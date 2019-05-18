@@ -19,20 +19,21 @@
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="fisd2\core\context.py" />
-    <Compile Include="fisd2\core\__init__.py" />
-    <Compile Include="fisd2\fisd2.py" />
+    <Compile Include="src\core\context.py" />
+    <Compile Include="src\core\__init__.py" />
+    <Compile Include="src\fisd2.py" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="fisd2" />
-    <Folder Include="fisd2\core" />
-    <Folder Include="fisd2\test\" />
+    <Folder Include="src\" />
+    <Folder Include="src\core\" />
+    <Folder Include="src\test\" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="Global|PythonCore|3.7" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fisd2\test\hello_world.fisd2" />
+    <Content Include="src\fisd2.txt" />
+    <Content Include="src\test\hello_world.fisd2" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>
