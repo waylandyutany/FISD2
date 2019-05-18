@@ -26,9 +26,13 @@
   <ItemGroup>
     <Folder Include="fisd2" />
     <Folder Include="fisd2\core" />
+    <Folder Include="fisd2\test\" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="Global|PythonCore|3.7" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fisd2\test\hello_world.fisd2" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>
