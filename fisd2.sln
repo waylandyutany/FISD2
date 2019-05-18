@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.645
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "fisd2", "fisd2.pyproj", "{0F06F2AE-6DA0-4BBD-83B0-C0B3C2CAC864}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "fisd2", "fisd2.pyproj", "{6231C4C2-419C-4D41-B950-4FA9D4A8C1E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,13 +11,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0F06F2AE-6DA0-4BBD-83B0-C0B3C2CAC864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F06F2AE-6DA0-4BBD-83B0-C0B3C2CAC864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6231C4C2-419C-4D41-B950-4FA9D4A8C1E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6231C4C2-419C-4D41-B950-4FA9D4A8C1E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {1092AC15-078E-407D-AE54-F14EFD2E460D}
+		SolutionGuid = {F8EE2FAF-8417-4EC7-BC97-B48E4BDA9326}
 	EndGlobalSection
 EndGlobal
