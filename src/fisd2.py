@@ -1,6 +1,13 @@
 import parser, sys, os
 from io import BytesIO
-from tokenize import tokenize, untokenize, NUMBER, STRING, NAME, OP
+from tokenize import tokenize, NUMBER, STRING, NAME, OP, COMMENT
+
+types = { NUMBER : "NUMBER",
+         STRING : "STRING",
+         NAME : "NAME",
+         OP : "OP",
+         COMMENT : "COMMENT"
+         }
 
 from core.context import Context
 
@@ -29,14 +36,7 @@ if __name__ == '__main__':
                 result = []
                 tokens = tokenize(BytesIO(line.encode('utf-8')).readline)
                 for toknum, tokval, _, _, _  in tokens:
-                    print(toknum, tokval)
-                    if toknum == NUMBER and '.' in tokval:  # replace NUMBER tokens
-                        result.extend([
-                            (NAME, 'Decimal'),
-                            (OP, '('),
-                            (STRING, repr(tokval)),
-                            (OP, ')')
-                        ])
+                    if toknum in types:
+                        print(types[toknum], tokval)
                     else:
-                        result.append((toknum, tokval))
-                #print(untokenize(result).decode('utf-8'))
+                        print("Unknown {} {}".format(toknum, tokval))

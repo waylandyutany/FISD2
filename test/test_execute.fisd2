@@ -1,5 +1,8 @@
+print "kraken" + 1 - 1.0
+kraken = 1 + 2
 execute "executed1.fisd2"
 execute "executed2.fisd"
 execute "executed1"
-execute "executed2"
+#execute "executed2"
+
 
