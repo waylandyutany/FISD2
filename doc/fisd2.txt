@@ -12,18 +12,18 @@ test_case_number = "tc001"
 program_path = "c:/program.exe"
 
 proc run_test(index)
-	async_id0 = run_cmd_async program_path + "config.cfg"
+	set async_id0 = run_cmd_async program_path + "config.cfg"
 	wait 1:00
 	restart
 	#stop_cmd_async async_id0
 
-	started_num = test_config_file program_path + "output.txt", "<started>"
-	ended_num = test_config_file program_path + "output.txt", "<ended>"
+	set started_num = test_config_file program_path + "output.txt", "<started>"
+	set ended_num = test_config_file program_path + "output.txt", "<ended>"
 
 	if (started_num == index) and (ended_num == index) then
-		write_test_case "ok" + index
+		set write_test_case "ok" + index
 	else
-		write_test_case "failed" + index
+		set write_test_case "failed" + index
 	endif
 endproc
 
@@ -50,3 +50,5 @@ fisd2 run_after_restart
 fisd_log_file "fisd.log", debug
 fisd_log_console debug
 
+execute
+set
