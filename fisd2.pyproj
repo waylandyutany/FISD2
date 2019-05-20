@@ -13,7 +13,7 @@
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId>Global|PythonCore|3.7</InterpreterId>
     <IsWindowsApplication>False</IsWindowsApplication>
-    <CommandLineArguments>../test/hello_world.fisd2</CommandLineArguments>
+    <CommandLineArguments>../test/test_execute.fisd2</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
@@ -23,6 +23,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="src\core\context.py" />
+    <Compile Include="src\core\key_words.py" />
     <Compile Include="src\core\__init__.py" />
     <Compile Include="src\fisd2.py" />
   </ItemGroup>
@@ -37,9 +38,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="doc\fisd2.txt" />
+    <Content Include="doc\test_cases.txt" />
     <Content Include="test\executed1.fisd2" />
     <Content Include="test\executed2.fisd" />
-    <Content Include="test\hello_world.fisd2" />
+    <Content Include="test\test_execute.fisd2" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>
