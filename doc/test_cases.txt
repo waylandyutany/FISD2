@@ -1,3 +1,6 @@
 1. passed and executed file with and without extension
 2. accept fisd and fisd2 extension
 3. use ascii, unicode(8,16,...), utf8 encoded file
+4. handle empty lines, comments, whitespaces at the beginning
+5. line number when error
+6. cyclic execute
