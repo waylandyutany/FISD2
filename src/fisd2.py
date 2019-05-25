@@ -5,9 +5,11 @@ from core.code import Tokenizers, Code
 from core.commands import Commands
 import default_commands.default_commands
 
+################################################################################
 context = Context()
 code = Code()
 
+################################################################################
 if __name__ == '__main__':
     args = sys.argv[1:]
     options = [str(arg).lower().strip(' -\t\n\r') for arg in args]

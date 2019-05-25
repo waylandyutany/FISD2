@@ -1,3 +1,4 @@
+################################################################################
 class Command:
     @staticmethod
     def parse():
@@ -7,9 +8,11 @@ class Command:
     def execute():
         print("Command.execute()")
 
+################################################################################
 class Commands:
     commands = {}
 
+################################################################################
 def command_class(name):
     def _command_class(_class):
         Commands.commands[name] = _class

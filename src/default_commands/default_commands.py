@@ -1,6 +1,7 @@
 from core.commands import command_class, Command
 from core.tokens import tokenizer_class, TOKEN_NAME
 
+################################################################################
 @command_class("set")
 @tokenizer_class("set")
 class SetCommand(Command):

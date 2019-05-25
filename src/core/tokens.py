@@ -5,8 +5,7 @@ from tokenize import STRING as TOKEN_STRING
 from tokenize import NAME as TOKEN_NAME
 from tokenize import OP as TOKEN_OP
 
-TOKEN_NONE = None
-
+################################################################################
 class Tokenizers:
     tokenizers = {}
 
@@ -15,12 +14,14 @@ class Tokenizers:
         for tokenizer in Tokenizers.tokenizers:
             Tokenizers.tokenizers[tokenizer].tokenize(tokens)
 
+################################################################################
 def tokenizer_class(name):
     def _tokenizer_class(_class):
         Tokenizers.tokenizers[name] = _class
         return _class
     return _tokenizer_class
 
+################################################################################
 class Tokens:
     valid_tokens = [TOKEN_NAME, TOKEN_STRING, TOKEN_NUMBER, TOKEN_OP]
 
@@ -38,7 +39,7 @@ class Tokens:
             return self._tokens[index][tindex]
         except:
             pass
-        return TOKEN_NONE
+        return None
 
     @property
     def tokens(self):
