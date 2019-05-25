@@ -14,5 +14,5 @@ class Code:
                 tokens = Tokens(line)
                 Tokenizers.tokenize(tokens)
 
-                if len(tokens.tokens) > 0:
+                if not tokens.empty():
                     print("line {} : {}".format(line_number, tokens.tokens))
