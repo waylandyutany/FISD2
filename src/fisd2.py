@@ -1,17 +1,12 @@
 import parser, sys, os
-from io import BytesIO
-from tokenize import tokenize, NUMBER, STRING, NAME, OP, COMMENT
-
-types = { NUMBER : "NUMBER",
-         STRING : "STRING",
-         NAME : "NAME",
-         OP : "OP",
-         COMMENT : "COMMENT"
-         }
 
 from core.context import Context
+from core.code import Code
+import core.commands
+import default_commands.default_commands
 
 context = Context()
+code = Code()
 
 if __name__ == '__main__':
     args = sys.argv[1:]
@@ -31,12 +26,4 @@ if __name__ == '__main__':
     #file parsing and execution
     print(os.path.abspath(args[0]))
     if os.path.isfile(args[0]):
-        with open(args[0]) as f:
-            for line in f.readlines():
-                result = []
-                tokens = tokenize(BytesIO(line.encode('utf-8')).readline)
-                for toknum, tokval, _, _, _  in tokens:
-                    if toknum in types:
-                        print(types[toknum], tokval)
-                    else:
-                        print("Unknown {} {}".format(toknum, tokval))
+        code.load_from_file(args[0])

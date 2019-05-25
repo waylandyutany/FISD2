@@ -22,13 +22,17 @@
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="src\core\code.py" />
+    <Compile Include="src\core\commands.py" />
     <Compile Include="src\core\context.py" />
-    <Compile Include="src\core\key_words.py" />
     <Compile Include="src\core\__init__.py" />
+    <Compile Include="src\default_commands\default_commands.py" />
+    <Compile Include="src\default_commands\__init__.py" />
     <Compile Include="src\fisd2.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="doc\" />
+    <Folder Include="src\default_commands\" />
     <Folder Include="test\" />
     <Folder Include="src\" />
     <Folder Include="src\core\" />

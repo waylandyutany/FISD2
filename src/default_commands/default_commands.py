@@ -1,3 +1,11 @@
-class DefaultCommands:
-    def __init__(self):
-        pass
+from core.commands import command_class, Command
+
+@command_class("set")
+class SetCommand(Command):
+    @classmethod
+    def parse(cls):
+        print("SetCommand.parse()")
+
+    @classmethod
+    def execute(cls):
+        print("SetCommand.execute()")
