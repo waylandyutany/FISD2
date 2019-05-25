@@ -26,4 +26,4 @@ if __name__ == '__main__':
     #file parsing and execution
     print(os.path.abspath(args[0]))
     if os.path.isfile(args[0]):
-        code.load_from_file(args[0])
+        code.compile_from_file(args[0])
