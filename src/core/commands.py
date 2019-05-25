@@ -9,14 +9,11 @@ class Command:
 
 class Commands:
     commands = {}
-    
-def register_command_class(name, cmd_class):
-    Commands.commands[name] = cmd_class
-    print("{} : {}".format(name, cmd_class))
-    cmd_class.parse()
-    cmd_class.execute()
 
 def command_class(name):
-    def _command_class(cmd_class):
-        register_command_class(name, cmd_class)
+    def _command_class(_class):
+        Commands.commands[name] = _class
+#        _class.parse()
+#        _class.execute()
+        return _class
     return _command_class

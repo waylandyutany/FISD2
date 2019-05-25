@@ -1,8 +1,8 @@
 import parser, sys, os
 
 from core.context import Context
-from core.code import Code
-import core.commands
+from core.code import Tokenizers, Code
+from core.commands import Commands
 import default_commands.default_commands
 
 context = Context()
@@ -23,7 +23,9 @@ if __name__ == '__main__':
         print("print_help")
         sys.exit(0)
 
-    #file parsing and execution
-    print(os.path.abspath(args[0]))
+    print("Tokenizers : {}".format(Tokenizers.tokenizers))
+    print("Commands : {}".format(Commands.commands))
+
+    #code compilation from file
     if os.path.isfile(args[0]):
         code.compile_from_file(args[0])
