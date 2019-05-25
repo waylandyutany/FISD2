@@ -14,6 +14,7 @@ class SetCommand(Command):
 
     @classmethod
     def tokenize(cls, tokens):
-        if (len(tokens) > 1) and (tokens[0]['id'] == TOKEN_NAME) and (tokens[1]['val'] == '='):
-            tokens.insert(0,{'id':TOKEN_NAME, 'val':'set'})
-        return tokens
+        if (len(tokens.tokens) > 1) and (tokens.tokens[0]['id'] == TOKEN_NAME) and (tokens.tokens[1]['val'] == '='):
+            tokens.insert_token(0,TOKEN_NAME,'set')
+
+

@@ -12,7 +12,7 @@ class Code:
                 line_number = line_number + 1
 
                 tokens = Tokens(line)
-                line_tokens = Tokenizers.tokenize(tokens.tokens)
+                Tokenizers.tokenize(tokens)
 
-                if len(line_tokens) > 0:
-                    print("line {} : {}".format(line_number, line_tokens))
+                if len(tokens.tokens) > 0:
+                    print("line {} : {}".format(line_number, tokens.tokens))

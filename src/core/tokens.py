@@ -5,14 +5,15 @@ from tokenize import STRING as TOKEN_STRING
 from tokenize import NAME as TOKEN_NAME
 from tokenize import OP as TOKEN_OP
 
+TOKEN_NONE = None
+
 class Tokenizers:
     tokenizers = {}
 
     @classmethod
     def tokenize(cls, tokens):
         for tokenizer in Tokenizers.tokenizers:
-            tokens = Tokenizers.tokenizers[tokenizer].tokenize(tokens)
-        return tokens
+            Tokenizers.tokenizers[tokenizer].tokenize(tokens)
 
 def tokenizer_class(name):
     def _tokenizer_class(_class):
@@ -22,7 +23,9 @@ def tokenizer_class(name):
 
 class Tokens:
     valid_tokens = [TOKEN_NAME, TOKEN_STRING, TOKEN_NUMBER, TOKEN_OP]
-    encoding = 'utf-8'
 
-    def __init__(self, line):
-        self.tokens = [{'id':tok_id, 'val':tok_val} for tok_id, tok_val, _, _, _  in tokenize(BytesIO(line.encode(Tokens.encoding)).readline) if tok_id in Tokens.valid_tokens]
+    def __init__(self, line, encoding = 'utf-8'):
+        self.tokens = [{'id':tok_id, 'val':tok_val} for tok_id, tok_val, _, _, _  in tokenize(BytesIO(line.encode(encoding)).readline) if tok_id in Tokens.valid_tokens]
+
+    def insert_token(self, index, type, value):
+        self.tokens.insert(index, {'id':type, 'val':value})
