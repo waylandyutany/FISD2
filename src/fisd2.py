@@ -13,7 +13,6 @@ __app_version__ = '2.0.0'
 ################################################################################
 context = Context()
 code = Code()
-logger = Logger()
 
 Logger.init_logger()
 ################################################################################
@@ -39,4 +38,5 @@ if __name__ == '__main__':
 
     #code compilation from file
     if os.path.isfile(args[0]):
-        code.compile_from_file(args[0])
+        logger = Logger()
+        code.compile_from_file(args[0], logger)

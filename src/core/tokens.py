@@ -45,9 +45,18 @@ class Tokens:
     def tokens(self):
         return tuple(self._tokens)
 
-    def type(self, index):
-        return self.token(index,0)
+    def is_name(self, index):
+        return self.token(index, 0) == TOKEN_NAME
 
-    def value(self, index):
-        return self.token(index,1)
+    def is_number(self, index):
+        return self.token(index, 0) == TOKEN_NUMBER
+
+    def is_string(self, index):
+        return self.token(index, 0) == TOKEN_STRING
+
+    def is_op(self, index):
+        return self.token(index, 0) == TOKEN_OP
+
+    def is_value(self, index, value):
+        return self.token(index, 1) == value
 

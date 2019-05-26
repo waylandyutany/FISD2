@@ -6,7 +6,7 @@ class Code:
     def __init__(self):
         pass
 
-    def compile_from_file(self, file_name):
+    def compile_from_file(self, file_name, logger):
         Logger.log.info("compile_from_file({})".format(file_name))
         with open(file_name) as f:
             line_number = 0
