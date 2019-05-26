@@ -12,14 +12,10 @@ class Code:
     def is_compiled(self, file_name):
         return file_name in self.code[Code._FILES]
 
-    def add_tokens(self, file_name, line_number, tokens):
-        if file_name not in self.code[Code._FILES]:
-            self.code[Code._FILES][file_name] = {}
-        self.code[Code._FILES][file_name][line_number] = tokens.tokens
-
     def compile_from_file(self, file_name, logger):
         if self.is_compiled(file_name):
             return
+        self.code[Code._FILES][file_name] = {}
 
         Logger.log.info("Compiling from file '{}'...".format(file_name))
 
@@ -32,7 +28,7 @@ class Code:
                 Tokenizers.tokenize(tokens)
 
                 if not tokens.empty():
-                    self.add_tokens(file_name, line_number, tokens)
+                    self.code[Code._FILES][file_name][line_number] = tokens.tokens
                     Logger.log.info("line {} : {}".format(line_number, tokens.tokens))
 
         return True
