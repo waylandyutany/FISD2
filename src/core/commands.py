@@ -6,7 +6,7 @@ class Command:
         Logger.log.info("Command.parse()")
 
     @staticmethod
-    def execute():
+    def execute(context, arguments):
         Logger.log.info("Command.execute()")
 
 ################################################################################
@@ -17,7 +17,5 @@ class Commands:
 def command_class(name):
     def _command_class(_class):
         Commands.commands[name] = _class
-#        _class.parse()
-#        _class.execute()
         return _class
     return _command_class
