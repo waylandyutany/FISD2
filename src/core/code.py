@@ -9,11 +9,8 @@ class Code:
     def __init__(self):
         self.code = {Code._FILES:{}, Code._FUNCTIONS:{}}
 
-    def is_compiled(self, file_name):
-        return file_name in self.code[Code._FILES]
-
     def compile_from_file(self, file_name, logger):
-        if self.is_compiled(file_name):
+        if file_name in self.code[Code._FILES]:
             return
         self.code[Code._FILES][file_name] = {}
 
