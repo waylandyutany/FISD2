@@ -11,8 +11,8 @@ class Tokenizers:
 
     @classmethod
     def tokenize(cls, tokens):
-        for tokenizer in Tokenizers.tokenizers:
-            Tokenizers.tokenizers[tokenizer].tokenize(tokens)
+        for tokenizer in cls.tokenizers:
+            cls.tokenizers[tokenizer].tokenize(tokens)
 
 ################################################################################
 def tokenizer_class(name):

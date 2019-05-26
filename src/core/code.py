@@ -1,4 +1,5 @@
 from core.tokens import Tokenizers, Tokens
+from core.logger import Logger
 
 ################################################################################
 class Code:
@@ -6,7 +7,7 @@ class Code:
         pass
 
     def compile_from_file(self, file_name):
-        print("compile_from_file({})".format(file_name))
+        Logger.log.info("compile_from_file({})".format(file_name))
         with open(file_name) as f:
             line_number = 0
             for line in f.readlines():
@@ -16,4 +17,4 @@ class Code:
                 Tokenizers.tokenize(tokens)
 
                 if not tokens.empty():
-                    print("line {} : {}".format(line_number, tokens.tokens))
+                    Logger.log.info("line {} : {}".format(line_number, tokens.tokens))

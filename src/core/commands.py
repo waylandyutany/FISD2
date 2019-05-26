@@ -1,12 +1,13 @@
+from core.logger import Logger
 ################################################################################
 class Command:
     @staticmethod
     def parse():
-        print("Command.parse()")
+        Logger.log.info("Command.parse()")
 
     @staticmethod
     def execute():
-        print("Command.execute()")
+        Logger.log.info("Command.execute()")
 
 ################################################################################
 class Commands:

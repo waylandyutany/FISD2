@@ -1,5 +1,6 @@
 from core.commands import command_class, Command
 from core.tokens import tokenizer_class, TOKEN_NAME
+from core.logger import Logger
 
 ################################################################################
 @command_class("set")
@@ -7,11 +8,11 @@ from core.tokens import tokenizer_class, TOKEN_NAME
 class SetCommand(Command):
     @classmethod
     def parse(cls):
-        print("SetCommand.parse()")
+        Logger.log.info("SetCommand.parse()")
 
     @classmethod
     def execute(cls):
-        print("SetCommand.execute()")
+        Logger.log.info("SetCommand.execute()")
 
     @classmethod
     def tokenize(cls, tokens):
