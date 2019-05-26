@@ -9,7 +9,7 @@ class Code:
     def __init__(self):
         self.code = {Code._FILES:{}, Code._FUNCTIONS:{}}
 
-    def is_file(self, file_name):
+    def is_compiled(self, file_name):
         return file_name in self.code[Code._FILES]
 
     def add_tokens(self, file_name, line_number, tokens):
@@ -18,7 +18,7 @@ class Code:
         self.code[Code._FILES][file_name][line_number] = tokens.tokens
 
     def compile_from_file(self, file_name, logger):
-        if self.is_file(file_name):
+        if self.is_compiled(file_name):
             return
 
         Logger.log.info("Compiling from file '{}'...".format(file_name))
