@@ -1,12 +1,13 @@
 from core.commands import command_class, Command
 from core.tokens import tokenizer_class, TOKEN_NAME
 from core.logger import Logger
+from default_commands.keywords import Keywords
 
 ################################################################################
 # SET Command
 ################################################################################
-@command_class("set")
-@tokenizer_class("set")
+@command_class(Keywords._SET)
+@tokenizer_class(Keywords._SET)
 class SetCommand(Command):
     @classmethod
     def parse(cls):
@@ -24,7 +25,7 @@ class SetCommand(Command):
 ################################################################################
 # PRINT Command
 ################################################################################
-@command_class("print")
+@command_class(Keywords._PRINT)
 class PrintCommand(Command):
     @classmethod
     def parse(cls):
@@ -37,7 +38,7 @@ class PrintCommand(Command):
 ################################################################################
 # EXECUTE Command
 ################################################################################
-@command_class("execute")
+@command_class(Keywords._EXECUTE)
 class PrintCommand(Command):
     @classmethod
     def parse(cls):

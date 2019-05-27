@@ -45,5 +45,5 @@ if __name__ == '__main__':
 
     #code compilation from file
     if os.path.isfile(args[0]):
-        logger = Logger()
+        logger = Logger(Logger.log)
         code.compile_from_file(args[0], logger)
