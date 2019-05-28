@@ -29,6 +29,7 @@
     <Compile Include="src\core\tokens.py" />
     <Compile Include="src\core\__init__.py" />
     <Compile Include="src\default_commands\default_commands.py" />
+    <Compile Include="src\default_commands\keywords.py" />
     <Compile Include="src\default_commands\__init__.py" />
     <Compile Include="src\fisd2.py" />
   </ItemGroup>

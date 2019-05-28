@@ -7,6 +7,8 @@ import os
 class Code:
     _FILES = 'files'
     _FUNCTIONS = 'functions'
+    _TOKENS = 'tokens'
+    _COMMAND = 'command'
 
 ################################################################################
     def __init__(self):
@@ -59,20 +61,26 @@ class Code:
             line_number = 0
             for line in f.readlines():
                 line_number = line_number + 1
-                logger.preface = "'{}'[{}] : ".format(file_name, line_number)
 
                 tokens = Tokens(line)
                 Tokenizers.tokenize(tokens)
 
-                self.__process_execute_tokens(tokens, logger)
-
                 logger.preface = "'{}'[{}] : ".format(file_name, line_number)
+                self.__process_execute_tokens(tokens, logger)
+                logger.preface = "'{}'[{}] : ".format(file_name, line_number)
+
                 if not tokens.empty():
-                    self.code[Code._FILES][file_name][line_number] = tokens.tokens
+                    self.code[Code._FILES][file_name][line_number] = {Code._TOKENS:{}, Code._COMMAND:None}
+                    self.code[Code._FILES][file_name][line_number][Code._TOKENS] = tokens.tokens
                     logger.info("{}".format(tokens.tokens))
 
         return file_name
+
+    def __parse_commands(self, logger):
+        pass
+
 ################################################################################
     def compile_from_file(self, file_name, logger):
         self.__code_path = os.path.dirname(file_name)
         self.__tokenize_from_file(file_name, logger)
+        self.__parse_commands(logger)
