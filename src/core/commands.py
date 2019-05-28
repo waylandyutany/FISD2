@@ -6,7 +6,7 @@ class Command:
         Logger.log.info("Command.parse({})".format(tokens))
 
     @staticmethod
-    def execute(context, arguments):
+    def execute(context, arguments, logger):
         Logger.log.info("Command.execute()")
 
 ################################################################################

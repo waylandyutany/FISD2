@@ -14,7 +14,7 @@ class SetCommand(Command):
         logger.info("SetCommand.parse({})".format(tokens))
 
     @classmethod
-    def execute(cls, context, arguments):
+    def execute(cls, context, arguments, logger):
         Logger.log.info("SetCommand.execute()")
 
     @classmethod
@@ -32,7 +32,7 @@ class PrintCommand(Command):
         logger.info("PrintCommand.parse({})".format(tokens))
 
     @classmethod
-    def execute(cls, context, arguments):
+    def execute(cls, context, arguments, logger):
         Logger.log.info("PrintCommand.execute()")
 
 ################################################################################
@@ -45,6 +45,6 @@ class PrintCommand(Command):
         logger.info("ExecuteCommand.parse({})".format(tokens))
 
     @classmethod
-    def execute(cls, context, arguments):
+    def execute(cls, context, arguments, logger):
         Logger.log.info("ExecuteCommand.execute()")
 

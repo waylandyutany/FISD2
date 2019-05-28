@@ -17,10 +17,11 @@ __app_name__ = 'FISD2'
 __app_version__ = '2.0.0'
 
 ################################################################################
-context = Context()
-code = Code()
-
 Logger.init_logger()
+logger = Logger(Logger.log)
+code = Code()
+context = Context(code, logger)
+
 ################################################################################
 if __name__ == '__main__':
     Logger.log.info("{} version {}".format(__app_name__, __app_version__))
@@ -44,5 +45,6 @@ if __name__ == '__main__':
 
     #code compilation from file
     if os.path.isfile(args[0]):
-        logger = Logger(Logger.log)
         code.compile_from_file(args[0], logger)
+
+    context.run()
