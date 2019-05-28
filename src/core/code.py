@@ -39,17 +39,19 @@ class Code:
             if not tokens.is_string(1):
                 logger.error("Valid fisd file name must follow 'execute' command!")
                 return
-            self.__tokenize_from_file(tokens.value_str(1), logger)
+            tokenized_file_name = self.__tokenize_from_file(tokens.value_str(1), logger)
+            if tokenized_file_name:
+                tokens.set_string(1, tokenized_file_name)
 
 ################################################################################
     def __tokenize_from_file(self, _file_name, logger):
         file_name, file_path = self.__find_fisd_file(_file_name)
         if not file_name:
             logger.error("Non existing file '{}'!".format(_file_name))
-            return
+            return file_name
 
         if file_name in self.code[Code._FILES]:
-            return
+            return file_name
         self.code[Code._FILES][file_name] = {}
 
         logger.info("Compiling from file '{}'...".format(file_path))
@@ -70,6 +72,7 @@ class Code:
                     self.code[Code._FILES][file_name][line_number] = tokens.tokens
                     logger.info("{}".format(tokens.tokens))
 
+        return file_name
 ################################################################################
     def compile_from_file(self, file_name, logger):
         self.__code_path = os.path.dirname(file_name)

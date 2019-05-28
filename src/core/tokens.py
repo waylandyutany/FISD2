@@ -74,3 +74,8 @@ class Tokens:
         if self.is_string(index):
             return self.__token(index, 1)[1:-1]
         return str(self.__token(index, 1))
+
+################################################################################
+    def set_string(self, index, string):
+        self._tokens[index][0] = TOKEN_STRING
+        self._tokens[index][1] = '"{}"'.format(string)
