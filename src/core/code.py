@@ -12,7 +12,6 @@ class Code:
     def __init__(self):
         self.code = {Code._FILES:{}, Code._FUNCTIONS:{}}
         self.__code_path = None
-        self.__tokens_handlers = [self.__process_execute_tokens]
 
 ################################################################################
     def __find_fisd_file(self, file_name):
@@ -54,7 +53,7 @@ class Code:
             return file_name
         self.code[Code._FILES][file_name] = {}
 
-        logger.info("Compiling from file '{}'...".format(file_path))
+        logger.info("Compiling fisd file '{}'...".format(file_path))
 
         with open(file_path ) as f:
             line_number = 0
@@ -65,9 +64,9 @@ class Code:
                 tokens = Tokens(line)
                 Tokenizers.tokenize(tokens)
 
-                for tokens_handler in self.__tokens_handlers:
-                    tokens_handler(tokens, logger)
+                self.__process_execute_tokens(tokens, logger)
 
+                logger.preface = "'{}'[{}] : ".format(file_name, line_number)
                 if not tokens.empty():
                     self.code[Code._FILES][file_name][line_number] = tokens.tokens
                     logger.info("{}".format(tokens.tokens))
