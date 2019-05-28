@@ -20,7 +20,7 @@ class SetCommand(Command):
     @classmethod
     def tokenize(cls, tokens):
         if tokens.is_name(0) and tokens.is_op(1) and tokens.is_value(1, '='):
-            tokens.insert_token(0, TOKEN_NAME, 'set')
+            tokens.insert_name(0, 'set')
 
 ################################################################################
 # PRINT Command

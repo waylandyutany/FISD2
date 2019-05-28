@@ -38,9 +38,6 @@ class Tokens:
         return None
 
 ################################################################################
-    def insert_token(self, index, type, value):
-        self._tokens.insert(index, [type, value])
-
     def empty(self):
         return len(self._tokens) == 0
 
@@ -79,3 +76,9 @@ class Tokens:
     def set_string(self, index, string):
         self._tokens[index][0] = TOKEN_STRING
         self._tokens[index][1] = '"{}"'.format(string)
+
+################################################################################
+    def insert_name(self, index, value):
+        self._tokens.insert(index, [TOKEN_NAME, value])
+
+################################################################################
