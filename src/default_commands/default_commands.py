@@ -10,8 +10,8 @@ from default_commands.keywords import Keywords
 @tokenizer_class(Keywords._SET)
 class SetCommand(Command):
     @classmethod
-    def parse(cls):
-        Logger.log.info("SetCommand.parse()")
+    def parse(cls, tokens, logger):
+        logger.info("SetCommand.parse({})".format(tokens))
 
     @classmethod
     def execute(cls, context, arguments):
@@ -28,8 +28,8 @@ class SetCommand(Command):
 @command_class(Keywords._PRINT)
 class PrintCommand(Command):
     @classmethod
-    def parse(cls):
-        Logger.log.info("PrintCommand.parse()")
+    def parse(cls, tokens, logger):
+        logger.info("PrintCommand.parse({})".format(tokens))
 
     @classmethod
     def execute(cls, context, arguments):
@@ -41,8 +41,8 @@ class PrintCommand(Command):
 @command_class(Keywords._EXECUTE)
 class PrintCommand(Command):
     @classmethod
-    def parse(cls):
-        Logger.log.info("ExecuteCommand.parse()")
+    def parse(cls, tokens, logger):
+        logger.info("ExecuteCommand.parse({})".format(tokens))
 
     @classmethod
     def execute(cls, context, arguments):

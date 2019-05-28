@@ -8,10 +8,9 @@ import default_commands.default_commands
 
 ################################################################################
 # @todo
-#   1. recursive compile_for_file for each execute statement
-#   2. handle set command with context
-#   3. handle print command
-#   4. handle execute command
+#   1. handle set command with context
+#   2. handle print command
+#   3. handle execute command
 #
 ################################################################################
 __app_name__ = 'FISD2'

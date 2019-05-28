@@ -1,6 +1,6 @@
 from core.tokens import Tokenizers, Tokens
 from default_commands.keywords import Keywords
-
+from core.commands import Commands
 import os
 
 ################################################################################
@@ -12,7 +12,7 @@ class Code:
 
 ################################################################################
     def __init__(self):
-        self.code = {Code._FILES:{}, Code._FUNCTIONS:{}}
+        self.__code = {Code._FILES:{}, Code._FUNCTIONS:{}}
         self.__code_path = None
 
 ################################################################################
@@ -51,9 +51,9 @@ class Code:
             logger.error("Non existing file '{}'!".format(_file_name))
             return file_name
 
-        if file_name in self.code[Code._FILES]:
+        if file_name in self.__code[Code._FILES]:
             return file_name
-        self.code[Code._FILES][file_name] = {}
+        self.__code[Code._FILES][file_name] = {}
 
         logger.info("Compiling fisd file '{}'...".format(file_path))
 
@@ -70,14 +70,30 @@ class Code:
                 logger.preface = "'{}'[{}] : ".format(file_name, line_number)
 
                 if not tokens.empty():
-                    self.code[Code._FILES][file_name][line_number] = {Code._TOKENS:{}, Code._COMMAND:None}
-                    self.code[Code._FILES][file_name][line_number][Code._TOKENS] = tokens.tokens
-                    logger.info("{}".format(tokens.tokens))
+                    self.__code[Code._FILES][file_name][line_number] = {Code._TOKENS:None, Code._COMMAND:None}
+                    self.__code[Code._FILES][file_name][line_number][Code._TOKENS] = tokens
+                    logger.info("{}".format(tokens.tokens()))
 
         return file_name
 
     def __parse_commands(self, logger):
-        pass
+        for code_file in self.__code[Code._FILES]:
+            for code_line in self.__code[Code._FILES][code_file]:
+                line_tokens = self.__code[Code._FILES][code_file][code_line][Code._TOKENS]
+
+                logger.preface = "'{}'[{}] : ".format(code_file, code_line)
+
+                if not line_tokens.is_name(0):
+                    logger.error("Invalid command token {}!".format(line_tokens.value(0)))
+                    continue
+
+                command_class = Commands.commands[line_tokens.value(0).lower()]
+                if not command_class:
+                    logger.error("Invalid command {}!".format(line_tokens.value(0)))
+                    continue;
+
+                self.__code[Code._FILES][code_file][code_line][Code._COMMAND] = command_class
+                command_class.parse(line_tokens, logger)
 
 ################################################################################
     def compile_from_file(self, file_name, logger):

@@ -17,7 +17,7 @@ class Tokenizers:
 ################################################################################
 def tokenizer_class(name):
     def _tokenizer_class(_class):
-        Tokenizers.tokenizers[name] = _class
+        Tokenizers.tokenizers[str(name).lower()] = _class
         return _class
     return _tokenizer_class
 
@@ -29,7 +29,9 @@ class Tokens:
     def __init__(self, line, encoding = 'utf-8'):
         self._tokens = [[tok_id, tok_val] for tok_id, tok_val, _, _, _  in tokenize(BytesIO(line.encode(encoding)).readline) if tok_id in Tokens.valid_tokens]
 
-################################################################################
+    def __str__(self):
+        return ", ".join([tok[1] for tok in self._tokens])
+
     def __token(self, index, tindex):
         try:
             return self._tokens[index][tindex]
@@ -41,7 +43,6 @@ class Tokens:
     def empty(self):
         return len(self._tokens) == 0
 
-    @property
     def tokens(self):
         return tuple(self._tokens)
 
