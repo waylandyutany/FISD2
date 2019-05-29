@@ -7,7 +7,7 @@ class Arguments:
 
 ################################################################################
 class Context:
-    _CODE_FILE = 'code_file'
+    _CODE_NAME = 'code_name'
     _CODE_INDEX = 'code_index'
 
     def __init__(self, code):
@@ -15,12 +15,12 @@ class Context:
         self._call_stack = []
 
 ################################################################################
-    def execute_code(self, code_file_name, logger, call_stack_index = None):
+    def execute_code(self, code_name, logger, call_stack_index = None):
         #getting code lines from the code
-        code_lines = self._code.get_file_code(code_file_name)
+        code_lines = self._code.get_code_lines(code_name)
 
         #creating code context
-        call_context = {Context._CODE_FILE:code_file_name, Context._CODE_INDEX:0}
+        call_context = {Context._CODE_NAME:code_name, Context._CODE_INDEX:0}
 
         #pushing code context to the stack
         self._call_stack.append(call_context)
@@ -31,7 +31,7 @@ class Context:
 
             line_number, line_tokens, command_class = Code.split_code_line(code_lines[code_index])
 
-            logger.preface = "'{}'[{}] : ".format(code_file_name, line_number)
+            logger.preface = "'{}'[{}] : ".format(code_name, line_number)
 
             command_class.execute(self, line_tokens, logger)
             
@@ -40,7 +40,7 @@ class Context:
 
 ################################################################################
     def run(self, logger):
-        self.execute_code(self._code.main_file_name(), logger)
+        self.execute_code(self._code.main_code_name(), logger)
 
     def run_from_call_stack(self, call_stack, logger):
         pass

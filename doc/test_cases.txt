@@ -4,3 +4,4 @@
 4. handle empty lines, comments, whitespaces at the beginning
 5. line number when error
 6. cyclic execute
+7. same code file name and function name

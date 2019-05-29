@@ -15,7 +15,7 @@ class Code:
     def __init__(self):
         self._code = {Code._FILES:{}, Code._FUNCTIONS:{}}
         self._code_path = None
-        self._main_file = None
+        self._main_code_name = None
 
 ################################################################################
     def __find_fisd_file(self, file_name):
@@ -101,7 +101,7 @@ class Code:
     def compile_from_file(self, file_name, logger):
         ''' Compiling code from the file, looking for *.fisd/*.fisd2 in no extension provided.'''
         self._code_path = os.path.dirname(file_name)
-        self._main_file = self.__tokenize_from_file(file_name, logger)
+        self._main_code_name = self.__tokenize_from_file(file_name, logger)
         self.__parse_commands(logger)
 
     def load_from_file(self, file_name, logger):
@@ -111,14 +111,15 @@ class Code:
         ''' Saving compiled code to the file.'''
 
 ################################################################################
-    def main_file_name(self):
-        return self._main_file
+    def main_code_name(self):
+        return self._main_code_name
 
-    def get_file_code(self, file_name):
-        return self._code[Code._FILES][file_name]
-
-    def get_function_code(self, function_name):
-        return self._code[Code._FUNCTIONS][function_name]
+    def get_code_lines(self, code_name):
+        if code_name in self._code[Code._FILES]:
+            return self._code[Code._FILES][code_name]
+        elif code_name in self._code[Code._FUNCTIONS]:
+            return self._code[Code._FUNCTIONS][code_name]
+        return None
 
 ################################################################################
     @staticmethod
