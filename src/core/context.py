@@ -15,7 +15,7 @@ class Context:
         self._call_stack = []
 
 ################################################################################
-    def __execute_code(self, code_file_name, logger):
+    def execute_code(self, code_file_name, logger, call_stack_index = None):
         #getting code lines from the code
         code_lines = self._code.get_file_code(code_file_name)
 
@@ -40,6 +40,6 @@ class Context:
 
 ################################################################################
     def run(self, logger):
-        self.__execute_code(self._code.main_file_name(), logger)
+        self.execute_code(self._code.main_file_name(), logger)
 
 ################################################################################

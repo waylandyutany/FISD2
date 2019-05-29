@@ -40,8 +40,8 @@ if __name__ == '__main__':
         Logger.log.info("print_help")
         sys.exit(0)
 
-    Logger.log.info("Tokenizers : {}".format(", ".join(["'{}'".format(name) for name in Tokenizers.tokenizers])))
-    Logger.log.info("Commands : {}".format(", ".join(["'{}'".format(name) for name in Commands.commands])))
+    Logger.log.debug("Tokenizers : {}".format(", ".join(["'{}'".format(name) for name in Tokenizers.tokenizers])))
+    Logger.log.debug("Commands : {}".format(", ".join(["'{}'".format(name) for name in Commands.commands])))
 
     #code compilation from file
     if os.path.isfile(args[0]):

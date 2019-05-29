@@ -73,7 +73,7 @@ class Code:
 
                 if not tokens.empty():
                     self._code[Code._FILES][file_name].append({Code._LINE_NUMBER:line_number, Code._TOKENS:tokens, Code._COMMAND_CLASS:None})
-                    logger.info("{}".format(tokens.tokens()))
+                    logger.debug("{}".format(tokens.tokens()))
 
         return file_name
 
