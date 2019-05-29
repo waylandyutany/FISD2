@@ -99,7 +99,29 @@ class Code:
 
 ################################################################################
     def compile_from_file(self, file_name, logger):
+        ''' Compiling code from the file, looking for *.fisd/*.fisd2 in no extension provided.'''
         self._code_path = os.path.dirname(file_name)
         self._main_file = self.__tokenize_from_file(file_name, logger)
         self.__parse_commands(logger)
-        pass
+
+    def load_from_file(self, file_name, logger):
+        ''' Loading already compiled code from the file.'''
+
+    def save_to_file(self, file_name, logger):
+        ''' Saving compiled code to the file.'''
+
+################################################################################
+    def main_file_name(self):
+        return self._main_file
+
+    def get_file_code(self, file_name):
+        return self._code[Code._FILES][file_name]
+
+    def get_function_code(self, function_name):
+        return self._code[Code._FUNCTIONS][function_name]
+
+################################################################################
+    @staticmethod
+    def split_code_line(code_line):
+        ''' Split stored code line and returns it's line_number, line_tokens, command_class '''
+        return code_line[Code._LINE_NUMBER], code_line[Code._TOKENS], code_line[Code._COMMAND_CLASS]

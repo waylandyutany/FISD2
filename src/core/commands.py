@@ -3,11 +3,11 @@ from core.logger import Logger
 class Command:
     @staticmethod
     def parse(tokens, logger):
-        Logger.log.info("Command.parse({})".format(tokens))
+        logger.info("Command.parse({})".format(tokens))
 
     @staticmethod
     def execute(context, arguments, logger):
-        Logger.log.info("Command.execute()")
+        logger.info("Command.execute({})".format(arguments))
 
 ################################################################################
 class Commands:

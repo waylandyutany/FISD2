@@ -15,7 +15,7 @@ class SetCommand(Command):
 
     @classmethod
     def execute(cls, context, arguments, logger):
-        Logger.log.info("SetCommand.execute()")
+        logger.info("SetCommand.execute({})".format(arguments))
 
     @classmethod
     def tokenize(cls, tokens):
@@ -33,7 +33,7 @@ class PrintCommand(Command):
 
     @classmethod
     def execute(cls, context, arguments, logger):
-        Logger.log.info("PrintCommand.execute()")
+        logger.info("PrintCommand.execute({})".format(arguments))
 
 ################################################################################
 # EXECUTE Command
@@ -46,5 +46,5 @@ class PrintCommand(Command):
 
     @classmethod
     def execute(cls, context, arguments, logger):
-        Logger.log.info("ExecuteCommand.execute()")
+        logger.info("ExecuteCommand.execute({})".format(arguments))
 
