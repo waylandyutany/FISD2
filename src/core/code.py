@@ -92,7 +92,7 @@ class Code:
                 command_class = Commands.commands[line_tokens.value(0).lower()]
                 if not command_class:
                     logger.error("Unknown command {}!".format(line_tokens.value(0)))
-                    continue;
+                    continue
 
                 code_line[Code._COMMAND_CLASS] = command_class
                 command_class.parse(line_tokens, logger)
