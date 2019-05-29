@@ -42,4 +42,6 @@ class Context:
     def run(self, logger):
         self.execute_code(self._code.main_file_name(), logger)
 
+    def run_from_call_stack(self, call_stack, logger):
+        pass
 ################################################################################
