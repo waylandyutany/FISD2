@@ -66,7 +66,7 @@ class Code:
 
                 tokens = Tokens(line)
                 Tokenizers.tokenize(tokens)
-
+                #@todo do it more generic with better preface handling
                 logger.preface = "'{}'[{}] : ".format(file_name, line_number)
                 self.__process_execute_tokens(tokens, logger)
                 logger.preface = "'{}'[{}] : ".format(file_name, line_number)

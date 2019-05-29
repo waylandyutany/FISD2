@@ -32,6 +32,9 @@ class Tokens:
     def __str__(self):
         return ", ".join([tok[1] for tok in self._tokens])
 
+    def __len__(self):
+        return len(self._tokens)
+
     def __token(self, index, tindex):
         try:
             return self._tokens[index][tindex]
@@ -44,7 +47,7 @@ class Tokens:
         return len(self._tokens) == 0
 
     def tokens(self):
-        return tuple(self._tokens)
+        return self._tokens
 
 ################################################################################
     def is_name(self, index):

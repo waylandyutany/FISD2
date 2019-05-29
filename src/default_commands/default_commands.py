@@ -11,11 +11,13 @@ from default_commands.keywords import Keywords
 class SetCommand(Command):
     @classmethod
     def parse(cls, tokens, logger):
-        logger.debug("SetCommand.parse({})".format(tokens))
+        #logger.debug("SetCommand.parse({})".format(tokens))
+        pass
 
     @classmethod
     def execute(cls, context, arguments, logger):
-        logger.debug("SetCommand.execute({})".format(arguments))
+        #logger.debug("SetCommand.execute({})".format(arguments))
+        pass
 
     @classmethod
     def tokenize(cls, tokens):
@@ -29,23 +31,26 @@ class SetCommand(Command):
 class PrintCommand(Command):
     @classmethod
     def parse(cls, tokens, logger):
-        logger.debug("PrintCommand.parse({})".format(tokens))
+        #logger.debug("PrintCommand.parse({})".format(tokens))
+        pass
 
     @classmethod
     def execute(cls, context, arguments, logger):
-        logger.debug("PrintCommand.execute({})".format(arguments))
+        #logger.debug("PrintCommand.execute({})".format(arguments))
+        logger.info("PRINT {}".format("".join([arguments.value_str(i) for i in range(1, len(arguments))])))
 
 ################################################################################
 # EXECUTE Command
 ################################################################################
 @command_class(Keywords._EXECUTE)
-class PrintCommand(Command):
+class ExecuteCommand(Command):
     @classmethod
     def parse(cls, tokens, logger):
-        logger.debug("ExecuteCommand.parse({})".format(tokens))
+        #logger.debug("ExecuteCommand.parse({})".format(tokens))
+        pass
 
     @classmethod
     def execute(cls, context, arguments, logger):
-        logger.debug("ExecuteCommand.execute({})".format(arguments))
+        #logger.debug("ExecuteCommand.execute({})".format(arguments))
         context.execute_code(arguments.value_str(1), logger)
 

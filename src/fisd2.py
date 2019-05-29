@@ -9,9 +9,7 @@ import default_commands.default_commands
 ################################################################################
 # @todo
 #   1. handle set command with context
-#   2. handle print command
-#   3. handle execute command
-#
+#   2. run time for the program
 ################################################################################
 __app_name__ = 'FISD2'
 __app_version__ = '2.0.0'

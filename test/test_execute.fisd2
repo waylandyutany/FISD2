@@ -1,4 +1,4 @@
-print "kraken" + 1 - 1.0
+print "kraken"# + 1 - 1.0
 kraken = 1 + 2
 Execute "executed1"
 execute "executed2"
