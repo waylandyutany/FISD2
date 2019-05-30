@@ -1,10 +1,11 @@
 from core.code import Code
 from core.tokens import Tokens
+from copy import deepcopy
 
 ################################################################################
 class Arguments(Tokens):
     def __init__(self, tokens):
-        self._tokens = tokens.tokens()[:]
+        self._tokens = deepcopy(tokens.tokens()[:])
 
 ################################################################################
 class Context:

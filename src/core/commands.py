@@ -1,17 +1,12 @@
-from core.logger import Logger
 ################################################################################
 class Command:
     @staticmethod
     def parse(tokens, logger):
-        #todo assert
-        #logger.info("Command.parse({})".format(tokens))
-        pass
+        raise NotImplementedError("Abstract method!")
 
     @staticmethod
     def execute(context, arguments, logger):
-        #todo assert
-        #logger.info("Command.execute({})".format(arguments))
-        pass
+        raise NotImplementedError("Abstract method!")
 
 ################################################################################
 class Commands:

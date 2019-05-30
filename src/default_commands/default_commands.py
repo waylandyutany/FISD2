@@ -37,7 +37,7 @@ class PrintCommand(Command):
     @classmethod
     def execute(cls, context, arguments, logger):
         #logger.debug("PrintCommand.execute({})".format(arguments))
-        logger.info("PRINT {}".format("".join([arguments.value_str(i) for i in range(1, len(arguments))])))
+        logger.info("PRINT {}".format("".join( ( arguments.value_str(i) for i in range(1, len(arguments)) ) )))
 
 ################################################################################
 # EXECUTE Command
