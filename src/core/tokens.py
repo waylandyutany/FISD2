@@ -4,7 +4,7 @@ from tokenize import NUMBER as TOKEN_NUMBER
 from tokenize import STRING as TOKEN_STRING
 from tokenize import NAME as TOKEN_NAME
 from tokenize import OP as TOKEN_OP
-TOKEN_KEYWORD = None
+TOKEN_KEYWORD = 0
 
 ################################################################################
 class Tokenizers:
