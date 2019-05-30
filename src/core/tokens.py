@@ -4,6 +4,7 @@ from tokenize import NUMBER as TOKEN_NUMBER
 from tokenize import STRING as TOKEN_STRING
 from tokenize import NAME as TOKEN_NAME
 from tokenize import OP as TOKEN_OP
+TOKEN_KEYWORD = None
 
 ################################################################################
 class Tokenizers:
@@ -62,6 +63,9 @@ class Tokens:
     def is_op(self, index):
         return self.__token(index, 0) == TOKEN_OP
 
+    def is_keyword(self, index):
+        return self.__token(index, 0) == TOKEN_KEYWORD
+
     def is_value(self, index, value):
         return self.__token(index, 1) == value
 
@@ -80,6 +84,9 @@ class Tokens:
     def set_string(self, index, string):
         self._tokens[index][0] = TOKEN_STRING
         self._tokens[index][1] = '"{}"'.format(string)
+
+    def set_keyword(self, index):
+        self._tokens[index][0] = TOKEN_KEYWORD
 
 ################################################################################
     def insert_name(self, index, value):
