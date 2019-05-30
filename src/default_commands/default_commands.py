@@ -11,6 +11,7 @@ from default_commands.keywords import Keywords
 class SetCommand(Command):
     @classmethod
     def parse(cls, tokens, logger):
+        tokens.set_keyword(1)
         #logger.debug("SetCommand.parse({})".format(tokens))
         pass
 
