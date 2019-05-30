@@ -74,6 +74,7 @@ class Code:
                 self.__process_execute_tokens(tokens, logger)
 
                 if not tokens.empty():
+                    logger.preface = "'{}'[{}] : ".format(file_name, line_number)
                     self._code[Code._FILES][file_name].append({Code._LINE_NUMBER:line_number, Code._TOKENS:tokens, Code._COMMAND_CLASS:None})
                     logger.debug("{}".format(tokens.tokens()))
 

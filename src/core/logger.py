@@ -22,36 +22,36 @@ class Logger:
 
 ################################################################################
     def __init__(self, log = None):
-        self.__criticals = 0
-        self.__errors = 0
-        self.__warnings = 0
-        self.__log = log
+        self._criticals = 0
+        self._errors = 0
+        self._warnings = 0
+        self._log = log
         self.preface = ""
        
     def debug(self, msg, *args, **kwargs):
         msg = self.preface + msg
-        if self.__log:
-            self.__log.debug(msg, *args, **kwargs)
+        if self._log:
+            self._log.debug(msg, *args, **kwargs)
 
     def info(self, msg, *args, **kwargs):
         msg = self.preface + msg
-        if self.__log:
-            self.__log.info(msg, *args, **kwargs)
+        if self._log:
+            self._log.info(msg, *args, **kwargs)
 
     def warning(self, msg, *args, **kwargs):
         msg = self.preface + msg
-        self.__warnings += 1
-        if self.__log:
-            self.__log.warning(msg, *args, **kwargs)
+        self._warnings += 1
+        if self._log:
+            self._log.warning(msg, *args, **kwargs)
 
     def error(self, msg, *args, **kwargs):
         msg = self.preface + msg
-        self.__errors += 1
-        if self.__log:
-            self.__log.error(msg, *args, **kwargs)
+        self._errors += 1
+        if self._log:
+            self._log.error(msg, *args, **kwargs)
 
     def critical(self, msg, *args, **kwargs):
         msg = self.preface + msg
-        self.__criticals += 1
-        if self.__log:
-            self.__log.critical(msg, *args, **kwargs)
+        self._criticals += 1
+        if self._log:
+            self._log.critical(msg, *args, **kwargs)
