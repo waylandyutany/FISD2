@@ -65,11 +65,13 @@ class Code:
                 line_number = line_number + 1
 
                 tokens = Tokens(line)
-                Tokenizers.tokenize(tokens)
+
                 #@todo do it more generic with better preface handling
                 logger.preface = "'{}'[{}] : ".format(file_name, line_number)
-                self.__process_execute_tokens(tokens, logger)
+                Tokenizers.tokenize(tokens, logger)
+
                 logger.preface = "'{}'[{}] : ".format(file_name, line_number)
+                self.__process_execute_tokens(tokens, logger)
 
                 if not tokens.empty():
                     self._code[Code._FILES][file_name].append({Code._LINE_NUMBER:line_number, Code._TOKENS:tokens, Code._COMMAND_CLASS:None})

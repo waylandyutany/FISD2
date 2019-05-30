@@ -10,9 +10,9 @@ class Tokenizers:
     tokenizers = {}
 
     @classmethod
-    def tokenize(cls, tokens):
+    def tokenize(cls, tokens, logger):
         for tokenizer in cls.tokenizers:
-            cls.tokenizers[tokenizer].tokenize(tokens)
+            cls.tokenizers[tokenizer].tokenize(tokens, logger)
 
 ################################################################################
 def tokenizer_class(name):
