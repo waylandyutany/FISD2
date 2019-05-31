@@ -22,7 +22,7 @@ class SetCommand(Command):
     @classmethod
     def execute(cls, context, arguments, logger):
         variable_name = arguments.value(1)
-        string_to_evaluate = " ".join( arguments.value(i) for i in range(3,len(arguments)))
+        string_to_evaluate = " ".join( str(arguments.value(i)) for i in range(3,len(arguments)))
 
         try:
             evaluated_value = eval(string_to_evaluate, {'__builtins__':None}, cls._eval_funcs)

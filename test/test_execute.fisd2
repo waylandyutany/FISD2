@@ -1,4 +1,5 @@
-kraken = cos((1 + 2) * sin(2.0))
+set flt = 4.0
+kraken = cos((1 + flt) * sin(2.0))
 print kraken# + 1 - 1.0
 kraken = "Hello world"
 kraken2 = "Hello world2"
