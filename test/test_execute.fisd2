@@ -3,7 +3,8 @@ kraken = cos((1 + flt) * sin(2.0))
 print kraken# + 1 - 1.0
 kraken = "Hello world"
 kraken2 = "Hello world2"
-Execute "executed1"
+Execute "test_for_if"
+execute "executed2"
 execute "executed2"
 execute "executed1.fisd2"
 execute "executed2.fisd"

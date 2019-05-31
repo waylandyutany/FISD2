@@ -1,0 +1,24 @@
+PROC test_for
+FOR I FROM 0 TO 10
+    if $I%2==0 then
+        print $I, "je parne"
+        if $i >= 4 then
+            print ">= Styri"
+        endif
+        if $i == 8 then
+            print "Osem"
+        endif
+    else
+        print $I, "je neparne"
+        if $I >= 5 then
+            print ">= Pat"
+        endif
+        if $I == 7 then
+            print "Sedem"
+        endif
+    endif
+    if $I > 0 and $I%3==0 then
+        print $I, "je delitelne troma"
+    endif
+next I
+endproc
