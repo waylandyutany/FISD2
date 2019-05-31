@@ -11,14 +11,16 @@ from default_commands.keywords import Keywords
 class SetCommand(Command):
     @classmethod
     def parse(cls, tokens, logger):
-        tokens.set_keyword(1)
-        #logger.debug("SetCommand.parse({})".format(tokens))
+        tokens.mark_as_keyword(1)
         pass
 
     @classmethod
     def execute(cls, context, arguments, logger):
-        #logger.debug("SetCommand.execute({})".format(arguments))
-        pass
+        variable_name = arguments.value(1)
+        string_to_evaluate = " ".join( arguments.value(i) for i in range(3,len(arguments)))
+        variable_value = eval(string_to_evaluate, {'__builtins__':None}, {})
+        logger.info("'{}' evaluated '{} = {}'".format(variable_name, string_to_evaluate, variable_value))
+        context.set_variable(variable_name, variable_value)
 
     @classmethod
     def tokenize(cls, tokens, logger):
@@ -32,13 +34,11 @@ class SetCommand(Command):
 class PrintCommand(Command):
     @classmethod
     def parse(cls, tokens, logger):
-        #logger.debug("PrintCommand.parse({})".format(tokens))
         pass
 
     @classmethod
     def execute(cls, context, arguments, logger):
-        #logger.debug("PrintCommand.execute({})".format(arguments))
-        logger.info("PRINT {}".format("".join( ( arguments.value_str(i) for i in range(1, len(arguments)) ) )))
+        logger.info("PRINT {}".format("".join( ( str(arguments.value_str(i)) for i in range(1, len(arguments)) ) )))
 
 ################################################################################
 # EXECUTE Command
@@ -47,11 +47,9 @@ class PrintCommand(Command):
 class ExecuteCommand(Command):
     @classmethod
     def parse(cls, tokens, logger):
-        #logger.debug("ExecuteCommand.parse({})".format(tokens))
         pass
 
     @classmethod
     def execute(cls, context, arguments, logger):
-        #logger.debug("ExecuteCommand.execute({})".format(arguments))
         context.execute_code(arguments.value_str(1), logger)
 

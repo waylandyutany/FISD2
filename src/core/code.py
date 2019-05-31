@@ -97,7 +97,7 @@ class Code:
                     logger.error("Unknown command {}!".format(line_tokens.value(0)))
                     continue
 
-                line_tokens.set_keyword(0)
+                line_tokens.mark_as_keyword(0)
                 code_line[Code._COMMAND_CLASS] = command_class
                 command_class.parse(line_tokens, logger)
 

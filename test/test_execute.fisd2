@@ -1,5 +1,6 @@
-print "kraken"# + 1 - 1.0
-$kraken = 1 + 2
+kraken = 1 + 2
+print kraken# + 1 - 1.0
+kraken = "Hello world"
 Execute "executed1"
 execute "executed2"
 execute "executed1.fisd2"

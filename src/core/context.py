@@ -1,5 +1,5 @@
 from core.code import Code
-from core.tokens import Tokens
+from core.tokens import Tokens, TOKEN_NUMBER, TOKEN_STRING, TOKEN_NONE
 from copy import deepcopy
 
 ################################################################################
@@ -11,6 +11,8 @@ class Arguments(Tokens):
 class Context:
     _CODE_NAME = 'code_name'
     _CODE_INDEX = 'code_index'
+    _VAR_TYPE = 'type'
+    _VAR_VALUE = 'value'
 
     def __init__(self, code):
         self._code = code
@@ -18,7 +20,30 @@ class Context:
         self._variable_stack = [{}]
 
     def __tokens_to_arguments(self, tokens):
-        return Arguments(tokens)
+        args =  Arguments(tokens)
+        for i in range(0, len(args)):
+            if args.is_name(i):
+                type, value = self.__find_variable(args.value(i))
+                if type == TOKEN_NUMBER:
+                    args.set_number(i, value)
+                elif type == TOKEN_STRING:
+                    args.set_string(i, value)
+
+        return args
+
+################################################################################
+    def __find_variable(self, name):
+        if name in self._variable_stack[-1]:
+            return self._variable_stack[-1][name][Context._VAR_TYPE], self._variable_stack[-1][name][Context._VAR_VALUE]
+        return TOKEN_NONE, None
+
+    def set_variable(self, name, value):
+        if isinstance(value, int):
+            self._variable_stack[-1][name] = {Context._VAR_TYPE : TOKEN_NUMBER, Context._VAR_VALUE:value}
+        elif isinstance(value, float):
+            self._variable_stack[-1][name] = {Context._VAR_TYPE : TOKEN_NUMBER, Context._VAR_VALUE:value}
+        else:
+            self._variable_stack[-1][name] = {Context._VAR_TYPE : TOKEN_STRING, Context._VAR_VALUE:str(value)}
 
 ################################################################################
     def execute_code(self, code_name, logger, call_stack_index = None):
@@ -50,6 +75,6 @@ class Context:
 
     def run_from_call_stack(self, call_stack, logger):
         pass
+
 ################################################################################
-    def set_variable(self, name, value):
-        self._variable_stack[-1][name] = value
+
