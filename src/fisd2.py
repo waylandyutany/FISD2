@@ -9,8 +9,8 @@ import default_commands.default_commands
 
 ################################################################################
 # @todo
-#
-#
+# 1. move logger into context object and generalize preface
+# 2. move functions into it's own sections and handle name existances between functions and files
 ################################################################################
 __app_name__ = 'FISD2'
 __app_version__ = '2.0.0'
