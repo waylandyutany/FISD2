@@ -1,6 +1,5 @@
 from core.commands import command_class, Command
 from core.tokens import tokenizer_class, TOKEN_NAME
-from core.logger import Logger
 from default_commands.keywords import Keywords
 import math
 
@@ -17,7 +16,6 @@ class SetCommand(Command):
     @classmethod
     def parse(cls, tokens, logger):
         tokens.mark_as_keyword(1)
-        pass
 
     @classmethod
     def execute(cls, context, arguments):
