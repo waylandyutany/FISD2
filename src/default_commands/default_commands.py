@@ -2,6 +2,7 @@ from core.commands import command_class, Command
 from core.tokens import tokenizer_class, TOKEN_NAME
 from core.logger import Logger
 from default_commands.keywords import Keywords
+import math
 
 ################################################################################
 # SET Command
@@ -9,6 +10,10 @@ from default_commands.keywords import Keywords
 @command_class(Keywords._SET)
 @tokenizer_class(Keywords._SET)
 class SetCommand(Command):
+    _eval_funcs = {'cos':math.cos,
+                   'sin':math.sin,
+                   }
+
     @classmethod
     def parse(cls, tokens, logger):
         tokens.mark_as_keyword(1)
@@ -18,8 +23,15 @@ class SetCommand(Command):
     def execute(cls, context, arguments, logger):
         variable_name = arguments.value(1)
         string_to_evaluate = " ".join( arguments.value(i) for i in range(3,len(arguments)))
-        evaluated_value = eval(string_to_evaluate, {'__builtins__':None}, {})
-        logger.info("'{}' evaluated '{} = {}'".format(variable_name, string_to_evaluate, evaluated_value))
+
+        try:
+            evaluated_value = eval(string_to_evaluate, {'__builtins__':None}, cls._eval_funcs)
+        except Exception as e:
+            logger.error("Exception during expression '{} = {}' evaluation! {}!".format(variable_name, string_to_evaluate, e))
+            return
+
+        logger.debug("'{}' evaluated '{} = {}'".format(variable_name, string_to_evaluate, evaluated_value))
+
         context.set_variable(variable_name, evaluated_value)
 
     @classmethod

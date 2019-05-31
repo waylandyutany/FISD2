@@ -1,6 +1,7 @@
-kraken = 1 + 2
+kraken = cos((1 + 2) * sin(2.0))
 print kraken# + 1 - 1.0
 kraken = "Hello world"
+kraken2 = "Hello world2"
 Execute "executed1"
 execute "executed2"
 execute "executed1.fisd2"

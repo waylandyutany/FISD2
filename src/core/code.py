@@ -57,7 +57,7 @@ class Code:
             return file_name
         self._code[Code._FILES][file_name] = []
 
-        logger.info("Compiling fisd file '{}'...".format(file_path))
+        #logger.debug("Compiling fisd file '{}'...".format(file_path))
 
         with open(file_path ) as f:
             line_number = 0
@@ -74,9 +74,9 @@ class Code:
                 self.__process_execute_tokens(tokens, logger)
 
                 if not tokens.empty():
-                    logger.preface = "'{}'[{}] : ".format(file_name, line_number)
                     self._code[Code._FILES][file_name].append({Code._LINE_NUMBER:line_number, Code._TOKENS:tokens, Code._COMMAND_CLASS:None})
-                    logger.debug("{}".format(tokens.tokens()))
+                    #logger.preface = "'{}'[{}] : ".format(file_name, line_number)
+                    #logger.debug("{}".format(tokens.tokens()))
 
         return file_name
 

@@ -1,4 +1,5 @@
 import parser, sys, os
+from datetime import datetime
 
 from core.context import Context
 from core.code import Tokenizers, Code
@@ -8,8 +9,8 @@ import default_commands.default_commands
 
 ################################################################################
 # @todo
-#   1. handle set command with context
-#   2. run time for the program
+#
+#
 ################################################################################
 __app_name__ = 'FISD2'
 __app_version__ = '2.0.0'
@@ -22,12 +23,12 @@ context = Context(code)
 
 ################################################################################
 if __name__ == '__main__':
-    Logger.log.info("{} version {}".format(__app_name__, __app_version__))
+    Logger.log.info("{} version '{}'.".format(__app_name__, __app_version__))
 
     args = sys.argv[1:]
     options = [str(arg).lower().strip(' -\t\n\r') for arg in args]
-    Logger.log.info("Arguments : {}".format(args))
-    Logger.log.info("Options : {}".format(options))
+    Logger.log.info("Arguments {}".format(args))
+    Logger.log.info("Options {}".format(options))
 
     #if wrong arguments or explicitly help required, help will be printed and script teminated
     print_help = False
@@ -38,11 +39,17 @@ if __name__ == '__main__':
         Logger.log.info("print_help")
         sys.exit(0)
 
-    Logger.log.debug("Tokenizers : {}".format(", ".join(["'{}'".format(name) for name in Tokenizers.tokenizers])))
-    Logger.log.debug("Commands : {}".format(", ".join(["'{}'".format(name) for name in Commands.commands])))
+    Logger.log.debug("Tokenizers {}.".format(", ".join(["'{}'".format(name) for name in Tokenizers.tokenizers])))
+    Logger.log.debug("Commands {}.".format(", ".join(["'{}'".format(name) for name in Commands.commands])))
 
+    start_compilation_time = datetime.now()
     #code compilation from file
     if os.path.isfile(args[0]):
         code.compile_from_file(args[0], logger)
+    compilation_time = datetime.now() - start_compilation_time
+    Logger.log.info("Compilation time '{}'.".format(compilation_time))
 
+    start_run_time = datetime.now()
     context.run(logger)
+    run_time = datetime.now() - start_run_time
+    Logger.log.info("Run time '{}'.".format(run_time))
