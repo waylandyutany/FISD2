@@ -6,6 +6,7 @@ import os
 ################################################################################
 class Code:
     _FUNCTION_FILE_NAME = 'function_file_name'
+    _CODE_LINES = 'code_lines'
     _TOKENS = 'tokens'
     _COMMAND_CLASS = 'command'
     _LINE_NUMBER = 'line'
@@ -54,7 +55,7 @@ class Code:
 
         if file_name in self._code:
             return file_name
-        self._code[file_name] = []
+        self._code[file_name] = {Code._CODE_LINES:[]}
 
         #logger.debug("Compiling fisd file '{}'...".format(file_path))
 
@@ -73,7 +74,7 @@ class Code:
                 self.__process_execute_tokens(tokens, logger)
 
                 if not tokens.empty():
-                    self._code[file_name].append({Code._LINE_NUMBER:line_number, Code._TOKENS:tokens, Code._COMMAND_CLASS:None})
+                    self._code[file_name][Code._CODE_LINES].append({Code._LINE_NUMBER:line_number, Code._TOKENS:tokens, Code._COMMAND_CLASS:None})
                     #logger.preface = "'{}'[{}] : ".format(file_name, line_number)
                     #logger.debug("{}".format(tokens.tokens()))
 
@@ -81,7 +82,7 @@ class Code:
 
     def __parse_commands(self, logger):
         for code_name in self._code:
-            for code_line in self._code[code_name]:
+            for code_line in self._code[code_name][Code._CODE_LINES]:
                 line_number = code_line[Code._LINE_NUMBER]
                 line_tokens = code_line[Code._TOKENS]
 
@@ -101,7 +102,36 @@ class Code:
                 command_class.parse(line_tokens, logger)
 
     def __extract_functions(self, logger):
-        pass
+        for code_name in self._code:
+            code_lines = self._code[code_name][Code._CODE_LINES]
+            begin_proc_line_index = 0
+            line_count = len(code_lines)
+            while begin_proc_line_index < line_count:
+                line_number, line_tokens, _ = Code.split_code_line(code_lines[begin_proc_line_index])
+
+                #@todo error when end proc w/o proc keyword
+                #@todo error when no name token after proc token
+                #@todo error when function name already exists
+                if line_tokens.is_name(0) and line_tokens.is_name(1) and line_tokens.is_value_no_case(0, Keywords._PROC):
+                    end_proc_line_index = begin_proc_line_index + 1
+                    function_name = line_tokens.value_str(0).lower()
+                    while end_proc_line_index < line_count:
+                        line_number, line_tokens, _ = Code.split_code_line(code_lines[end_proc_line_index])
+                        #@todo error when proc within proc, no nested proc supported
+                        if line_tokens.is_name(0) and line_tokens.is_value_no_case(0, Keywords._END_PROC):
+                            break
+                        end_proc_line_index += 1
+
+                    #function body is between begin_proc_line_index and end_proc_line_index
+                    if end_proc_line_index < line_count: 
+
+                        pass
+                    #@todo error no endproc
+                    else:
+                        pass
+
+                #_FUNCTION_FILE_NAME
+                begin_proc_line_index += 1
 
 ################################################################################
     def compile_from_file(self, file_name, logger):
@@ -123,7 +153,7 @@ class Code:
 
     def get_code_lines(self, code_name):
         if code_name in self._code:
-            return self._code[code_name]
+            return self._code[code_name][Code._CODE_LINES]
         return None
 
 ################################################################################
