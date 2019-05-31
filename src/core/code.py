@@ -102,6 +102,7 @@ class Code:
                 command_class.parse(line_tokens, logger)
 
     def __extract_functions(self, logger):
+        functions_code = {}
         for code_name in self._code:
             code_lines = self._code[code_name][Code._CODE_LINES]
             begin_proc_line_index = 0
@@ -114,7 +115,7 @@ class Code:
                 #@todo error when function name already exists
                 if line_tokens.is_name(0) and line_tokens.is_name(1) and line_tokens.is_value_no_case(0, Keywords._PROC):
                     end_proc_line_index = begin_proc_line_index + 1
-                    function_name = line_tokens.value_str(0).lower()
+                    function_name = line_tokens.value_str(1).lower()
                     while end_proc_line_index < line_count:
                         line_number, line_tokens, _ = Code.split_code_line(code_lines[end_proc_line_index])
                         #@todo error when proc within proc, no nested proc supported
@@ -124,7 +125,12 @@ class Code:
 
                     #function body is between begin_proc_line_index and end_proc_line_index
                     if end_proc_line_index < line_count: 
-
+                        functions_code[function_name] = {Code._CODE_LINES:self._code[code_name][Code._CODE_LINES][begin_proc_line_index:end_proc_line_index - line_count + 1],
+                                                        Code._FUNCTION_FILE_NAME:code_name}
+                        # must due to : begin_proc_line_index += 1
+                        del self._code[code_name][Code._CODE_LINES][begin_proc_line_index:end_proc_line_index - line_count + 1]
+                        begin_proc_line_index -= 1
+                        line_count = len(code_lines)
                         pass
                     #@todo error no endproc
                     else:
@@ -132,6 +138,10 @@ class Code:
 
                 #_FUNCTION_FILE_NAME
                 begin_proc_line_index += 1
+
+        for function_code in functions_code:
+            self._code[function_code] = functions_code[function_code]
+        pass
 
 ################################################################################
     def compile_from_file(self, file_name, logger):

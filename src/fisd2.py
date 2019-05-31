@@ -14,6 +14,7 @@ import default_commands.procedure_commands
 
 ################################################################################
 # @todo
+# 0. Fix error when proc is in entire file !!!
 # 1. move logger into context object and generalize preface
 # 2. move functions into it's own sections and handle name existances between functions and files
 # 3. error codes and descriptions
