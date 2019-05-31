@@ -18,9 +18,9 @@ class SetCommand(Command):
     def execute(cls, context, arguments, logger):
         variable_name = arguments.value(1)
         string_to_evaluate = " ".join( arguments.value(i) for i in range(3,len(arguments)))
-        variable_value = eval(string_to_evaluate, {'__builtins__':None}, {})
-        logger.info("'{}' evaluated '{} = {}'".format(variable_name, string_to_evaluate, variable_value))
-        context.set_variable(variable_name, variable_value)
+        evaluated_value = eval(string_to_evaluate, {'__builtins__':None}, {})
+        logger.info("'{}' evaluated '{} = {}'".format(variable_name, string_to_evaluate, evaluated_value))
+        context.set_variable(variable_name, evaluated_value)
 
     @classmethod
     def tokenize(cls, tokens, logger):

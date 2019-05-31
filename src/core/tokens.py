@@ -68,10 +68,12 @@ class Tokens:
         return self.__token(index, 0) == TOKEN_KEYWORD
 
     def is_value(self, index, value):
+        if self.is_string(index):
+            return self.value_str(index) == str(value)
         return self.__token(index, 1) == value
 
     def is_value_no_case(self, index, value):
-        return str(self.__token(index, 1)).lower() == str(value).lower()
+        return self.value_str(index).lower() == str(value).lower()
 
     def value(self, index):
         return self.__token(index, 1)
