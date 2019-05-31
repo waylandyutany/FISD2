@@ -5,15 +5,14 @@ import os
 
 ################################################################################
 class Code:
-    _FILES = 'files'
-    _FUNCTIONS = 'functions'
+    _FUNCTION_FILE_NAME = 'function_file_name'
     _TOKENS = 'tokens'
     _COMMAND_CLASS = 'command'
     _LINE_NUMBER = 'line'
 
 ################################################################################
     def __init__(self):
-        self._code = {Code._FILES:{}, Code._FUNCTIONS:{}}
+        self._code = {}
         self._code_path = None
         self._main_code_name = None
 
@@ -53,9 +52,9 @@ class Code:
             logger.error("Non existing file '{}'!".format(_file_name))
             return file_name
 
-        if file_name in self._code[Code._FILES]:
+        if file_name in self._code:
             return file_name
-        self._code[Code._FILES][file_name] = []
+        self._code[file_name] = []
 
         #logger.debug("Compiling fisd file '{}'...".format(file_path))
 
@@ -74,19 +73,19 @@ class Code:
                 self.__process_execute_tokens(tokens, logger)
 
                 if not tokens.empty():
-                    self._code[Code._FILES][file_name].append({Code._LINE_NUMBER:line_number, Code._TOKENS:tokens, Code._COMMAND_CLASS:None})
+                    self._code[file_name].append({Code._LINE_NUMBER:line_number, Code._TOKENS:tokens, Code._COMMAND_CLASS:None})
                     #logger.preface = "'{}'[{}] : ".format(file_name, line_number)
                     #logger.debug("{}".format(tokens.tokens()))
 
         return file_name
 
     def __parse_commands(self, logger):
-        for code_file in self._code[Code._FILES]:
-            for code_line in self._code[Code._FILES][code_file]:
+        for code_name in self._code:
+            for code_line in self._code[code_name]:
                 line_number = code_line[Code._LINE_NUMBER]
                 line_tokens = code_line[Code._TOKENS]
 
-                logger.preface = "'{}'[{}] : ".format(code_file, line_number)
+                logger.preface = "'{}'[{}] : ".format(code_name, line_number)
 
                 if not line_tokens.is_name(0):
                     logger.error("Invalid command token {}!".format(line_tokens.value(0)))
@@ -123,10 +122,8 @@ class Code:
         return self._main_code_name
 
     def get_code_lines(self, code_name):
-        if code_name in self._code[Code._FILES]:
-            return self._code[Code._FILES][code_name]
-        elif code_name in self._code[Code._FUNCTIONS]:
-            return self._code[Code._FUNCTIONS][code_name]
+        if code_name in self._code:
+            return self._code[code_name]
         return None
 
 ################################################################################

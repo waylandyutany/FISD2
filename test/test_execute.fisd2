@@ -1,4 +1,9 @@
 set flt = 4.0
+
+proc test_print_proc
+print "Hello from " 2 " test_print_proc"
+endproc
+
 kraken = cos((1 + flt) * sin(2.0))
 print kraken# + 1 - 1.0
 kraken = "Hello world"
