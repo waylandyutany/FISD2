@@ -101,11 +101,15 @@ class Code:
                 code_line[Code._COMMAND_CLASS] = command_class
                 command_class.parse(line_tokens, logger)
 
+    def __extract_functions(self, logger):
+        pass
+
 ################################################################################
     def compile_from_file(self, file_name, logger):
         ''' Compiling code from the file, looking for *.fisd/*.fisd2 in no extension provided.'''
         self._code_path = os.path.dirname(file_name)
         self._main_code_name = self.__tokenize_from_file(file_name, logger)
+        self.__extract_functions(logger)
         self.__parse_commands(logger)
 
     def load_from_file(self, file_name, logger):

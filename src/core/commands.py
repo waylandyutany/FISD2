@@ -5,7 +5,7 @@ class Command:
         raise NotImplementedError("Abstract method!")
 
     @staticmethod
-    def execute(context, arguments, logger):
+    def execute(context, arguments):
         raise NotImplementedError("Abstract method!")
 
 ################################################################################

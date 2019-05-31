@@ -7,6 +7,9 @@ class Keywords:
     _END_PROC = 'endproc'
 
     _FOR = 'for'
+    _FROM = 'from'
+    _TO = 'to'
+    _STEP = 'step'
     _NEXT = 'next'
 
     _IF = 'if'

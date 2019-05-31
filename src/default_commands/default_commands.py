@@ -20,17 +20,17 @@ class SetCommand(Command):
         pass
 
     @classmethod
-    def execute(cls, context, arguments, logger):
+    def execute(cls, context, arguments):
         variable_name = arguments.value(1)
         string_to_evaluate = " ".join( str(arguments.value(i)) for i in range(3,len(arguments)))
 
         try:
             evaluated_value = eval(string_to_evaluate, {'__builtins__':None}, cls._eval_funcs)
         except Exception as e:
-            logger.error("Exception during expression '{} = {}' evaluation! {}!".format(variable_name, string_to_evaluate, e))
+            context.logger.error("Exception during expression '{} = {}' evaluation! {}!".format(variable_name, string_to_evaluate, e))
             return
 
-        logger.debug("'{}' evaluated '{} = {}'".format(variable_name, string_to_evaluate, evaluated_value))
+        context.logger.debug("'{}' evaluated '{} = {}'".format(variable_name, string_to_evaluate, evaluated_value))
 
         context.set_variable(variable_name, evaluated_value)
 
@@ -49,8 +49,8 @@ class PrintCommand(Command):
         pass
 
     @classmethod
-    def execute(cls, context, arguments, logger):
-        logger.info("PRINT {}".format("".join( ( str(arguments.value_str(i)) for i in range(1, len(arguments)) ) )))
+    def execute(cls, context, arguments):
+        context.logger.info("PRINT {}".format("".join( ( str(arguments.value_str(i)) for i in range(1, len(arguments)) ) )))
 
 ################################################################################
 # EXECUTE Command
@@ -62,6 +62,32 @@ class ExecuteCommand(Command):
         pass
 
     @classmethod
-    def execute(cls, context, arguments, logger):
-        context.execute_code(arguments.value_str(1), logger)
+    def execute(cls, context, arguments):
+        context.execute_code(arguments.value_str(1))
+
+################################################################################
+# PROC Command
+################################################################################
+@command_class(Keywords._PROC)
+class ProcCommand(Command):
+    @classmethod
+    def parse(cls, tokens, logger):
+        pass
+
+    @classmethod
+    def execute(cls, context, arguments):
+        pass
+
+################################################################################
+# END_PROC Command
+################################################################################
+@command_class(Keywords._END_PROC)
+class EndProcCommand(Command):
+    @classmethod
+    def parse(cls, tokens, logger):
+        pass
+
+    @classmethod
+    def execute(cls, context, arguments):
+        pass
 

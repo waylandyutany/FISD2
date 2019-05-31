@@ -18,6 +18,11 @@ class Context:
         self._code = code
         self._call_stack = []
         self._variable_stack = [{}]
+        self._logger = None
+
+    @property
+    def logger(self):
+        return self._logger
 
     def __tokens_to_arguments(self, tokens):
         args =  Arguments(tokens)
@@ -46,7 +51,7 @@ class Context:
             self._variable_stack[-1][name] = {Context._VAR_TYPE : TOKEN_STRING, Context._VAR_VALUE:str(value)}
 
 ################################################################################
-    def execute_code(self, code_name, logger, call_stack_index = None):
+    def execute_code(self, code_name, call_stack_index = None):
         #getting code lines from the code
         code_lines = self._code.get_code_lines(code_name)
 
@@ -62,15 +67,16 @@ class Context:
 
             line_number, line_tokens, command_class = Code.split_code_line(code_lines[code_index])
 
-            logger.preface = "'{}'[{}] : ".format(code_name, line_number)
+            self.logger.preface = "'{}'[{}] : ".format(code_name, line_number)
 
-            command_class.execute(self, self.__tokens_to_arguments(line_tokens), logger)
+            command_class.execute(self, self.__tokens_to_arguments(line_tokens))
             
         #popping code context from code stack
         self._call_stack.pop()
 
 ################################################################################
     def run(self, logger):
+        self._logger = logger
         self.execute_code(self._code.main_code_name(), logger)
 
     def run_from_call_stack(self, call_stack, logger):
