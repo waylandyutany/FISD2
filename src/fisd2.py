@@ -5,9 +5,12 @@ from core.context import Context
 from core.code import Tokenizers, Code
 from core.commands import Commands
 from core.logger import Logger
+
+#importing all default command files
 import default_commands.default_commands
 import default_commands.loop_commands
 import default_commands.conditions_commands
+import default_commands.procedure_commands
 
 ################################################################################
 # @todo

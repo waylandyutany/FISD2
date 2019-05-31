@@ -5,6 +5,7 @@ class Keywords:
 
     _PROC = 'proc'
     _END_PROC = 'endproc'
+    _RETURN = 'return'
 
     _FOR = 'for'
     _FROM = 'from'

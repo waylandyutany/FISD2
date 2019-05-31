@@ -63,29 +63,3 @@ class ExecuteCommand(Command):
     def execute(cls, context, arguments):
         context.execute_code(arguments.value_str(1))
 
-################################################################################
-# PROC Command
-################################################################################
-@command_class(Keywords._PROC)
-class ProcCommand(Command):
-    @classmethod
-    def parse(cls, tokens, logger):
-        pass
-
-    @classmethod
-    def execute(cls, context, arguments):
-        pass
-
-################################################################################
-# END_PROC Command
-################################################################################
-@command_class(Keywords._END_PROC)
-class EndProcCommand(Command):
-    @classmethod
-    def parse(cls, tokens, logger):
-        pass
-
-    @classmethod
-    def execute(cls, context, arguments):
-        pass
-
