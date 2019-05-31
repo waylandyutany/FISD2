@@ -52,6 +52,7 @@
     <Content Include="test\executed1.fisd2" />
     <Content Include="test\executed2.fisd" />
     <Content Include="test\test_execute.fisd2" />
+    <Content Include="test\test_for_if_proc.fisd2" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>
