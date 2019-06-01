@@ -1,5 +1,3 @@
-print kraken
-
 PROC test_for
 FOR I FROM 0 TO 10
     if $I%2==0 then
@@ -24,5 +22,3 @@ FOR I FROM 0 TO 10
     endif
 next I
 endproc
-print kraken
-

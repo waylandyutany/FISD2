@@ -1,15 +1,17 @@
 from core.tokens import Tokenizers, Tokens
 from default_commands.keywords import Keywords
 from core.commands import Commands
+import core.code_utils as code_utils
+
 import os
 
 ################################################################################
 class Code:
     _FUNCTION_FILE_NAME = 'function_file_name'
     _CODE_LINES = 'code_lines'
-    _TOKENS = 'tokens'
-    _COMMAND_CLASS = 'command'
-    _LINE_NUMBER = 'line'
+    _TOKENS = code_utils._CODE_TOKENS
+    _COMMAND_CLASS = code_utils._CODE_COMMAND_CLASS
+    _LINE_NUMBER = code_utils._CODE_LINE_NUMBER
 
 ################################################################################
     def __init__(self):
@@ -101,32 +103,6 @@ class Code:
                 code_line[Code._COMMAND_CLASS] = command_class
                 command_class.parse(line_tokens, logger)
 
-    @classmethod
-    def filter_code_lines(cls, code_lines, filters):
-        ret = []
-        for i in range(0, len(code_lines)):
-            line_number, line_tokens, _ = cls.split_code_line(code_lines[i])
-            for filter in filters:
-                if line_tokens.is_name(0) and line_tokens.is_value_no_case(0, filter):
-                    ret.append((line_number, line_tokens))
-        return ret
-
-    @classmethod
-    def move_code_lines(cls, code_lines, first_line_number, last_line_number):
-        ret = []
-        from_index = 0
-        to_index = len(code_lines)
-        while from_index < to_index:
-            line_number, _, _ = cls.split_code_line(code_lines[from_index])
-            if first_line_number <= line_number and line_number <= last_line_number:
-                ret.append(code_lines[from_index])
-                del code_lines[from_index]
-                to_index -= 1
-            else:
-                from_index += 1
-
-        return ret
-
     def __extract_functions(self, logger):
         #@todo error when end proc w/o proc keyword
         #@todo error when no name token after proc token
@@ -136,12 +112,12 @@ class Code:
         functions_code = {}
         for code_name in self._code:
             code_lines = self._code[code_name][Code._CODE_LINES]
-            proc_code_lines = Code.filter_code_lines(code_lines, [Keywords._PROC, Keywords._END_PROC])
+            proc_code_lines = code_utils.filter_code_lines(code_lines, [Keywords._PROC, Keywords._END_PROC])
             for i in range(0,len(proc_code_lines),2):
                 first_line_number, first_line_tokens = proc_code_lines[i]
                 last_line_number, last_line_tokens = proc_code_lines[i+1]
                 function_name = first_line_tokens.value(1)
-                function_code_lines = Code.move_code_lines(code_lines, first_line_number, last_line_number)
+                function_code_lines = code_utils.move_code_lines(code_lines, first_line_number, last_line_number)
                 functions_code[function_name] = {Code._CODE_LINES:function_code_lines,
                                                 Code._FUNCTION_FILE_NAME:code_name}
 
@@ -177,4 +153,4 @@ class Code:
     @staticmethod
     def split_code_line(code_line):
         ''' Split stored code line and returns it's line_number, line_tokens, command_class '''
-        return code_line[Code._LINE_NUMBER], code_line[Code._TOKENS], code_line[Code._COMMAND_CLASS]
+        return code_utils.split_code_line(code_line)

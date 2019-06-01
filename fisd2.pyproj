@@ -23,6 +23,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="src\core\code.py" />
+    <Compile Include="src\core\code_utils.py" />
     <Compile Include="src\core\commands.py" />
     <Compile Include="src\core\context.py" />
     <Compile Include="src\core\logger.py" />
