@@ -101,46 +101,53 @@ class Code:
                 code_line[Code._COMMAND_CLASS] = command_class
                 command_class.parse(line_tokens, logger)
 
+    @classmethod
+    def filter_code_lines(cls, code_lines, filters):
+        ret = []
+        for i in range(0, len(code_lines)):
+            line_number, line_tokens, _ = cls.split_code_line(code_lines[i])
+            for filter in filters:
+                if line_tokens.is_name(0) and line_tokens.is_value_no_case(0, filter):
+                    ret.append((line_number, line_tokens))
+        return ret
+
+    @classmethod
+    def move_code_lines(cls, code_lines, first_line_number, last_line_number):
+        ret = []
+        from_index = 0
+        to_index = len(code_lines)
+        while from_index < to_index:
+            line_number, _, _ = cls.split_code_line(code_lines[from_index])
+            if first_line_number <= line_number and line_number <= last_line_number:
+                ret.append(code_lines[from_index])
+                del code_lines[from_index]
+                to_index -= 1
+            else:
+                from_index += 1
+
+        return ret
+
     def __extract_functions(self, logger):
+        #@todo error when end proc w/o proc keyword
+        #@todo error when no name token after proc token
+        #@todo error when function name already exists
+        #@todo error when proc within proc, no nested proc supported
+        #@todo error no endproc
         functions_code = {}
         for code_name in self._code:
             code_lines = self._code[code_name][Code._CODE_LINES]
-            begin_proc_line_index = 0
-            line_count = len(code_lines)
-            while begin_proc_line_index < line_count:
-                line_number, line_tokens, _ = Code.split_code_line(code_lines[begin_proc_line_index])
-
-                #@todo error when end proc w/o proc keyword
-                #@todo error when no name token after proc token
-                #@todo error when function name already exists
-                if line_tokens.is_name(0) and line_tokens.is_name(1) and line_tokens.is_value_no_case(0, Keywords._PROC):
-                    end_proc_line_index = begin_proc_line_index + 1
-                    function_name = line_tokens.value_str(1).lower()
-                    while end_proc_line_index < line_count:
-                        line_number, line_tokens, _ = Code.split_code_line(code_lines[end_proc_line_index])
-                        #@todo error when proc within proc, no nested proc supported
-                        if line_tokens.is_name(0) and line_tokens.is_value_no_case(0, Keywords._END_PROC):
-                            break
-                        end_proc_line_index += 1
-
-                    #function body is between begin_proc_line_index and end_proc_line_index
-                    if end_proc_line_index < line_count: 
-                        functions_code[function_name] = {Code._CODE_LINES:self._code[code_name][Code._CODE_LINES][begin_proc_line_index:end_proc_line_index - line_count + 1],
-                                                        Code._FUNCTION_FILE_NAME:code_name}
-                        # must due to : begin_proc_line_index += 1
-                        del self._code[code_name][Code._CODE_LINES][begin_proc_line_index:end_proc_line_index - line_count + 1]
-                        begin_proc_line_index -= 1
-                        line_count = len(code_lines)
-                        pass
-                    #@todo error no endproc
-                    else:
-                        pass
-
-                #_FUNCTION_FILE_NAME
-                begin_proc_line_index += 1
+            proc_code_lines = Code.filter_code_lines(code_lines, [Keywords._PROC, Keywords._END_PROC])
+            for i in range(0,len(proc_code_lines),2):
+                first_line_number, first_line_tokens = proc_code_lines[i]
+                last_line_number, last_line_tokens = proc_code_lines[i+1]
+                function_name = first_line_tokens.value(1)
+                function_code_lines = Code.move_code_lines(code_lines, first_line_number, last_line_number)
+                functions_code[function_name] = {Code._CODE_LINES:function_code_lines,
+                                                Code._FUNCTION_FILE_NAME:code_name}
 
         for function_code in functions_code:
             self._code[function_code] = functions_code[function_code]
+
         pass
 
 ################################################################################
