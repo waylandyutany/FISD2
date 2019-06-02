@@ -1,10 +1,8 @@
-_CODE_LINE_NUMBER = 'line'
-_CODE_TOKENS = 'tokens'
-_CODE_COMMAND_CLASS = 'command'
+import core.code_keys as code_keys
 
 def split_code_line(code_line):
     ''' Split stored code line and returns it's line_number, line_tokens, command_class '''
-    return code_line[_CODE_LINE_NUMBER], code_line[_CODE_TOKENS], code_line[_CODE_COMMAND_CLASS]
+    return code_line[code_keys._LINE_NUMBER], code_line[code_keys._TOKENS], code_line[code_keys._COMMAND_CLASS]
 
 def filter_code_lines(code_lines, filters):
     ret = []

@@ -2,17 +2,12 @@ from core.tokens import Tokenizers, Tokens
 from default_commands.keywords import Keywords
 from core.commands import Commands, ParseArgs
 import core.code_utils as code_utils
+import core.code_keys as code_keys
 
 import os
 
 ################################################################################
 class Code:
-    _FUNCTION_FILE_NAME = 'function_file_name'
-    _CODE_LINES = 'code_lines'
-    _TOKENS = code_utils._CODE_TOKENS
-    _COMMAND_CLASS = code_utils._CODE_COMMAND_CLASS
-    _LINE_NUMBER = code_utils._CODE_LINE_NUMBER
-
 ################################################################################
     def __init__(self):
         self._code = {}
@@ -57,7 +52,7 @@ class Code:
 
         if file_name in self._code:
             return file_name
-        self._code[file_name] = {Code._CODE_LINES:[]}
+        self._code[file_name] = {code_keys._CODE_LINES:[]}
 
         #logger.debug("Compiling fisd file '{}'...".format(file_path))
 
@@ -76,7 +71,7 @@ class Code:
                 self.__process_execute_tokens(tokens, logger)
 
                 if not tokens.empty():
-                    self._code[file_name][Code._CODE_LINES].append({Code._LINE_NUMBER:line_number, Code._TOKENS:tokens, Code._COMMAND_CLASS:None})
+                    self._code[file_name][code_keys._CODE_LINES].append({code_keys._LINE_NUMBER:line_number, code_keys._TOKENS:tokens, code_keys._COMMAND_CLASS:None})
                     #logger.preface = "'{}'[{}] : ".format(file_name, line_number)
                     #logger.debug("{}".format(tokens.tokens()))
 
@@ -86,7 +81,7 @@ class Code:
         parse_args = ParseArgs(self, logger)
 
         for code_name in self._code:
-            for code_line in self._code[code_name][Code._CODE_LINES]:
+            for code_line in self._code[code_name][code_keys._CODE_LINES]:
                 parse_args.code_name = code_name
                 parse_args.code_line = code_line
 
@@ -104,7 +99,7 @@ class Code:
                     continue
 
                 line_tokens.mark_as_keyword(0)
-                code_line[Code._COMMAND_CLASS] = command_class
+                code_line[code_keys._COMMAND_CLASS] = command_class
                 command_class.parse(parse_args)
 
     def __extract_functions(self, logger):
@@ -115,15 +110,15 @@ class Code:
         #@todo error no endproc
         functions_code = {}
         for code_name in self._code:
-            code_lines = self._code[code_name][Code._CODE_LINES]
+            code_lines = self._code[code_name][code_keys._CODE_LINES]
             proc_code_lines = code_utils.filter_code_lines(code_lines, [Keywords._PROC, Keywords._END_PROC])
             for i in range(0,len(proc_code_lines),2):
                 first_line_number, first_line_tokens = proc_code_lines[i]
                 last_line_number, last_line_tokens = proc_code_lines[i+1]
                 function_name = first_line_tokens.value(1)
                 function_code_lines = code_utils.move_code_lines(code_lines, first_line_number, last_line_number)
-                functions_code[function_name] = {Code._CODE_LINES:function_code_lines,
-                                                Code._FUNCTION_FILE_NAME:code_name}
+                functions_code[function_name] = {code_keys._CODE_LINES:function_code_lines,
+                                                code_keys._FUNCTION_FILE_NAME:code_name}
 
         for function_code in functions_code:
             self._code[function_code] = functions_code[function_code]
@@ -150,7 +145,7 @@ class Code:
 
     def get_code_lines(self, code_name):
         if code_name in self._code:
-            return self._code[code_name][Code._CODE_LINES]
+            return self._code[code_name][code_keys._CODE_LINES]
         return None
 
 ################################################################################
