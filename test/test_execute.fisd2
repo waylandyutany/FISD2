@@ -9,7 +9,7 @@ print kraken# + 1 - 1.0
 kraken = "Hello world"
 kraken2 = "Hello world2"
 Execute "test_for_if_proc"
-execute "@executed2"
+execute "executed2"
 execute "executed2"
 execute "executed1.fisd2"
 execute "executed2.fisd"

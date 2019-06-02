@@ -49,7 +49,6 @@ class Code:
         file_name, file_path = self.__find_fisd_file(_file_name)
         if not file_name:
             logger.error(compile_errors.non_existing_file_name(_file_name))
-#            logger.error("Non existing file '{}'!".format(_file_name))
             return file_name
 
         if file_name in self._code:
@@ -92,12 +91,12 @@ class Code:
                 logger.preface = "'{}'[{}] : ".format(code_name, line_number)
 
                 if not line_tokens.is_name(0):
-                    logger.error("Invalid command token {}!".format(line_tokens.value(0)))
+                    logger.error(compile_errors.invalid_command(line_tokens.value(0)))
                     continue
 
-                command_class = Commands.commands[line_tokens.value(0).lower()]
+                command_class = Commands.find_command(line_tokens.value(0))
                 if not command_class:
-                    logger.error("Unknown command {}!".format(line_tokens.value(0)))
+                    logger.error(compile_errors.unknown_command(line_tokens.value(0)))
                     continue
 
                 line_tokens.mark_as_keyword(0)

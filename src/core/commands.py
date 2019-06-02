@@ -26,6 +26,13 @@ class Command:
 class Commands:
     commands = {}
 
+    @classmethod
+    def find_command(cls, name):
+        name = str(name).lower()
+        if name in cls.commands:
+            return cls.commands[name]
+        return None
+
 ################################################################################
 def command_class(name):
     def _command_class(_class):
