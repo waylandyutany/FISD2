@@ -1,7 +1,20 @@
 ################################################################################
+class ParseArgs:
+    def __init__(self, _code, _logger):
+        self.code_name = None
+        self.code_line = None
+        self.code = _code
+        self.logger = _logger
+
+################################################################################
+class ExecuteArgs:
+    def __init__(self):
+        pass
+
+################################################################################
 class Command:
     @staticmethod
-    def parse(tokens, logger):
+    def parse(parse_args):
         raise NotImplementedError("Abstract method!")
 
     @staticmethod

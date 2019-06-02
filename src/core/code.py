@@ -1,6 +1,6 @@
 from core.tokens import Tokenizers, Tokens
 from default_commands.keywords import Keywords
-from core.commands import Commands
+from core.commands import Commands, ParseArgs
 import core.code_utils as code_utils
 
 import os
@@ -83,10 +83,14 @@ class Code:
         return file_name
 
     def __parse_commands(self, logger):
+        parse_args = ParseArgs(self, logger)
+
         for code_name in self._code:
             for code_line in self._code[code_name][Code._CODE_LINES]:
-                line_number = code_line[Code._LINE_NUMBER]
-                line_tokens = code_line[Code._TOKENS]
+                parse_args.code_name = code_name
+                parse_args.code_line = code_line
+
+                line_number, line_tokens, _ = code_utils.split_code_line(code_line)
 
                 logger.preface = "'{}'[{}] : ".format(code_name, line_number)
 
@@ -101,7 +105,7 @@ class Code:
 
                 line_tokens.mark_as_keyword(0)
                 code_line[Code._COMMAND_CLASS] = command_class
-                command_class.parse(line_tokens, logger)
+                command_class.parse(parse_args)
 
     def __extract_functions(self, logger):
         #@todo error when end proc w/o proc keyword

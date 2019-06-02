@@ -7,7 +7,7 @@ from default_commands.keywords import Keywords
 @command_class(Keywords._FOR)
 class ForCommand(Command):
     @classmethod
-    def parse(cls, tokens, logger):
+    def parse(cls, parse_args):
         pass
 
     @classmethod
@@ -20,7 +20,7 @@ class ForCommand(Command):
 @command_class(Keywords._NEXT)
 class NextProcCommand(Command):
     @classmethod
-    def parse(cls, tokens, logger):
+    def parse(cls, parse_args):
         pass
 
     @classmethod

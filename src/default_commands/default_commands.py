@@ -1,6 +1,7 @@
 from core.commands import command_class, Command
 from core.tokens import tokenizer_class, TOKEN_NAME
 from default_commands.keywords import Keywords
+import core.code_utils as code_utils
 import math
 
 ################################################################################
@@ -14,8 +15,9 @@ class SetCommand(Command):
                    }
 
     @classmethod
-    def parse(cls, tokens, logger):
-        tokens.mark_as_keyword(1)
+    def parse(cls, parse_args):
+        _, line_tokens, _ = code_utils.split_code_line(parse_args.code_line)
+        line_tokens.mark_as_keyword(1)
 
     @classmethod
     def execute(cls, context, arguments):
@@ -43,7 +45,7 @@ class SetCommand(Command):
 @command_class(Keywords._PRINT)
 class PrintCommand(Command):
     @classmethod
-    def parse(cls, tokens, logger):
+    def parse(cls, parse_args):
         pass
 
     @classmethod
@@ -56,7 +58,7 @@ class PrintCommand(Command):
 @command_class(Keywords._EXECUTE)
 class ExecuteCommand(Command):
     @classmethod
-    def parse(cls, tokens, logger):
+    def parse(cls, parse_args):
         pass
 
     @classmethod
