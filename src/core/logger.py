@@ -29,29 +29,29 @@ class Logger:
         self.preface = ""
        
     def debug(self, msg, *args, **kwargs):
-        msg = self.preface + msg
+        msg = self.preface + str(msg)
         if self._log:
             self._log.debug(msg, *args, **kwargs)
 
     def info(self, msg, *args, **kwargs):
-        msg = self.preface + msg
+        msg = self.preface + str(msg)
         if self._log:
             self._log.info(msg, *args, **kwargs)
 
     def warning(self, msg, *args, **kwargs):
-        msg = self.preface + msg
+        msg = self.preface + str(msg)
         self._warnings += 1
         if self._log:
             self._log.warning(msg, *args, **kwargs)
 
     def error(self, msg, *args, **kwargs):
-        msg = self.preface + msg
+        msg = self.preface + str(msg)
         self._errors += 1
         if self._log:
             self._log.error(msg, *args, **kwargs)
 
     def critical(self, msg, *args, **kwargs):
-        msg = self.preface + msg
+        msg = self.preface + str(msg)
         self._criticals += 1
         if self._log:
             self._log.critical(msg, *args, **kwargs)

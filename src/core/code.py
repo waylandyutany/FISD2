@@ -3,6 +3,7 @@ from default_commands.keywords import Keywords
 from core.commands import Commands, ParseArgs
 import core.code_utils as code_utils
 import core.code_keys as code_keys
+import core.compile_errors as compile_errors
 
 import os
 
@@ -47,7 +48,8 @@ class Code:
     def __tokenize_from_file(self, _file_name, logger):
         file_name, file_path = self.__find_fisd_file(_file_name)
         if not file_name:
-            logger.error("Non existing file '{}'!".format(_file_name))
+            logger.error(compile_errors.non_existing_file_name(_file_name))
+#            logger.error("Non existing file '{}'!".format(_file_name))
             return file_name
 
         if file_name in self._code:

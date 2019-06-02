@@ -55,6 +55,8 @@ if __name__ == '__main__':
         code.compile_from_file(args[0], logger)
     compilation_time = datetime.now() - start_compilation_time
     Logger.log.info("Compilation time '{}'.".format(compilation_time))
+    if logger._errors > 0:
+        sys.exit(0)
 
     start_run_time = datetime.now()
     context.run(logger)
