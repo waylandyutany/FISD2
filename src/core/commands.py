@@ -7,9 +7,10 @@ class ParseArgs:
         self.logger = _logger
 
 ################################################################################
-class ExecuteArgs:
-    def __init__(self):
-        pass
+class ExecuteArgs: 
+    def __init__(self, _context):
+        self.context = _context
+        self.arguments = None
 
 ################################################################################
 class Command:
@@ -18,7 +19,7 @@ class Command:
         raise NotImplementedError("Abstract method!")
 
     @staticmethod
-    def execute(context, arguments):
+    def execute(execute_args):
         raise NotImplementedError("Abstract method!")
 
 ################################################################################

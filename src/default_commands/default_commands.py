@@ -20,9 +20,9 @@ class SetCommand(Command):
         line_tokens.mark_as_keyword(1)
 
     @classmethod
-    def execute(cls, context, arguments):
-        variable_name = arguments.value(1)
-        string_to_evaluate = " ".join( str(arguments.value(i)) for i in range(3,len(arguments)))
+    def execute(cls, execute_args):
+        variable_name = execute_args.arguments.value(1)
+        string_to_evaluate = " ".join( str(execute_args.arguments.value(i)) for i in range(3,len(execute_args.arguments)))
 
         try:
             evaluated_value = eval(string_to_evaluate, {'__builtins__':None}, cls._eval_funcs)
@@ -32,7 +32,7 @@ class SetCommand(Command):
 
         #context.logger.debug("'{}' evaluated '{} = {}'".format(variable_name, string_to_evaluate, evaluated_value))
 
-        context.set_variable(variable_name, evaluated_value)
+        execute_args.context.set_variable(variable_name, evaluated_value)
 
     @classmethod
     def tokenize(cls, tokens, logger):
@@ -49,8 +49,8 @@ class PrintCommand(Command):
         pass
 
     @classmethod
-    def execute(cls, context, arguments):
-        context.logger.info("PRINT {}".format("".join( ( str(arguments.value_str(i)) for i in range(1, len(arguments)) ) )))
+    def execute(cls, execute_args):
+        execute_args.context.logger.info("PRINT {}".format("".join( ( str(execute_args.arguments.value_str(i)) for i in range(1, len(execute_args.arguments)) ) )))
 
 ################################################################################
 # EXECUTE Command
@@ -62,6 +62,6 @@ class ExecuteCommand(Command):
         pass
 
     @classmethod
-    def execute(cls, context, arguments):
-        context.execute_code(arguments.value_str(1))
+    def execute(cls, execute_args):
+        execute_args.context.execute_code(execute_args.arguments.value_str(1))
 

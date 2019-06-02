@@ -11,7 +11,7 @@ class ForCommand(Command):
         pass
 
     @classmethod
-    def execute(cls, context, arguments):
+    def execute(cls, execute_args):
         pass
 
 ################################################################################
@@ -24,6 +24,6 @@ class NextProcCommand(Command):
         pass
 
     @classmethod
-    def execute(cls, context, arguments):
+    def execute(cls, execute_args):
         pass
 

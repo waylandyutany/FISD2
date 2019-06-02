@@ -11,7 +11,7 @@ class ProcCommand(Command):
         pass
 
     @classmethod
-    def execute(cls, context, arguments):
+    def execute(cls, execute_args):
         pass
 
 ################################################################################
@@ -24,7 +24,7 @@ class EndProcCommand(Command):
         pass
 
     @classmethod
-    def execute(cls, context, arguments):
+    def execute(cls, execute_args):
         pass
 
 ################################################################################
@@ -37,6 +37,6 @@ class ReturnCommand(Command):
         pass
 
     @classmethod
-    def execute(cls, context, arguments):
+    def execute(cls, execute_args):
         pass
 

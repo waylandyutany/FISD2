@@ -1,6 +1,7 @@
 from core.code import Code
 from core.tokens import Tokens, TOKEN_NUMBER, TOKEN_STRING, TOKEN_NONE
 from copy import deepcopy
+from core.commands import ExecuteArgs
 
 ################################################################################
 class Arguments(Tokens):
@@ -52,6 +53,8 @@ class Context:
 
 ################################################################################
     def execute_code(self, code_name, call_stack_index = None):
+        execute_args = ExecuteArgs(self)
+
         #getting code lines from the code
         code_lines = self._code.get_code_lines(code_name)
 
@@ -69,7 +72,8 @@ class Context:
 
             self.logger.preface = "'{}'[{}] : ".format(code_name, line_number)
 
-            command_class.execute(self, self.__tokens_to_arguments(line_tokens))
+            execute_args.arguments = self.__tokens_to_arguments(line_tokens)
+            command_class.execute(execute_args)
             
         #popping code context from code stack
         self._call_stack.pop()

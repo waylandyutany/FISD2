@@ -11,7 +11,7 @@ class IfCommand(Command):
         pass
 
     @classmethod
-    def execute(cls, context, arguments):
+    def execute(cls, execute_args):
         pass
 
 ################################################################################
@@ -24,7 +24,7 @@ class EndIfProcCommand(Command):
         pass
 
     @classmethod
-    def execute(cls, context, arguments):
+    def execute(cls, execute_args):
         pass
 
 ################################################################################
@@ -37,7 +37,7 @@ class ElseProcCommand(Command):
         pass
 
     @classmethod
-    def execute(cls, context, arguments):
+    def execute(cls, execute_args):
         pass
 
 ################################################################################
@@ -50,6 +50,6 @@ class ElifProcCommand(Command):
         pass
 
     @classmethod
-    def execute(cls, context, arguments):
+    def execute(cls, execute_args):
         pass
 
