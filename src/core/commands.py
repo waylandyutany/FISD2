@@ -11,6 +11,8 @@ class ExecuteArgs:
     def __init__(self, _context):
         self.context = _context
         self.arguments = None
+        self.code_lines = None
+        self.code_index = None
 
 ################################################################################
 class Command:

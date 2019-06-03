@@ -25,6 +25,7 @@ class Context:
     def logger(self):
         return self._logger
 
+################################################################################
     def __tokens_to_arguments(self, tokens):
         args =  Arguments(tokens)
         for i in range(0, len(args)):
@@ -37,7 +38,6 @@ class Context:
 
         return args
 
-################################################################################
     def __find_variable(self, name):
         if name in self._variable_stack[-1]:
             return self._variable_stack[-1][name][Context._VAR_TYPE], self._variable_stack[-1][name][Context._VAR_VALUE]
@@ -65,18 +65,24 @@ class Context:
         self._call_stack.append(call_context)
 
         #executing commands
-        for code_index in range(call_context[Context._CODE_INDEX], len(code_lines)):
-            call_context[Context._CODE_INDEX] = code_index
+        while call_context[Context._CODE_INDEX] < len(code_lines):
+            line_number, line_tokens, command_class = Code.split_code_line(code_lines[call_context[Context._CODE_INDEX]])
 
-            line_number, line_tokens, command_class = Code.split_code_line(code_lines[code_index])
-
-            self.logger.preface = "'{}'[{}] : ".format(code_name, line_number)
+            self.logger.preface = self._code.get_code_line_description(code_name, line_number)
 
             execute_args.arguments = self.__tokens_to_arguments(line_tokens)
+            execute_args.code_lines = code_lines
+            execute_args.code_index = call_context[Context._CODE_INDEX]
+
             command_class.execute(execute_args)
+
+            call_context[Context._CODE_INDEX] += 1
             
         #popping code context from code stack
         self._call_stack.pop()
+
+    def jump_to_code(self, new_code_index):
+        self._call_stack[-1][Context._CODE_INDEX] = new_code_index - 1 # - 1 is due to #call_context[Context._CODE_INDEX] += 1 in execute_code loop!!!
 
 ################################################################################
     def run(self, logger):

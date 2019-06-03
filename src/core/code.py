@@ -78,7 +78,7 @@ class Code:
 
         return file_name
 
-    def __get_code_line_description(self, code_name, line_number):
+    def get_code_line_description(self, code_name, line_number):
         if code_keys._FUNCTION_FILE_NAME in self._code[code_name]:
             return "'{}'.'{}'[{}] : ".format(self._code[code_name][code_keys._FUNCTION_FILE_NAME], code_name, line_number)
         return "'{}'[{}] : ".format(code_name, line_number)
@@ -93,7 +93,7 @@ class Code:
 
                 line_number, line_tokens, _ = code_utils.split_code_line(code_line)
 
-                logger.preface = self.__get_code_line_description(code_name, line_number)
+                logger.preface = self.get_code_line_description(code_name, line_number)
 
                 if not line_tokens.is_name(0):
                     logger.error(CompileError.invalid_command(line_tokens.value(0)))
