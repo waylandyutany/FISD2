@@ -3,7 +3,7 @@ from default_commands.keywords import Keywords
 from core.commands import Commands, ParseArgs
 import core.code_utils as code_utils
 import core.code_keys as code_keys
-import core.compile_errors as compile_errors
+from core.compile_errors import CompileError
 
 import os
 
@@ -48,7 +48,7 @@ class Code:
     def __tokenize_from_file(self, _file_name, logger):
         file_name, file_path = self.__find_fisd_file(_file_name)
         if not file_name:
-            logger.error(compile_errors.non_existing_file_name(_file_name))
+            logger.error(CompileError.non_existing_file_name(_file_name))
             return file_name
 
         if file_name in self._code:
@@ -78,6 +78,11 @@ class Code:
 
         return file_name
 
+    def __get_code_line_description(self, code_name, line_number):
+        if code_keys._FUNCTION_FILE_NAME in self._code[code_name]:
+            return "'{}'.'{}'[{}] : ".format(self._code[code_name][code_keys._FUNCTION_FILE_NAME], code_name, line_number)
+        return "'{}'[{}] : ".format(code_name, line_number)
+
     def __parse_commands(self, logger):
         parse_args = ParseArgs(self, logger)
 
@@ -88,15 +93,15 @@ class Code:
 
                 line_number, line_tokens, _ = code_utils.split_code_line(code_line)
 
-                logger.preface = "'{}'[{}] : ".format(code_name, line_number)
+                logger.preface = self.__get_code_line_description(code_name, line_number)
 
                 if not line_tokens.is_name(0):
-                    logger.error(compile_errors.invalid_command(line_tokens.value(0)))
+                    logger.error(CompileError.invalid_command(line_tokens.value(0)))
                     continue
 
                 command_class = Commands.find_command(line_tokens.value(0))
                 if not command_class:
-                    logger.error(compile_errors.unknown_command(line_tokens.value(0)))
+                    logger.error(CompileError.unknown_command(line_tokens.value(0)))
                     continue
 
                 line_tokens.mark_as_keyword(0)

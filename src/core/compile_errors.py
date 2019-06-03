@@ -8,13 +8,21 @@ class Error:
         return "({}){}".format(self.code, self.string)
 
 ################################################################################
-def non_existing_file_name(file_name):
-    return Error(0, "Non existing file name '{}'!".format(file_name))
+class CompileError(Error):
+    def __init__(self, *args, **kwargs):
+        return super().__init__(*args, **kwargs)
 
-def unknown_command(command_name):
-    return Error(1, "Unknown command '{}'!".format(command_name))
+    ################################################################################
+    @staticmethod
+    def non_existing_file_name(file_name):
+        return CompileError(0, "Non existing file name '{}'!".format(file_name))
 
-def invalid_command(command_name):
-    return Error(2, "Invalid command '{}'!".format(command_name))
+    @staticmethod
+    def unknown_command(command_name):
+        return CompileError(1, "Unknown command '{}'!".format(command_name))
+
+    @staticmethod
+    def invalid_command(command_name):
+        return CompileError(2, "Invalid command '{}'!".format(command_name))
 
 ################################################################################

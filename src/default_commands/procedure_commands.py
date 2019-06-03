@@ -53,7 +53,7 @@ class CallCommand(Command):
 
     @classmethod
     def execute(cls, execute_args):
-        pass
+        execute_args.context.execute_code(execute_args.arguments.value_str(1))
 
     @classmethod
     def tokenize(cls, tokens, logger):
