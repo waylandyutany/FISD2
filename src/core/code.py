@@ -78,11 +78,6 @@ class Code:
 
         return file_name
 
-    def get_code_line_description(self, code_name, line_number):
-        if code_keys._FUNCTION_FILE_NAME in self._code[code_name]:
-            return "'{}'.'{}'[{}] : ".format(self._code[code_name][code_keys._FUNCTION_FILE_NAME], code_name, line_number)
-        return "'{}'[{}] : ".format(code_name, line_number)
-
     def __parse_commands(self, logger):
         parse_args = ParseArgs(self, logger)
 
@@ -128,7 +123,6 @@ class Code:
 
         for function_code in functions_code:
             self._code[function_code] = functions_code[function_code]
-
         pass
 
 ################################################################################
@@ -153,6 +147,11 @@ class Code:
         if code_name in self._code:
             return self._code[code_name][code_keys._CODE_LINES]
         return None
+
+    def get_code_line_description(self, code_name, line_number):
+        if code_keys._FUNCTION_FILE_NAME in self._code[code_name]:
+            return "'{}'.'{}'[{}] : ".format(self._code[code_name][code_keys._FUNCTION_FILE_NAME], code_name, line_number)
+        return "'{}'[{}] : ".format(code_name, line_number)
 
 ################################################################################
     @staticmethod

@@ -76,6 +76,11 @@ class Tokens:
         return self.value_str(index).lower() == str(value).lower()
 
     def value(self, index):
+        if self.is_number(index):
+            try:
+                return int(self.__token(index, 1))
+            except:
+                return  float(self.__token(index, 1))
         return self.__token(index, 1)
 
     def value_str(self, index):

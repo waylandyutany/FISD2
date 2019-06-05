@@ -17,7 +17,7 @@ class Context:
 
     def __init__(self, code):
         self._code = code
-        self._call_stack = []
+        self._execution_stack = []
         self._variable_stack = [{}]
         self._logger = None
 
@@ -59,30 +59,30 @@ class Context:
         code_lines = self._code.get_code_lines(code_name)
 
         #creating code context
-        call_context = {Context._CODE_NAME:code_name, Context._CODE_INDEX:0}
+        execution_context = {Context._CODE_NAME:code_name, Context._CODE_INDEX:0}
 
         #pushing code context to the stack
-        self._call_stack.append(call_context)
+        self._execution_stack.append(execution_context)
 
         #executing commands
-        while call_context[Context._CODE_INDEX] < len(code_lines):
-            line_number, line_tokens, command_class = Code.split_code_line(code_lines[call_context[Context._CODE_INDEX]])
+        while execution_context[Context._CODE_INDEX] < len(code_lines):
+            line_number, line_tokens, command_class = Code.split_code_line(code_lines[execution_context[Context._CODE_INDEX]])
 
             self.logger.preface = self._code.get_code_line_description(code_name, line_number)
 
             execute_args.arguments = self.__tokens_to_arguments(line_tokens)
             execute_args.code_lines = code_lines
-            execute_args.code_index = call_context[Context._CODE_INDEX]
+            execute_args.code_index = execution_context[Context._CODE_INDEX]
 
             command_class.execute(execute_args)
 
-            call_context[Context._CODE_INDEX] += 1
+            execution_context[Context._CODE_INDEX] += 1
             
         #popping code context from code stack
-        self._call_stack.pop()
+        self._execution_stack.pop()
 
     def jump_to_code(self, new_code_index):
-        self._call_stack[-1][Context._CODE_INDEX] = new_code_index - 1 # - 1 is due to #call_context[Context._CODE_INDEX] += 1 in execute_code loop!!!
+        self._execution_stack[-1][Context._CODE_INDEX] = new_code_index - 1 # - 1 is due to #call_context[Context._CODE_INDEX] += 1 in execute_code loop!!!
 
 ################################################################################
     def run(self, logger):
