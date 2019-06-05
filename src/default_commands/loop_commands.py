@@ -85,12 +85,14 @@ class NextProcCommand(Command):
 
     @classmethod
     def parse(cls, parse_args):
-        pass
+        _, line_tokens, _ = code_utils.split_code_line(parse_args.code_line)
+        line_tokens.mark_as_keyword(1)
 
     @classmethod
     def execute(cls, execute_args):
         #@todo handle nested loops within search function
         #@todo handle from > to
+        #@todo check next name with it's for name
         loop_start_index = cls.search_for_loop_start(execute_args)
         _, line_tokens, _ = code_utils.split_code_line(execute_args.code_lines[loop_start_index])
         variable_name, from_value, to_value, step_value = ForCommand.parse_loop_tokens(line_tokens)
