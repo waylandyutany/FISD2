@@ -70,7 +70,7 @@ class Tokens:
     def is_value(self, index, value):
         if self.is_string(index):
             return self.value_str(index) == str(value)
-        return self.__token(index, 1) == value
+        return self.value(index) == value
 
     def is_value_no_case(self, index, value):
         return self.value_str(index).lower() == str(value).lower()
