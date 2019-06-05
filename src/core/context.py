@@ -43,6 +43,10 @@ class Context:
             return self._variable_stack[-1][name][Context._VAR_TYPE], self._variable_stack[-1][name][Context._VAR_VALUE]
         return TOKEN_NONE, None
 
+    def get_variable(self, name):
+        type, value = self.__find_variable(name)
+        return value
+
     def set_variable(self, name, value):
         if isinstance(value, int):
             self._variable_stack[-1][name] = {Context._VAR_TYPE : TOKEN_NUMBER, Context._VAR_VALUE:value}
