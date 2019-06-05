@@ -49,6 +49,7 @@ class ForCommand(Command):
     def parse(cls, parse_args):
         _, line_tokens, _ = code_utils.split_code_line(parse_args.code_line)
         mark_tokens_as_keywords(line_tokens, cls._keywords)
+        line_tokens.mark_as_keyword(1)
 
     @classmethod
     def execute(cls, execute_args):
@@ -68,10 +69,18 @@ class NextProcCommand(Command):
     @classmethod
     def search_for_loop_start(cls, execute_args):
         nested_counter = 0
-        for i in range(execute_args.code_index, 0, -1):
+        for i in range(execute_args.code_index - 1, -1, -1):
             _, line_tokens, _ = code_utils.split_code_line(execute_args.code_lines[i])
-            if line_tokens.is_value_no_case(0, Keywords._FOR) and (nested_counter == 0):
-                return i
+
+            if line_tokens.is_value_no_case(0, Keywords._NEXT):
+                nested_counter += 1
+
+            if line_tokens.is_value_no_case(0, Keywords._FOR):
+               if nested_counter == 0:
+                    return i
+               else:
+                    nested_counter -= 1
+
         return None
 
     @classmethod
