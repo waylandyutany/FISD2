@@ -35,10 +35,13 @@ class ForCommand(Command):
         for_from_to_step_indicies = code_utils.search_keywords_in_tokens(args, cls._keywords)
         variable_name = args.value(1)
         from_value = code_utils.evaluate_tokens(args, for_from_to_step_indicies[1], for_from_to_step_indicies[2])
-        to_value = code_utils.evaluate_tokens(args, for_from_to_step_indicies[2], len(args))
-        step_value = 1 #@todo evaluate step
-        if args.is_number(7):
-            step_value = args.value(7)
+
+        try:
+            to_value = code_utils.evaluate_tokens(args, for_from_to_step_indicies[2], for_from_to_step_indicies[3])
+            step_value = code_utils.evaluate_tokens(args, for_from_to_step_indicies[3], len(args))
+        except:
+            to_value = code_utils.evaluate_tokens(args, for_from_to_step_indicies[2], len(args))
+            step_value = 1
 
         return variable_name, from_value, to_value, step_value
 

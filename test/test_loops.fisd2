@@ -10,3 +10,15 @@ for i from -1 to 2
 next i
 print i " " j
 
+for i from -1 to 2 step 2
+	for j from -1 to 2 step 2
+		print i " " j
+	next j
+next i
+
+for i from -1 to 2 step 2
+	for j from -1 to 2 step 2
+	next j
+next i
+print i " " j
+
