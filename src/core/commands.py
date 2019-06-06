@@ -16,6 +16,10 @@ class ExecuteArgs:
 
 ################################################################################
 class Command:
+
+    #Any token with name in this list is automaticaly marked as keyword.
+    _keywords = None
+
     @staticmethod
     def parse(parse_args):
         raise NotImplementedError("Abstract method!")

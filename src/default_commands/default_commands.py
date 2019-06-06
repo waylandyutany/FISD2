@@ -2,15 +2,6 @@ from core.commands import command_class, Command
 from core.tokens import tokenizer_class, TOKEN_NAME
 from default_commands.keywords import Keywords
 import core.code_utils as code_utils
-import math
-
-#@todo move to utils
-_eval_funcs = {'cos':math.cos,
-                'sin':math.sin,
-                }
-
-def evaluate_string(s):
-    return eval(s, {'__builtins__':None}, _eval_funcs)
 
 ################################################################################
 # SET Command
@@ -30,7 +21,7 @@ class SetCommand(Command):
         string_to_evaluate = " ".join( str(execute_args.arguments.value(i)) for i in range(3,len(execute_args.arguments)))
 
         try:
-            evaluated_value = evaluate_string(string_to_evaluate)
+            evaluated_value = code_utils.evaluate_string(string_to_evaluate)
         except Exception as e:
             context.logger.error("Exception during expression '{} = {}' evaluation! {}!".format(variable_name, string_to_evaluate, e))
             return

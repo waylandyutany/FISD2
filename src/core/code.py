@@ -100,6 +100,9 @@ class Code:
                     continue
 
                 line_tokens.mark_as_keyword(0)
+                if command_class._keywords:
+                    code_utils.mark_tokens_as_keywords(line_tokens, command_class._keywords)
+
                 code_line[code_keys._COMMAND_CLASS] = command_class
                 command_class.parse(parse_args)
 
