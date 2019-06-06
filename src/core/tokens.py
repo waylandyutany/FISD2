@@ -73,6 +73,10 @@ class Tokens:
         return self.value(index) == value
 
     def is_value_no_case(self, index, value):
+        if isinstance(value,list):
+            for v in value:
+                if self.value_str(index).lower() == str(v).lower():
+                    return True
         return self.value_str(index).lower() == str(value).lower()
 
     def value(self, index):
