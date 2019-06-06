@@ -58,6 +58,7 @@ class ForCommand(Command):
         if not next_code_index:
             #@todo error no loop ending 
             #@todo error when variable name is not the same for for and next
+            #@todo warning if no variable name behind next
             pass
         else:
             parse_args.code_lines[for_code_index][ForCommand._KEY_NEXT_CODE_INDEX] = next_code_index
@@ -71,7 +72,7 @@ class ForCommand(Command):
         next_code_index = execute_args.code_line[ForCommand._KEY_NEXT_CODE_INDEX]
 
         #@todo handle if value is already over to _value
-        #@todo handle is from > to
+        #@todo handle if from > to
         #@todo handle other then number values (e.g. dates)
 
 ################################################################################
