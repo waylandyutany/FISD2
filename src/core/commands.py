@@ -2,20 +2,23 @@
 class ParseArgs:
     def __init__(self, _code, _logger):
         self.code_name = None
-        self.code_line = None
-        self.code = _code
-        self.logger = _logger
         self.code_lines = None
         self.code_index = None
+        self.code_line = None
+
+        self.code = _code
+        self.logger = _logger
 
 ################################################################################
 class ExecuteArgs: 
     def __init__(self, _context):
-        self.context = _context
-        self.arguments = None
+        self.code_name = None
         self.code_lines = None
         self.code_index = None
         self.code_line = None
+
+        self.context = _context
+        self.arguments = None
 
 ################################################################################
 class Command:

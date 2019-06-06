@@ -47,11 +47,14 @@ class ForCommand(Command):
         _, line_tokens, _ = code_utils.split_code_line(parse_args.code_line)
         line_tokens.mark_as_keyword(1)
 
+        #@todo error if wrong arguments
+
         #detecting loop end and set jump code index for next and for commands into their code_lines
         for_code_index = parse_args.code_index
         next_code_index = cls.search_for_loop_end(parse_args.code_lines, parse_args.code_index)
         if not next_code_index:
             #@todo error no loop ending 
+            #@todo error when variable name is not the same for for and next
             pass
         else:
             parse_args.code_lines[for_code_index][ForCommand._KEY_NEXT_CODE_INDEX] = next_code_index
@@ -82,7 +85,7 @@ class NextProcCommand(Command):
     @classmethod
     def execute(cls, execute_args):
         #@todo handle from > to
-        #@todo check next name with it's for name
+        #@todo one time warning if infinite loop detected
         for_code_index = execute_args.code_line[ForCommand._KEY_FOR_CODE_INDEX]
         _, line_tokens, _ = code_utils.split_code_line(execute_args.code_lines[for_code_index])
         variable_name, from_value, to_value, step_value = ForCommand.parse_loop_tokens(line_tokens)

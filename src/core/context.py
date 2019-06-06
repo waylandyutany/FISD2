@@ -58,6 +58,7 @@ class Context:
 ################################################################################
     def execute_code(self, code_name, call_stack_index = None):
         execute_args = ExecuteArgs(self)
+        execute_args.code_name = code_name
 
         #getting code lines from the code
         code_lines = self._code.get_code_lines(code_name)
