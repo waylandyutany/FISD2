@@ -5,6 +5,8 @@ class ParseArgs:
         self.code_line = None
         self.code = _code
         self.logger = _logger
+        self.code_lines = None
+        self.code_index = None
 
 ################################################################################
 class ExecuteArgs: 
