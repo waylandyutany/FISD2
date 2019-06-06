@@ -90,15 +90,21 @@ class Tokens:
 
 ################################################################################
     def set_string(self, index, string):
-        self._tokens[index][0] = TOKEN_STRING
-        self._tokens[index][1] = '"{}"'.format(string)
+        try:
+            self._tokens[index][0] = TOKEN_STRING
+            self._tokens[index][1] = '"{}"'.format(string)
+        except:pass
 
     def set_number(self, index, number):
-        self._tokens[index][0] = TOKEN_NUMBER
-        self._tokens[index][1] = number
+        try:
+            self._tokens[index][0] = TOKEN_NUMBER
+            self._tokens[index][1] = number
+        except:pass
 
     def mark_as_keyword(self, index):
-        self._tokens[index][0] = TOKEN_KEYWORD
+        try:
+            self._tokens[index][0] = TOKEN_KEYWORD
+        except:pass
 
 ################################################################################
     def insert_name(self, index, value):

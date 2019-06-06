@@ -83,12 +83,10 @@ class NextProcCommand(Command):
     @classmethod
     def parse(cls, parse_args):
         _, line_tokens, _ = code_utils.split_code_line(parse_args.code_line)
-        if len(line_tokens) > 1:
-            line_tokens.mark_as_keyword(1)
+        line_tokens.mark_as_keyword(1)
 
     @classmethod
     def execute(cls, execute_args):
-        #@todo handle from > to
         #@todo one time warning if infinite loop detected
         for_code_index = execute_args.code_line[ForCommand._KEY_FOR_CODE_INDEX]
         _, line_tokens, _ = code_utils.split_code_line(execute_args.code_lines[for_code_index])
