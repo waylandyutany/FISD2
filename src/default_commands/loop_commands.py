@@ -30,7 +30,7 @@ class ForCommand(Command):
         return None
 
     @classmethod
-    def parse_loop_tokens(cls, args):
+    def evaluate_for_tokens(cls, args):
         ''' return variable_name, from_value, to_value, step_value'''
         for_from_to_step_indicies = code_utils.search_keywords_in_tokens(args, cls._keywords)
         variable_name = args.value(1)
@@ -41,7 +41,7 @@ class ForCommand(Command):
             step_value = code_utils.evaluate_tokens(args, for_from_to_step_indicies[3], len(args))
         except:
             to_value = code_utils.evaluate_tokens(args, for_from_to_step_indicies[2], len(args))
-            step_value = 1
+            step_value = 1 if from_value <= to_value else -1
 
         return variable_name, from_value, to_value, step_value
 
@@ -66,7 +66,7 @@ class ForCommand(Command):
 
     @classmethod
     def execute(cls, execute_args):
-        variable_name, from_value, to_value, step_value = cls.parse_loop_tokens(execute_args.arguments)
+        variable_name, from_value, to_value, step_value = cls.evaluate_for_tokens(execute_args.arguments)
         execute_args.context.set_variable(variable_name, from_value)
         next_code_index = execute_args.code_line[ForCommand._KEY_NEXT_CODE_INDEX]
 
@@ -83,7 +83,8 @@ class NextProcCommand(Command):
     @classmethod
     def parse(cls, parse_args):
         _, line_tokens, _ = code_utils.split_code_line(parse_args.code_line)
-        line_tokens.mark_as_keyword(1)
+        if len(line_tokens) > 1:
+            line_tokens.mark_as_keyword(1)
 
     @classmethod
     def execute(cls, execute_args):
@@ -91,10 +92,14 @@ class NextProcCommand(Command):
         #@todo one time warning if infinite loop detected
         for_code_index = execute_args.code_line[ForCommand._KEY_FOR_CODE_INDEX]
         _, line_tokens, _ = code_utils.split_code_line(execute_args.code_lines[for_code_index])
-        variable_name, from_value, to_value, step_value = ForCommand.parse_loop_tokens(line_tokens)
+        variable_name, from_value, to_value, step_value = ForCommand.evaluate_for_tokens(line_tokens)
         value = execute_args.context.get_variable(variable_name)
         value = value + step_value
         execute_args.context.set_variable(variable_name, value)
-        if value < to_value:
-            execute_args.context.jump_to_code(for_code_index + 1)
 
+        if from_value < to_value:
+            if value < to_value:
+                execute_args.context.jump_to_code(for_code_index + 1)
+        else:
+            if value > to_value:
+                execute_args.context.jump_to_code(for_code_index + 1)

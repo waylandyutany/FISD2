@@ -22,3 +22,17 @@ for i from -1 to 2 step 2
 next i
 print i " " j
 
+print "for i from -1 to 2"
+for i from -1 to 2
+	print i
+next
+
+print "for i from 1 to -2"
+for i from 1 to -2
+	print i
+next
+
+print "for i from 1 to -2 step -2"
+for i from 1 to -2 step -2
+	print i
+next
