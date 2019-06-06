@@ -12,7 +12,7 @@ def evaluate_string(s):
     return eval(s, {'__builtins__':None}, _eval_funcs)
 
 ################################################################################
-def search_keywords_in_tokens(tokens, keywords):
+def search_keywords_in_tokens(tokens, keywords):#@ move to Tokens class
     ret = []
     for i in range(0, len(tokens)):
         for keyword in keywords:
@@ -20,7 +20,7 @@ def search_keywords_in_tokens(tokens, keywords):
                 ret.append(i)
     return ret
 
-def mark_tokens_as_keywords(tokens, keywords):
+def mark_tokens_as_keywords(tokens, keywords):#@ move to Tokens class
     for i in range(0, len(tokens)):
         if tokens.is_name(i):
             for keyword in keywords:

@@ -15,6 +15,7 @@ class ExecuteArgs:
         self.arguments = None
         self.code_lines = None
         self.code_index = None
+        self.code_line = None
 
 ################################################################################
 class Command:

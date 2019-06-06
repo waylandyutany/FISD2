@@ -70,7 +70,9 @@ class Context:
 
         #executing commands
         while execution_context[Context._CODE_INDEX] < len(code_lines):
-            line_number, line_tokens, command_class = Code.split_code_line(code_lines[execution_context[Context._CODE_INDEX]])
+            execute_args.code_line = code_lines[execution_context[Context._CODE_INDEX]]
+
+            line_number, line_tokens, command_class = Code.split_code_line(execute_args.code_line)
 
             self.logger.preface = self._code.get_code_line_description(code_name, line_number)
 
