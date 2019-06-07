@@ -17,7 +17,6 @@ import default_commands.procedure_commands
 # 1. move logger into context object and generalize preface
 # 2. move functions into it's own sections and handle name existances between functions and files
 # 3. error codes and descriptions
-# 4. variable names are no case sensitive, via switch
 ################################################################################
 __app_name__ = 'FISD2'
 __app_version__ = '2.0.0'

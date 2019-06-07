@@ -10,6 +10,8 @@ class Arguments(Tokens):
 
 ################################################################################
 class Context:
+    _variable_case_sensitive = False
+
     _CODE_NAME = 'code_name'
     _CODE_INDEX = 'code_index'
     _VAR_TYPE = 'type'
@@ -40,6 +42,9 @@ class Context:
         return args
 
     def __find_variable(self, name):
+        if not Context._variable_case_sensitive:
+            name = name.lower()
+
         if name in self._variable_stack[-1]:
             return self._variable_stack[-1][name][Context._VAR_TYPE], self._variable_stack[-1][name][Context._VAR_VALUE]
         return TOKEN_NONE, None
@@ -49,6 +54,9 @@ class Context:
         return value
 
     def set_variable(self, name, value):
+        if not Context._variable_case_sensitive:
+            name = name.lower()
+
         if isinstance(value, int):
             self._variable_stack[-1][name] = {Context._VAR_TYPE : TOKEN_NUMBER, Context._VAR_VALUE:value}
         elif isinstance(value, float):
