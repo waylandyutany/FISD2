@@ -15,17 +15,15 @@ def evaluate_string(s):
 def search_keywords_in_tokens(tokens, keywords):#@ move to Tokens class
     ret = []
     for i in range(0, len(tokens)):
-        for keyword in keywords:
-            if tokens.is_keyword(i) and tokens.is_value_no_case(i, keyword):
+            if tokens.is_keyword(i) and tokens.is_value_no_case(i, keywords):
                 ret.append(i)
     return ret
 
 def mark_tokens_as_keywords(tokens, keywords):#@ move to Tokens class
     for i in range(0, len(tokens)):
         if tokens.is_name(i):
-            for keyword in keywords:
-                if tokens.is_value_no_case(i, keyword):
-                    tokens.mark_as_keyword(i)
+            if tokens.is_value_no_case(i, keywords):
+                tokens.mark_as_keyword(i)
 
 def evaluate_tokens(tokens, start_index, end_index):
     str_to_evaluate = " ".join((tokens.value_str(i) for i in range(start_index + 1, end_index)))
