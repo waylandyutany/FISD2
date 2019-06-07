@@ -59,10 +59,7 @@ class IfCommand(Command):
                 parse_args.code_lines[code_index][IfCommand._KEY_END_CONDITION_CODE_INDEX] = end_condition_code_index
         
     @classmethod
-    def execute(cls, execute_args):
-        # must be first !!!
-        execute_args.context.begin_if()
-
+    def execute_if(cls, execute_args):
         result = code_utils.evaluate_tokens(execute_args.arguments, 0, len(execute_args.arguments) - 1)
 
         if result and (not execute_args.context.is_skip_if()):
@@ -70,6 +67,13 @@ class IfCommand(Command):
         else:
             next_condition_code_index = execute_args.code_line[IfCommand._KEY_NEXT_CONDITION_CODE_INDEX]
             execute_args.context.jump_to_code(next_condition_code_index)
+
+    @classmethod
+    def execute(cls, execute_args):
+        # must be first !!!
+        execute_args.context.begin_if()
+
+        cls.execute_if(execute_args)
 
 ################################################################################
 # ENDIF Command
@@ -118,4 +122,4 @@ class ElifProcCommand(Command):
             execute_args.context.jump_to_code(end_condition_code_index)
             return
 
-        IfCommand.execute(execute_args)
+        IfCommand.execute_if(execute_args)
