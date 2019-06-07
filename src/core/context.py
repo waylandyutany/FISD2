@@ -70,17 +70,19 @@ class Context:
 
 ################################################################################
     def execute_code(self, code_name, call_stack_index = None):
+        if call_stack_index == None:
+            #creating code execution context
+            execution_context = {Context._CODE_NAME:code_name, Context._CODE_INDEX:0, Context._IF_STACK:[], Context._VAR_STACK:{}}
+            #pushing code context to the stack
+            self._execution_stack.append(execution_context)
+        else:
+            pass #@todo take by the call_stack_index
+
         execute_args = ExecuteArgs(self)
-        execute_args.code_name = code_name
+        execute_args.code_name = execution_context[Context._CODE_NAME]
 
         #getting code lines from the code
-        code_lines = self._code.get_code_lines(code_name)
-
-        #creating code execution context
-        execution_context = {Context._CODE_NAME:code_name, Context._CODE_INDEX:0, Context._IF_STACK:[], Context._VAR_STACK:{}}
-
-        #pushing code context to the stack
-        self._execution_stack.append(execution_context)
+        code_lines = self._code.get_code_lines(execute_args.code_name)
 
         #executing commands
         while execution_context[Context._CODE_INDEX] < len(code_lines):
@@ -120,7 +122,7 @@ class Context:
 ################################################################################
     def run(self, logger):
         self._logger = logger
-        self.execute_code(self._code.main_code_name(), logger)
+        self.execute_code(self._code.main_code_name())
 
     def run_from_call_stack(self, call_stack, logger):
         pass
