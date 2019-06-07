@@ -8,6 +8,7 @@ import core.code_utils as code_utils
 @command_class(Keywords._IF)
 class IfCommand(Command):
     _KEY_NEXT_CONDITION_CODE_INDEX = 'next_condition_code_index'
+    _KEY_END_CONDITION_CODE_INDEX = 'end_condition_code_index'
 
     _keywords = [Keywords._THEN]
 
@@ -46,11 +47,20 @@ class IfCommand(Command):
         for i in range(0, len(if_commands) - 1):
             code_index = if_commands[i]
             next_condition_code_index = if_commands[i + 1]
+            end_condition_code_index = if_commands[-1]
             parse_args.code_lines[code_index][IfCommand._KEY_NEXT_CONDITION_CODE_INDEX] = next_condition_code_index
+            parse_args.code_lines[code_index][IfCommand._KEY_END_CONDITION_CODE_INDEX] = end_condition_code_index
         
     @classmethod
     def execute(cls, execute_args):
+        # must be first !!!
         execute_args.context.begin_if()
+
+        # jump to the if end when condition already satisfied, preventing condition statement evaluation
+        if execute_args.context.is_skip_if():
+            end_condition_code_index = execute_args.code_line[IfCommand._KEY_END_CONDITION_CODE_INDEX]
+            execute_args.context.jump_to_code(end_condition_code_index)
+            return
 
         result = code_utils.evaluate_tokens(execute_args.arguments, 0, len(execute_args.arguments) - 1)
 
@@ -85,8 +95,8 @@ class ElseProcCommand(Command):
     @classmethod
     def execute(cls, execute_args):
         if execute_args.context.is_skip_if():
-            next_condition_code_index = execute_args.code_line[IfCommand._KEY_NEXT_CONDITION_CODE_INDEX]
-            execute_args.context.jump_to_code(next_condition_code_index)
+            end_condition_code_index = execute_args.code_line[IfCommand._KEY_END_CONDITION_CODE_INDEX]
+            execute_args.context.jump_to_code(end_condition_code_index)
 
 ################################################################################
 # ELIF Command
