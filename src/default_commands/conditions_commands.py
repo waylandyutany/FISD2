@@ -60,7 +60,6 @@ class IfCommand(Command):
             next_condition_code_index = execute_args.code_line[IfCommand._KEY_NEXT_CONDITION_CODE_INDEX]
             execute_args.context.jump_to_code(next_condition_code_index)
 
-
 ################################################################################
 # ENDIF Command
 ################################################################################
@@ -103,4 +102,3 @@ class ElifProcCommand(Command):
     @classmethod
     def execute(cls, execute_args):
         IfCommand.execute(execute_args)
-
