@@ -19,6 +19,7 @@ class Context:
         self._code = code
         self._execution_stack = []
         self._variable_stack = [{}]
+        self._if_stack = []
         self._logger = None
 
     @property
@@ -90,6 +91,21 @@ class Context:
 
     def jump_to_code(self, new_code_index):
         self._execution_stack[-1][Context._CODE_INDEX] = new_code_index - 1 # - 1 is due to #call_context[Context._CODE_INDEX] += 1 in execute_code loop!!!
+
+################################################################################
+    #@todo must be recursive for nested conditions
+    def begin_if(self):
+        self._if_stack.append(False)
+
+    #@todo must be called when leaving scope(execution code, or proc code) with return !!!
+    def end_if(self):
+        self._if_stack.pop()
+
+    def skip_if(self):
+        self._if_stack[-1] = True
+
+    def is_skip_if(self):
+        return self._if_stack[-1]
 
 ################################################################################
     def run(self, logger):
