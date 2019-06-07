@@ -14,6 +14,8 @@ class Context:
 
     _CODE_NAME = 'code_name'
     _CODE_INDEX = 'code_index'
+    _IF_STACK = 'if_stack'
+
     _VAR_TYPE = 'type'
     _VAR_VALUE = 'value'
 
@@ -21,7 +23,6 @@ class Context:
         self._code = code
         self._execution_stack = []
         self._variable_stack = [{}]
-        self._if_stack = []
         self._logger = None
 
     @property
@@ -73,7 +74,7 @@ class Context:
         code_lines = self._code.get_code_lines(code_name)
 
         #creating code context
-        execution_context = {Context._CODE_NAME:code_name, Context._CODE_INDEX:0}
+        execution_context = {Context._CODE_NAME:code_name, Context._CODE_INDEX:0, Context._IF_STACK:[]}
 
         #pushing code context to the stack
         self._execution_stack.append(execution_context)
@@ -103,17 +104,17 @@ class Context:
 ################################################################################
     #@todo must be recursive for nested conditions
     def begin_if(self):
-        self._if_stack.append(False)
+        self._execution_stack[-1][Context._IF_STACK].append(False)
 
     #@todo must be called when leaving scope(execution code, or proc code) with return !!!
     def end_if(self):
-        self._if_stack.pop()
+        self._execution_stack[-1][Context._IF_STACK].pop()
 
     def skip_if(self):
-        self._if_stack[-1] = True
+        self._execution_stack[-1][Context._IF_STACK][-1] = True
 
     def is_skip_if(self):
-        return self._if_stack[-1]
+        return self._execution_stack[-1][Context._IF_STACK][-1]
 
 ################################################################################
     def run(self, logger):
