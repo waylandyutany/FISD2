@@ -38,9 +38,8 @@ def filter_code_lines(code_lines, filters):
     ret = []
     for i in range(0, len(code_lines)):
         line_number, line_tokens, _ = split_code_line(code_lines[i])
-        for filter in filters:
-            if line_tokens.is_name(0) and line_tokens.is_value_no_case(0, filter):
-                ret.append((line_number, line_tokens))
+        if line_tokens.is_name(0) and line_tokens.is_value_no_case(0, filters):
+            ret.append((line_number, line_tokens))
     return ret
 
 def move_code_lines(code_lines, first_line_number, last_line_number):
