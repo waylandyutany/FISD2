@@ -2,8 +2,10 @@ PROC test_for()
 FOR I FROM 0 TO 10
     if $I%2==0 then
         print $I, "je parne"
-        if $i >= 4 then
-            print ">= Styri"
+        if $i == 4 then
+            print "Styri"
+		elif $i == 6 then
+			print "Sest"
         endif
         if $i == 8 then
             print "Osem"

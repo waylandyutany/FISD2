@@ -45,15 +45,17 @@ class IfCommand(Command):
 
         #set _KEY_NEXT_CONDITION_CODE_INDEX for all conditional commands, except endif
         for i in range(0, len(if_commands) - 1):
-            _, line_tokens, _ = code_utils.split_code_line(parse_args.code_lines[i])
-
             code_index = if_commands[i]
+
             next_condition_code_index = if_commands[i + 1]
+            end_condition_code_index = if_commands[-1]
+
+            _, line_tokens, _ = code_utils.split_code_line(parse_args.code_lines[code_index])
+
             parse_args.code_lines[code_index][IfCommand._KEY_NEXT_CONDITION_CODE_INDEX] = next_condition_code_index
     
             # _KEY_END_CONDITION_CODE_INDEX optimization apply only for elseif statement
             if line_tokens.is_value_no_case(0, Keywords._ELIF):
-                end_condition_code_index = if_commands[-1]
                 parse_args.code_lines[code_index][IfCommand._KEY_END_CONDITION_CODE_INDEX] = end_condition_code_index
         
     @classmethod
