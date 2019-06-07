@@ -15,6 +15,7 @@ class Context:
     _CODE_NAME = 'code_name'
     _CODE_INDEX = 'code_index'
     _IF_STACK = 'if_stack'
+    _VAR_STACK = 'var_stack'
 
     _VAR_TYPE = 'type'
     _VAR_VALUE = 'value'
@@ -22,7 +23,6 @@ class Context:
     def __init__(self, code):
         self._code = code
         self._execution_stack = []
-        self._variable_stack = [{}]
         self._logger = None
 
     @property
@@ -46,8 +46,10 @@ class Context:
         if not Context._variable_case_sensitive:
             name = name.lower()
 
-        if name in self._variable_stack[-1]:
-            return self._variable_stack[-1][name][Context._VAR_TYPE], self._variable_stack[-1][name][Context._VAR_VALUE]
+        var_stack = self._execution_stack[-1][Context._VAR_STACK]
+
+        if name in var_stack:
+            return var_stack[name][Context._VAR_TYPE], var_stack[name][Context._VAR_VALUE]
         return TOKEN_NONE, None
 
     def get_variable(self, name):
@@ -58,12 +60,13 @@ class Context:
         if not Context._variable_case_sensitive:
             name = name.lower()
 
+        var_stack = self._execution_stack[-1][Context._VAR_STACK]
         if isinstance(value, int):
-            self._variable_stack[-1][name] = {Context._VAR_TYPE : TOKEN_NUMBER, Context._VAR_VALUE:value}
+            var_stack[name] = {Context._VAR_TYPE : TOKEN_NUMBER, Context._VAR_VALUE:value}
         elif isinstance(value, float):
-            self._variable_stack[-1][name] = {Context._VAR_TYPE : TOKEN_NUMBER, Context._VAR_VALUE:value}
+            var_stack[name] = {Context._VAR_TYPE : TOKEN_NUMBER, Context._VAR_VALUE:value}
         else:
-            self._variable_stack[-1][name] = {Context._VAR_TYPE : TOKEN_STRING, Context._VAR_VALUE:str(value)}
+            var_stack[name] = {Context._VAR_TYPE : TOKEN_STRING, Context._VAR_VALUE:str(value)}
 
 ################################################################################
     def execute_code(self, code_name, call_stack_index = None):
@@ -73,8 +76,8 @@ class Context:
         #getting code lines from the code
         code_lines = self._code.get_code_lines(code_name)
 
-        #creating code context
-        execution_context = {Context._CODE_NAME:code_name, Context._CODE_INDEX:0, Context._IF_STACK:[]}
+        #creating code execution context
+        execution_context = {Context._CODE_NAME:code_name, Context._CODE_INDEX:0, Context._IF_STACK:[], Context._VAR_STACK:{}}
 
         #pushing code context to the stack
         self._execution_stack.append(execution_context)
@@ -102,11 +105,9 @@ class Context:
         self._execution_stack[-1][Context._CODE_INDEX] = new_code_index - 1 # - 1 is due to #call_context[Context._CODE_INDEX] += 1 in execute_code loop!!!
 
 ################################################################################
-    #@todo must be recursive for nested conditions
     def begin_if(self):
         self._execution_stack[-1][Context._IF_STACK].append(False)
 
-    #@todo must be called when leaving scope(execution code, or proc code) with return !!!
     def end_if(self):
         self._execution_stack[-1][Context._IF_STACK].pop()
 
