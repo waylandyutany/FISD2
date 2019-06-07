@@ -155,8 +155,8 @@ class Code:
 
     def get_code_line_description(self, code_name, line_number):
         if code_keys._FUNCTION_FILE_NAME in self._code[code_name]:
-            return "'{}'.'{}'[{}] : ".format(self._code[code_name][code_keys._FUNCTION_FILE_NAME], code_name, line_number)
-        return "'{}'[{}] : ".format(code_name, line_number)
+            return "'{}'.'{}'[{:03d}] : ".format(self._code[code_name][code_keys._FUNCTION_FILE_NAME], code_name, line_number)
+        return "'{}'[{:03d}] : ".format(code_name, line_number)
 
 ################################################################################
     @staticmethod
