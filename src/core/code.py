@@ -92,10 +92,12 @@ class Code:
 
     def __parse_commands(self, logger):
         parse_args = ParseArgs(self, logger)
-        parse_args.code_labels = Code_labels()
 
         for code_name in self._code:
+            #code labels uniqueness is per code[code_name]
+            parse_args.code_labels = Code_labels()
             parse_args.code_lines = self._code[code_name][code_keys._CODE_LINES]
+
             for parse_args.code_index in range(0, len(parse_args.code_lines)):
                 code_line = parse_args.code_lines[parse_args.code_index]
                 parse_args.code_name = code_name
