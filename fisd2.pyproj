@@ -24,6 +24,7 @@
   <ItemGroup>
     <Compile Include="src\core\code.py" />
     <Compile Include="src\core\code_keys.py" />
+    <Compile Include="src\core\code_labels.py" />
     <Compile Include="src\core\code_utils.py" />
     <Compile Include="src\core\commands.py" />
     <Compile Include="src\core\compile_errors.py" />

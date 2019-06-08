@@ -3,6 +3,7 @@ from default_commands.keywords import Keywords
 from core.commands import Commands, ParseArgs
 import core.code_utils as code_utils
 import core.code_keys as code_keys
+from core.code_labels import Code_labels
 from core.compile_errors import CompileError
 
 import os
@@ -12,7 +13,7 @@ class Code:
 ################################################################################
     def __init__(self):
         self._code = {}
-        self._code_path = None
+        self._code_path = None #@not needed to be part of Code class
         self._main_code_name = None
 
 ################################################################################
@@ -80,6 +81,7 @@ class Code:
 
     def __parse_commands(self, logger):
         parse_args = ParseArgs(self, logger)
+        parse_args.code_labels = Code_labels()
 
         for code_name in self._code:
             parse_args.code_lines = self._code[code_name][code_keys._CODE_LINES]
@@ -130,6 +132,9 @@ class Code:
             self._code[function_code] = functions_code[function_code]
         pass
 
+    def __resolve_jumps(self, logger):
+        pass
+
 ################################################################################
     def compile_from_file(self, file_name, logger):
         ''' Compiling code from the file, looking for *.fisd/*.fisd2 in no extension provided.'''
@@ -137,6 +142,7 @@ class Code:
         self._main_code_name = self.__tokenize_from_file(file_name, logger)
         self.__extract_functions(logger)
         self.__parse_commands(logger)
+        self.__resolve_jumps(logger)
 
     def load_from_file(self, file_name, logger):
         ''' Loading already compiled code from the file.'''
@@ -159,7 +165,3 @@ class Code:
         return "'{}'[{:03d}] : ".format(code_name, line_number)
 
 ################################################################################
-    @staticmethod
-    def split_code_line(code_line):
-        ''' Split stored code line and returns it's line_number, line_tokens, command_class '''
-        return code_utils.split_code_line(code_line)

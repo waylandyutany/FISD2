@@ -5,6 +5,7 @@ class ParseArgs:
         self.code_lines = None
         self.code_index = None
         self.code_line = None
+        self.code_labels = None
 
         self.code = _code
         self.logger = _logger

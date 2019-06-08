@@ -1,6 +1,5 @@
 import core.code_keys as code_keys
 
-
 ################################################################################
 import math
 
@@ -58,3 +57,19 @@ def move_code_lines(code_lines, first_line_number, last_line_number):
     return ret
 ################################################################################
 
+def add_code_line_label(code_line, label_name):
+    code_line[code_keys._CODE_LABEL] = label_name
+
+def add_code_line_jump(code_line, jump_name, label_name):
+    if code_keys._CODE_JUMPS not in code_line:
+        code_line[code_keys._CODE_JUMPS] = {}
+    code_line[code_keys._CODE_JUMPS][jump_name] = label_name
+
+def get_code_line_jump(code_line, jump_name):
+    if code_keys._CODE_JUMPS not in code_line:
+        return None
+    if jump_name not in code_line[code_keys._CODE_JUMPS]:
+        return None
+    return code_line[code_keys._CODE_JUMPS][jump_name]
+
+################################################################################
