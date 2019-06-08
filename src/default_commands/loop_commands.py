@@ -61,6 +61,15 @@ class ForCommand(Command):
             #@todo warning if no variable name behind next
             pass
         else:
+            for_label_name = parse_args.code_labels.get_label_name(Keywords._FOR)
+            next_label_name = parse_args.code_labels.get_label_name(Keywords._NEXT)
+
+            code_utils.add_code_line_label(parse_args.code_lines[for_code_index], for_label_name)
+            code_utils.add_code_line_label(parse_args.code_lines[next_code_index], next_label_name)
+
+            code_utils.add_code_line_jump(parse_args.code_lines[for_code_index], Keywords._NEXT, next_label_name)
+            code_utils.add_code_line_jump(parse_args.code_lines[next_code_index], Keywords._FOR, for_label_name)
+
             parse_args.code_lines[for_code_index][ForCommand._KEY_NEXT_CODE_INDEX] = next_code_index
             parse_args.code_lines[next_code_index][ForCommand._KEY_FOR_CODE_INDEX] = for_code_index
             
@@ -71,6 +80,8 @@ class ForCommand(Command):
         execute_args.context.set_variable(variable_name, from_value)
         next_code_index = execute_args.code_line[ForCommand._KEY_NEXT_CODE_INDEX]
 
+        next_code_index2 = code_utils.get_code_line_jump(execute_args.code_line, Keywords._NEXT)
+        assert next_code_index == next_code_index2
         #@todo handle if value is already over to _value
         #@todo handle if from > to
         #@todo handle other then number values (e.g. dates)
@@ -102,3 +113,6 @@ class NextProcCommand(Command):
         else:
             if value > to_value:
                 execute_args.context.jump_to_code(for_code_index + 1)
+
+        for_code_index2 = code_utils.get_code_line_jump(execute_args.code_line, Keywords._FOR)
+        assert for_code_index == for_code_index2

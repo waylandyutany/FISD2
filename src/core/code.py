@@ -133,7 +133,25 @@ class Code:
         pass
 
     def __resolve_jumps(self, logger):
-        pass
+        for code_name in self._code:
+            code_lines = self._code[code_name][code_keys._CODE_LINES]
+
+            labels_jumps_indicies = {}
+
+            #searching for all labels and remember it's indicies
+            for i in range(0, len(code_lines)):
+                code_line = code_lines[i]
+                labels = code_utils.get_code_line_labels(code_line)
+                for label in labels:
+                    assert label not in labels_jumps_indicies, "Each label must be unique !!!"
+                    labels_jumps_indicies[label] = i
+
+            #searhing for all jump labels and sets it's indicies
+            for i in range(0, len(code_lines)):
+                code_line = code_lines[i]
+                jumps = code_utils.get_code_line_jumps(code_line)
+                for jump_name in jumps:
+                    jumps[jump_name] = labels_jumps_indicies[jumps[jump_name]]
 
 ################################################################################
     def compile_from_file(self, file_name, logger):
