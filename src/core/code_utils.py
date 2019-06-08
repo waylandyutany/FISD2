@@ -57,32 +57,35 @@ def move_code_lines(code_lines, first_line_number, last_line_number):
     return ret
 ################################################################################
 
+_CODE_LABEL = 'label'
+_CODE_JUMPS = 'jumps'
+
 def add_code_line_label(code_line, label_name):
-    if code_keys._CODE_LABEL not in code_line:
-        code_line[code_keys._CODE_LABEL] = []
-    if label_name not in code_line[code_keys._CODE_LABEL]:
-        code_line[code_keys._CODE_LABEL].append(label_name)
+    if _CODE_LABEL not in code_line:
+        code_line[_CODE_LABEL] = []
+    if label_name not in code_line[_CODE_LABEL]:
+        code_line[_CODE_LABEL].append(label_name)
 
 def add_code_line_jump(code_line, jump_name, label_name):
-    if code_keys._CODE_JUMPS not in code_line:
-        code_line[code_keys._CODE_JUMPS] = {}
-    code_line[code_keys._CODE_JUMPS][jump_name] = label_name
+    if _CODE_JUMPS not in code_line:
+        code_line[_CODE_JUMPS] = {}
+    code_line[_CODE_JUMPS][jump_name] = label_name
 
 def get_code_line_jump(code_line, jump_name):
-    if code_keys._CODE_JUMPS not in code_line:
+    if _CODE_JUMPS not in code_line:
         return None
-    if jump_name not in code_line[code_keys._CODE_JUMPS]:
+    if jump_name not in code_line[_CODE_JUMPS]:
         return None
-    return code_line[code_keys._CODE_JUMPS][jump_name]
+    return code_line[_CODE_JUMPS][jump_name]
 
 def get_code_line_labels(code_line):
-    if code_keys._CODE_LABEL in code_line:
-        return code_line[code_keys._CODE_LABEL]
+    if _CODE_LABEL in code_line:
+        return code_line[_CODE_LABEL]
     return []
 
 def get_code_line_jumps(code_line):
-    if code_keys._CODE_JUMPS not in code_line:
+    if _CODE_JUMPS not in code_line:
         return {}
-    return code_line[code_keys._CODE_JUMPS]
+    return code_line[_CODE_JUMPS]
 
 ################################################################################

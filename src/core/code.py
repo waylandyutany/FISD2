@@ -3,14 +3,25 @@ from default_commands.keywords import Keywords
 from core.commands import Commands, ParseArgs
 import core.code_utils as code_utils
 import core.code_keys as code_keys
-from core.code_labels import Code_labels
 from core.compile_errors import CompileError
 
 import os
 
 ################################################################################
-class Code:
+class Code_labels:
+    def __init__(self):
+        self._labels_counter = {}
+       
+    def get_label_name(self, label_name):
+        if label_name not in self._labels_counter:
+            self._labels_counter[label_name] = 0
+            return "{}_{:02d}".format(label_name, self._labels_counter[label_name])
+
+        self._labels_counter[label_name] += 1
+        return "{}_{:02d}".format(label_name, self._labels_counter[label_name])
+
 ################################################################################
+class Code:
     def __init__(self):
         self._code = {}
         self._code_path = None #@not needed to be part of Code class
@@ -146,7 +157,7 @@ class Code:
                     assert label not in labels_jumps_indicies, "Each label must be unique !!!"
                     labels_jumps_indicies[label] = i
 
-            #searhing for all jump labels and sets it's indicies
+            #searching for all jump labels and replace label_name with code index
             for i in range(0, len(code_lines)):
                 code_line = code_lines[i]
                 jumps = code_utils.get_code_line_jumps(code_line)
