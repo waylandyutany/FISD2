@@ -129,6 +129,7 @@ class Tokens:
                     self.mark_as_keyword(i)
 
 ################################################################################
+    #@todo handle better error with more details in exception, test it ! :-)
     def evaluate_tokens(self, start_index, end_index):
         str_to_evaluate = " ".join((str(self.value(i)) for i in range(start_index + 1, end_index)))
         return eval(str_to_evaluate, {'__builtins__':None}, _eval_funcs)
