@@ -2,7 +2,7 @@ import parser, sys, os
 from datetime import datetime
 
 from core.context import Context
-from core.code import Tokenizers, Code
+from core.code import Tokenizers, Code_compilation
 from core.commands import Commands
 from core.logger import Logger
 
@@ -24,7 +24,7 @@ __app_version__ = '2.0.0'
 ################################################################################
 Logger.init_logger()
 logger = Logger(Logger.log)
-code = Code()
+code = Code_compilation()
 context = Context(code)
 
 ################################################################################
