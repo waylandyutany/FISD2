@@ -3,7 +3,7 @@ from core.code_line import Code_line
 
 class Code_lines:
     @classmethod
-    def filter_code_lines(cls, code_lines, filters):
+    def filter(cls, code_lines, filters):
         ret = []
         for i in range(0, len(code_lines)):
             line_number, line_tokens, _ = Code_line.split(code_lines[i])
@@ -12,7 +12,7 @@ class Code_lines:
         return ret
 
     @classmethod
-    def move_code_lines(cls, code_lines, first_line_number, last_line_number):
+    def move(cls, code_lines, first_line_number, last_line_number):
         ret = []
         from_index = 0
         to_index = len(code_lines)

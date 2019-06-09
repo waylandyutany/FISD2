@@ -135,12 +135,12 @@ class Code_compilation(Code):
         functions_code = {}
         for code_name in self._code:
             code_lines = self._code[code_name][code_keys._CODE_LINES]
-            proc_code_lines = Code_lines.filter_code_lines(code_lines, [Keywords._PROC, Keywords._END_PROC])
+            proc_code_lines = Code_lines.filter(code_lines, [Keywords._PROC, Keywords._END_PROC])
             for i in range(0,len(proc_code_lines),2):
                 first_line_number, first_line_tokens = proc_code_lines[i]
                 last_line_number, last_line_tokens = proc_code_lines[i+1]
                 function_name = first_line_tokens.value(1)
-                function_code_lines = Code_lines.move_code_lines(code_lines, first_line_number, last_line_number)
+                function_code_lines = Code_lines.move(code_lines, first_line_number, last_line_number)
                 functions_code[function_name] = {code_keys._CODE_LINES:function_code_lines,
                                                 code_keys._FUNCTION_FILE_NAME:code_name}
 
