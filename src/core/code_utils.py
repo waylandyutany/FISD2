@@ -10,20 +10,6 @@ _eval_funcs = {'cos':math.cos,
 def evaluate_string(s):
     return eval(s, {'__builtins__':None}, _eval_funcs)
 
-################################################################################
-def search_keywords_in_tokens(tokens, keywords):#@ move to Tokens class
-    ret = []
-    for i in range(0, len(tokens)):
-            if tokens.is_keyword(i) and tokens.is_value_no_case(i, keywords):
-                ret.append(i)
-    return ret
-
-def mark_tokens_as_keywords(tokens, keywords):#@ move to Tokens class
-    for i in range(0, len(tokens)):
-        if tokens.is_name(i):
-            if tokens.is_value_no_case(i, keywords):
-                tokens.mark_as_keyword(i)
-
 def evaluate_tokens(tokens, start_index, end_index):
     str_to_evaluate = " ".join((tokens.value_str(i) for i in range(start_index + 1, end_index)))
     return evaluate_string(str_to_evaluate)

@@ -29,7 +29,7 @@ class ForCommand(Command):
     @classmethod
     def evaluate_for_tokens(cls, args):
         ''' return variable_name, from_value, to_value, step_value'''
-        for_from_to_step_indicies = code_utils.search_keywords_in_tokens(args, cls._keywords)
+        for_from_to_step_indicies = args.search_keywords_in_tokens(cls._keywords)
         variable_name = args.value(1)
         from_value = code_utils.evaluate_tokens(args, for_from_to_step_indicies[1], for_from_to_step_indicies[2])
 

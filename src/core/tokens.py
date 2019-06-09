@@ -113,3 +113,11 @@ class Tokens:
         self._tokens.insert(index, [TOKEN_NAME, value])
 
 ################################################################################
+    def search_keywords_in_tokens(self, keywords):
+        return [i for i in range(0, len(self)) if self.is_keyword(i) and self.is_value_no_case(i, keywords)]
+
+    def mark_tokens_as_keywords(self, keywords):
+        for i in range(0, len(self)):
+            if self.is_name(i):
+                if self.is_value_no_case(i, keywords):
+                    self.mark_as_keyword(i)
