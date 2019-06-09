@@ -2,7 +2,8 @@ import parser, sys, os
 from datetime import datetime
 
 from core.context import Context
-from core.code import Tokenizers, Code_compilation
+from core.tokens import Tokenizers
+from core.code_compilation import Code_compilation
 from core.commands import Commands
 from core.logger import Logger
 
