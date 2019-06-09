@@ -90,7 +90,7 @@ class Context:
         while execution_context[Context._CODE_INDEX] < len(code_lines):
             execute_args.code_line = code_lines[execution_context[Context._CODE_INDEX]]
 
-            line_number, line_tokens, command_class = Code_line.split_code_line(execute_args.code_line)
+            line_number, line_tokens, command_class = Code_line.split(execute_args.code_line)
 
             self.logger.preface = self._code.get_code_line_description(code_name, line_number)
 

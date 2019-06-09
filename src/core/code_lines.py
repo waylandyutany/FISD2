@@ -6,7 +6,7 @@ class Code_lines:
     def filter_code_lines(cls, code_lines, filters):
         ret = []
         for i in range(0, len(code_lines)):
-            line_number, line_tokens, _ = Code_line.split_code_line(code_lines[i])
+            line_number, line_tokens, _ = Code_line.split(code_lines[i])
             if line_tokens.is_name(0) and line_tokens.is_value_no_case(0, filters):
                 ret.append((line_number, line_tokens))
         return ret
@@ -17,7 +17,7 @@ class Code_lines:
         from_index = 0
         to_index = len(code_lines)
         while from_index < to_index:
-            line_number, _, _ = Code_line.split_code_line(code_lines[from_index])
+            line_number, _, _ = Code_line.split(code_lines[from_index])
             if first_line_number <= line_number and line_number <= last_line_number:
                 ret.append(code_lines[from_index])
                 del code_lines[from_index]

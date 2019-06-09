@@ -106,7 +106,7 @@ class Code_compilation(Code):
                 parse_args.code_name = code_name
                 parse_args.code_line = code_line
 
-                line_number, line_tokens, _ = Code_line.split_code_line(code_line)
+                line_number, line_tokens, _ = Code_line.split(code_line)
 
                 logger.preface = self.get_code_line_description(code_name, line_number)
 
@@ -157,7 +157,7 @@ class Code_compilation(Code):
             #searching for all labels and remember it's indicies
             for i in range(0, len(code_lines)):
                 code_line = code_lines[i]
-                labels = Code_line.get_code_line_labels(code_line)
+                labels = Code_line.get_labels(code_line)
                 for label in labels:
                     assert label not in labels_jumps_indicies, "Each label must be unique !!!"
                     labels_jumps_indicies[label] = i
@@ -165,7 +165,7 @@ class Code_compilation(Code):
             #searching for all jump labels and replace label_name with code index
             for i in range(0, len(code_lines)):
                 code_line = code_lines[i]
-                jumps = Code_line.get_code_line_jumps(code_line)
+                jumps = Code_line.get_jumps(code_line)
                 for jump_name in jumps:
                     jumps[jump_name] = labels_jumps_indicies[jumps[jump_name]]
 

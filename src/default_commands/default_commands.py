@@ -13,7 +13,7 @@ class SetCommand(Command):
 
     @classmethod
     def parse(cls, parse_args):
-        _, line_tokens, _ = Code_line.split_code_line(parse_args.code_line)
+        _, line_tokens, _ = Code_line.split(parse_args.code_line)
         line_tokens.mark_as_keyword(1)
 
     @classmethod
