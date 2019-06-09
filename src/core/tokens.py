@@ -8,6 +8,12 @@ TOKEN_KEYWORD = 0
 TOKEN_NONE = -1
 
 ################################################################################
+import math
+_eval_funcs = {'cos':math.cos,
+                'sin':math.sin,
+                }
+
+################################################################################
 class Tokenizers:
     tokenizers = {}
 
@@ -121,3 +127,8 @@ class Tokens:
             if self.is_name(i):
                 if self.is_value_no_case(i, keywords):
                     self.mark_as_keyword(i)
+
+################################################################################
+    def evaluate_tokens(self, start_index, end_index):
+        str_to_evaluate = " ".join((str(self.value(i)) for i in range(start_index + 1, end_index)))
+        return eval(str_to_evaluate, {'__builtins__':None}, _eval_funcs)

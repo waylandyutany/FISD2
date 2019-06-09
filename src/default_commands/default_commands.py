@@ -1,7 +1,6 @@
 from core.commands import command_class, Command
 from core.tokens import tokenizer_class, TOKEN_NAME
 from default_commands.keywords import Keywords
-import core.code_utils as code_utils
 from core.code_line import Code_line
 
 ################################################################################
@@ -19,12 +18,10 @@ class SetCommand(Command):
     @classmethod
     def execute(cls, execute_args):
         variable_name = execute_args.arguments.value(1)
-        string_to_evaluate = " ".join( str(execute_args.arguments.value(i)) for i in range(3,len(execute_args.arguments)))
-
         try:
-            evaluated_value = code_utils.evaluate_string(string_to_evaluate)
+            evaluated_value = execute_args.arguments.evaluate_tokens(2, len(execute_args.arguments))
         except Exception as e:
-            context.logger.error("Exception during expression '{} = {}' evaluation! {}!".format(variable_name, string_to_evaluate, e))
+            execute_args.context.logger.error("Exception during expression '{} = {}' evaluation! {}!".format(variable_name, string_to_evaluate, e))
             return
 
         #context.logger.debug("'{}' evaluated '{} = {}'".format(variable_name, string_to_evaluate, evaluated_value))

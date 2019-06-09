@@ -1,6 +1,5 @@
 from core.commands import command_class, Command
 from default_commands.keywords import Keywords
-import core.code_utils as code_utils
 from core.code_line import Code_line
 
 ################################################################################
@@ -61,7 +60,7 @@ class IfCommand(Command):
         
     @classmethod
     def execute_if(cls, execute_args):
-        result = code_utils.evaluate_tokens(execute_args.arguments, 0, len(execute_args.arguments) - 1)
+        result = execute_args.arguments.evaluate_tokens(0, len(execute_args.arguments) - 1)
 
         if result and (not execute_args.context.is_skip_if()):
             execute_args.context.skip_if()

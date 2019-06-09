@@ -1,6 +1,5 @@
 from core.commands import command_class, Command
 from default_commands.keywords import Keywords
-import core.code_utils as code_utils
 from core.code_line import Code_line
 
 ################################################################################
@@ -32,13 +31,13 @@ class ForCommand(Command):
         ''' return variable_name, from_value, to_value, step_value'''
         for_from_to_step_indicies = args.search_keywords_in_tokens(cls._keywords)
         variable_name = args.value(1)
-        from_value = code_utils.evaluate_tokens(args, for_from_to_step_indicies[1], for_from_to_step_indicies[2])
+        from_value = args.evaluate_tokens(for_from_to_step_indicies[1], for_from_to_step_indicies[2])
 
         try:
-            to_value = code_utils.evaluate_tokens(args, for_from_to_step_indicies[2], for_from_to_step_indicies[3])
-            step_value = code_utils.evaluate_tokens(args, for_from_to_step_indicies[3], len(args))
+            to_value = args.evaluate_tokens(for_from_to_step_indicies[2], for_from_to_step_indicies[3])
+            step_value = args.evaluate_tokens(for_from_to_step_indicies[3], len(args))
         except:
-            to_value = code_utils.evaluate_tokens(args, for_from_to_step_indicies[2], len(args))
+            to_value = args.evaluate_tokens(for_from_to_step_indicies[2], len(args))
             step_value = 1 if from_value <= to_value else -1
 
         return variable_name, from_value, to_value, step_value

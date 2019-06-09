@@ -1,5 +1,4 @@
 from core.code import Code
-import core.code_utils as code_utils
 from core.tokens import Tokens, TOKEN_NUMBER, TOKEN_STRING, TOKEN_NONE
 from copy import deepcopy
 from core.commands import ExecuteArgs
