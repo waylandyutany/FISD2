@@ -3,6 +3,7 @@ import core.code_utils as code_utils
 from core.tokens import Tokens, TOKEN_NUMBER, TOKEN_STRING, TOKEN_NONE
 from copy import deepcopy
 from core.commands import ExecuteArgs
+from core.code_line import Code_line
 
 ################################################################################
 class Arguments(Tokens):
@@ -89,7 +90,7 @@ class Context:
         while execution_context[Context._CODE_INDEX] < len(code_lines):
             execute_args.code_line = code_lines[execution_context[Context._CODE_INDEX]]
 
-            line_number, line_tokens, command_class = code_utils.split_code_line(execute_args.code_line)
+            line_number, line_tokens, command_class = Code_line.split_code_line(execute_args.code_line)
 
             self.logger.preface = self._code.get_code_line_description(code_name, line_number)
 

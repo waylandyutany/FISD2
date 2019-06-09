@@ -5,6 +5,8 @@ from core.commands import Commands, ParseArgs
 import core.code_utils as code_utils
 from core.compile_errors import CompileError
 import core.code_keys as code_keys
+from core.code_line import Code_line
+from core.code_lines import Code_lines
 import os
 
 ################################################################################
@@ -104,7 +106,7 @@ class Code_compilation(Code):
                 parse_args.code_name = code_name
                 parse_args.code_line = code_line
 
-                line_number, line_tokens, _ = code_utils.split_code_line(code_line)
+                line_number, line_tokens, _ = Code_line.split_code_line(code_line)
 
                 logger.preface = self.get_code_line_description(code_name, line_number)
 
@@ -133,12 +135,12 @@ class Code_compilation(Code):
         functions_code = {}
         for code_name in self._code:
             code_lines = self._code[code_name][code_keys._CODE_LINES]
-            proc_code_lines = code_utils.filter_code_lines(code_lines, [Keywords._PROC, Keywords._END_PROC])
+            proc_code_lines = Code_lines.filter_code_lines(code_lines, [Keywords._PROC, Keywords._END_PROC])
             for i in range(0,len(proc_code_lines),2):
                 first_line_number, first_line_tokens = proc_code_lines[i]
                 last_line_number, last_line_tokens = proc_code_lines[i+1]
                 function_name = first_line_tokens.value(1)
-                function_code_lines = code_utils.move_code_lines(code_lines, first_line_number, last_line_number)
+                function_code_lines = Code_lines.move_code_lines(code_lines, first_line_number, last_line_number)
                 functions_code[function_name] = {code_keys._CODE_LINES:function_code_lines,
                                                 code_keys._FUNCTION_FILE_NAME:code_name}
 
@@ -155,7 +157,7 @@ class Code_compilation(Code):
             #searching for all labels and remember it's indicies
             for i in range(0, len(code_lines)):
                 code_line = code_lines[i]
-                labels = code_utils.get_code_line_labels(code_line)
+                labels = Code_line.get_code_line_labels(code_line)
                 for label in labels:
                     assert label not in labels_jumps_indicies, "Each label must be unique !!!"
                     labels_jumps_indicies[label] = i
@@ -163,7 +165,7 @@ class Code_compilation(Code):
             #searching for all jump labels and replace label_name with code index
             for i in range(0, len(code_lines)):
                 code_line = code_lines[i]
-                jumps = code_utils.get_code_line_jumps(code_line)
+                jumps = Code_line.get_code_line_jumps(code_line)
                 for jump_name in jumps:
                     jumps[jump_name] = labels_jumps_indicies[jumps[jump_name]]
 

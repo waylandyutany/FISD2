@@ -1,6 +1,7 @@
 from core.commands import command_class, Command
 from default_commands.keywords import Keywords
 import core.code_utils as code_utils
+from core.code_line import Code_line
 
 ################################################################################
 # FOR Command
@@ -13,7 +14,7 @@ class ForCommand(Command):
     def search_for_loop_end(cls, code_lines, code_index):
         nested_counter = 0
         for i in range(code_index + 1, len(code_lines)):
-            _, line_tokens, _ = code_utils.split_code_line(code_lines[i])
+            _, line_tokens, _ = Code_line.split_code_line(code_lines[i])
 
             if line_tokens.is_value_no_case(0, Keywords._FOR):
                 nested_counter += 1
@@ -44,7 +45,7 @@ class ForCommand(Command):
 
     @classmethod
     def parse(cls, parse_args):
-        _, line_tokens, _ = code_utils.split_code_line(parse_args.code_line)
+        _, line_tokens, _ = Code_line.split_code_line(parse_args.code_line)
         line_tokens.mark_as_keyword(1)
 
         #@todo error if wrong arguments
@@ -61,17 +62,17 @@ class ForCommand(Command):
             for_label_name = parse_args.code_labels.get_label_name(Keywords._FOR)
             next_label_name = parse_args.code_labels.get_label_name(Keywords._NEXT)
 
-            code_utils.add_code_line_label(parse_args.code_lines[for_code_index], for_label_name)
-            code_utils.add_code_line_label(parse_args.code_lines[next_code_index], next_label_name)
+            Code_line.add_code_line_label(parse_args.code_lines[for_code_index], for_label_name)
+            Code_line.add_code_line_label(parse_args.code_lines[next_code_index], next_label_name)
 
-            code_utils.add_code_line_jump(parse_args.code_lines[for_code_index], Keywords._NEXT, next_label_name)
-            code_utils.add_code_line_jump(parse_args.code_lines[next_code_index], Keywords._FOR, for_label_name)
+            Code_line.add_code_line_jump(parse_args.code_lines[for_code_index], Keywords._NEXT, next_label_name)
+            Code_line.add_code_line_jump(parse_args.code_lines[next_code_index], Keywords._FOR, for_label_name)
 
     @classmethod
     def execute(cls, execute_args):
         variable_name, from_value, to_value, step_value = cls.evaluate_for_tokens(execute_args.arguments)
         execute_args.context.set_variable(variable_name, from_value)
-        next_code_index = code_utils.get_code_line_jump(execute_args.code_line, Keywords._NEXT)
+        next_code_index = Code_line.get_code_line_jump(execute_args.code_line, Keywords._NEXT)
         #@todo handle if value is already over to _value
         #@todo handle if from > to
         #@todo handle other then number values (e.g. dates)
@@ -84,14 +85,14 @@ class NextProcCommand(Command):
 
     @classmethod
     def parse(cls, parse_args):
-        _, line_tokens, _ = code_utils.split_code_line(parse_args.code_line)
+        _, line_tokens, _ = Code_line.split_code_line(parse_args.code_line)
         line_tokens.mark_as_keyword(1)
 
     @classmethod
     def execute(cls, execute_args):
         #@todo one time warning if infinite loop detected
-        for_code_index = code_utils.get_code_line_jump(execute_args.code_line, Keywords._FOR)
-        _, line_tokens, _ = code_utils.split_code_line(execute_args.code_lines[for_code_index])
+        for_code_index = Code_line.get_code_line_jump(execute_args.code_line, Keywords._FOR)
+        _, line_tokens, _ = Code_line.split_code_line(execute_args.code_lines[for_code_index])
         variable_name, from_value, to_value, step_value = ForCommand.evaluate_for_tokens(line_tokens)
         value = execute_args.context.get_variable(variable_name)
         value = value + step_value

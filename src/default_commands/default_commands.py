@@ -2,6 +2,7 @@ from core.commands import command_class, Command
 from core.tokens import tokenizer_class, TOKEN_NAME
 from default_commands.keywords import Keywords
 import core.code_utils as code_utils
+from core.code_line import Code_line
 
 ################################################################################
 # SET Command
@@ -12,7 +13,7 @@ class SetCommand(Command):
 
     @classmethod
     def parse(cls, parse_args):
-        _, line_tokens, _ = code_utils.split_code_line(parse_args.code_line)
+        _, line_tokens, _ = Code_line.split_code_line(parse_args.code_line)
         line_tokens.mark_as_keyword(1)
 
     @classmethod

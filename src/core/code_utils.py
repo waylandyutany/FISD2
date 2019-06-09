@@ -1,5 +1,3 @@
-import core.code_keys as code_keys
-
 ################################################################################
 import math
 
@@ -14,64 +12,5 @@ def evaluate_tokens(tokens, start_index, end_index):
     str_to_evaluate = " ".join((tokens.value_str(i) for i in range(start_index + 1, end_index)))
     return evaluate_string(str_to_evaluate)
 
-################################################################################
-def split_code_line(code_line):
-    ''' Split stored code line and returns it's line_number, line_tokens, command_class '''
-    return code_line[code_keys._LINE_NUMBER], code_line[code_keys._TOKENS], code_line[code_keys._COMMAND_CLASS]
-
-def filter_code_lines(code_lines, filters):
-    ret = []
-    for i in range(0, len(code_lines)):
-        line_number, line_tokens, _ = split_code_line(code_lines[i])
-        if line_tokens.is_name(0) and line_tokens.is_value_no_case(0, filters):
-            ret.append((line_number, line_tokens))
-    return ret
-
-def move_code_lines(code_lines, first_line_number, last_line_number):
-    ret = []
-    from_index = 0
-    to_index = len(code_lines)
-    while from_index < to_index:
-        line_number, _, _ = split_code_line(code_lines[from_index])
-        if first_line_number <= line_number and line_number <= last_line_number:
-            ret.append(code_lines[from_index])
-            del code_lines[from_index]
-            to_index -= 1
-        else:
-            from_index += 1
-
-    return ret
-################################################################################
-
-_CODE_LABEL = 'label'
-_CODE_JUMPS = 'jumps'
-
-def add_code_line_label(code_line, label_name):
-    if _CODE_LABEL not in code_line:
-        code_line[_CODE_LABEL] = []
-    if label_name not in code_line[_CODE_LABEL]:
-        code_line[_CODE_LABEL].append(label_name)
-
-def add_code_line_jump(code_line, jump_name, label_name):
-    if _CODE_JUMPS not in code_line:
-        code_line[_CODE_JUMPS] = {}
-    code_line[_CODE_JUMPS][jump_name] = label_name
-
-def get_code_line_jump(code_line, jump_name):
-    if _CODE_JUMPS not in code_line:
-        return None
-    if jump_name not in code_line[_CODE_JUMPS]:
-        return None
-    return code_line[_CODE_JUMPS][jump_name]
-
-def get_code_line_labels(code_line):
-    if _CODE_LABEL in code_line:
-        return code_line[_CODE_LABEL]
-    return []
-
-def get_code_line_jumps(code_line):
-    if _CODE_JUMPS not in code_line:
-        return {}
-    return code_line[_CODE_JUMPS]
 
 ################################################################################

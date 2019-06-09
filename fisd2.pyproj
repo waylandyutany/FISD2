@@ -25,6 +25,8 @@
     <Compile Include="src\core\code.py" />
     <Compile Include="src\core\code_compilation.py" />
     <Compile Include="src\core\code_keys.py" />
+    <Compile Include="src\core\code_line.py" />
+    <Compile Include="src\core\code_lines.py" />
     <Compile Include="src\core\code_utils.py" />
     <Compile Include="src\core\commands.py" />
     <Compile Include="src\core\compile_errors.py" />
