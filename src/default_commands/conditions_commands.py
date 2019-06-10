@@ -38,10 +38,10 @@ class IfCommand(Command):
         return None #When no endif found!
 
     @classmethod
-    def parse(cls, parse_args):
+    def parse(cls, pargs):
         #@todo error when no correct order if, elif..., else, endif
         #@todo error when no endif
-        if_commands = cls.search_for_if_commands(parse_args.code_lines, parse_args.code_index)
+        if_commands = cls.search_for_if_commands(pargs.code_lines, pargs.code_index)
 
         #end_if_label_name = parse_args.code_labels.get_label_name(IfCommand._END_IF_LABEL)
         #Code_line.add_label(parse_args.code_lines[if_commands[-1]], end_if_label_name)
@@ -52,25 +52,25 @@ class IfCommand(Command):
             #code_index = if_commands[i]
             #next_condition_code_index = if_commands[i + 1]
 
-            next_if_label_name = parse_args.code_labels.get_label_name(IfCommand._NEXT_IF_LABEL)
-            Code_line.add_label(parse_args.code_lines[if_commands[i + 1]], next_if_label_name)
-            Code_line.add_jump(parse_args.code_lines[if_commands[i]], IfCommand._NEXT_IF_LABEL, next_if_label_name)
+            next_if_label_name = pargs.code_labels.get_label_name(IfCommand._NEXT_IF_LABEL)
+            Code_line.add_label(pargs.code_lines[if_commands[i + 1]], next_if_label_name)
+            Code_line.add_jump(pargs.code_lines[if_commands[i]], IfCommand._NEXT_IF_LABEL, next_if_label_name)
         
     @classmethod
-    def execute_if(cls, execute_args):
-        result = execute_args.arguments.evaluate_tokens(0, len(execute_args.arguments) - 1)
+    def execute_if(cls, eargs):
+        result = eargs.arguments.evaluate_tokens(0, len(eargs.arguments) - 1)
 
-        if result and (not execute_args.context.is_skip_if()):
-            execute_args.context.skip_if()
+        if result and (not eargs.context.is_skip_if()):
+            eargs.context.skip_if()
         else:
-            execute_args.context.jump_to_code(Code_line.get_jump(execute_args.code_line, IfCommand._NEXT_IF_LABEL))
+            eargs.context.jump_to_code(Code_line.get_jump(eargs.code_line, IfCommand._NEXT_IF_LABEL))
 
     @classmethod
-    def execute(cls, execute_args):
+    def execute(cls, eargs):
         # must be first !!!
-        execute_args.context.begin_if()
+        eargs.context.begin_if()
 
-        cls.execute_if(execute_args)
+        cls.execute_if(eargs)
 
 ################################################################################
 # ENDIF Command
@@ -78,12 +78,12 @@ class IfCommand(Command):
 @command_class(Keywords._END_IF)
 class EndIfProcCommand(Command):
     @classmethod
-    def parse(cls, parse_args):
+    def parse(cls, pargs):
         pass
 
     @classmethod
-    def execute(cls, execute_args):
-        execute_args.context.end_if()
+    def execute(cls, eargs):
+        eargs.context.end_if()
 
 ################################################################################
 # ELSE Command
@@ -91,13 +91,13 @@ class EndIfProcCommand(Command):
 @command_class(Keywords._ELSE)
 class ElseProcCommand(Command):
     @classmethod
-    def parse(cls, parse_args):
+    def parse(cls, pargs):
         pass
 
     @classmethod
-    def execute(cls, execute_args):
-        if execute_args.context.is_skip_if():
-            execute_args.context.jump_to_code(Code_line.get_jump(execute_args.code_line, IfCommand._NEXT_IF_LABEL))
+    def execute(cls, eargs):
+        if eargs.context.is_skip_if():
+            eargs.context.jump_to_code(Code_line.get_jump(eargs.code_line, IfCommand._NEXT_IF_LABEL))
 
 ################################################################################
 # ELIF Command
@@ -107,9 +107,9 @@ class ElifProcCommand(Command):
     _keywords = [Keywords._THEN]
 
     @classmethod
-    def parse(cls, parse_args):
+    def parse(cls, pargs):
         pass
 
     @classmethod
-    def execute(cls, execute_args):
-        IfCommand.execute_if(execute_args)
+    def execute(cls, eargs):
+        IfCommand.execute_if(eargs)

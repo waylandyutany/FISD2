@@ -43,35 +43,35 @@ class ForCommand(Command):
         return variable_name, from_value, to_value, step_value
 
     @classmethod
-    def parse(cls, parse_args):
-        _, line_tokens, _ = Code_line.split(parse_args.code_line)
+    def parse(cls, pargs):
+        _, line_tokens, _ = Code_line.split(pargs.code_line)
         line_tokens.mark_as_keyword(1)
 
         #@todo error if wrong arguments
 
         #detecting loop end and set jump code index for next and for commands into their code_lines
-        for_code_index = parse_args.code_index
-        next_code_index = cls.search_for_loop_end(parse_args.code_lines, parse_args.code_index)
+        for_code_index = pargs.code_index
+        next_code_index = cls.search_for_loop_end(pargs.code_lines, pargs.code_index)
         if not next_code_index:
             #@todo error no loop ending 
             #@todo error when variable name is not the same for for and next
             #@todo warning if no variable name behind next
             pass
         else:
-            for_label_name = parse_args.code_labels.get_label_name(Keywords._FOR)
-            next_label_name = parse_args.code_labels.get_label_name(Keywords._NEXT)
+            for_label_name = pargs.code_labels.get_label_name(Keywords._FOR)
+            next_label_name = pargs.code_labels.get_label_name(Keywords._NEXT)
 
-            Code_line.add_label(parse_args.code_lines[for_code_index], for_label_name)
-            Code_line.add_label(parse_args.code_lines[next_code_index], next_label_name)
+            Code_line.add_label(pargs.code_lines[for_code_index], for_label_name)
+            Code_line.add_label(pargs.code_lines[next_code_index], next_label_name)
 
-            Code_line.add_jump(parse_args.code_lines[for_code_index], Keywords._NEXT, next_label_name)
-            Code_line.add_jump(parse_args.code_lines[next_code_index], Keywords._FOR, for_label_name)
+            Code_line.add_jump(pargs.code_lines[for_code_index], Keywords._NEXT, next_label_name)
+            Code_line.add_jump(pargs.code_lines[next_code_index], Keywords._FOR, for_label_name)
 
     @classmethod
-    def execute(cls, execute_args):
-        variable_name, from_value, to_value, step_value = cls.evaluate_for_tokens(execute_args.arguments)
-        execute_args.context.set_variable(variable_name, from_value)
-        next_code_index = Code_line.get_jump(execute_args.code_line, Keywords._NEXT)
+    def execute(cls, eargs):
+        variable_name, from_value, to_value, step_value = cls.evaluate_for_tokens(eargs.arguments)
+        eargs.context.set_variable(variable_name, from_value)
+        next_code_index = Code_line.get_jump(eargs.code_line, Keywords._NEXT)
         #@todo handle if value is already over to _value
         #@todo handle if from > to
         #@todo handle other then number values (e.g. dates)
@@ -83,24 +83,24 @@ class ForCommand(Command):
 class NextProcCommand(Command):
 
     @classmethod
-    def parse(cls, parse_args):
-        _, line_tokens, _ = Code_line.split(parse_args.code_line)
+    def parse(cls, pargs):
+        _, line_tokens, _ = Code_line.split(pargs.code_line)
         line_tokens.mark_as_keyword(1)
 
     @classmethod
-    def execute(cls, execute_args):
+    def execute(cls, eargs):
         #@todo one time warning if infinite loop detected
-        for_code_index = Code_line.get_jump(execute_args.code_line, Keywords._FOR)
-        _, line_tokens, _ = Code_line.split(execute_args.code_lines[for_code_index])
+        for_code_index = Code_line.get_jump(eargs.code_line, Keywords._FOR)
+        _, line_tokens, _ = Code_line.split(eargs.code_lines[for_code_index])
         variable_name, from_value, to_value, step_value = ForCommand.evaluate_for_tokens(line_tokens)
-        value = execute_args.context.get_variable(variable_name)
+        value = eargs.context.get_variable(variable_name)
         value = value + step_value
-        execute_args.context.set_variable(variable_name, value)
+        eargs.context.set_variable(variable_name, value)
 
         if from_value < to_value:
             if value < to_value:
-                execute_args.context.jump_to_code(for_code_index + 1)
+                eargs.context.jump_to_code(for_code_index + 1)
         else:
             if value > to_value:
-                execute_args.context.jump_to_code(for_code_index + 1)
+                eargs.context.jump_to_code(for_code_index + 1)
 
