@@ -10,6 +10,8 @@ class ParseArgs:
         self.code = _code
         self.logger = _logger
 
+        self.code_lines_insertion = None
+
 ################################################################################
 class ExecuteArgs: 
     def __init__(self, _context, _logger, _code_name, _code_lines):

@@ -10,6 +10,21 @@ import os
 
 ################################################################################
 ################################################################################
+class Code_lines_insertion:
+    def __init__(self):
+        self._insertion = {}
+
+    def insert_before(self, line_number, code_line):
+        self.__insert('before', line_number, code_line)
+
+    def insert_after(self, line_number, code_line):
+        self.__insert('after', line_number, code_line)
+
+    def __insert(self, where, line_number, code_line):
+        self._insertion[line_number][where] = code_line
+
+################################################################################
+################################################################################
 class Code_labels:
     def __init__(self):
         self._labels_counter = {}
@@ -99,6 +114,7 @@ class Code_compilation(Code):
             #code labels uniqueness is per code[code_name]
             parse_args.code_labels = Code_labels()
             parse_args.code_lines = self._code[code_name][code_keys._CODE_LINES]
+            parse_args.code_lines_insertion = Code_lines_insertion()
 
             for parse_args.code_index in range(0, len(parse_args.code_lines)):
                 code_line = parse_args.code_lines[parse_args.code_index]
@@ -124,6 +140,11 @@ class Code_compilation(Code):
 
                 code_line[code_keys._COMMAND_CLASS] = command_class
                 command_class.parse(parse_args)
+
+            self.__insert_code_lines(parse_args.code_lines, parse_args.code_lines_insertion)
+
+    def __insert_code_lines(self, code_lines, insertion):
+        pass
 
     def __extract_functions(self, logger):
         #@todo error when end proc w/o proc keyword
