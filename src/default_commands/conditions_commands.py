@@ -61,8 +61,7 @@ class IfCommand(Command):
         for i in range(1, len(if_commands) - 1):
             line_number = Code_line.get_line_number(pargs.code_lines[if_commands[i]])
             jump_code_line = JumpCommand.create_code_line(line_number, end_if_label_name)
-            pargs.code_lines_insertion.insert_before(jump_code_line)
-
+            pargs.code_lines_insertion.insert_before(line_number, jump_code_line)
         
     @classmethod
     def execute_if(cls, eargs):

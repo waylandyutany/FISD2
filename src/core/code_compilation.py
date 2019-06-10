@@ -14,14 +14,13 @@ class Code_lines_insertion:
     def __init__(self):
         self._insertion = {}
 
-    def insert_before(self, code_line):
-        self.__insert(-1, code_line)
+    def insert_before(self, line_number, code_line):
+        self.__insert(-1, line_number, code_line)
 
     def insert_after(self, line_number, code_line):
-        self.__insert(1, code_line)
+        self.__insert(1, line_number, code_line)
 
-    def __insert(self, where, code_line):
-        line_number = Code_line.get_line_number(code_line)
+    def __insert(self, where, line_number, code_line):
         if line_number not in self._insertion:
             self._insertion[line_number] = { -1 : [], 1 : []}
         self._insertion[line_number][where].append(code_line)
