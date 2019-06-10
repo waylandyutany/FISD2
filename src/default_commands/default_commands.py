@@ -21,7 +21,7 @@ class SetCommand(Command):
         try:
             evaluated_value = execute_args.arguments.evaluate_tokens(2, len(execute_args.arguments))
         except Exception as e:
-            execute_args.context.logger.error("Exception during expression '{} = {}' evaluation! {}!".format(variable_name, string_to_evaluate, e))
+            execute_args.logger.error("Exception during expression '{} = {}' evaluation! {}!".format(variable_name, string_to_evaluate, e))
             return
 
         #context.logger.debug("'{}' evaluated '{} = {}'".format(variable_name, string_to_evaluate, evaluated_value))
@@ -44,7 +44,7 @@ class PrintCommand(Command):
 
     @classmethod
     def execute(cls, execute_args):
-        execute_args.context.logger.info("PRINT {}".format("".join( ( str(execute_args.arguments.value_str(i)) for i in range(1, len(execute_args.arguments)) ) )))
+        execute_args.logger.info("PRINT {}".format("".join( ( str(execute_args.arguments.value_str(i)) for i in range(1, len(execute_args.arguments)) ) )))
 
 ################################################################################
 # EXECUTE Command

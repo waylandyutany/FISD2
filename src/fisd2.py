@@ -15,10 +15,9 @@ import default_commands.procedure_commands
 
 ################################################################################
 # @todo
-# 1. move logger into context object and generalize preface
+# 1. Generalize logger preface
 # 2. move functions into it's own sections and handle name existances between functions and files
 # 3. error codes and descriptions
-# 4. ExecuteArgs has logger
 ################################################################################
 __app_name__ = 'FISD2'
 __app_version__ = '2.0.0'

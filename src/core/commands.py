@@ -12,14 +12,16 @@ class ParseArgs:
 
 ################################################################################
 class ExecuteArgs: 
-    def __init__(self, _context):
-        self.code_name = None
-        self.code_lines = None
+    def __init__(self, _context, _logger, _code_name, _code_lines):
+        self.code_name = _code_name
+        self.code_lines = _code_lines
         self.code_index = None
         self.code_line = None
 
-        self.context = _context
         self.arguments = None
+
+        self.context = _context
+        self.logger = _logger
 
 ################################################################################
 class Command:

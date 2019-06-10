@@ -79,11 +79,10 @@ class Context:
         else:
             pass #@todo take by the call_stack_index
 
-        execute_args = ExecuteArgs(self)
-        execute_args.code_name = execution_context[Context._CODE_NAME]
 
         #getting code lines from the code
-        code_lines = self._code.get_code_lines(execute_args.code_name)
+        code_lines = self._code.get_code_lines(execution_context[Context._CODE_NAME])
+        execute_args = ExecuteArgs(self, self._logger, execution_context[Context._CODE_NAME], code_lines)
 
         #executing commands
         while execution_context[Context._CODE_INDEX] < len(code_lines):
