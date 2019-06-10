@@ -14,14 +14,17 @@ class Code_lines_insertion:
     def __init__(self):
         self._insertion = {}
 
-    def insert_before(self, line_number, code_line):
-        self.__insert('before', line_number, code_line)
+    def insert_before(self, code_line):
+        self.__insert(-1, code_line)
 
     def insert_after(self, line_number, code_line):
-        self.__insert('after', line_number, code_line)
+        self.__insert(1, code_line)
 
-    def __insert(self, where, line_number, code_line):
-        self._insertion[line_number][where] = code_line
+    def __insert(self, where, code_line):
+        line_number = Code_line.get_line_number(code_line)
+        if line_number not in self._insertion:
+            self._insertion[line_number] = { -1 : [], 1 : []}
+        self._insertion[line_number][where].append(code_line)
 
 ################################################################################
 ################################################################################
@@ -101,7 +104,7 @@ class Code_compilation(Code):
                 self.__process_execute_tokens(tokens, logger)
 
                 if not tokens.empty():
-                    self._code[file_name][code_keys._CODE_LINES].append({code_keys._LINE_NUMBER:line_number, code_keys._TOKENS:tokens, code_keys._COMMAND_CLASS:None})
+                    self._code[file_name][code_keys._CODE_LINES].append(Code_line.create(line_number, tokens, None))
                     #logger.preface = "'{}'[{}] : ".format(file_name, line_number)
                     #logger.debug("{}".format(tokens.tokens()))
 

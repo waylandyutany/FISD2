@@ -4,13 +4,21 @@ class Code_line:
     _CODE_LABEL = 'label'
     _CODE_JUMPS = 'jumps'
 
-    @classmethod
-    def split(cls, code_line):
+    @staticmethod
+    def create(line_number, tokens, command_class):
+        return {code_keys._LINE_NUMBER:line_number, code_keys._TOKENS:tokens, code_keys._COMMAND_CLASS:command_class}
+
+    @staticmethod
+    def get_line_number(code_line):
+        return code_line[code_keys._LINE_NUMBER]
+
+    @staticmethod
+    def split(code_line):
         ''' Split stored code line and returns it's line_number, line_tokens, command_class '''
         return code_line[code_keys._LINE_NUMBER], code_line[code_keys._TOKENS], code_line[code_keys._COMMAND_CLASS]
 
-    @classmethod
-    def add_label(cls, code_line, label_name):
+    @staticmethod
+    def add_label(code_line, label_name):
         if Code_line._CODE_LABEL not in code_line:
             code_line[Code_line._CODE_LABEL] = []
         if label_name not in code_line[Code_line._CODE_LABEL]:

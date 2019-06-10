@@ -1,5 +1,6 @@
 from core.commands import command_class, Command
 from default_commands.keywords import Keywords
+from default_commands.jump_command import JumpCommand
 from core.code_line import Code_line
 
 ################################################################################
@@ -43,9 +44,8 @@ class IfCommand(Command):
         #@todo error when no endif
         if_commands = cls.search_for_if_commands(pargs.code_lines, pargs.code_index)
 
-        #end_if_label_name = parse_args.code_labels.get_label_name(IfCommand._END_IF_LABEL)
-        #Code_line.add_label(parse_args.code_lines[if_commands[-1]], end_if_label_name)
-        #Code_line.add_jump(parse_args.code_lines[code_index], IfCommand._END_IF_LABEL, end_if_label_name)
+        end_if_label_name = pargs.code_labels.get_label_name(IfCommand._END_IF_LABEL)
+        Code_line.add_label(pargs.code_lines[if_commands[-1]], end_if_label_name)
 
         #set _KEY_NEXT_CONDITION_CODE_INDEX for all conditional commands, except endif
         for i in range(0, len(if_commands) - 1):
@@ -56,6 +56,13 @@ class IfCommand(Command):
             next_if_label_name = pargs.code_labels.get_label_name(IfCommand._NEXT_IF_LABEL)
             Code_line.add_label(pargs.code_lines[if_commands[i + 1]], next_if_label_name)
             Code_line.add_jump(pargs.code_lines[if_commands[i]], IfCommand._NEXT_IF_LABEL, next_if_label_name)
+
+        # inserting jump command before each elif or else
+        for i in range(1, len(if_commands) - 1):
+            line_number = Code_line.get_line_number(pargs.code_lines[if_commands[i]])
+            jump_code_line = JumpCommand.create_code_line(line_number, end_if_label_name)
+            pargs.code_lines_insertion.insert_before(jump_code_line)
+
         
     @classmethod
     def execute_if(cls, eargs):

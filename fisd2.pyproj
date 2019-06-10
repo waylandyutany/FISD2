@@ -35,6 +35,7 @@
     <Compile Include="src\core\__init__.py" />
     <Compile Include="src\default_commands\conditions_commands.py" />
     <Compile Include="src\default_commands\default_commands.py" />
+    <Compile Include="src\default_commands\jump_command.py" />
     <Compile Include="src\default_commands\keywords.py" />
     <Compile Include="src\default_commands\loop_commands.py" />
     <Compile Include="src\default_commands\procedure_commands.py" />

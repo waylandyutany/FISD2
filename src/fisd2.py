@@ -20,6 +20,7 @@ import default_commands.procedure_commands
 # 3. error codes and descriptions
 # 4. command_class decorator adds _command_keyword with command name into command class
 # 5. insert JUMP instruction and remove stupid if.. methods from context !!!
+# 6. remove absolete keywords.py
 ################################################################################
 __app_name__ = 'FISD2'
 __app_version__ = '2.0.0'

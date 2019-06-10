@@ -19,3 +19,5 @@ class Keywords:
     _THEN = 'then'
     _ELSE = 'else'
     _ELIF = 'elif'
+
+    _JUMP = 'jump'
