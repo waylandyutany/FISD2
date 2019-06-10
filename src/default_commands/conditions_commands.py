@@ -58,12 +58,14 @@ class IfCommand(Command):
         
     @classmethod
     def execute_if(cls, eargs):
-        result = eargs.arguments.evaluate_tokens(0, len(eargs.arguments) - 1)
-
-        if result and (not eargs.context.is_skip_if()):
-            eargs.context.skip_if()
-        else:
+        if eargs.context.is_skip_if():
             eargs.context.jump_to_code(Code_line.get_jump(eargs.code_line, IfCommand._NEXT_IF_LABEL))
+            return
+
+        if not eargs.arguments.evaluate_tokens(0, len(eargs.arguments) - 1):
+            eargs.context.jump_to_code(Code_line.get_jump(eargs.code_line, IfCommand._NEXT_IF_LABEL))
+        else:
+            eargs.context.skip_if()
 
     @classmethod
     def execute(cls, eargs):
