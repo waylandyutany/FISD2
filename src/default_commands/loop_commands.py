@@ -24,7 +24,7 @@ class ForCommand(Command):
                else:
                     nested_counter -= 1
 
-        return None
+        return None #hen no next found!
 
     @classmethod
     def evaluate_for_tokens(cls, args):
