@@ -1,6 +1,15 @@
 from core.commands import command_class, Command
-from default_commands.keywords import Keywords
 from core.code_line import Code_line
+
+################################################################################
+# Keywords
+################################################################################
+class Keywords:
+    _FOR = 'for'
+    _FROM = 'from'
+    _TO = 'to'
+    _STEP = 'step'
+    _NEXT = 'next'
 
 ################################################################################
 # FOR Command

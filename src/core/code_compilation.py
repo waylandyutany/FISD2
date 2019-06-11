@@ -1,11 +1,12 @@
 from core.code import Code
 from core.tokens import Tokenizers, Tokens
-from default_commands.keywords import Keywords
 from core.commands import Commands, ParseArgs
 from core.compile_errors import CompileError
 import core.code_keys as code_keys
 from core.code_line import Code_line
 from core.code_lines import Code_lines
+import default_commands.default_commands as default_commands
+import default_commands.procedure_commands as procedure_commands
 import os
 
 ################################################################################
@@ -74,7 +75,7 @@ class Code_compilation(Code):
         return None, None
 
     def __process_execute_tokens(self, tokens, logger):
-        if tokens.is_name(0) and tokens.is_value_no_case(0, Keywords._EXECUTE):
+        if tokens.is_name(0) and tokens.is_value_no_case(0, default_commands.Keywords._EXECUTE):
             if not tokens.is_string(1):
                 logger.error("Valid fisd file name must follow 'execute' command!")
                 return
@@ -175,7 +176,7 @@ class Code_compilation(Code):
         functions_code = {}
         for code_name in self._code:
             code_lines = self._code[code_name][code_keys._CODE_LINES]
-            proc_code_lines = Code_lines.filter(code_lines, [Keywords._PROC, Keywords._END_PROC])
+            proc_code_lines = Code_lines.filter(code_lines, [procedure_commands.Keywords._PROC, procedure_commands.Keywords._END_PROC])
             for i in range(0,len(proc_code_lines),2):
                 first_line_number, first_line_tokens = proc_code_lines[i]
                 last_line_number, last_line_tokens = proc_code_lines[i+1]

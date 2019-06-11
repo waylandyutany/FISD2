@@ -1,6 +1,14 @@
 from core.commands import command_class, Command
-from default_commands.keywords import Keywords
 from core.tokens import tokenizer_class, TOKEN_NAME, TOKEN_OP
+
+################################################################################
+# Keywords
+################################################################################
+class Keywords:
+    _PROC = 'proc'
+    _END_PROC = 'endproc'
+    _RETURN = 'return'
+    _CALL = 'call'
 
 ################################################################################
 # PROC Command

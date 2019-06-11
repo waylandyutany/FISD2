@@ -1,7 +1,14 @@
 from core.commands import command_class, Command
 from core.tokens import tokenizer_class, TOKEN_NAME
-from default_commands.keywords import Keywords
 from core.code_line import Code_line
+
+################################################################################
+# Keywords
+################################################################################
+class Keywords:
+    _SET = 'set'
+    _PRINT = 'print'
+    _EXECUTE = 'execute'
 
 ################################################################################
 # SET Command

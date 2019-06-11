@@ -1,7 +1,16 @@
 from core.commands import command_class, Command
-from default_commands.keywords import Keywords
 from default_commands.jump_command import JumpCommand
 from core.code_line import Code_line
+
+################################################################################
+# Keywords
+################################################################################
+class Keywords:
+    _IF = 'if'
+    _END_IF = 'endif'
+    _THEN = 'then'
+    _ELSE = 'else'
+    _ELIF = 'elif'
 
 ################################################################################
 # IF Command

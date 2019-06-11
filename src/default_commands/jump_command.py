@@ -1,7 +1,12 @@
 from core.commands import command_class, Command
-from default_commands.keywords import Keywords
 from core.code_line import Code_line
 from core.tokens import Tokens
+
+################################################################################
+# Keywords
+################################################################################
+class Keywords:
+    _JUMP = 'jump'
 
 ################################################################################
 # JUMP Command
