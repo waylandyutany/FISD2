@@ -25,6 +25,13 @@ class Code_lines_insertion:
             self._insertion[line_number] = { -1 : [], 1 : []}
         self._insertion[line_number][where].append(code_line)
 
+    def pop_lines_for_insertion(self, line_number):
+        if line_number in self._insertion:
+            ret = self._insertion[line_number][-1], self._insertion[line_number][1]
+            del self._insertion[line_number]
+            return ret
+        return None
+
 ################################################################################
 ################################################################################
 class Code_labels:
@@ -146,7 +153,18 @@ class Code_compilation(Code):
             self.__insert_code_lines(parse_args.code_lines, parse_args.code_lines_insertion)
 
     def __insert_code_lines(self, code_lines, insertion):
-        pass
+        i = 0
+        while i < len(code_lines):
+            line_number = Code_line.get_line_number(code_lines[i])
+            lines = insertion.pop_lines_for_insertion(line_number)
+            if lines:
+                lines_before, lines_after = lines
+                code_lines[i+1:i+1] = lines_after
+                code_lines[i:i] = lines_before
+                i += len(lines_before) + len(lines_after)
+
+            i += 1
+
 
     def __extract_functions(self, logger):
         #@todo error when end proc w/o proc keyword
