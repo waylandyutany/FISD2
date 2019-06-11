@@ -15,7 +15,6 @@ class Context:
 
     _CODE_NAME = 'code_name'
     _CODE_INDEX = 'code_index'
-    _IF_STACK = 'if_stack'
     _VAR_STACK = 'var_stack'
 
     _VAR_TYPE = 'type'
@@ -73,7 +72,7 @@ class Context:
     def execute_code(self, code_name, call_stack_index = None):
         if call_stack_index == None:
             #creating code execution context
-            execution_context = {Context._CODE_NAME:code_name, Context._CODE_INDEX:0, Context._IF_STACK:[], Context._VAR_STACK:{}}
+            execution_context = {Context._CODE_NAME:code_name, Context._CODE_INDEX:0, Context._VAR_STACK:{}}
             #pushing code context to the stack
             self._execution_stack.append(execution_context)
         else:
@@ -105,19 +104,6 @@ class Context:
 
     def jump_to_code(self, new_code_index):
         self._execution_stack[-1][Context._CODE_INDEX] = new_code_index - 1 # - 1 is due to #call_context[Context._CODE_INDEX] += 1 in execute_code loop!!!
-
-################################################################################
-    def begin_if(self):
-        self._execution_stack[-1][Context._IF_STACK].append(False)
-
-    def end_if(self):
-        self._execution_stack[-1][Context._IF_STACK].pop()
-
-    def skip_if(self):
-        self._execution_stack[-1][Context._IF_STACK][-1] = True
-
-    def is_skip_if(self):
-        return self._execution_stack[-1][Context._IF_STACK][-1]
 
 ################################################################################
     def run(self, logger):

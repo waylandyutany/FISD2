@@ -13,8 +13,8 @@ class IfCommand(Command):
 
     _keywords = [Keywords._THEN]
 
-    @classmethod
-    def search_for_if_commands(cls, code_lines, code_index):
+    @staticmethod
+    def search_for_if_commands(code_lines, code_index):
         ''' Returns code indicies for all if conditional commands (if, elif, else, endif)'''
         ret = []
         nested_counter = 0
@@ -62,51 +62,37 @@ class IfCommand(Command):
             line_number = Code_line.get_line_number(pargs.code_lines[if_commands[i]])
             jump_code_line = JumpCommand.create_code_line(line_number, end_if_label_name)
             pargs.code_lines_insertion.insert_before(line_number, jump_code_line)
-        
-    @classmethod
-    def execute_if(cls, eargs):
-        if eargs.context.is_skip_if():
-            eargs.context.jump_to_code(Code_line.get_jump(eargs.code_line, IfCommand._NEXT_IF_LABEL))
-            return
 
+    @staticmethod
+    def execute(eargs):
         if not eargs.arguments.evaluate_tokens(0, len(eargs.arguments) - 1):
             eargs.context.jump_to_code(Code_line.get_jump(eargs.code_line, IfCommand._NEXT_IF_LABEL))
-        else:
-            eargs.context.skip_if()
-
-    @classmethod
-    def execute(cls, eargs):
-        # must be first !!!
-        eargs.context.begin_if()
-
-        cls.execute_if(eargs)
 
 ################################################################################
 # ENDIF Command
 ################################################################################
 @command_class(Keywords._END_IF)
 class EndIfProcCommand(Command):
-    @classmethod
-    def parse(cls, pargs):
+    @staticmethod
+    def parse(pargs):
         pass
 
-    @classmethod
-    def execute(cls, eargs):
-        eargs.context.end_if()
+    @staticmethod
+    def execute(eargs):
+        pass
 
 ################################################################################
 # ELSE Command
 ################################################################################
 @command_class(Keywords._ELSE)
 class ElseProcCommand(Command):
-    @classmethod
-    def parse(cls, pargs):
+    @staticmethod
+    def parse(pargs):
         pass
 
-    @classmethod
-    def execute(cls, eargs):
-        if eargs.context.is_skip_if():
-            eargs.context.jump_to_code(Code_line.get_jump(eargs.code_line, IfCommand._NEXT_IF_LABEL))
+    @staticmethod
+    def execute(eargs):
+        pass
 
 ################################################################################
 # ELIF Command
@@ -115,10 +101,10 @@ class ElseProcCommand(Command):
 class ElifProcCommand(Command):
     _keywords = [Keywords._THEN]
 
-    @classmethod
-    def parse(cls, pargs):
+    @staticmethod
+    def parse(pargs):
         pass
 
-    @classmethod
-    def execute(cls, eargs):
-        IfCommand.execute_if(eargs)
+    @staticmethod
+    def execute(eargs):
+        IfCommand.execute(eargs)
