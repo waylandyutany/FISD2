@@ -13,9 +13,6 @@ class IfCommand(Command):
     _ELSE = 'else'
     _ELIF = 'elif'
 
-    _END_IF_LABEL = 'end_if'
-    _NEXT_IF_LABEL = 'next_if'
-
     _keyword = _IF
     _keywords = [_THEN]
 
@@ -50,7 +47,7 @@ class IfCommand(Command):
         #@todo error when no endif
         if_commands = cls.search_for_if_commands(pargs.code_lines, pargs.code_index)
 
-        end_if_label_name = pargs.code_labels.get_label_name(IfCommand._END_IF_LABEL)
+        end_if_label_name = pargs.code_labels.get_label_name(IfCommand._END_IF)
         Code_line.add_label(pargs.code_lines[if_commands[-1]], end_if_label_name)
 
         #set _KEY_NEXT_CONDITION_CODE_INDEX for all conditional commands, except endif
@@ -59,9 +56,9 @@ class IfCommand(Command):
             #next_condition_code_index = if_commands[i + 1]
             #parse_args.code_lines_insertion.insert(...)
 
-            next_if_label_name = pargs.code_labels.get_label_name(IfCommand._NEXT_IF_LABEL)
+            next_if_label_name = pargs.code_labels.get_label_name(IfCommand._ELSE)
             Code_line.add_label(pargs.code_lines[if_commands[i + 1]], next_if_label_name)
-            Code_line.add_jump(pargs.code_lines[if_commands[i]], IfCommand._NEXT_IF_LABEL, next_if_label_name)
+            Code_line.add_jump(pargs.code_lines[if_commands[i]], IfCommand._ELSE, next_if_label_name)
 
         # inserting jump command before each elif or else
         for i in range(1, len(if_commands) - 1):
@@ -72,7 +69,7 @@ class IfCommand(Command):
     @staticmethod
     def execute(eargs):
         if not eargs.arguments.evaluate_tokens(0, len(eargs.arguments) - 1):
-            eargs.context.jump_to_code(Code_line.get_jump(eargs.code_line, IfCommand._NEXT_IF_LABEL))
+            eargs.context.jump_to_code(Code_line.get_jump(eargs.code_line, IfCommand._ELSE))
 
 ################################################################################
 # ENDIF Command
