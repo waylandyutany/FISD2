@@ -50,12 +50,8 @@ class IfCommand(Command):
         end_if_label_name = pargs.code_labels.get_label_name(IfCommand._END_IF)
         Code_line.add_label(pargs.code_lines[if_commands[-1]], end_if_label_name)
 
-        #set _KEY_NEXT_CONDITION_CODE_INDEX for all conditional commands, except endif
+        #add jumps to next elif, else commands marked with their labels
         for i in range(0, len(if_commands) - 1):
-            #code_index = if_commands[i]
-            #next_condition_code_index = if_commands[i + 1]
-            #parse_args.code_lines_insertion.insert(...)
-
             next_if_label_name = pargs.code_labels.get_label_name(IfCommand._ELSE)
             Code_line.add_label(pargs.code_lines[if_commands[i + 1]], next_if_label_name)
             Code_line.add_jump(pargs.code_lines[if_commands[i]], IfCommand._ELSE, next_if_label_name)
