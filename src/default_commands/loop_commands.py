@@ -2,21 +2,18 @@ from core.commands import command_class, Command
 from core.code_line import Code_line
 
 ################################################################################
-# Keywords
+# FOR Command
 ################################################################################
-class Keywords:
+@command_class()
+class ForCommand(Command):
     _FOR = 'for'
     _FROM = 'from'
     _TO = 'to'
     _STEP = 'step'
     _NEXT = 'next'
 
-################################################################################
-# FOR Command
-################################################################################
-@command_class(Keywords._FOR)
-class ForCommand(Command):
-    _keywords = [Keywords._FOR, Keywords._FROM, Keywords._TO, Keywords._STEP]
+    _keyword = _FOR
+    _keywords = [_FOR, _FROM, _TO, _STEP]
 
     @classmethod
     def search_for_loop_end(cls, code_lines, code_index):
@@ -24,10 +21,10 @@ class ForCommand(Command):
         for i in range(code_index + 1, len(code_lines)):
             _, line_tokens, _ = Code_line.split(code_lines[i])
 
-            if line_tokens.is_value_no_case(0, Keywords._FOR):
+            if line_tokens.is_value_no_case(0, cls._FOR):
                 nested_counter += 1
 
-            if line_tokens.is_value_no_case(0, Keywords._NEXT):
+            if line_tokens.is_value_no_case(0, cls._NEXT):
                if nested_counter == 0:
                     return i
                else:
@@ -67,20 +64,20 @@ class ForCommand(Command):
             #@todo warning if no variable name behind next
             pass
         else:
-            for_label_name = pargs.code_labels.get_label_name(Keywords._FOR)
-            next_label_name = pargs.code_labels.get_label_name(Keywords._NEXT)
+            for_label_name = pargs.code_labels.get_label_name(cls._FOR)
+            next_label_name = pargs.code_labels.get_label_name(cls._NEXT)
 
             Code_line.add_label(pargs.code_lines[for_code_index], for_label_name)
             Code_line.add_label(pargs.code_lines[next_code_index], next_label_name)
 
-            Code_line.add_jump(pargs.code_lines[for_code_index], Keywords._NEXT, next_label_name)
-            Code_line.add_jump(pargs.code_lines[next_code_index], Keywords._FOR, for_label_name)
+            Code_line.add_jump(pargs.code_lines[for_code_index], cls._NEXT, next_label_name)
+            Code_line.add_jump(pargs.code_lines[next_code_index], cls._FOR, for_label_name)
 
     @classmethod
     def execute(cls, eargs):
         variable_name, from_value, to_value, step_value = cls.evaluate_for_tokens(eargs.arguments)
         eargs.context.set_variable(variable_name, from_value)
-        next_code_index = Code_line.get_jump(eargs.code_line, Keywords._NEXT)
+        next_code_index = Code_line.get_jump(eargs.code_line, cls._NEXT)
         #@todo handle if value is already over to _value
         #@todo handle if from > to
         #@todo handle other then number values (e.g. dates)
@@ -88,8 +85,9 @@ class ForCommand(Command):
 ################################################################################
 # NEXT Command
 ################################################################################
-@command_class(Keywords._NEXT)
+@command_class()
 class NextProcCommand(Command):
+    _keyword = ForCommand._NEXT
 
     @classmethod
     def parse(cls, pargs):
@@ -99,7 +97,7 @@ class NextProcCommand(Command):
     @classmethod
     def execute(cls, eargs):
         #@todo one time warning if infinite loop detected
-        for_code_index = Code_line.get_jump(eargs.code_line, Keywords._FOR)
+        for_code_index = Code_line.get_jump(eargs.code_line, ForCommand._FOR)
         _, line_tokens, _ = Code_line.split(eargs.code_lines[for_code_index])
         variable_name, from_value, to_value, step_value = ForCommand.evaluate_for_tokens(line_tokens)
         value = eargs.context.get_variable(variable_name)

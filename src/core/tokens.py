@@ -23,9 +23,9 @@ class Tokenizers:
             cls.tokenizers[tokenizer].tokenize(tokens, logger)
 
 ################################################################################
-def tokenizer_class(name):
+def tokenizer_class(name=None):
     def _tokenizer_class(_class):
-        Tokenizers.tokenizers[str(name).lower()] = _class
+        Tokenizers.tokenizers[str(_class._keyword).lower()] = _class
         return _class
     return _tokenizer_class
 

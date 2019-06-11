@@ -3,27 +3,24 @@ from default_commands.jump_command import JumpCommand
 from core.code_line import Code_line
 
 ################################################################################
-# Keywords
+# IF Command
 ################################################################################
-class Keywords:
+@command_class()
+class IfCommand(Command):
     _IF = 'if'
     _END_IF = 'endif'
     _THEN = 'then'
     _ELSE = 'else'
     _ELIF = 'elif'
 
-################################################################################
-# IF Command
-################################################################################
-@command_class(Keywords._IF)
-class IfCommand(Command):
     _END_IF_LABEL = 'end_if'
     _NEXT_IF_LABEL = 'next_if'
 
-    _keywords = [Keywords._THEN]
+    _keyword = _IF
+    _keywords = [_THEN]
 
-    @staticmethod
-    def search_for_if_commands(code_lines, code_index):
+    @classmethod
+    def search_for_if_commands(cls, code_lines, code_index):
         ''' Returns code indicies for all if conditional commands (if, elif, else, endif)'''
         ret = []
         nested_counter = 0
@@ -31,10 +28,10 @@ class IfCommand(Command):
         for i in range(code_index + 1, len(code_lines)):
             _, line_tokens, _ = Code_line.split(code_lines[i])
 
-            if line_tokens.is_value_no_case(0, Keywords._IF):
+            if line_tokens.is_value_no_case(0, cls._IF):
                 nested_counter += 1
 
-            if line_tokens.is_value_no_case(0, Keywords._END_IF):
+            if line_tokens.is_value_no_case(0, cls._END_IF):
                if nested_counter == 0:
                     ret.append(i)
                     return ret
@@ -42,7 +39,7 @@ class IfCommand(Command):
                     nested_counter -= 1
 
             if nested_counter == 0:
-                if line_tokens.is_value_no_case(0, [Keywords._ELSE, Keywords._ELIF]):
+                if line_tokens.is_value_no_case(0, [cls._ELSE, cls._ELIF]):
                     ret.append(i)
 
         return None #When no endif found!
@@ -80,8 +77,10 @@ class IfCommand(Command):
 ################################################################################
 # ENDIF Command
 ################################################################################
-@command_class(Keywords._END_IF)
+@command_class()
 class EndIfProcCommand(Command):
+    _keyword = IfCommand._END_IF
+
     @staticmethod
     def parse(pargs):
         pass
@@ -93,8 +92,10 @@ class EndIfProcCommand(Command):
 ################################################################################
 # ELSE Command
 ################################################################################
-@command_class(Keywords._ELSE)
+@command_class()
 class ElseProcCommand(Command):
+    _keyword = IfCommand._ELSE
+
     @staticmethod
     def parse(pargs):
         pass
@@ -106,9 +107,10 @@ class ElseProcCommand(Command):
 ################################################################################
 # ELIF Command
 ################################################################################
-@command_class(Keywords._ELIF)
+@command_class()
 class ElifProcCommand(Command):
-    _keywords = [Keywords._THEN]
+    _keyword = IfCommand._ELIF
+    _keywords = [IfCommand._THEN]
 
     @staticmethod
     def parse(pargs):

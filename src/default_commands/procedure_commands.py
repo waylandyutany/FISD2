@@ -2,68 +2,71 @@ from core.commands import command_class, Command
 from core.tokens import tokenizer_class, TOKEN_NAME, TOKEN_OP
 
 ################################################################################
-# Keywords
-################################################################################
-class Keywords:
-    _PROC = 'proc'
-    _END_PROC = 'endproc'
-    _RETURN = 'return'
-    _CALL = 'call'
-
-################################################################################
 # PROC Command
 ################################################################################
-@command_class(Keywords._PROC)
+@command_class()
 class ProcCommand(Command):
-    @classmethod
-    def parse(cls, parse_args):
+    _PROC = 'proc'
+    _keyword = _PROC
+
+    @staticmethod
+    def parse(parse_args):
         pass
 
-    @classmethod
-    def execute(cls, execute_args):
+    @staticmethod
+    def execute(execute_args):
         pass
 
 ################################################################################
 # END_PROC Command
 ################################################################################
-@command_class(Keywords._END_PROC)
+@command_class()
 class EndProcCommand(Command):
-    @classmethod
-    def parse(cls, parse_args):
+    _END_PROC = 'endproc'
+    _keyword = _END_PROC
+
+    @staticmethod
+    def parse(parse_args):
         pass
 
-    @classmethod
-    def execute(cls, execute_args):
+    @staticmethod
+    def execute(execute_args):
         pass
 
 ################################################################################
 # RETURN Command
 ################################################################################
-@command_class(Keywords._RETURN)
+@command_class()
 class ReturnCommand(Command):
-    @classmethod
-    def parse(cls, parse_args):
+    _RETURN = 'return'
+    _keyword = _RETURN
+
+    @staticmethod
+    def parse(parse_args):
         pass
 
-    @classmethod
-    def execute(cls, execute_args):
+    @staticmethod
+    def execute(execute_args):
         pass
 
 ################################################################################
 # CALL Command
 ################################################################################
-@command_class(Keywords._CALL)
-@tokenizer_class(Keywords._CALL)
+@command_class()
+@tokenizer_class()
 class CallCommand(Command):
-    @classmethod
-    def parse(cls, parse_args):
+    _CALL = 'call'
+    _keyword = _CALL
+
+    @staticmethod
+    def parse(parse_args):
         pass
 
-    @classmethod
-    def execute(cls, execute_args):
+    @staticmethod
+    def execute(execute_args):
         execute_args.context.execute_code(execute_args.arguments.value_str(1))
 
-    @classmethod
-    def tokenize(cls, tokens, logger):
+    @staticmethod
+    def tokenize(tokens, logger):
         if tokens.is_name(0) and tokens.is_op(1) and tokens.is_value(1, '('):
-            tokens.insert_name(0, Keywords._CALL)
+            tokens.insert_name(0, CallCommand._keyword)

@@ -30,6 +30,7 @@ class Command:
 
     #Any token with name in this list is automaticaly marked as keyword.
     _keywords = None
+    _keyword = None
 
     @staticmethod
     def parse(parse_args):
@@ -51,8 +52,8 @@ class Commands:
         return None
 
 ################################################################################
-def command_class(name):
+def command_class(name=None):
     def _command_class(_class):
-        Commands.commands[str(name).lower()] = _class
+        Commands.commands[str(_class._keyword).lower()] = _class
         return _class
     return _command_class

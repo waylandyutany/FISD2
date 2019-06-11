@@ -18,7 +18,6 @@ import default_commands.procedure_commands
 # 1. Generalize logger preface
 # 2. Handle function name existances between functions and files
 # 3. error codes and descriptions
-# 4. command_class decorator adds _command_keyword with command name into command class
 ################################################################################
 __app_name__ = 'FISD2'
 __app_version__ = '2.0.0'

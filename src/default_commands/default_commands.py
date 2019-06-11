@@ -3,19 +3,13 @@ from core.tokens import tokenizer_class, TOKEN_NAME
 from core.code_line import Code_line
 
 ################################################################################
-# Keywords
-################################################################################
-class Keywords:
-    _SET = 'set'
-    _PRINT = 'print'
-    _EXECUTE = 'execute'
-
-################################################################################
 # SET Command
 ################################################################################
-@command_class(Keywords._SET)
-@tokenizer_class(Keywords._SET)
+@command_class()
+@tokenizer_class()
 class SetCommand(Command):
+    _SET = 'set'
+    _keyword = _SET
 
     @classmethod
     def parse(cls, parse_args):
@@ -38,13 +32,16 @@ class SetCommand(Command):
     @classmethod
     def tokenize(cls, tokens, logger):
         if tokens.is_name(0) and tokens.is_op(1) and tokens.is_value(1, '='):
-            tokens.insert_name(0, Keywords._SET)
+            tokens.insert_name(0, cls._SET)
 
 ################################################################################
 # PRINT Command
 ################################################################################
-@command_class(Keywords._PRINT)
+@command_class()
 class PrintCommand(Command):
+    _PRINT = 'print'
+    _keyword = _PRINT
+
     @classmethod
     def parse(cls, parse_args):
         pass
@@ -56,8 +53,11 @@ class PrintCommand(Command):
 ################################################################################
 # EXECUTE Command
 ################################################################################
-@command_class(Keywords._EXECUTE)
+@command_class()
 class ExecuteCommand(Command):
+    _EXECUTE = 'execute'
+    _keyword = _EXECUTE
+
     @classmethod
     def parse(cls, parse_args):
         pass
