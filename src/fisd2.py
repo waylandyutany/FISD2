@@ -18,7 +18,6 @@ import default_commands.procedure_commands
 # 1. Generalize logger preface
 # 2. Handle function name existances between functions and files
 # 3. error codes and descriptions
-# 4. remove kode_keys.py, move jump command into default_commands
 
 ################################################################################
 __app_name__ = 'FISD2'

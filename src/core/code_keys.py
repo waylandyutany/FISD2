@@ -1,5 +1,0 @@
-_LINE_NUMBER = 'line'
-_TOKENS = 'tokens'
-_COMMAND_CLASS = 'command'
-_FUNCTION_FILE_NAME = 'function_file_name'
-_CODE_LINES = 'code_lines'

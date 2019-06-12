@@ -92,7 +92,7 @@ class Code_compilation(Code):
 
         if file_name in self._code:
             return file_name
-        self._code[file_name] = {code_keys._CODE_LINES:[]}
+        self._code[file_name] = {Code._CODE_LINES:[]}
 
         #logger.debug("Compiling fisd file '{}'...".format(file_path))
 
@@ -111,7 +111,7 @@ class Code_compilation(Code):
                 self.__process_execute_tokens(tokens, logger)
 
                 if not tokens.empty():
-                    self._code[file_name][code_keys._CODE_LINES].append(Code_line.create(line_number, tokens, None))
+                    self._code[file_name][Code._CODE_LINES].append(Code_line.create(line_number, tokens, None))
                     #logger.preface = "'{}'[{}] : ".format(file_name, line_number)
                     #logger.debug("{}".format(tokens.tokens()))
 
@@ -123,7 +123,7 @@ class Code_compilation(Code):
         for code_name in self._code:
             #code labels uniqueness is per code[code_name]
             parse_args.code_labels = Code_labels()
-            parse_args.code_lines = self._code[code_name][code_keys._CODE_LINES]
+            parse_args.code_lines = self.get_code_lines(code_name)
             parse_args.code_lines_insertion = Code_lines_insertion()
 
             for parse_args.code_index in range(0, len(parse_args.code_lines)):
@@ -148,7 +148,7 @@ class Code_compilation(Code):
                 if command_class._keywords:
                     line_tokens.mark_tokens_as_keywords(command_class._keywords)
 
-                code_line[code_keys._COMMAND_CLASS] = command_class
+                Code_line.set_command_class(code_line,command_class)
                 command_class.parse(parse_args)
 
             self.__insert_code_lines(parse_args.code_lines, parse_args.code_lines_insertion)
@@ -175,15 +175,15 @@ class Code_compilation(Code):
         #@todo error no endproc
         functions_code = {}
         for code_name in self._code:
-            code_lines = self._code[code_name][code_keys._CODE_LINES]
+            code_lines = self.get_code_lines(code_name)
             proc_code_lines = Code_lines.filter(code_lines, [ProcCommand._keyword, EndProcCommand._keyword])
             for i in range(0,len(proc_code_lines),2):
                 first_line_number, first_line_tokens = proc_code_lines[i]
                 last_line_number, last_line_tokens = proc_code_lines[i+1]
                 function_name = first_line_tokens.value(1)
                 function_code_lines = Code_lines.move(code_lines, first_line_number, last_line_number)
-                functions_code[function_name] = {code_keys._CODE_LINES:function_code_lines,
-                                                code_keys._FUNCTION_FILE_NAME:code_name}
+                functions_code[function_name] = {Code._CODE_LINES:function_code_lines,
+                                                Code._FUNCTION_FILE_NAME:code_name}
 
         for function_code in functions_code:
             self._code[function_code] = functions_code[function_code]
@@ -191,7 +191,7 @@ class Code_compilation(Code):
 
     def __resolve_jumps(self, logger):
         for code_name in self._code:
-            code_lines = self._code[code_name][code_keys._CODE_LINES]
+            code_lines = self.get_code_lines(code_name)
 
             labels_jumps_indicies = {}
 
