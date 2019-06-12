@@ -57,6 +57,16 @@ class Tokens:
     def tokens(self):
         return self._tokens
 
+    def find_op(self, op):
+        for i in range(0, len(self._tokens)):
+            if self.is_op(i) and self.is_value(i,op):
+                return i
+
+    def sub_tokens(self, start, end):
+        ret = Tokens("")
+        ret._tokens = self._tokens[start + 1 : end]
+        return ret
+
 ################################################################################
     def is_name(self, index):
         return self.__token(index, 0) == TOKEN_NAME

@@ -1,36 +1,45 @@
 from core.commands import command_class, Command
 from core.tokens import tokenizer_class, TOKEN_NAME, TOKEN_OP
+from core.code_line import Code_line
 
 ################################################################################
 # PROC Command
 ################################################################################
 @command_class()
 class ProcCommand(Command):
-    _PROC = 'proc'
-    _keyword = _PROC
+    _keyword = 'proc'
 
     @staticmethod
-    def parse(parse_args):
-        pass
+    def parse(pargs):
+        #@ error when missing begin and end parenthesis
+        # mark all names as keywords, we do value replacement on execute
+        _, line_tokens, _ = Code_line.split(pargs.code_line)
+        for i in range(0, len(line_tokens)):
+            if line_tokens.is_name(i):
+                line_tokens.mark_as_keyword(i)
 
     @staticmethod
-    def execute(execute_args):
-        pass
+    def execute(eargs):
+        #@todo handle different parameters and default parameters
+        variable_tokens = eargs.arguments.sub_tokens(eargs.arguments.find_op('('), eargs.arguments.find_op(')'))
+        value_tokens = eargs.context.pop_call_tokens()
+        for i in range(0, len(variable_tokens)):
+            if variable_tokens.is_keyword(i):
+                eargs.context.set_variable(variable_tokens.value(i), value_tokens.value(i))
 
 ################################################################################
 # END_PROC Command
 ################################################################################
 @command_class()
 class EndProcCommand(Command):
-    _END_PROC = 'endproc'
-    _keyword = _END_PROC
+    _keyword = 'endproc'
 
     @staticmethod
-    def parse(parse_args):
+    def parse(pargs):
         pass
 
     @staticmethod
-    def execute(execute_args):
+    def execute(eargs):
         pass
 
 ################################################################################
@@ -42,11 +51,11 @@ class ReturnCommand(Command):
     _keyword = _RETURN
 
     @staticmethod
-    def parse(parse_args):
+    def parse(pargs):
         pass
 
     @staticmethod
-    def execute(execute_args):
+    def execute(eargs):
         pass
 
 ################################################################################
@@ -59,12 +68,16 @@ class CallCommand(Command):
     _keyword = _CALL
 
     @staticmethod
-    def parse(parse_args):
+    def parse(pargs):
         pass
 
     @staticmethod
-    def execute(execute_args):
-        execute_args.context.execute_code(execute_args.arguments.value_str(1))
+    def execute(eargs):
+        i0 = eargs.arguments.find_op('(')
+        i1 = eargs.arguments.find_op(')')
+        call_tokens = eargs.arguments.sub_tokens(i0, i1)
+        eargs.context.push_call_tokens(call_tokens)
+        eargs.context.execute_code(eargs.arguments.value_str(1))
 
     @staticmethod
     def tokenize(tokens, logger):

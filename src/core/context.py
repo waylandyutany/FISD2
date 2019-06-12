@@ -23,6 +23,7 @@ class Context:
     def __init__(self, code):
         self._code = code
         self._execution_stack = []
+        self._call_tokens = None
         self._logger = None
 
     @property
@@ -104,6 +105,15 @@ class Context:
 
     def jump_to_code(self, new_code_index):
         self._execution_stack[-1][Context._CODE_INDEX] = new_code_index - 1 # - 1 is due to #call_context[Context._CODE_INDEX] += 1 in execute_code loop!!!
+
+################################################################################
+    def push_call_tokens(self, call_tokens):
+        self._call_tokens = call_tokens
+
+    def pop_call_tokens(self):
+        ret = self._call_tokens
+        self._call_tokens = None
+        return ret
 
 ################################################################################
     def run(self, logger):
