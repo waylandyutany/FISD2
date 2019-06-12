@@ -21,6 +21,7 @@ class ProcCommand(Command):
     @staticmethod
     def execute(eargs):
         #@todo handle different parameters and default parameters
+        #@todo evaluate tokens between ','
         variable_tokens = eargs.arguments.sub_tokens(eargs.arguments.find_op('('), eargs.arguments.find_op(')'))
         value_tokens = eargs.context.pop_call_tokens()
         for i in range(0, len(variable_tokens)):
@@ -68,6 +69,7 @@ class CallCommand(Command):
     @staticmethod
     def parse(pargs):
         #@todo error when mismatched number of arguments
+        #@todo detect function calls and generate call and set_ret instructions
         pass
 
     @staticmethod
