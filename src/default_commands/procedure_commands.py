@@ -40,15 +40,14 @@ class EndProcCommand(Command):
 
     @staticmethod
     def execute(eargs):
-        pass
+        eargs.context.return_from_execution(None)
 
 ################################################################################
 # RETURN Command
 ################################################################################
 @command_class()
 class ReturnCommand(Command):
-    _RETURN = 'return'
-    _keyword = _RETURN
+    _keyword = 'return'
 
     @staticmethod
     def parse(pargs):
@@ -56,7 +55,7 @@ class ReturnCommand(Command):
 
     @staticmethod
     def execute(eargs):
-        pass
+        eargs.context.return_from_execution(None)
 
 ################################################################################
 # CALL Command
@@ -64,11 +63,11 @@ class ReturnCommand(Command):
 @command_class()
 @tokenizer_class()
 class CallCommand(Command):
-    _CALL = 'call'
-    _keyword = _CALL
+    _keyword = 'call'
 
     @staticmethod
     def parse(pargs):
+        #@todo error when mismatched number of arguments
         pass
 
     @staticmethod

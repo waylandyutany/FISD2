@@ -23,7 +23,10 @@ class Context:
     def __init__(self, code):
         self._code = code
         self._execution_stack = []
+
         self._call_tokens = None
+        self._return = None
+
         self._logger = None
 
     @property
@@ -115,6 +118,13 @@ class Context:
         self._call_tokens = None
         return ret
 
+    def return_from_execution(self, value = None):
+        code_lines = self._code.get_code_lines(self._execution_stack[-1][Context._CODE_NAME])
+        self.jump_to_code(len(code_lines))
+        self._return = value
+
+    def get_return_value(self):
+        return self._return
 ################################################################################
     def run(self, logger):
         self._logger = logger

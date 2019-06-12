@@ -1,6 +1,8 @@
 
 proc test_proc(arg0, arg1, arg2)
-print "test_proc(" arg0, arg1, arg2 ")"
+	print "test_proc(" arg0, arg1, arg2 ")"
+	return
+	print "test_proc(" arg0, arg1, arg2 ")"
 endproc
 
 test_proc("kraken", 1, 2.0)
