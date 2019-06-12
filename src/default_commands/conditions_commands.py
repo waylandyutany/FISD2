@@ -1,5 +1,5 @@
 from core.commands import command_class, Command
-from default_commands.jump_command import JumpCommand
+from default_commands.default_commands import JumpCommand
 from core.code_line import Code_line
 
 ################################################################################

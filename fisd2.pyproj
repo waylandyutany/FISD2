@@ -13,7 +13,7 @@
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId>Global|PythonCore|3.7</InterpreterId>
     <IsWindowsApplication>False</IsWindowsApplication>
-    <CommandLineArguments>test/test_loops.fisd2</CommandLineArguments>
+    <CommandLineArguments>test/test_proc_calls.fisd2</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
@@ -35,7 +35,6 @@
     <Compile Include="src\core\__init__.py" />
     <Compile Include="src\default_commands\conditions_commands.py" />
     <Compile Include="src\default_commands\default_commands.py" />
-    <Compile Include="src\default_commands\jump_command.py" />
     <Compile Include="src\default_commands\loop_commands.py" />
     <Compile Include="src\default_commands\procedure_commands.py" />
     <Compile Include="src\default_commands\__init__.py" />
@@ -59,6 +58,7 @@
     <Content Include="test\test_execute.fisd2" />
     <Content Include="test\test_for_if_proc.fisd2" />
     <Content Include="test\test_loops.fisd2" />
+    <Content Include="test\test_proc_calls.fisd2" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>
