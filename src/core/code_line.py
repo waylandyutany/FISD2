@@ -1,5 +1,3 @@
-import core.code_keys as code_keys
-
 class Code_line:
     _CODE_LABEL = 'label'
     _CODE_JUMPS = 'jumps'

@@ -1,5 +1,3 @@
-import core.code_keys as code_keys
-
 ################################################################################
 class Code:
     _FUNCTION_FILE_NAME = 'function_file_name'

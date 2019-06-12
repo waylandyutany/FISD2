@@ -2,7 +2,6 @@ from core.code import Code
 from core.tokens import Tokenizers, Tokens
 from core.commands import Commands, ParseArgs
 from core.compile_errors import CompileError
-import core.code_keys as code_keys
 from core.code_line import Code_line
 from core.code_lines import Code_lines
 from default_commands.default_commands import ExecuteCommand
