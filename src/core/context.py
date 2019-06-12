@@ -118,7 +118,7 @@ class Context:
         self._call_tokens = None
         return ret
 
-    def return_from_execution(self, value = None):
+    def return_execute_code(self, value = None):
         code_lines = self._code.get_code_lines(self._execution_stack[-1][Context._CODE_NAME])
         self.jump_to_code(len(code_lines))
         self._return = value

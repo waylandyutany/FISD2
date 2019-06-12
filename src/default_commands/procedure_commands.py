@@ -40,7 +40,7 @@ class EndProcCommand(Command):
 
     @staticmethod
     def execute(eargs):
-        eargs.context.return_from_execution(None)
+        eargs.context.return_execute_code(None)
 
 ################################################################################
 # RETURN Command
@@ -55,7 +55,7 @@ class ReturnCommand(Command):
 
     @staticmethod
     def execute(eargs):
-        eargs.context.return_from_execution(None)
+        eargs.context.return_execute_code(None)
 
 ################################################################################
 # CALL Command
