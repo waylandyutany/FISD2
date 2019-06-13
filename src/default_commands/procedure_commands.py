@@ -1,5 +1,5 @@
 from core.commands import command_class, Command
-from core.tokens import tokenizer_class, TOKEN_NAME, TOKEN_OP
+from core.tokens import tokenizer_class, Tokens
 from core.code_line import Code_line
 
 ################################################################################
@@ -21,12 +21,15 @@ class ProcCommand(Command):
     @staticmethod
     def execute(eargs):
         #@todo handle different parameters and default parameters
-        #@todo evaluate tokens between ','
-        variable_tokens = eargs.arguments.sub_tokens(eargs.arguments.find_op('('), eargs.arguments.find_op(')'))
-        value_tokens = eargs.context.pop_call_tokens()
-        for i in range(0, len(variable_tokens)):
-            if variable_tokens.is_keyword(i):
-                eargs.context.set_variable(variable_tokens.value(i), value_tokens.value(i))
+        variable_names = eargs.arguments.sub_tokens(eargs.arguments.find_op('('), eargs.arguments.find_op(')')).split_tokens_by_op(',')
+        variable_values = eargs.context.pop_call_tokens().split_tokens_by_op(',')
+
+        names = [str(tokens.value(0)) for tokens in variable_names]
+        evaluated_values = [tokens.evaluate() for tokens in variable_values]
+
+        #value_tokens = [token.evaluate() for token in variable_tokens]
+        for i in range(0, len(names)):
+            eargs.context.set_variable(names[i], evaluated_values[i])
 
 ################################################################################
 # END_PROC Command
@@ -79,7 +82,7 @@ class CallCommand(Command):
     @staticmethod
     def execute(eargs):
         i0 = eargs.arguments.find_op('(')
-        call_tokens = eargs.arguments.sub_tokens(i0, len(eargs.arguments))
+        call_tokens = eargs.arguments.sub_tokens(i0, len(eargs.arguments) - 1)
         eargs.context.push_call_tokens(call_tokens)
         eargs.context.execute_code(eargs.arguments.value_str(1))
 

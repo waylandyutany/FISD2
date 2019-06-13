@@ -57,10 +57,19 @@ class Tokens:
     def tokens(self):
         return self._tokens
 
-    def find_op(self, op):#@todo why not return all positions of op ?!?!
+    def find_op(self, op):#@todo why not use find_ops instead?!?!
         for i in range(0, len(self._tokens)):
             if self.is_op(i) and self.is_value(i,op):
                 return i
+
+    def find_ops(self, op):
+        return [i for i in range(0, len(self)) if self.is_op(i) and self.is_value(i,op)]
+
+    def split_tokens_by_op(self, op = ','):
+        ret = []
+        ops = [-1, len(self)]
+        ops[1:1] = self.find_ops(op)
+        return [ self.sub_tokens(ops[i],ops[i+1]) for i in range(0, len(ops)-1)]
 
     def sub_tokens(self, start, end):
         ''' create new Tokens from tokens between (start, end) '''
@@ -74,6 +83,7 @@ class Tokens:
         ret._tokens = self._tokens[start + 1 : end]
         del self._tokens[start + 1 : end]
         return ret
+
 ################################################################################
     def is_name(self, index):
         return self.__token(index, 0) == TOKEN_NAME
@@ -152,6 +162,13 @@ class Tokens:
     def evaluate_tokens(self, start_index, end_index):
         try:
             str_to_evaluate = " ".join((str(self.value(i)) for i in range(start_index + 1, end_index)))
-            return eval(str_to_evaluate, {'__builtins__':None}, _eval_funcs)
+            e = eval(str_to_evaluate, {'__builtins__':None}, _eval_funcs)
+            #@todo hack for evaluating "string" back to "string"
+            if str_to_evaluate.startswith('"'):
+                return '"{}"'.format(str(e))
+            return e
         except BaseException as e:
             raise Exception("'{}' in '{}'".format(e, str_to_evaluate))
+
+    def evaluate(self):
+        return self.evaluate_tokens(-1, len(self))
