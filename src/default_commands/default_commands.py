@@ -65,7 +65,7 @@ class SetCommand(Command):
     def rightest_function(tokens):
         ret = None
         for i in range(0, len(tokens) - 2):
-            if tokens.is_name(i) and tokens.is_op(i + 1) and tokens.is_value(i + 1, '('):
+            if tokens.is_keyword(i) and tokens.is_op(i + 1) and tokens.is_value(i + 1, '('):
                 nested_counter = 0
                 for j in range(i + 2, len(tokens)):
                     if tokens.is_op(j):
@@ -79,11 +79,18 @@ class SetCommand(Command):
                                 nested_counter -= 1
         return ret
 
+    @staticmethod
+    def mark_functions_as_keywords(tokens):
+        for i in range(0, len(tokens) - 2):
+            if tokens.is_name(i) and tokens.is_op(i + 1) and tokens.is_value(i + 1, '('):
+                tokens.mark_as_keyword(i)
+
     @classmethod
     def parse(cls, pargs):
         line_tokens = Code_line.get_line_tokens(pargs.code_line)
         line_number = Code_line.get_line_number(pargs.code_line)
 
+        cls.mark_functions_as_keywords(line_tokens)
         rightest_function = cls.rightest_function(line_tokens)
         var_index = 0
         while rightest_function:
