@@ -79,8 +79,7 @@ class CallCommand(Command):
     @staticmethod
     def execute(eargs):
         i0 = eargs.arguments.find_op('(')
-        i1 = eargs.arguments.find_op(')')
-        call_tokens = eargs.arguments.sub_tokens(i0, i1)
+        call_tokens = eargs.arguments.sub_tokens(i0, len(eargs.arguments))
         eargs.context.push_call_tokens(call_tokens)
         eargs.context.execute_code(eargs.arguments.value_str(1))
 

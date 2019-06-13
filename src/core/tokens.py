@@ -57,18 +57,19 @@ class Tokens:
     def tokens(self):
         return self._tokens
 
-    def find_op(self, op):
+    def find_op(self, op):#@todo why not return all positions of op ?!?!
         for i in range(0, len(self._tokens)):
             if self.is_op(i) and self.is_value(i,op):
                 return i
 
     def sub_tokens(self, start, end):
+        ''' create new Tokens from tokens between (start, end) '''
         ret = Tokens("")
         ret._tokens = self._tokens[start + 1 : end]
         return ret
 
     def pop_tokens(self, start, end):
-        ''' remove tokens between (start end) and returns them '''
+        ''' remove tokens between (start, end) and returns them '''
         ret = Tokens("")
         ret._tokens = self._tokens[start + 1 : end]
         del self._tokens[start + 1 : end]
@@ -100,6 +101,7 @@ class Tokens:
         return self.value_str(index).lower() == str(value).lower()
 
     def value(self, index):
+        ''' return string as "string" '''
         if self.is_number(index):
             try:
                 return int(self.__token(index, 1))
@@ -108,6 +110,7 @@ class Tokens:
         return self.__token(index, 1)
 
     def value_str(self, index):
+        ''' return string as string '''
         if self.is_string(index):
             return self.__token(index, 1)[1:-1]
         return str(self.__token(index, 1))
