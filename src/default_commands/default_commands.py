@@ -32,61 +32,69 @@ class JumpCommand(Command):
 @command_class()
 @tokenizer_class()
 class SetCommand(Command):
-    _SET = 'set'
-    _keyword = _SET
+    _keyword = 'set'
+
+    #@todo error when function name == variable name
+    @staticmethod
+    def split_function_calls(tokens):
+        ret = {}
+        for i in range(0, len(tokens) - 2):
+            if tokens.is_name(i) and tokens.is_op(i + 1) and tokens.is_value(i+1, '('):
+                pass
+
+        return ret
 
     @classmethod
-    def parse(cls, parse_args):
-        _, line_tokens, _ = Code_line.split(parse_args.code_line)
+    def parse(cls, pargs):
+        line_tokens = Code_line.get_line_tokens(pargs.code_line)
+        function_calls = cls.split_function_calls(line_tokens)
         line_tokens.mark_as_keyword(1)
 
-    @classmethod
-    def execute(cls, execute_args):
-        variable_name = execute_args.arguments.value(1)
+    @staticmethod
+    def execute(eargs):
+        variable_name = eargs.arguments.value(1)
         try:
-            evaluated_value = execute_args.arguments.evaluate_tokens(2, len(execute_args.arguments))
+            evaluated_value = eargs.arguments.evaluate_tokens(2, len(eargs.arguments))
         except Exception as e:
-            execute_args.logger.error("Exception during expression '{} = {}' evaluation! {}!".format(variable_name, string_to_evaluate, e))
+            eargs.logger.error("Exception during '{}' evaluation! {}!".format(variable_name, e))
             return
 
         #context.logger.debug("'{}' evaluated '{} = {}'".format(variable_name, string_to_evaluate, evaluated_value))
 
-        execute_args.context.set_variable(variable_name, evaluated_value)
+        eargs.context.set_variable(variable_name, evaluated_value)
 
-    @classmethod
-    def tokenize(cls, tokens, logger):
+    @staticmethod
+    def tokenize(tokens, logger):
         if tokens.is_name(0) and tokens.is_op(1) and tokens.is_value(1, '='):
-            tokens.insert_name(0, cls._SET)
+            tokens.insert_name(0, SetCommand._keyword)
 
 ################################################################################
 # PRINT Command
 ################################################################################
 @command_class()
 class PrintCommand(Command):
-    _PRINT = 'print'
-    _keyword = _PRINT
+    _keyword = 'print'
 
     @classmethod
-    def parse(cls, parse_args):
+    def parse(cls, pargs):
         pass
 
     @classmethod
-    def execute(cls, execute_args):
-        execute_args.logger.info("PRINT {}".format("".join( ( str(execute_args.arguments.value_str(i)) for i in range(1, len(execute_args.arguments)) ) )))
+    def execute(cls, eargs):
+        eargs.logger.info("PRINT {}".format("".join( ( str(eargs.arguments.value_str(i)) for i in range(1, len(eargs.arguments)) ) )))
 
 ################################################################################
 # EXECUTE Command
 ################################################################################
 @command_class()
 class ExecuteCommand(Command):
-    _EXECUTE = 'execute'
-    _keyword = _EXECUTE
+    _keyword = 'execute'
 
     @classmethod
-    def parse(cls, parse_args):
+    def parse(cls, pargs):
         pass
 
     @classmethod
-    def execute(cls, execute_args):
-        execute_args.context.execute_code(execute_args.arguments.value_str(1))
+    def execute(cls, eargs):
+        eargs.context.execute_code(eargs.arguments.value_str(1))
 

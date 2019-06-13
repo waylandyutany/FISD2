@@ -5,4 +5,11 @@ proc test_proc(arg0, arg1, arg2)
 	print "test_proc(" arg0, arg1, arg2 ")"
 endproc
 
+proc test_proc_sum(i0,i1)
+return i0 + i1
+endproc
+
 test_proc("kraken", 1, 2.0)
+
+r = test_proc_sum(1,1) + test_proc_sum(test_proc_sum(1,1),test_proc_sum(1,1))
+print r

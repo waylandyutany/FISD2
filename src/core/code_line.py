@@ -14,6 +14,10 @@ class Code_line:
         return code_line[cls._LINE_NUMBER]
 
     @classmethod
+    def get_line_tokens(cls, code_line):
+        return code_line[cls._TOKENS]
+
+    @classmethod
     def set_command_class(cls, code_line, command_class):
         code_line[cls._COMMAND_CLASS] = command_class
 
