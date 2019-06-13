@@ -60,9 +60,8 @@ class SetCommand(Command):
     _keyword = 'set'
 
     #@todo error when function name == variable name
-    #@todo only our functions are accepted !!!
     @staticmethod
-    def rightest_function(tokens):
+    def rightest_function(tokens, code):
         ret = None
         for i in range(0, len(tokens) - 2):
             if tokens.is_keyword(i) and tokens.is_op(i + 1) and tokens.is_value(i + 1, '('):
@@ -73,7 +72,9 @@ class SetCommand(Command):
                             nested_counter += 1
                         elif tokens.is_value(j, ')'):
                             if nested_counter == 0:
-                                ret = (i,j)
+                                # only our fisd functions are accepted
+                                if code.get_code_lines(tokens.value(i)):
+                                    ret = (i,j)
                                 break
                             else:
                                 nested_counter -= 1
@@ -91,7 +92,7 @@ class SetCommand(Command):
         line_number = Code_line.get_line_number(pargs.code_line)
 
         cls.mark_functions_as_keywords(line_tokens)
-        rightest_function = cls.rightest_function(line_tokens)
+        rightest_function = cls.rightest_function(line_tokens, pargs.code)
         var_index = 0
         while rightest_function:
             #@todo take a look on double set_ret0 in line_tokens !!!
@@ -108,7 +109,7 @@ class SetCommand(Command):
             pargs.code_lines_insertion.insert_before(line_number, call_code_line)
             pargs.code_lines_insertion.insert_before(line_number, call_ret_code_line)
 
-            rightest_function = cls.rightest_function(line_tokens)
+            rightest_function = cls.rightest_function(line_tokens, pargs.code)
             var_index += 1
 
         line_tokens.mark_as_keyword(1)
