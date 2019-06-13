@@ -56,7 +56,11 @@ class ReturnCommand(Command):
 
     @staticmethod
     def execute(eargs):
-        eargs.context.return_execute_code(None)
+        if len(eargs.arguments) > 1:
+            value = eargs.arguments.evaluate_tokens(0, len(eargs.arguments))
+            eargs.context.return_execute_code(value)
+        else:
+            eargs.context.return_execute_code(None)
 
 ################################################################################
 # CALL Command
@@ -84,3 +88,10 @@ class CallCommand(Command):
     def tokenize(tokens, logger):
         if tokens.is_name(0) and tokens.is_op(1) and tokens.is_value(1, '('):
             tokens.insert_name(0, CallCommand._keyword)
+
+    @staticmethod
+    def create_code_line(line_number, tokens):
+        tokens.insert_name(0, CallCommand._keyword)
+        tokens.mark_as_keyword(0)
+        code_line = Code_line.create(line_number, tokens, CallCommand)
+        return code_line

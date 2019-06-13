@@ -67,6 +67,12 @@ class Tokens:
         ret._tokens = self._tokens[start + 1 : end]
         return ret
 
+    def pop_tokens(self, start, end):
+        ''' remove tokens between (start end) and returns them '''
+        ret = Tokens("")
+        ret._tokens = self._tokens[start + 1 : end]
+        del self._tokens[start + 1 : end]
+        return ret
 ################################################################################
     def is_name(self, index):
         return self.__token(index, 0) == TOKEN_NAME
