@@ -27,4 +27,7 @@ class Code:
             return "'{}'.'{}'[{:03d}] : ".format(self._code[code_name][Code._FUNCTION_FILE_NAME], code_name, line_number)
         return "'{}'[{:03d}] : ".format(code_name, line_number)
 
+    def is_code_function(self, code_name):
+        return Code._FUNCTION_FILE_NAME in self._code[code_name]
+
 ################################################################################

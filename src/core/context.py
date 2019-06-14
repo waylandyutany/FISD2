@@ -15,19 +15,22 @@ class Context:
 
     _CODE_NAME = 'code_name'
     _CODE_INDEX = 'code_index'
-    _VAR_STACK = 'var_stack'
+    _CODE_IS_FUNCTION = 'is_function'
 
     _VAR_TYPE = 'type'
     _VAR_VALUE = 'value'
 
     def __init__(self, code):
         self._code = code
-        self._execution_stack = []
 
         self._call_tokens = None
         self._return = None
 
         self._logger = None
+
+        # thoose needs to be saved
+        self._execution_stack = []
+        self._variable_stack = [{}]
 
     @property
     def logger(self):
@@ -50,7 +53,7 @@ class Context:
         if not Context._variable_case_sensitive:
             name = name.lower()
 
-        var_stack = self._execution_stack[-1][Context._VAR_STACK]
+        var_stack = self._variable_stack[-1]
 
         if name in var_stack:
             return var_stack[name][Context._VAR_TYPE], var_stack[name][Context._VAR_VALUE]
@@ -64,7 +67,8 @@ class Context:
         if not Context._variable_case_sensitive:
             name = name.lower()
 
-        var_stack = self._execution_stack[-1][Context._VAR_STACK]
+        var_stack = self._variable_stack[-1]
+
         if isinstance(value, int):
             var_stack[name] = {Context._VAR_TYPE : TOKEN_NUMBER, Context._VAR_VALUE:value}
         elif isinstance(value, float):
@@ -76,7 +80,9 @@ class Context:
     def execute_code(self, code_name, call_stack_index = None):
         if call_stack_index == None:
             #creating code execution context
-            execution_context = {Context._CODE_NAME:code_name, Context._CODE_INDEX:0, Context._VAR_STACK:{}}
+            execution_context = {Context._CODE_NAME:code_name,
+                                 Context._CODE_INDEX:0,
+                                 Context._CODE_IS_FUNCTION:self._code.is_code_function(code_name)}
             #pushing code context to the stack
             self._execution_stack.append(execution_context)
         else:
