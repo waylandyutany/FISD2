@@ -54,9 +54,14 @@ class Context:
             name = name.lower()
 
         var_stack = self._variable_stack[-1]
-
         if name in var_stack:
             return var_stack[name][Context._VAR_TYPE], var_stack[name][Context._VAR_VALUE]
+
+        if len(self._variable_stack) > 1:
+            global_var_stack = self._variable_stack[0]
+            if name in global_var_stack:
+                return global_var_stack[name][Context._VAR_TYPE], global_var_stack[name][Context._VAR_VALUE]
+
         return TOKEN_NONE, None
 
     def get_variable(self, name):
@@ -85,6 +90,9 @@ class Context:
                                  Context._CODE_IS_FUNCTION:self._code.is_code_function(code_name)}
             #pushing code context to the stack
             self._execution_stack.append(execution_context)
+            if execution_context[Context._CODE_IS_FUNCTION]:
+                self._var_stack.append({})
+
         else:
             pass #@todo take by the call_stack_index
 
@@ -111,6 +119,9 @@ class Context:
             
         #popping code context from code stack
         self._execution_stack.pop()
+        if execution_context[Context._CODE_IS_FUNCTION]:
+            self._var_stack.pop()
+
 
     def jump_to_code(self, new_code_index):
         self._execution_stack[-1][Context._CODE_INDEX] = new_code_index - 1 # - 1 is due to #call_context[Context._CODE_INDEX] += 1 in execute_code loop!!!

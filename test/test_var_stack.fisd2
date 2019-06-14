@@ -1,0 +1,2 @@
+execute "test_var_stack_executed"
+print "test_var_stack"
