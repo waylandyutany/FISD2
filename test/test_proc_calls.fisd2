@@ -1,3 +1,4 @@
+execute "test_var_stack"
 
 proc test_proc(arg0, arg1, arg2)
 	print "test_proc(" arg0, arg1, arg2 ")"

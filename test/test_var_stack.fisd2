@@ -1,6 +1,6 @@
-set kraken = "kraken"
-set andromeda = "andromeda"
+set kraken = "kraken_str"
+set andromeda = "andromeda_str"
 execute "test_var_stack_executed"
-print "test_var_stack"
+print "test_var_stack_str"
 print kraken
 print andromeda
