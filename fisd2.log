@@ -1,0 +1,170 @@
+2019-06-14 10:37:09,316 - INFO - FISD2 version '2.0.0'.
+2019-06-14 10:37:09,319 - INFO - Arguments ['test/tc_*.fisd2']
+2019-06-14 10:37:09,320 - INFO - Options ['test/tc_*.fisd2']
+2019-06-14 10:37:09,321 - DEBUG - Tokenizers 'set', 'call'.
+2019-06-14 10:37:09,322 - DEBUG - Commands 'jump', 'set', 'print', 'execute', 'proc', 'endproc', 'return', 'call', 'setret', 'for', 'next', 'if', 'endif', 'else', 'elif'.
+2019-06-14 10:37:09,325 - INFO - Running 'test\tc_execute.fisd2'...
+2019-06-14 10:37:09,348 - INFO - Compilation time '0:00:00.021977'.
+2019-06-14 10:37:09,349 - INFO - 'tc_execute.fisd2'[008] : PRINT -0.16514186177539192
+2019-06-14 10:37:09,350 - INFO - 'executed2.fisd'[001] : PRINT executed2.fisd, Hello world2
+2019-06-14 10:37:09,351 - INFO - 'executed2.fisd'[001] : PRINT executed2.fisd, Hello world2
+2019-06-14 10:37:09,352 - INFO - 'executed1.fisd2'[001] : PRINT executed1.fisd2, "Hello world"
+2019-06-14 10:37:09,353 - INFO - 'executed2.fisd'[001] : PRINT executed2.fisd, Hello world2
+2019-06-14 10:37:09,354 - INFO - 'tc_execute.fisd2'.'test_print_proc'[004] : PRINT Hello from 2 test_print_proc
+2019-06-14 10:37:09,354 - INFO - Run time '0:00:00.004995'.
+2019-06-14 10:37:09,355 - INFO - Running 'test\tc_for_if_proc.fisd2'...
+2019-06-14 10:37:09,363 - INFO - Compilation time '0:00:00.007992'.
+2019-06-14 10:37:09,365 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[004] : PRINT 0,je parne
+2019-06-14 10:37:09,367 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[014] : PRINT 1,je neparne
+2019-06-14 10:37:09,369 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[004] : PRINT 2,je parne
+2019-06-14 10:37:09,372 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[014] : PRINT 3,je neparne
+2019-06-14 10:37:09,374 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[023] : PRINT 3,je delitelne troma
+2019-06-14 10:37:09,375 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[004] : PRINT 4,je parne
+2019-06-14 10:37:09,375 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[006] : PRINT Styri
+2019-06-14 10:37:09,377 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[014] : PRINT 5,je neparne
+2019-06-14 10:37:09,378 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[016] : PRINT >= Pat
+2019-06-14 10:37:09,379 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[004] : PRINT 6,je parne
+2019-06-14 10:37:09,380 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[008] : PRINT Sest
+2019-06-14 10:37:09,381 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[023] : PRINT 6,je delitelne troma
+2019-06-14 10:37:09,383 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[014] : PRINT 7,je neparne
+2019-06-14 10:37:09,384 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[016] : PRINT >= Pat
+2019-06-14 10:37:09,385 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[019] : PRINT Sedem
+2019-06-14 10:37:09,387 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[004] : PRINT 8,je parne
+2019-06-14 10:37:09,388 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[011] : PRINT Osem
+2019-06-14 10:37:09,389 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[014] : PRINT 9,je neparne
+2019-06-14 10:37:09,390 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[016] : PRINT >= Pat
+2019-06-14 10:37:09,391 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[023] : PRINT 9,je delitelne troma
+2019-06-14 10:37:09,392 - INFO - Run time '0:00:00.028971'.
+2019-06-14 10:37:09,393 - INFO - Running 'test\tc_loops.fisd2'...
+2019-06-14 10:37:09,405 - INFO - Compilation time '0:00:00.010989'.
+2019-06-14 10:37:09,407 - INFO - 'tc_loops.fisd2'[003] : PRINT -1 -1
+2019-06-14 10:37:09,408 - INFO - 'tc_loops.fisd2'[003] : PRINT -1 0
+2019-06-14 10:37:09,409 - INFO - 'tc_loops.fisd2'[003] : PRINT -1 1
+2019-06-14 10:37:09,410 - INFO - 'tc_loops.fisd2'[003] : PRINT 0 -1
+2019-06-14 10:37:09,411 - INFO - 'tc_loops.fisd2'[003] : PRINT 0 0
+2019-06-14 10:37:09,412 - INFO - 'tc_loops.fisd2'[003] : PRINT 0 1
+2019-06-14 10:37:09,413 - INFO - 'tc_loops.fisd2'[003] : PRINT 1 -1
+2019-06-14 10:37:09,414 - INFO - 'tc_loops.fisd2'[003] : PRINT 1 0
+2019-06-14 10:37:09,415 - INFO - 'tc_loops.fisd2'[003] : PRINT 1 1
+2019-06-14 10:37:09,419 - INFO - 'tc_loops.fisd2'[011] : PRINT 2 2
+2019-06-14 10:37:09,421 - INFO - 'tc_loops.fisd2'[015] : PRINT -1 -1
+2019-06-14 10:37:09,422 - INFO - 'tc_loops.fisd2'[015] : PRINT -1 1
+2019-06-14 10:37:09,423 - INFO - 'tc_loops.fisd2'[015] : PRINT 1 -1
+2019-06-14 10:37:09,424 - INFO - 'tc_loops.fisd2'[015] : PRINT 1 1
+2019-06-14 10:37:09,428 - INFO - 'tc_loops.fisd2'[023] : PRINT 3 3
+2019-06-14 10:37:09,428 - INFO - 'tc_loops.fisd2'[025] : PRINT for i from -1 to 2
+2019-06-14 10:37:09,429 - INFO - 'tc_loops.fisd2'[027] : PRINT -1
+2019-06-14 10:37:09,431 - INFO - 'tc_loops.fisd2'[027] : PRINT 0
+2019-06-14 10:37:09,432 - INFO - 'tc_loops.fisd2'[027] : PRINT 1
+2019-06-14 10:37:09,433 - INFO - 'tc_loops.fisd2'[030] : PRINT for i from 1 to -2
+2019-06-14 10:37:09,434 - INFO - 'tc_loops.fisd2'[032] : PRINT 1
+2019-06-14 10:37:09,435 - INFO - 'tc_loops.fisd2'[032] : PRINT 0
+2019-06-14 10:37:09,435 - INFO - 'tc_loops.fisd2'[032] : PRINT -1
+2019-06-14 10:37:09,436 - INFO - 'tc_loops.fisd2'[035] : PRINT for i from 1 to -2 step -2
+2019-06-14 10:37:09,437 - INFO - 'tc_loops.fisd2'[037] : PRINT 1
+2019-06-14 10:37:09,438 - INFO - 'tc_loops.fisd2'[037] : PRINT -1
+2019-06-14 10:37:09,439 - INFO - Run time '0:00:00.032973'.
+2019-06-14 10:37:09,440 - INFO - Running 'test\tc_proc_calls.fisd2'...
+2019-06-14 10:37:09,451 - INFO - Compilation time '0:00:00.010010'.
+2019-06-14 10:37:09,453 - INFO - 'tc_proc_calls.fisd2'.'test_proc2'[002] : PRINT test_proc(kraken,1,2.0)
+2019-06-14 10:37:09,458 - INFO - 'tc_proc_calls.fisd2'[017] : PRINT -24
+2019-06-14 10:37:09,459 - INFO - 'tc_proc_calls.fisd2'[020] : PRINT -0.9899924966004454
+2019-06-14 10:37:09,462 - INFO - 'tc_proc_calls.fisd2'[023] : PRINT 12
+2019-06-14 10:37:09,466 - INFO - 'tc_proc_calls.fisd2'[026] : PRINT 6
+2019-06-14 10:37:09,467 - INFO - Run time '0:00:00.014979'.
+2019-06-14 10:37:09,468 - INFO - Running 'test\tc_var_stack.fisd2'...
+2019-06-14 10:37:09,473 - INFO - Compilation time '0:00:00.003994'.
+2019-06-14 10:37:09,474 - INFO - 'test_var_stack_executed.fisd2'[002] : PRINT test_var_stack_executed_str
+2019-06-14 10:37:09,475 - INFO - 'test_var_stack_executed.fisd2'[003] : PRINT andromeda_executed_str
+2019-06-14 10:37:09,477 - INFO - 'test_var_stack_executed.fisd2'.'test_proc'[006] : PRINT test_proc ,andromeda_executed_str
+2019-06-14 10:37:09,477 - INFO - 'test_var_stack_executed.fisd2'.'test_proc'[007] : PRINT test_proc ,kraken_replace
+2019-06-14 10:37:09,479 - INFO - 'test_var_stack_executed.fisd2'[010] : PRINT kraken_str
+2019-06-14 10:37:09,481 - INFO - 'tc_var_stack.fisd2'[004] : PRINT test_var_stack_str
+2019-06-14 10:37:09,481 - INFO - 'tc_var_stack.fisd2'[005] : PRINT kraken_str
+2019-06-14 10:37:09,482 - INFO - 'tc_var_stack.fisd2'[006] : PRINT andromeda_executed_str
+2019-06-14 10:37:09,484 - INFO - Run time '0:00:00.009989'.
+2019-06-14 10:38:51,557 - INFO - FISD2 version '2.0.0'.
+2019-06-14 10:38:51,560 - INFO - Arguments ['test/tc_*.fisd2']
+2019-06-14 10:38:51,561 - INFO - Options ['test/tc_*.fisd2']
+2019-06-14 10:38:51,562 - DEBUG - Tokenizers 'set', 'call'.
+2019-06-14 10:38:51,563 - DEBUG - Commands 'jump', 'set', 'print', 'execute', 'proc', 'endproc', 'return', 'call', 'setret', 'for', 'next', 'if', 'endif', 'else', 'elif'.
+2019-06-14 10:38:51,567 - INFO - Running 'test\tc_execute.fisd2'...
+2019-06-14 10:38:51,603 - INFO - Compilation time '0:00:00.033972'.
+2019-06-14 10:38:51,605 - INFO - 'tc_execute.fisd2'[008] : PRINT -0.16514186177539192
+2019-06-14 10:38:51,608 - INFO - 'executed2.fisd'[001] : PRINT executed2.fisd, Hello world2
+2019-06-14 10:38:51,609 - INFO - 'executed2.fisd'[001] : PRINT executed2.fisd, Hello world2
+2019-06-14 10:38:51,610 - INFO - 'executed1.fisd2'[001] : PRINT executed1.fisd2, "Hello world"
+2019-06-14 10:38:51,611 - INFO - 'executed2.fisd'[001] : PRINT executed2.fisd, Hello world2
+2019-06-14 10:38:51,613 - INFO - 'tc_execute.fisd2'.'test_print_proc'[004] : PRINT Hello from 2 test_print_proc
+2019-06-14 10:38:51,614 - INFO - Run time '0:00:00.009960'.
+2019-06-14 10:38:51,614 - INFO - Running 'test\tc_for_if_proc.fisd2'...
+2019-06-14 10:38:51,636 - INFO - Compilation time '0:00:00.020975'.
+2019-06-14 10:38:51,641 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[004] : PRINT 0,je parne
+2019-06-14 10:38:51,644 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[014] : PRINT 1,je neparne
+2019-06-14 10:38:51,646 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[004] : PRINT 2,je parne
+2019-06-14 10:38:51,648 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[014] : PRINT 3,je neparne
+2019-06-14 10:38:51,649 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[023] : PRINT 3,je delitelne troma
+2019-06-14 10:38:51,651 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[004] : PRINT 4,je parne
+2019-06-14 10:38:51,652 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[006] : PRINT Styri
+2019-06-14 10:38:51,654 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[014] : PRINT 5,je neparne
+2019-06-14 10:38:51,655 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[016] : PRINT >= Pat
+2019-06-14 10:38:51,657 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[004] : PRINT 6,je parne
+2019-06-14 10:38:51,658 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[008] : PRINT Sest
+2019-06-14 10:38:51,660 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[023] : PRINT 6,je delitelne troma
+2019-06-14 10:38:51,661 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[014] : PRINT 7,je neparne
+2019-06-14 10:38:51,662 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[016] : PRINT >= Pat
+2019-06-14 10:38:51,663 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[019] : PRINT Sedem
+2019-06-14 10:38:51,666 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[004] : PRINT 8,je parne
+2019-06-14 10:38:51,668 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[011] : PRINT Osem
+2019-06-14 10:38:51,669 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[014] : PRINT 9,je neparne
+2019-06-14 10:38:51,670 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[016] : PRINT >= Pat
+2019-06-14 10:38:51,672 - INFO - 'tc_for_if_proc.fisd2'.'test_for'[023] : PRINT 9,je delitelne troma
+2019-06-14 10:38:51,674 - INFO - Run time '0:00:00.035962'.
+2019-06-14 10:38:51,675 - INFO - Running 'test\tc_loops.fisd2'...
+2019-06-14 10:38:51,685 - INFO - Compilation time '0:00:00.008993'.
+2019-06-14 10:38:51,686 - INFO - 'tc_loops.fisd2'[003] : PRINT -1 -1
+2019-06-14 10:38:51,687 - INFO - 'tc_loops.fisd2'[003] : PRINT -1 0
+2019-06-14 10:38:51,688 - INFO - 'tc_loops.fisd2'[003] : PRINT -1 1
+2019-06-14 10:38:51,690 - INFO - 'tc_loops.fisd2'[003] : PRINT 0 -1
+2019-06-14 10:38:51,691 - INFO - 'tc_loops.fisd2'[003] : PRINT 0 0
+2019-06-14 10:38:51,692 - INFO - 'tc_loops.fisd2'[003] : PRINT 0 1
+2019-06-14 10:38:51,695 - INFO - 'tc_loops.fisd2'[003] : PRINT 1 -1
+2019-06-14 10:38:51,696 - INFO - 'tc_loops.fisd2'[003] : PRINT 1 0
+2019-06-14 10:38:51,697 - INFO - 'tc_loops.fisd2'[003] : PRINT 1 1
+2019-06-14 10:38:51,704 - INFO - 'tc_loops.fisd2'[011] : PRINT 2 2
+2019-06-14 10:38:51,706 - INFO - 'tc_loops.fisd2'[015] : PRINT -1 -1
+2019-06-14 10:38:51,707 - INFO - 'tc_loops.fisd2'[015] : PRINT -1 1
+2019-06-14 10:38:51,709 - INFO - 'tc_loops.fisd2'[015] : PRINT 1 -1
+2019-06-14 10:38:51,710 - INFO - 'tc_loops.fisd2'[015] : PRINT 1 1
+2019-06-14 10:38:51,714 - INFO - 'tc_loops.fisd2'[023] : PRINT 3 3
+2019-06-14 10:38:51,715 - INFO - 'tc_loops.fisd2'[025] : PRINT for i from -1 to 2
+2019-06-14 10:38:51,716 - INFO - 'tc_loops.fisd2'[027] : PRINT -1
+2019-06-14 10:38:51,716 - INFO - 'tc_loops.fisd2'[027] : PRINT 0
+2019-06-14 10:38:51,717 - INFO - 'tc_loops.fisd2'[027] : PRINT 1
+2019-06-14 10:38:51,718 - INFO - 'tc_loops.fisd2'[030] : PRINT for i from 1 to -2
+2019-06-14 10:38:51,719 - INFO - 'tc_loops.fisd2'[032] : PRINT 1
+2019-06-14 10:38:51,720 - INFO - 'tc_loops.fisd2'[032] : PRINT 0
+2019-06-14 10:38:51,721 - INFO - 'tc_loops.fisd2'[032] : PRINT -1
+2019-06-14 10:38:51,722 - INFO - 'tc_loops.fisd2'[035] : PRINT for i from 1 to -2 step -2
+2019-06-14 10:38:51,723 - INFO - 'tc_loops.fisd2'[037] : PRINT 1
+2019-06-14 10:38:51,724 - INFO - 'tc_loops.fisd2'[037] : PRINT -1
+2019-06-14 10:38:51,724 - INFO - Run time '0:00:00.038957'.
+2019-06-14 10:38:51,725 - INFO - Running 'test\tc_proc_calls.fisd2'...
+2019-06-14 10:38:51,736 - INFO - Compilation time '0:00:00.009993'.
+2019-06-14 10:38:51,739 - INFO - 'tc_proc_calls.fisd2'.'test_proc2'[002] : PRINT test_proc(kraken,1,2.0)
+2019-06-14 10:38:51,744 - INFO - 'tc_proc_calls.fisd2'[017] : PRINT -24
+2019-06-14 10:38:51,745 - INFO - 'tc_proc_calls.fisd2'[020] : PRINT -0.9899924966004454
+2019-06-14 10:38:51,749 - INFO - 'tc_proc_calls.fisd2'[023] : PRINT 12
+2019-06-14 10:38:51,753 - INFO - 'tc_proc_calls.fisd2'[026] : PRINT 6
+2019-06-14 10:38:51,753 - INFO - Run time '0:00:00.015985'.
+2019-06-14 10:38:51,754 - INFO - Running 'test\tc_var_stack.fisd2'...
+2019-06-14 10:38:51,759 - INFO - Compilation time '0:00:00.004016'.
+2019-06-14 10:38:51,760 - INFO - 'test_var_stack_executed.fisd2'[002] : PRINT test_var_stack_executed_str
+2019-06-14 10:38:51,761 - INFO - 'test_var_stack_executed.fisd2'[003] : PRINT andromeda_executed_str
+2019-06-14 10:38:51,762 - INFO - 'test_var_stack_executed.fisd2'.'test_proc'[006] : PRINT test_proc ,andromeda_executed_str
+2019-06-14 10:38:51,763 - INFO - 'test_var_stack_executed.fisd2'.'test_proc'[007] : PRINT test_proc ,kraken_replace
+2019-06-14 10:38:51,764 - INFO - 'test_var_stack_executed.fisd2'[010] : PRINT kraken_str
+2019-06-14 10:38:51,764 - INFO - 'tc_var_stack.fisd2'[004] : PRINT test_var_stack_str
+2019-06-14 10:38:51,765 - INFO - 'tc_var_stack.fisd2'[005] : PRINT kraken_str
+2019-06-14 10:38:51,767 - INFO - 'tc_var_stack.fisd2'[006] : PRINT andromeda_executed_str
+2019-06-14 10:38:51,767 - INFO - Run time '0:00:00.007972'.
