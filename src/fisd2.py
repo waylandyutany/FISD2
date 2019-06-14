@@ -12,6 +12,7 @@ import default_commands.default_commands
 import default_commands.loop_commands
 import default_commands.conditions_commands
 import default_commands.procedure_commands
+import default_commands.evaluation_commands
 
 ################################################################################
 # @todo

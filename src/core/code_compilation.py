@@ -169,7 +169,7 @@ class Code_compilation(Code):
     def __extract_functions(self, logger):
         #@todo error when end proc w/o proc keyword
         #@todo error when no name token after proc token
-        #@todo error when function name already exists
+        #@todo error when function name already exists, we should allow same function name but not for same scope, but we should at least warn
         #@todo error when proc within proc, no nested proc supported
         #@todo error no endproc
         functions_code = {}
