@@ -145,7 +145,7 @@ class PrintCommand(Command):
 
     @classmethod
     def execute(cls, eargs):
-        eargs.logger.info("PRINT {}".format("".join( ( str(eargs.arguments.value(i)) for i in range(1, len(eargs.arguments)) ) )))
+        eargs.logger.info("PRINT {}".format("".join( ( str(eargs.arguments.value_str(i)) for i in range(1, len(eargs.arguments)) ) )))
 
 ################################################################################
 # EXECUTE Command
