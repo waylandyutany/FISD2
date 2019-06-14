@@ -1,1 +1,9 @@
+set andromeda = "andromeda_executed"
 print "test_var_stack_executed"
+print kraken
+print andromeda
+proc test_proc(name)
+print "test_proc ", name
+print "test_proc ", kraken
+endproc
+test_proc(andromeda)

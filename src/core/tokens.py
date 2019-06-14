@@ -163,9 +163,6 @@ class Tokens:
         try:
             str_to_evaluate = " ".join((str(self.value(i)) for i in range(start_index + 1, end_index)))
             e = eval(str_to_evaluate, {'__builtins__':None}, _eval_funcs)
-            #@todo hack for evaluating "string" back to "string"
-            if str_to_evaluate.startswith('"'):
-                return '"{}"'.format(str(e))
             return e
         except BaseException as e:
             raise Exception("'{}' in '{}'".format(e, str_to_evaluate))
