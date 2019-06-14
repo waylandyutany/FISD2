@@ -31,6 +31,7 @@ class Command:
     #Any token with name in this list is automaticaly marked as keyword.
     _keywords = None
     _keyword = None
+    _evaluate = False #if true function calls are evaluated
 
     @staticmethod
     def parse(parse_args):

@@ -2,8 +2,6 @@ from core.commands import command_class, Command
 from core.tokens import tokenizer_class, TOKEN_NAME
 from core.code_line import Code_line
 
-from default_commands.evaluation_commands import Code_evaluation
-
 ################################################################################
 # JUMP Command
 ################################################################################
@@ -35,10 +33,10 @@ class JumpCommand(Command):
 @tokenizer_class()
 class SetCommand(Command):
     _keyword = 'set'
+    _evaluate = True
 
     @classmethod
     def parse(cls, pargs):
-        Code_evaluation.evaluate_function_calls(pargs)
         line_tokens = Code_line.get_line_tokens(pargs.code_line)
         line_tokens.mark_as_keyword(1)
 
