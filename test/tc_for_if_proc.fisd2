@@ -22,7 +22,7 @@ FOR I FROM 0 TO 10
     if $I > 0 and $I%3==0 then
         print $I, "je delitelne troma"
     endif
-	return
+	#return
 next I
 endproc
 test_for()

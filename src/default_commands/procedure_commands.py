@@ -24,8 +24,8 @@ class ProcCommand(Command):
         variable_names = eargs.arguments.sub_tokens(eargs.arguments.find_op('('), eargs.arguments.find_op(')')).split_tokens_by_op(',')
         variable_values = eargs.context.pop_call_tokens().split_tokens_by_op(',')
 
-        names = [str(tokens.value(0)) for tokens in variable_names]
-        evaluated_values = [tokens.evaluate() for tokens in variable_values]
+        names = [str(tokens.value(0)) for tokens in variable_names if not tokens.empty()]
+        evaluated_values = [tokens.evaluate() for tokens in variable_values if not tokens.empty()]
 
         #value_tokens = [token.evaluate() for token in variable_tokens]
         for i in range(0, len(names)):

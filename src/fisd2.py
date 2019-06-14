@@ -1,4 +1,4 @@
-import parser, sys, os
+import parser, sys, os, glob
 from datetime import datetime
 
 from core.context import Context
@@ -19,7 +19,6 @@ import default_commands.evaluation_commands
 # 1. Generalize logger preface
 # 2. Handle function name existances between functions and files
 # 3. error codes and descriptions
-
 ################################################################################
 __app_name__ = 'FISD2'
 __app_version__ = '2.0.0'
@@ -27,8 +26,6 @@ __app_version__ = '2.0.0'
 ################################################################################
 Logger.init_logger()
 logger = Logger(Logger.log)
-code = Code_compilation()
-context = Context(code)
 
 ################################################################################
 if __name__ == '__main__':
@@ -51,16 +48,21 @@ if __name__ == '__main__':
     Logger.log.debug("Tokenizers {}.".format(", ".join(["'{}'".format(name) for name in Tokenizers.tokenizers])))
     Logger.log.debug("Commands {}.".format(", ".join(["'{}'".format(name) for name in Commands.commands])))
 
-    start_compilation_time = datetime.now()
-    #code compilation from file
-    if os.path.isfile(args[0]):
-        code.compile_from_file(args[0], logger)
-    compilation_time = datetime.now() - start_compilation_time
-    Logger.log.info("Compilation time '{}'.".format(compilation_time))
-    if logger._errors > 0:
-        sys.exit(0)
+    for file_name in glob.glob(args[0]):
+        logger.reset_errors()
+        Logger.log.info("Running '{}'...".format(file_name))
+        code = Code_compilation()
+        context = Context(code)
 
-    start_run_time = datetime.now()
-    context.run(logger)
-    run_time = datetime.now() - start_run_time
-    Logger.log.info("Run time '{}'.".format(run_time))
+        start_compilation_time = datetime.now()
+        #code compilation from file
+        code.compile_from_file(file_name, logger)
+        compilation_time = datetime.now() - start_compilation_time
+        Logger.log.info("Compilation time '{}'.".format(compilation_time))
+        if logger._errors > 0:
+            continue
+
+        start_run_time = datetime.now()
+        context.run(logger)
+        run_time = datetime.now() - start_run_time
+        Logger.log.info("Run time '{}'.".format(run_time))

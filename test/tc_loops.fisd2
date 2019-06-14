@@ -37,6 +37,3 @@ for i from 1 to -2 step -2
 	print i
 next
 
-execute "test_for_if_proc"
-execute "test_execute"
-

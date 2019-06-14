@@ -13,7 +13,7 @@
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId>Global|PythonCore|3.7</InterpreterId>
     <IsWindowsApplication>False</IsWindowsApplication>
-    <CommandLineArguments>test/test_proc_calls.fisd2</CommandLineArguments>
+    <CommandLineArguments>test/tc_*.fisd2</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
@@ -42,8 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="doc\" />
-    <Folder Include="src\default_commands\" />
     <Folder Include="test\" />
+    <Folder Include="src\default_commands\" />
     <Folder Include="src\" />
     <Folder Include="src\core\" />
   </ItemGroup>
@@ -55,11 +55,11 @@
     <Content Include="doc\test_cases.txt" />
     <Content Include="test\executed1.fisd2" />
     <Content Include="test\executed2.fisd" />
-    <Content Include="test\test_execute.fisd2" />
-    <Content Include="test\test_for_if_proc.fisd2" />
-    <Content Include="test\test_loops.fisd2" />
-    <Content Include="test\test_proc_calls.fisd2" />
-    <Content Include="test\test_var_stack.fisd2" />
+    <Content Include="test\tc_execute.fisd2" />
+    <Content Include="test\tc_for_if_proc.fisd2" />
+    <Content Include="test\tc_loops.fisd2" />
+    <Content Include="test\tc_proc_calls.fisd2" />
+    <Content Include="test\tc_var_stack.fisd2" />
     <Content Include="test\test_var_stack_executed.fisd2" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

@@ -1,5 +1,5 @@
 from core.commands import command_class, Command
-from core.tokens import tokenizer_class, TOKEN_NAME
+from core.tokens import tokenizer_class, TOKEN_NAME, Tokens
 from core.code_line import Code_line
 
 ################################################################################

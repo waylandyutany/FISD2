@@ -50,6 +50,9 @@ class Logger:
         if self._log:
             self._log.error(msg, *args, **kwargs)
 
+    def reset_errors(self):
+        self._errors = 0
+
     def critical(self, msg, *args, **kwargs):
         msg = self.preface + str(msg)
         self._criticals += 1
