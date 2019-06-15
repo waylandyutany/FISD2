@@ -156,6 +156,7 @@ class Code_compilation(Code):
             self.__insert_code_lines(parse_args.code_lines, parse_args.code_lines_insertion)
 
     def __insert_code_lines(self, code_lines, insertion):
+        #@todo move label if avaliable at the beginning of line with same line numbers !!!
         i = 0
         while i < len(code_lines):
             line_number = Code_line.get_line_number(code_lines[i])
