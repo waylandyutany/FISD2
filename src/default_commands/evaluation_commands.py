@@ -62,10 +62,9 @@ class Code_evaluation:
         line_tokens = Code_line.get_line_tokens(pargs.code_line)
         line_number = Code_line.get_line_number(pargs.code_line)
         cls.mark_functions_as_keywords(line_tokens)
-        rightest_function = cls.rightest_function(line_tokens, pargs.code)
+        rightest_function = cls.rightest_function(line_tokens, pargs.code)#@ can be done via generator and ienumerate to get the var_index
         var_index = 0
         while rightest_function:
-            #@todo take a look on double set_ret0 in line_tokens !!!
             #@todo handle already existing varn_name !!!
             var_name = "setret_{}".format(var_index)
             i, j = rightest_function

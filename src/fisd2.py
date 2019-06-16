@@ -20,7 +20,7 @@ import default_commands.evaluation_commands
 # 2. Handle function name existances between functions and files
 # 3. error codes and descriptions
 # 4. test cases for recursion with and without return
-# 5. default return value of no return
+# 5. error when variable name equals to keywords
 ################################################################################
 __app_name__ = 'FISD2'
 __app_version__ = '2.0.0'
