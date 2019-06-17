@@ -1,3 +1,8 @@
+# @todo
+# 1. Improve errors, descriptions and create tcs for them
+# 2. Better handling error file/function and line number preface
+# 3. Error when same names as variables, function names, script files, fisd functions and keywords
+
 ################################################################################
 class Error:
     def __init__(self, _code, _string):

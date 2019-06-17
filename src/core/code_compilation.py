@@ -1,4 +1,4 @@
-from core.code import Code
+from core.code_json import Code_json
 from core.tokens import Tokenizers, Tokens
 from core.commands import Commands, ParseArgs
 from core.compile_errors import CompileError
@@ -49,7 +49,7 @@ class Code_labels:
 
 ################################################################################
 ################################################################################
-class Code_compilation(Code):
+class Code_compilation(Code_json):
     def __init__(self):
         self._code_path = None
         return super().__init__()
@@ -92,7 +92,7 @@ class Code_compilation(Code):
 
         if file_name in self._code:
             return file_name
-        self._code[file_name] = {Code._CODE_LINES:[]}
+        self._code[file_name] = Code_lines.create()
 
         #logger.debug("Compiling fisd file '{}'...".format(file_path))
 
@@ -111,9 +111,7 @@ class Code_compilation(Code):
                 self.__process_execute_tokens(tokens, logger)
 
                 if not tokens.empty():
-                    self._code[file_name][Code._CODE_LINES].append(Code_line.create(line_number, tokens, None))
-                    #logger.preface = "'{}'[{}] : ".format(file_name, line_number)
-                    #logger.debug("{}".format(tokens.tokens()))
+                    Code_lines.get_code_lines(self._code[file_name]).append(Code_line.create(line_number, tokens, None))
 
         return file_name
 
@@ -185,8 +183,7 @@ class Code_compilation(Code):
                 last_line_number, last_line_tokens = proc_code_lines[i+1]
                 function_name = first_line_tokens.value(1)
                 function_code_lines = Code_lines.move(code_lines, first_line_number, last_line_number)
-                functions_code[function_name] = {Code._CODE_LINES:function_code_lines,
-                                                Code._FUNCTION_FILE_NAME:code_name}
+                functions_code[function_name] = Code_lines.create_function_code_lines(function_name, function_code_lines)
 
         for function_code in functions_code:
             self._code[function_code] = functions_code[function_code]

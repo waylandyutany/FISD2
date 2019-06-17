@@ -7,12 +7,6 @@ class Code:
         self._code = {}
         self._main_code_name = None
 
-    def load_from_file(self, file_name, logger):
-        ''' Loading already compiled code from the file.'''
-
-    def save_to_file(self, file_name, logger):
-        ''' Saving compiled code to the file.'''
-
 ################################################################################
     def main_code_name(self):
         return self._main_code_name

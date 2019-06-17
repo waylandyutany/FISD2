@@ -13,14 +13,10 @@ import default_commands.loop_commands
 import default_commands.conditions_commands
 import default_commands.procedure_commands
 import default_commands.evaluation_commands
+import default_commands.fisd_commands
 
 ################################################################################
 # @todo
-# 1. Generalize logger preface
-# 2. Handle function name existances between functions and files
-# 3. error codes and descriptions
-# 4. test cases for recursion with and without return
-# 5. error when variable name equals to keywords
 ################################################################################
 __app_name__ = 'FISD2'
 __app_version__ = '2.0.0'

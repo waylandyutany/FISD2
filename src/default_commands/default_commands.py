@@ -49,8 +49,6 @@ class SetCommand(Command):
             eargs.logger.error("Exception during '{}' evaluation! {}!".format(variable_name, e))
             return
 
-        #context.logger.debug("'{}' evaluated '{} = {}'".format(variable_name, string_to_evaluate, evaluated_value))
-
         eargs.context.set_variable(variable_name, evaluated_value)
 
     @staticmethod

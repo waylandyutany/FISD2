@@ -24,6 +24,7 @@
   <ItemGroup>
     <Compile Include="src\core\code.py" />
     <Compile Include="src\core\code_compilation.py" />
+    <Compile Include="src\core\code_json.py" />
     <Compile Include="src\core\code_line.py" />
     <Compile Include="src\core\code_lines.py" />
     <Compile Include="src\core\commands.py" />
@@ -35,6 +36,7 @@
     <Compile Include="src\default_commands\conditions_commands.py" />
     <Compile Include="src\default_commands\default_commands.py" />
     <Compile Include="src\default_commands\evaluation_commands.py" />
+    <Compile Include="src\default_commands\fisd_commands.py" />
     <Compile Include="src\default_commands\loop_commands.py" />
     <Compile Include="src\default_commands\procedure_commands.py" />
     <Compile Include="src\default_commands\__init__.py" />

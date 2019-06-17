@@ -1,8 +1,9 @@
 from core.code_line import Code_line
+from core.code import Code
 
 class Code_lines:
-    @classmethod
-    def filter(cls, code_lines, filters):
+    @staticmethod
+    def filter(code_lines, filters):
         ret = []
         for i in range(0, len(code_lines)):
             line_number, line_tokens, _ = Code_line.split(code_lines[i])
@@ -10,8 +11,8 @@ class Code_lines:
                 ret.append((line_number, line_tokens))
         return ret
 
-    @classmethod
-    def move(cls, code_lines, first_line_number, last_line_number):
+    @staticmethod
+    def move(code_lines, first_line_number, last_line_number):
         ret = []
         from_index = 0
         to_index = len(code_lines)
@@ -25,3 +26,17 @@ class Code_lines:
                 from_index += 1
 
         return ret
+
+
+    @staticmethod
+    def create():
+        return {Code._CODE_LINES:[]}
+
+    @staticmethod
+    def create_function_code_lines(function_file_name, function_code_lines):
+        return {Code._CODE_LINES:function_code_lines,
+                Code._FUNCTION_FILE_NAME:function_file_name}
+
+    @staticmethod
+    def get_code_lines(code):
+        return code[Code._CODE_LINES]
