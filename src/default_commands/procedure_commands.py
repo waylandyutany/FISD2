@@ -52,6 +52,7 @@ class EndProcCommand(Command):
 @command_class()
 class ReturnCommand(Command):
     _keyword = 'return'
+    _evaluate = True
 
     @staticmethod
     def parse(pargs):
