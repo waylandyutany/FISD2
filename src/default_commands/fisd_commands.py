@@ -14,5 +14,5 @@ class Fisd_store_contextCommand(Command):
 
     @staticmethod
     def execute(eargs):
-        pass
+        eargs.context.store_context(eargs.arguments.value_str(1) if eargs.arguments.value(1) else None)
 
