@@ -59,7 +59,7 @@ class Code_compilation(Code_json):
         return super().__init__()
 
 ################################################################################
-    def find_fisd_file(self, file_name):
+    def __find_fisd_file(self, file_name):
         dir_name = os.path.dirname(file_name)
         name, ext = os.path.splitext(os.path.basename(file_name))
 
@@ -88,7 +88,7 @@ class Code_compilation(Code_json):
 
 ################################################################################
     def __tokenize_from_file(self, _file_name, logger):
-        file_name, file_path = self.find_fisd_file(_file_name)
+        file_name, file_path = self.__find_fisd_file(_file_name)
         if not file_name:
             logger.error(CompileError.non_existing_file_name(_file_name))
             return file_name

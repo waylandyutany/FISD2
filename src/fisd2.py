@@ -18,6 +18,7 @@ import default_commands.fisd_commands
 
 ################################################################################
 # @todo
+# 0. !!! fix preface mess !!!
 # 1. store_context from fisd, from cmd switch, for one and multiple files, with file_name specified with automatical file name from code name(for one and multiple files :-))
 # 2. store context folder can be overwritten with cmd argument and with fisd command
 ################################################################################
@@ -29,7 +30,7 @@ logger = Logger(Logger.log)
 ################################################################################
 def compile_to_file(fisd_file_name, logger):
     fisd_bin_file_name = fisd_file_name + ".bin"
-    logger.info("Compiling '{}' to '{}'...".format(fisd_file_name, fisd_bin_file_name))
+    Logger.log.info("Compiling '{}' to '{}'...".format(fisd_file_name, fisd_bin_file_name))
 
     code = Code_compilation()
     context = Context(code, logger)
@@ -38,15 +39,15 @@ def compile_to_file(fisd_file_name, logger):
     #code compilation from file
     code.compile_from_file(fisd_file_name, logger)
     compilation_time = datetime.now() - start_compilation_time
-    logger.info("Compilation time '{}'.".format(compilation_time))
+    Logger.log.info("Compilation time '{}'.".format(compilation_time))
 
     start_store_time = datetime.now()
     context.store_context(fisd_bin_file_name)
     store_time = datetime.now() - start_store_time
-    logger.info("Storing time '{}'.".format(store_time))
+    Logger.log.info("Storing time '{}'.".format(store_time))
 
 def run_from_fisd_file(fisd_file_name, logger):
-    logger.info("Running '{}'...".format(fisd_file_name))
+    Logger.log.info("Running '{}'...".format(fisd_file_name))
     code = Code_compilation()
     context = Context(code, logger)
 
@@ -54,12 +55,19 @@ def run_from_fisd_file(fisd_file_name, logger):
     #code compilation from file
     code.compile_from_file(fisd_file_name, logger)
     compilation_time = datetime.now() - start_compilation_time
-    logger.info("Compilation time '{}'.".format(compilation_time))
+    Logger.log.info("Compilation time '{}'.".format(compilation_time))
 
     start_run_time = datetime.now()
-    context.run(logger)
+    context.run()
     run_time = datetime.now() - start_run_time
-    logger.info("Run time '{}'.".format(run_time))
+    Logger.log.info("Run time '{}'.".format(run_time))
+
+def run_from_bin_fisd_file(fisd_file_name, logger):
+    Logger.log.info("Running '{}'...".format(fisd_file_name))
+    code = Code_compilation()
+    context = Context(code, logger)
+    context.restore_context(fisd_file_name)
+    context.run_from_restored_context()
 
 ################################################################################
 if __name__ == '__main__':
@@ -83,12 +91,16 @@ if __name__ == '__main__':
     Logger.log.debug("Commands {}.".format(", ".join(["'{}'".format(name) for name in Commands.commands])))
 
     for file_name in glob.glob(args[0]):
+        file_extension = str(os.path.splitext(file_name)[1]).lower()
         logger.reset_errors()
 
-        if 'compile-to-file' in options:
-            compile_to_file(file_name, logger)
-        else:
-            run_from_fisd_file(file_name, logger)
+        if file_extension in core.__fisd_file_extensions__:
+            if 'compile-to-file' in options:
+                compile_to_file(file_name, logger)
+            else:
+                run_from_fisd_file(file_name, logger)
+        elif file_extension in core.__binary_fisd_file_extensions__:
+            run_from_bin_fisd_file(file_name, logger)
 
         if logger._errors > 0:
             continue

@@ -147,11 +147,11 @@ class Context:
         return self._return
 
 ################################################################################
-    def run(self, logger):
+    def run(self):
         self._logger = logger
         self.execute_code(self._code.main_code_name())
 
-    def run_from_call_stack(self, call_stack, logger):
+    def run_from_restored_context(self):
         pass
 
 ################################################################################
@@ -169,3 +169,10 @@ If file_name is None, file_name is taken from code, '.bin' extension is added an
         j = json.dumps(json_dict, indent=2)
         with open(file_name, 'w') as f:
             f.write(j)
+
+    def restore_context(self, file_name):
+        if file_name == None:
+            return
+        ''' Store entire context with code into file 'file_name'.
+If file_name is None, file_name is taken from code, '.bin' extension is added and folder is the same as code '''
+        self._logger.info("Restoring context from '{}'...".format(file_name))
