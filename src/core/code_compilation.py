@@ -4,6 +4,7 @@ from core.commands import Commands, ParseArgs
 from core.compile_errors import CompileError
 from core.code_line import Code_line
 from core.code_lines import Code_lines
+from core.utils import PrefaceLogger
 
 import core.core as core
 
@@ -55,7 +56,6 @@ class Code_labels:
 ################################################################################
 class Code_compilation(Code_json):
     def __init__(self):
-        self._code_path = None
         return super().__init__()
 
 ################################################################################
@@ -97,8 +97,6 @@ class Code_compilation(Code_json):
             return file_name
         self._code[file_name] = Code_lines.create()
 
-        #logger.debug("Compiling fisd file '{}'...".format(file_path))
-
         with open(file_path ) as f:
             line_number = 0
             for line in f.readlines():
@@ -106,12 +104,11 @@ class Code_compilation(Code_json):
 
                 tokens = Tokens(line)
 
-                #@todo do it more generic with better preface handling
-                logger.preface = "'{}'[{}] : ".format(file_name, line_number)
-                Tokenizers.tokenize(tokens, logger)
+                with PrefaceLogger("'{}'[{}] : ".format(file_name, line_number), logger):
+                    Tokenizers.tokenize(tokens, logger)
 
-                logger.preface = "'{}'[{}] : ".format(file_name, line_number)
-                self.__process_execute_tokens(tokens, logger)
+                with PrefaceLogger("'{}'[{}] : ".format(file_name, line_number), logger):
+                    self.__process_execute_tokens(tokens, logger)
 
                 if not tokens.empty():
                     Code_lines.get_code_lines(self._code[file_name]).append(Code_line.create(line_number, tokens, None))
@@ -134,25 +131,24 @@ class Code_compilation(Code_json):
 
                 line_number, line_tokens, _ = Code_line.split(code_line)
 
-                logger.preface = self.get_code_line_description(code_name, line_number)
+                with PrefaceLogger(self.get_code_line_description(code_name, line_number), logger):
+                    if not line_tokens.is_name(0):
+                        logger.error(CompileError.invalid_command(line_tokens.value(0)))
+                        continue
 
-                if not line_tokens.is_name(0):
-                    logger.error(CompileError.invalid_command(line_tokens.value(0)))
-                    continue
+                    command_class = Commands.find_command(line_tokens.value(0))
+                    if not command_class:
+                        logger.error(CompileError.unknown_command(line_tokens.value(0)))
+                        continue
 
-                command_class = Commands.find_command(line_tokens.value(0))
-                if not command_class:
-                    logger.error(CompileError.unknown_command(line_tokens.value(0)))
-                    continue
+                    line_tokens.mark_as_keyword(0)
+                    if command_class._keywords:
+                        line_tokens.mark_tokens_as_keywords(command_class._keywords)
 
-                line_tokens.mark_as_keyword(0)
-                if command_class._keywords:
-                    line_tokens.mark_tokens_as_keywords(command_class._keywords)
-
-                Code_line.set_command_class(code_line,command_class)
-                if command_class._evaluate:
-                    Code_evaluation.evaluate_function_calls(parse_args)
-                command_class.parse(parse_args)
+                    Code_line.set_command_class(code_line,command_class)
+                    if command_class._evaluate:
+                        Code_evaluation.evaluate_function_calls(parse_args)
+                    command_class.parse(parse_args)
 
             self.__insert_code_lines(parse_args.code_lines, parse_args.code_lines_insertion)
 

@@ -17,5 +17,4 @@ proc rec_count_down2(i)
 	return rec_count_down(i)
 endproc
 
-rec_count_down(10)
 rec_count_down2(10)

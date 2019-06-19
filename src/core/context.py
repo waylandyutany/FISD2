@@ -3,6 +3,7 @@ from core.tokens import Tokens, TOKEN_NUMBER, TOKEN_STRING, TOKEN_NONE
 from copy import deepcopy
 from core.commands import ExecuteArgs
 from core.code_line import Code_line
+from core.utils import PrefaceLogger
 import json
 
 ################################################################################
@@ -107,13 +108,12 @@ class Context:
 
             line_number, line_tokens, command_class = Code_line.split(execute_args.code_line)
 
-            self.logger.preface = self._code.get_code_line_description(code_name, line_number)
-
             execute_args.arguments = self.__tokens_to_arguments(line_tokens)
             execute_args.code_lines = code_lines
             execute_args.code_index = execution_context[Context._CODE_INDEX]
 
-            command_class.execute(execute_args)
+            with PrefaceLogger(self._code.get_code_line_description(code_name, line_number), self.logger):
+                command_class.execute(execute_args)
 
             execution_context[Context._CODE_INDEX] += 1
             

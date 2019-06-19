@@ -6,6 +6,7 @@ class Code:
     def __init__(self):
         self._code = {}
         self._main_code_name = None
+        self._code_path = None
 
 ################################################################################
     def main_code_name(self):

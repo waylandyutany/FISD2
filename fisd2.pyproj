@@ -63,6 +63,7 @@
     <Content Include="test\tc_for_if_proc.fisd2" />
     <Content Include="test\tc_loops.fisd2" />
     <Content Include="test\tc_proc_calls.fisd2" />
+    <Content Include="test\tc_restore_context.fisd2" />
     <Content Include="test\tc_var_stack.fisd2" />
     <Content Include="test\tc_recursion.fisd2" />
     <Content Include="test\test_var_stack_executed.fisd2" />
