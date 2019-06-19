@@ -20,9 +20,8 @@ import default_commands.fisd_commands
 # @todo
 # 0. !!! fix preface mess !!!, error when multiple command classes under same name, or multiple names under same command classes !!!
 # 1. store_context from fisd, from cmd switch, for one and multiple files, with file_name specified with automatical file name from code name(for one and multiple files :-))
-# 2. store context folder can be overwritten with cmd argument and with fisd command
-# 3. Check True,False tokens, implement exit command, 
-################################################################################
+# 2. store context folder can be overwritten with cmd argument and with fisd command, save zipped
+# 3. Check True,False tokens, implement exit command, ExecuteArgs.line_tokens
 
 ################################################################################
 Logger.init_logger()
