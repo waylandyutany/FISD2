@@ -7,6 +7,7 @@ from core.code_compilation import Code_compilation
 from core.commands import Commands
 from core.logger import Logger
 import core.core as core
+from core.utils import TimeLogger
 
 #importing all default command files
 import default_commands.default_commands
@@ -35,39 +36,35 @@ def compile_to_file(fisd_file_name, logger):
     code = Code_compilation()
     context = Context(code, logger)
 
-    start_compilation_time = datetime.now()
-    #code compilation from file
-    code.compile_from_file(fisd_file_name, logger)
-    compilation_time = datetime.now() - start_compilation_time
-    Logger.log.info("Compilation time '{}'.".format(compilation_time))
+    with TimeLogger("Compilation time", Logger.log):
+        code.compile_from_file(fisd_file_name, logger)
 
-    start_store_time = datetime.now()
-    context.store_context(fisd_bin_file_name)
-    store_time = datetime.now() - start_store_time
-    Logger.log.info("Storing time '{}'.".format(store_time))
+    with TimeLogger("Storing time", Logger.log):
+        context.store_context(fisd_bin_file_name)
 
+################################################################################
 def run_from_fisd_file(fisd_file_name, logger):
     Logger.log.info("Running '{}'...".format(fisd_file_name))
     code = Code_compilation()
     context = Context(code, logger)
 
-    start_compilation_time = datetime.now()
-    #code compilation from file
-    code.compile_from_file(fisd_file_name, logger)
-    compilation_time = datetime.now() - start_compilation_time
-    Logger.log.info("Compilation time '{}'.".format(compilation_time))
+    with TimeLogger("Compilation time", Logger.log):
+        code.compile_from_file(fisd_file_name, logger)
 
-    start_run_time = datetime.now()
-    context.run()
-    run_time = datetime.now() - start_run_time
-    Logger.log.info("Run time '{}'.".format(run_time))
+    with TimeLogger("Run time", Logger.log):
+        context.run()
 
+################################################################################
 def run_from_bin_fisd_file(fisd_file_name, logger):
     Logger.log.info("Running '{}'...".format(fisd_file_name))
     code = Code_compilation()
     context = Context(code, logger)
-    context.restore_context(fisd_file_name)
-    context.run_from_restored_context()
+
+    with TimeLogger("Restoring time", Logger.log):
+        context.restore_context(fisd_file_name)
+
+    with TimeLogger("Run time", Logger.log):
+        context.run_from_restored_context()
 
 ################################################################################
 if __name__ == '__main__':
