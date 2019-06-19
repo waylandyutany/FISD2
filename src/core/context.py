@@ -32,8 +32,6 @@ class Context:
         self._execution_stack = []
         self._variable_stack = [{}]
 
-        self._context = {'execution_stack':self._execution_stack, 'variable_stack':self._variable_stack}
-
     @property
     def logger(self):
         return self._logger
@@ -152,18 +150,27 @@ class Context:
         self.execute_code(self._code.main_code_name())
 
     def run_from_restored_context(self):
-        pass
+        self.execute_code(self._code.main_code_name())
 
 ################################################################################
     def to_json_dict(self):
-        return deepcopy(self._context)
+        return {'execution_stack':deepcopy(self._execution_stack),
+                'variable_stack':deepcopy(self._variable_stack)}
 
+    def from_json_dict(self, json_dict):
+        self._execution_stack = json_dict['execution_stack']
+        self._variable_stack = json_dict['variable_stack']
+
+################################################################################
     def store_context(self, file_name):
-        if file_name == None:
-            return
         ''' Store entire context with code into file 'file_name'.
 If file_name is None, file_name is taken from code, '.bin' extension is added and folder is the same as code '''
-        json_dict = {'code':self._code.to_json_dict(), 'context':self.to_json_dict()}
+        if file_name == None:
+            return
+
+        json_dict = {'code':self._code.to_json_dict(),
+                     'context':self.to_json_dict()}
+
         j = json.dumps(json_dict, indent=2)
         with open(file_name, 'w') as f:
             f.write(j)
@@ -171,3 +178,12 @@ If file_name is None, file_name is taken from code, '.bin' extension is added an
     def restore_context(self, file_name):
         if file_name == None:
             return
+
+        with open(file_name) as f:
+            json_dict = json.load(f)
+
+        self._code.from_json_dict(json_dict['code'], self._logger)
+        self.from_json_dict(json_dict['context'])
+
+################################################################################
+
