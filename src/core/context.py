@@ -3,6 +3,7 @@ from core.tokens import Tokens, TOKEN_NUMBER, TOKEN_STRING, TOKEN_NONE
 from copy import deepcopy
 from core.commands import ExecuteArgs
 from core.code_line import Code_line
+import json
 
 ################################################################################
 class Arguments(Tokens):
@@ -28,9 +29,10 @@ class Context:
 
         self._logger = logger
 
-        # thoose needs to be saved
         self._execution_stack = []
         self._variable_stack = [{}]
+
+        self._context = {'execution_stack':self._execution_stack, 'variable_stack':self._variable_stack}
 
     @property
     def logger(self):
@@ -153,7 +155,15 @@ class Context:
         pass
 
 ################################################################################
+    def to_json_dict(self):
+        return deepcopy(self._context)
+
     def store_context(self, file_name):
         ''' Store entire context with code into file 'file_name'.
 If file_name is None, file_name is taken from code, '.bin' extension is added and folder is the same as code '''
         self._logger.info("Storing context to '{}'...".format(file_name))
+
+        json_dict = {'code':self._code.to_json_dict(), 'context':self.to_json_dict()}
+        j = json.dumps(json_dict, indent=2)
+        with open(file_name, 'w') as f:
+            f.write(j)
