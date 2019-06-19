@@ -1,12 +1,11 @@
 import parser, sys, os, glob
-from datetime import datetime
+import core.core as core
 
 from core.context import Context
 from core.tokens import Tokenizers
 from core.code_compilation import Code_compilation
 from core.commands import Commands
 from core.logger import Logger
-import core.core as core
 from core.utils import TimeLogger
 
 #importing all default command files
@@ -19,7 +18,7 @@ import default_commands.fisd_commands
 
 ################################################################################
 # @todo
-# 0. !!! fix preface mess !!!
+# 0. !!! fix preface mess !!!, error when multiple command classes under same name, or multiple names under same command classes !!!
 # 1. store_context from fisd, from cmd switch, for one and multiple files, with file_name specified with automatical file name from code name(for one and multiple files :-))
 # 2. store context folder can be overwritten with cmd argument and with fisd command
 ################################################################################

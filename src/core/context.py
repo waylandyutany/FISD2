@@ -163,8 +163,6 @@ class Context:
             return
         ''' Store entire context with code into file 'file_name'.
 If file_name is None, file_name is taken from code, '.bin' extension is added and folder is the same as code '''
-        self._logger.info("Storing context to '{}'...".format(file_name))
-
         json_dict = {'code':self._code.to_json_dict(), 'context':self.to_json_dict()}
         j = json.dumps(json_dict, indent=2)
         with open(file_name, 'w') as f:
@@ -173,6 +171,3 @@ If file_name is None, file_name is taken from code, '.bin' extension is added an
     def restore_context(self, file_name):
         if file_name == None:
             return
-        ''' Store entire context with code into file 'file_name'.
-If file_name is None, file_name is taken from code, '.bin' extension is added and folder is the same as code '''
-        self._logger.info("Restoring context from '{}'...".format(file_name))
