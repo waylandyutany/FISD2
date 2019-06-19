@@ -186,7 +186,7 @@ class Code_compilation(Code_json):
                 last_line_number, last_line_tokens = proc_code_lines[i+1]
                 function_name = first_line_tokens.value(1)
                 function_code_lines = Code_lines.move(code_lines, first_line_number, last_line_number)
-                functions_code[function_name] = Code_lines.create_function_code_lines(function_name, function_code_lines)
+                functions_code[function_name] = Code_lines.create_function_code_lines(code_name, function_code_lines)
 
         for function_code in functions_code:
             self._code[function_code] = functions_code[function_code]
