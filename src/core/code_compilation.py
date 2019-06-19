@@ -4,9 +4,13 @@ from core.commands import Commands, ParseArgs
 from core.compile_errors import CompileError
 from core.code_line import Code_line
 from core.code_lines import Code_lines
+
+import core.core as core
+
 from default_commands.default_commands import ExecuteCommand
 from default_commands.procedure_commands import ProcCommand, EndProcCommand
 from default_commands.evaluation_commands import Code_evaluation
+
 import os
 
 ################################################################################
@@ -55,7 +59,7 @@ class Code_compilation(Code_json):
         return super().__init__()
 
 ################################################################################
-    def __find_fisd_file(self, file_name):
+    def find_fisd_file(self, file_name):
         dir_name = os.path.dirname(file_name)
         name, ext = os.path.splitext(os.path.basename(file_name))
 
@@ -63,8 +67,7 @@ class Code_compilation(Code_json):
         if len(dir_name) == 0:
             dir_name = self._code_path
         if len(ext) == 0:
-            possible_files.append(os.path.join(dir_name, name) + '.fisd')
-            possible_files.append(os.path.join(dir_name, name) + '.fisd2')
+            possible_files = [os.path.join(dir_name, name) + ext for ext in core.__fisd_file_extensions__]
         else:
             possible_files.append(os.path.join(dir_name, name) + ext)
 
@@ -85,7 +88,7 @@ class Code_compilation(Code_json):
 
 ################################################################################
     def __tokenize_from_file(self, _file_name, logger):
-        file_name, file_path = self.__find_fisd_file(_file_name)
+        file_name, file_path = self.find_fisd_file(_file_name)
         if not file_name:
             logger.error(CompileError.non_existing_file_name(_file_name))
             return file_name

@@ -13,7 +13,7 @@ class Code_json(Code):
                 code_line[Code_line._TOKENS] = code_line[Code_line._TOKENS]._tokens
                 code_line[Code_line._COMMAND_CLASS] = code_line[Code_line._COMMAND_CLASS]._keyword
 
-        return code_dict
+        return {'_code':code_dict, '_main_code_name':self._main_code_name}
 
     def from_json_dict(self, code_json):
         pass

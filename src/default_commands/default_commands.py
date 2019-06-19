@@ -90,7 +90,7 @@ class ExecuteCommand(Command):
 # EXIT Command
 ################################################################################
 @command_class()
-class ExecuteCommand(Command):
+class ExitCommand(Command):
     _keyword = 'exit'
 
     @classmethod

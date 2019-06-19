@@ -159,6 +159,8 @@ class Context:
         return deepcopy(self._context)
 
     def store_context(self, file_name):
+        if file_name == None:
+            return
         ''' Store entire context with code into file 'file_name'.
 If file_name is None, file_name is taken from code, '.bin' extension is added and folder is the same as code '''
         self._logger.info("Storing context to '{}'...".format(file_name))

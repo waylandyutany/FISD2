@@ -6,6 +6,7 @@ from core.tokens import Tokenizers
 from core.code_compilation import Code_compilation
 from core.commands import Commands
 from core.logger import Logger
+import core.core as core
 
 #importing all default command files
 import default_commands.default_commands
@@ -20,8 +21,6 @@ import default_commands.fisd_commands
 # 1. store_context from fisd, from cmd switch, for one and multiple files, with file_name specified with automatical file name from code name(for one and multiple files :-))
 # 2. store context folder can be overwritten with cmd argument and with fisd command
 ################################################################################
-__app_name__ = 'FISD2'
-__app_version__ = '2.0.0'
 
 ################################################################################
 Logger.init_logger()
@@ -64,7 +63,7 @@ def run_from_fisd_file(fisd_file_name, logger):
 
 ################################################################################
 if __name__ == '__main__':
-    Logger.log.info("{} version '{}'.".format(__app_name__, __app_version__))
+    Logger.log.info("{} version '{}'.".format(core.__app_name__, core.__app_version__))
 
     args = sys.argv[1:]
     options = [str(arg).lower().strip(' -\t\n\r') for arg in args]
