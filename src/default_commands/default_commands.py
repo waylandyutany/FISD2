@@ -86,3 +86,18 @@ class ExecuteCommand(Command):
     def execute(cls, eargs):
         eargs.context.execute_code(eargs.arguments.value_str(1))
 
+################################################################################
+# EXIT Command
+################################################################################
+@command_class()
+class ExecuteCommand(Command):
+    _keyword = 'exit'
+
+    @classmethod
+    def parse(cls, pargs):
+        pass
+
+    @classmethod
+    def execute(cls, eargs):
+        pass
+

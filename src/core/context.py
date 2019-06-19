@@ -20,13 +20,13 @@ class Context:
     _VAR_TYPE = 'type'
     _VAR_VALUE = 'value'
 
-    def __init__(self, code):
+    def __init__(self, code, logger):
         self._code = code
 
         self._call_tokens = None
         self._return = None
 
-        self._logger = None
+        self._logger = logger
 
         # thoose needs to be saved
         self._execution_stack = []
@@ -154,4 +154,6 @@ class Context:
 
 ################################################################################
     def store_context(self, file_name):
+        ''' Store entire context with code into file 'file_name'.
+If file_name is None, file_name is taken from code, '.bin' extension is added and folder is the same as code '''
         self._logger.info("Storing context to '{}'...".format(file_name))

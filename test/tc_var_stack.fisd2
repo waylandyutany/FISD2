@@ -3,5 +3,6 @@ set andromeda = "andromeda_str"
 execute "test_var_stack_executed"
 fisd_store_context
 print "test_var_stack_str"
+fisd_restore_context
 print kraken
 print andromeda
