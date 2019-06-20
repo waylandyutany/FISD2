@@ -87,6 +87,7 @@ class Context:
 
 ################################################################################
     def execute_code(self, code_name, execution_stack_index = None):
+        # creating new execution context and pushing it into execution stack
         if execution_stack_index == None:
             #creating code execution context
             execution_context = {Context._CODE_NAME:code_name,
@@ -97,11 +98,12 @@ class Context:
             #if function call new var stack is pushed
             if execution_context[Context._CODE_IS_FUNCTION]:
                 self._variable_stack.append({})
-        else:
+        else:# restoring execution context from execution stack recurrently
             execution_context = self._execution_stack[execution_stack_index]
             if execution_stack_index + 1 < len(self._execution_stack):
-                self.execute_code(code_name, execution_stack_index)
-            else:
+                self.execute_code(code_name, execution_stack_index + 1)
+            else:# in case of last execution context, we search for restoration point code line
+                 # so code will start from that point
                 code_lines = self._code.get_code_lines(execution_context[Context._CODE_NAME])
                 while execution_context[Context._CODE_INDEX] < len(code_lines):
                     cmd_class = Code_line.get_command_class(code_lines[execution_context[Context._CODE_INDEX]])
