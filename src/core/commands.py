@@ -1,31 +1,4 @@
 ################################################################################
-class ParseArgs:
-    def __init__(self, _code, _logger):
-        self.code_name = None
-        self.code_lines = None
-        self.code_index = None
-        self.code_line = None
-        self.code_labels = None
-
-        self.code = _code
-        self.logger = _logger
-
-        self.code_lines_insertion = None
-
-################################################################################
-class ExecuteArgs: 
-    def __init__(self, _context, _logger, _code_name, _code_lines):
-        self.code_name = _code_name
-        self.code_lines = _code_lines
-        self.code_index = None
-        self.code_line = None
-
-        self.arguments = None
-
-        self.context = _context
-        self.logger = _logger
-
-################################################################################
 class Command:
 
     #Any token with name in this list is automaticaly marked as keyword.

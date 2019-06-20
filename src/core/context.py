@@ -1,7 +1,6 @@
 from core.code import Code
 from core.tokens import Tokens, TOKEN_NUMBER, TOKEN_STRING, TOKEN_NONE
 from copy import deepcopy
-from core.commands import ExecuteArgs
 from core.code_line import Code_line
 from core.utils import PrefaceLogger
 import json, os
@@ -13,6 +12,19 @@ import core.core as core
 class Arguments(Tokens):
     def __init__(self, tokens):
         self._tokens = deepcopy(tokens.tokens()[:])
+
+################################################################################
+class ExecuteArgs: 
+    def __init__(self, _context, _logger, _code_name, _code_lines):
+        self.code_name = _code_name
+        self.code_lines = _code_lines
+        self.code_index = None
+        self.code_line = None
+
+        self.arguments = None
+
+        self.context = _context
+        self.logger = _logger
 
 ################################################################################
 class Context:

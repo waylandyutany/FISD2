@@ -1,6 +1,6 @@
 from core.code_json import Code_json
 from core.tokens import Tokenizers, Tokens
-from core.commands import Commands, ParseArgs
+from core.commands import Commands
 from core.compile_errors import CompileError
 from core.code_line import Code_line
 from core.code_lines import Code_lines
@@ -13,6 +13,20 @@ from default_commands.procedure_commands import ProcCommand, EndProcCommand
 from default_commands.evaluation_commands import Code_evaluation
 
 import os
+
+################################################################################
+class ParseArgs:
+    def __init__(self, _code, _logger):
+        self.code_name = None
+        self.code_lines = None
+        self.code_index = None
+        self.code_line = None
+        self.code_labels = None
+
+        self.code = _code
+        self.logger = _logger
+
+        self.code_lines_insertion = None
 
 ################################################################################
 ################################################################################
