@@ -110,6 +110,8 @@ class Context:
                     if cmd_class._keyword == Fisd_restore_context_command._keyword:
                         break
                     execution_context[Context._CODE_INDEX] += 1
+            # after restoring always starts from next code line
+            execution_context[Context._CODE_INDEX] += 1
 
         #getting code lines from the code
         code_lines = self._code.get_code_lines(execution_context[Context._CODE_NAME])
