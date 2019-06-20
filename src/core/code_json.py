@@ -29,9 +29,7 @@ class Code_json(Code):
         for code_name in code_dict:
             code_lines = code_dict[code_name][Code._CODE_LINES]
             for code_line in code_lines:
-                tokens = Tokens("")
-                tokens._tokens = code_line[Code_line._TOKENS]
-                code_line[Code_line._TOKENS] = tokens
+                code_line[Code_line._TOKENS] = Tokens(code_line[Code_line._TOKENS])
                 code_line[Code_line._COMMAND_CLASS] = Commands.find_command(code_line[Code_line._COMMAND_CLASS])
 
         self._code = code_dict

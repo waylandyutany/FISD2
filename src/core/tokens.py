@@ -34,8 +34,15 @@ class Tokens:
     valid_tokens = [TOKEN_NAME, TOKEN_STRING, TOKEN_NUMBER, TOKEN_OP]
 
 ################################################################################
-    def __init__(self, line, encoding = 'utf-8'):
-        self._tokens = [[tok_id, tok_val] for tok_id, tok_val, _, _, _  in tokenize(BytesIO(line.encode(encoding)).readline) if tok_id in Tokens.valid_tokens]
+    def __init__(self, line_or_tokens, encoding = 'utf-8'):
+        if line_or_tokens == None:
+            self._tokens = []
+        elif isinstance(line_or_tokens, list):
+            self._tokens = line_or_tokens
+        else:
+            self._tokens = [ [tok_id, tok_val]\
+               for tok_id, tok_val, _, _, _  in tokenize(BytesIO(line_or_tokens.encode(encoding)).readline) if tok_id in Tokens.valid_tokens\
+              ]
 
     def __str__(self):
         return ", ".join([tok[1] for tok in self._tokens])

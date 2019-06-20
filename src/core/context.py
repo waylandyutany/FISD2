@@ -6,7 +6,7 @@ from core.code_line import Code_line
 from core.utils import PrefaceLogger
 import json, os
 
-from default_commands.fisd_commands import Fisd_restore_context_command
+from default_commands.fisd_commands import Fisd_restore_context_command #@todo remove this dependency
 import core.core as core
 
 ################################################################################
@@ -37,9 +37,14 @@ class Context:
         self._execution_stack = []
         self._variable_stack = [{}]
 
-    @property
-    def logger(self):
-        return self._logger
+################################################################################
+    def to_json_dict(self):
+        return {'execution_stack':deepcopy(self._execution_stack),
+                'variable_stack':deepcopy(self._variable_stack)}
+
+    def from_json_dict(self, json_dict):
+        self._execution_stack = json_dict['execution_stack']
+        self._variable_stack = json_dict['variable_stack']
 
 ################################################################################
     def __tokens_to_arguments(self, tokens):
@@ -87,32 +92,41 @@ class Context:
             var_stack[name] = {Context._VAR_TYPE : TOKEN_STRING, Context._VAR_VALUE:str(value)}
 
 ################################################################################
+    def __push_execution_context(self, code_name):
+        #creating code execution context
+        execution_context = {Context._CODE_NAME:code_name,
+                                Context._CODE_INDEX:0,
+                                Context._CODE_IS_FUNCTION:self._code.is_code_function(code_name)}
+        #pushing code context to the stack
+        self._execution_stack.append(execution_context)
+        #if function call new var stack is pushed
+        if execution_context[Context._CODE_IS_FUNCTION]:
+            self._variable_stack.append({})
+
+        return execution_context
+
+    def __restore_execution_context(self, execution_stack_index):
+        execution_context = self._execution_stack[execution_stack_index]
+        if execution_stack_index + 1 < len(self._execution_stack):
+            self.execute_code(execution_context[Context._CODE_NAME], execution_stack_index + 1)
+        else:# in case of last execution context, we search for restoration point code line
+                # so code will start from that point
+            code_lines = self._code.get_code_lines(execution_context[Context._CODE_NAME])
+            while execution_context[Context._CODE_INDEX] < len(code_lines):
+                cmd_class = Code_line.get_command_class(code_lines[execution_context[Context._CODE_INDEX]])
+                if cmd_class._keyword == Fisd_restore_context_command._keyword:
+                    break
+                execution_context[Context._CODE_INDEX] += 1
+
+        # after restoring always starts from next code line
+        execution_context[Context._CODE_INDEX] += 1
+
+        return execution_context
+
+################################################################################
     def execute_code(self, code_name, execution_stack_index = None):
-        # creating new execution context and pushing it into execution stack
-        if execution_stack_index == None:
-            #creating code execution context
-            execution_context = {Context._CODE_NAME:code_name,
-                                 Context._CODE_INDEX:0,
-                                 Context._CODE_IS_FUNCTION:self._code.is_code_function(code_name)}
-            #pushing code context to the stack
-            self._execution_stack.append(execution_context)
-            #if function call new var stack is pushed
-            if execution_context[Context._CODE_IS_FUNCTION]:
-                self._variable_stack.append({})
-        else:# restoring execution context from execution stack recurrently
-            execution_context = self._execution_stack[execution_stack_index]
-            if execution_stack_index + 1 < len(self._execution_stack):
-                self.execute_code(code_name, execution_stack_index + 1)
-            else:# in case of last execution context, we search for restoration point code line
-                 # so code will start from that point
-                code_lines = self._code.get_code_lines(execution_context[Context._CODE_NAME])
-                while execution_context[Context._CODE_INDEX] < len(code_lines):
-                    cmd_class = Code_line.get_command_class(code_lines[execution_context[Context._CODE_INDEX]])
-                    if cmd_class._keyword == Fisd_restore_context_command._keyword:
-                        break
-                    execution_context[Context._CODE_INDEX] += 1
-            # after restoring always starts from next code line
-            execution_context[Context._CODE_INDEX] += 1
+        execution_context = self.__push_execution_context(code_name) if execution_stack_index == None else\
+                            self.__restore_execution_context(execution_stack_index)
 
         #getting code lines from the code
         code_lines = self._code.get_code_lines(execution_context[Context._CODE_NAME])
@@ -128,7 +142,7 @@ class Context:
             execute_args.code_lines = code_lines
             execute_args.code_index = execution_context[Context._CODE_INDEX]
 
-            with PrefaceLogger(self._code.get_code_line_description(execution_context[Context._CODE_NAME], line_number), self.logger):
+            with PrefaceLogger(self._code.get_code_line_description(execution_context[Context._CODE_NAME], line_number), self._logger):
                 command_class.execute(execute_args)
 
             execution_context[Context._CODE_INDEX] += 1
@@ -172,15 +186,6 @@ class Context:
             self.execute_code(self._code.main_code_name())
         else:
             self.execute_code(None, 0)
-
-################################################################################
-    def to_json_dict(self):
-        return {'execution_stack':deepcopy(self._execution_stack),
-                'variable_stack':deepcopy(self._variable_stack)}
-
-    def from_json_dict(self, json_dict):
-        self._execution_stack = json_dict['execution_stack']
-        self._variable_stack = json_dict['variable_stack']
 
 ################################################################################
     def store_context(self, file_name):
