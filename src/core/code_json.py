@@ -18,12 +18,13 @@ class Code_json(Code):
 
         return {'code':code_dict,
                 'main_code_name':self._main_code_name,
+                'code_path':self._code_path,
                 'json_version':Code_json.__JSON_VERSION__}
 
     #@todo error when no command class available
     #@todo add version
     def from_json_dict(self, json_dict, logger):
-        self._main_code_name, code_dict, json_version = json_dict['main_code_name'], json_dict['code'], json_dict['json_version']
+        self._main_code_name, code_dict, json_version, self._code_path = json_dict['main_code_name'], json_dict['code'], json_dict['json_version'], json_dict['code_path']
 
         for code_name in code_dict:
             code_lines = code_dict[code_name][Code._CODE_LINES]

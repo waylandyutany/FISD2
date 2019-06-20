@@ -4,7 +4,9 @@ from copy import deepcopy
 from core.commands import ExecuteArgs
 from core.code_line import Code_line
 from core.utils import PrefaceLogger
-import json
+import json, os
+
+from default_commands.fisd_commands import Fisd_restore_context_command
 
 ################################################################################
 class Arguments(Tokens):
@@ -27,6 +29,7 @@ class Context:
 
         self._call_tokens = None
         self._return = None
+        self._exit = False
 
         self._logger = logger
 
@@ -83,8 +86,8 @@ class Context:
             var_stack[name] = {Context._VAR_TYPE : TOKEN_STRING, Context._VAR_VALUE:str(value)}
 
 ################################################################################
-    def execute_code(self, code_name, call_stack_index = None):
-        if call_stack_index == None:
+    def execute_code(self, code_name, execution_stack_index = None):
+        if execution_stack_index == None:
             #creating code execution context
             execution_context = {Context._CODE_NAME:code_name,
                                  Context._CODE_INDEX:0,
@@ -95,15 +98,23 @@ class Context:
             if execution_context[Context._CODE_IS_FUNCTION]:
                 self._variable_stack.append({})
         else:
-            pass #@todo take by the call_stack_index
-
+            execution_context = self._execution_stack[execution_stack_index]
+            if execution_stack_index + 1 < len(self._execution_stack):
+                self.execute_code(code_name, execution_stack_index)
+            else:
+                code_lines = self._code.get_code_lines(execution_context[Context._CODE_NAME])
+                while execution_context[Context._CODE_INDEX] < len(code_lines):
+                    cmd_class = Code_line.get_command_class(code_lines[execution_context[Context._CODE_INDEX]])
+                    if cmd_class._keyword == Fisd_restore_context_command._keyword:
+                        break
+                    execution_context[Context._CODE_INDEX] += 1
 
         #getting code lines from the code
         code_lines = self._code.get_code_lines(execution_context[Context._CODE_NAME])
         execute_args = ExecuteArgs(self, self._logger, execution_context[Context._CODE_NAME], code_lines)
 
         #executing commands
-        while execution_context[Context._CODE_INDEX] < len(code_lines):
+        while execution_context[Context._CODE_INDEX] < len(code_lines) and (self._exit == False):
             execute_args.code_line = code_lines[execution_context[Context._CODE_INDEX]]
 
             line_number, line_tokens, command_class = Code_line.split(execute_args.code_line)
@@ -112,7 +123,7 @@ class Context:
             execute_args.code_lines = code_lines
             execute_args.code_index = execution_context[Context._CODE_INDEX]
 
-            with PrefaceLogger(self._code.get_code_line_description(code_name, line_number), self.logger):
+            with PrefaceLogger(self._code.get_code_line_description(execution_context[Context._CODE_NAME], line_number), self.logger):
                 command_class.execute(execute_args)
 
             execution_context[Context._CODE_INDEX] += 1
@@ -135,6 +146,9 @@ class Context:
         self._call_tokens = None
         return ret
 
+    def exit(self):
+        self._exit = True
+
 ################################################################################
     def return_execute_code(self, value = None):
         code_lines = self._code.get_code_lines(self._execution_stack[-1][Context._CODE_NAME])
@@ -146,11 +160,13 @@ class Context:
 
 ################################################################################
     def run(self):
-        self._logger = logger
         self.execute_code(self._code.main_code_name())
 
     def run_from_restored_context(self):
-        self.execute_code(self._code.main_code_name())
+        if len(self._execution_stack) == 0:
+            self.execute_code(self._code.main_code_name())
+        else:
+            self.execute_code(None, 0)
 
 ################################################################################
     def to_json_dict(self):
@@ -166,7 +182,7 @@ class Context:
         ''' Store entire context with code into file 'file_name'.
 If file_name is None, file_name is taken from code, '.bin' extension is added and folder is the same as code '''
         if file_name == None:
-            return
+            file_name = os.path.join(self._code._code_path, self._code.main_code_name() + '.bin')
 
         json_dict = {'code':self._code.to_json_dict(),
                      'context':self.to_json_dict()}

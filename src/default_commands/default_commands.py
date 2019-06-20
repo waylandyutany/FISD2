@@ -99,5 +99,5 @@ class ExitCommand(Command):
 
     @classmethod
     def execute(cls, eargs):
-        pass
+        eargs.context.exit()
 
