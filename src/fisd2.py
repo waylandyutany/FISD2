@@ -20,7 +20,7 @@ import default_commands.fisd_commands
 # @todo
 # 0. !!! fix preface mess !!!, error when multiple command classes under same name, or multiple names under same command classes !!!
 # 1. fisd_store_context delete_after_restore, cwd, store_context_folder(cmd switch as well), context is stored zipped
-# 2. Check True,False tokens, ExecuteArgs.line_tokens
+# 2. ExecuteArgs.line_tokens
 
 ################################################################################
 Logger.init_logger()
