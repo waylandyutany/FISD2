@@ -79,7 +79,7 @@ class Code_compilation(Code_json):
 
         possible_files = []
         if len(dir_name) == 0:
-            dir_name = self._code_path
+            dir_name = self._main_code_path
         if len(ext) == 0:
             possible_files = [os.path.join(dir_name, name) + ext for ext in core.__fisd_file_extensions__]
         else:
@@ -226,7 +226,7 @@ class Code_compilation(Code_json):
 ################################################################################
     def compile_from_file(self, file_name, logger):
         ''' Compiling code from the file, looking for *.fisd/*.fisd2 in no extension provided.'''
-        self._code_path = os.path.dirname(file_name)
+        self._main_code_path = os.path.dirname(file_name)
         self._main_code_name = self.__tokenize_from_file(file_name, logger)
         self.__extract_functions(logger)
         self.__parse_commands(logger)

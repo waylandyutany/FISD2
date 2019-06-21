@@ -204,7 +204,7 @@ class Context:
         ''' Store entire context with code into file 'file_name'.
 If file_name is None, file_name is taken from code, '.bin' extension is added and folder is the same as code '''
         if file_name == None:
-            file_name = os.path.join(self._code._code_path, self._code.main_code_name() + core.__binary_fisd_file_extension__)
+            file_name = os.path.join(self._code._main_code_path, self._code.main_code_name() + core.__binary_fisd_file_extension__)
 
         json_dict = {'code':self._code.to_json_dict(),
                      'context':self.to_json_dict()}
