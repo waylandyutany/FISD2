@@ -109,6 +109,8 @@ class Code_compilation(Code_json):
 
         if file_path in self._code:
             return file_path
+        logger.info("Compiling '{}'...".format(root_and_file_name(file_path)))
+
         self._code[file_path] = Code_lines.create()
 
         with open(file_path ) as f:
