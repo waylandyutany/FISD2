@@ -38,6 +38,7 @@
     <Compile Include="src\default_commands\conditions_commands.py" />
     <Compile Include="src\default_commands\default_commands.py" />
     <Compile Include="src\default_commands\evaluation_commands.py" />
+    <Compile Include="src\default_commands\file_system_commands.py" />
     <Compile Include="src\default_commands\fisd_commands.py" />
     <Compile Include="src\default_commands\loop_commands.py" />
     <Compile Include="src\default_commands\procedure_commands.py" />
@@ -62,6 +63,10 @@
     <Content Include="doc\test_cases.txt" />
     <Content Include="test\executed1.fisd2" />
     <Content Include="test\executed2.fisd" />
+    <Content Include="test\fisd2_test_suite\config.fisd" />
+    <Content Include="test\fisd2_test_suite\language_features_test_sets\config.fisd2" />
+    <Content Include="test\fisd2_test_suite\language_features_test_sets\loops_test_cases\config.fisd2" />
+    <Content Include="test\fisd2_test_suite\language_features_test_sets\loops_test_cases\tc_loops.fisd2" />
     <Content Include="test\tc_execute.fisd2" />
     <Content Include="test\tc_for_if_proc.fisd2" />
     <Content Include="test\tc_proc_calls.fisd2" />

@@ -1,2 +1,2 @@
 execute "../config"
-test_cases_name = "loops_test_cases"
+test_cases_name = root_folder_name()

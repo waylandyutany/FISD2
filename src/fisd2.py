@@ -15,6 +15,7 @@ import default_commands.conditions_commands
 import default_commands.procedure_commands
 import default_commands.evaluation_commands
 import default_commands.fisd_commands
+import default_commands.file_system_commands
 
 ################################################################################
 # @todo

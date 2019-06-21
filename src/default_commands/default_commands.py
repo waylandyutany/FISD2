@@ -160,3 +160,18 @@ class WaitCommand(Command):
     @classmethod
     def execute(cls, eargs):
         eargs.logger.error("Not implemented yet!")
+
+################################################################################
+# ON Command
+################################################################################
+@command_class()
+class OnCommand(Command):
+    _keyword = 'on'
+
+    @classmethod
+    def parse(cls, pargs):
+        pass
+
+    @classmethod
+    def execute(cls, eargs):
+        eargs.logger.error("Not implemented yet!")
