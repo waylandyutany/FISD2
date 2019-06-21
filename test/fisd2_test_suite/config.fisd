@@ -1,4 +1,4 @@
-test_suite_name = root_folder_name()
+#test_suite_name = root_folder_name()
 
 on_event start proc begin_test_suite()
 	print "begin_test_suite()"

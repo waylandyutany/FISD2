@@ -104,7 +104,7 @@ class Code_compilation(Code_json):
     def __tokenize_from_file(self, _file_folder, _file_name, logger):
         file_path = self.__find_fisd_file(_file_folder, _file_name)
         if not file_path:
-            logger.error(CompileError.non_existing_file_name(file_path))
+            logger.error(CompileError.non_existing_file_name(_file_name))
             return file_path
 
         if file_path in self._code:

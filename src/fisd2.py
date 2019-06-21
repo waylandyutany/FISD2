@@ -35,10 +35,12 @@ def compile_to_file(fisd_file_name, logger):
     code = Code_compilation()
     context = Context(code, logger)
 
-    with TimeLogger("Compilation time", Logger.log):
+    with TimeLogger("Compilation time", logger):
         code.compile_from_file(fisd_file_name, logger)
 
-    with TimeLogger("Storing time", Logger.log):
+    if logger._errors > 0:return
+
+    with TimeLogger("Storing time", logger):
         context.store_context(fisd_bin_file_name)
 
 ################################################################################
@@ -47,8 +49,10 @@ def run_from_fisd_file(fisd_file_name, logger):
     code = Code_compilation()
     context = Context(code, logger)
 
-    with TimeLogger("Compilation time", Logger.log):
+    with TimeLogger("Compilation time", logger):
         code.compile_from_file(fisd_file_name, logger)
+
+    if logger._errors > 0:return
 
     with TimeLogger("Run time", Logger.log):
         context.run()
@@ -59,10 +63,12 @@ def run_from_bin_fisd_file(fisd_file_name, logger):
     code = Code_compilation()
     context = Context(code, logger)
 
-    with TimeLogger("Restoring time", Logger.log):
+    with TimeLogger("Restoring time", logger):
         context.restore_context(fisd_file_name)
 
-    with TimeLogger("Run time", Logger.log):
+    if logger._errors > 0:return
+
+    with TimeLogger("Run time", logger):
         context.run_from_restored_context()
 
 ################################################################################
@@ -97,6 +103,3 @@ if __name__ == '__main__':
                 run_from_fisd_file(file_name, logger)
         elif file_extension in core.__binary_fisd_file_extensions__:
             run_from_bin_fisd_file(file_name, logger)
-
-        if logger._errors > 0:
-            continue
