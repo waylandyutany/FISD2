@@ -13,7 +13,7 @@
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId>Global|PythonCore|3.7</InterpreterId>
     <IsWindowsApplication>False</IsWindowsApplication>
-    <CommandLineArguments>test/tc_restore*.*</CommandLineArguments>
+    <CommandLineArguments>test/**/tc_*.*</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
@@ -50,6 +50,9 @@
     <Folder Include="src\default_commands\" />
     <Folder Include="src\" />
     <Folder Include="src\core\" />
+    <Folder Include="test\fisd2_test_suite\" />
+    <Folder Include="test\fisd2_test_suite\language_features_test_sets\" />
+    <Folder Include="test\fisd2_test_suite\language_features_test_sets\loops_test_cases\" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="Global|PythonCore|3.7" />

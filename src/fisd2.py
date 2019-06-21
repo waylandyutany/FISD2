@@ -1,4 +1,4 @@
-import parser, sys, os, glob
+import parser, sys, os, glob2
 import core.core as core
 
 from core.context import Context
@@ -85,7 +85,7 @@ if __name__ == '__main__':
     Logger.log.debug("Tokenizers {}.".format(", ".join(["'{}'".format(name) for name in Tokenizers.tokenizers])))
     Logger.log.debug("Commands {}.".format(", ".join(["'{}'".format(name) for name in Commands.commands])))
 
-    for file_name in glob.glob(args[0]):
+    for file_name in glob2.glob(args[0]):
         file_extension = str(os.path.splitext(file_name)[1]).lower()
         logger.reset_errors()
 
