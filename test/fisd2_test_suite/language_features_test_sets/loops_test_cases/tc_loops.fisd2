@@ -1,3 +1,5 @@
+#execute "config"
+
 for i from -1 to 2
 	for j from -1 to 2
 		print i " " j

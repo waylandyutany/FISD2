@@ -1,0 +1,2 @@
+execute "../config"
+test_set_name = "language_features_test_set"

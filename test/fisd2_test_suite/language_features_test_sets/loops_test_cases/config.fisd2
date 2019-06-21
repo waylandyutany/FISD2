@@ -1,0 +1,2 @@
+execute "../config"
+test_cases_name = "loops_test_cases"
