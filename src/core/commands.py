@@ -7,12 +7,12 @@ class Command:
     _evaluate = False #if true function calls are evaluated
 
     @staticmethod
-    def parse(parse_args):
+    def parse(pargs):
         raise NotImplementedError("Abstract method!")
 
-    @staticmethod
-    def execute(execute_args):
-        raise NotImplementedError("Abstract method!")
+    @classmethod
+    def execute(cls, eargs):
+        eargs.logger.error("Command '{}' is not yet implemented!".format(cls._keyword))
 
 ################################################################################
 class Commands:

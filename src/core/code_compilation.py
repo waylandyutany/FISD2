@@ -74,17 +74,12 @@ class Code_compilation(Code_json):
 
 ################################################################################
     def __find_fisd_file(self, file_folder, file_name):
-        dir_name = os.path.dirname(file_name)
-        name, ext = os.path.splitext(os.path.basename(file_name))
-
-        possible_files = []
-        if len(dir_name) == 0:
-            dir_name = self._main_code_path
+        file_names = [file_name]
+        _, ext = os.path.splitext(os.path.basename(file_name))
         if len(ext) == 0:
-            possible_files = [os.path.join(dir_name, name) + ext for ext in core.__fisd_file_extensions__]
-        else:
-            possible_files.append(os.path.join(dir_name, name) + ext)
+            file_names = [file_name + ext for ext in core.__fisd_file_extensions__]
 
+        possible_files = [os.path.join(file_folder, file_name) for file_name in file_names]
         for possible_file in possible_files:
             if os.path.isfile(possible_file):
                 return os.path.abspath(possible_file)
@@ -124,7 +119,7 @@ class Code_compilation(Code_json):
                     Tokenizers.tokenize(tokens, logger)
 
                 with PrefaceLogger("'{}'[{}] : ".format(root_and_file_name(file_path), line_number), logger):
-                    self.__process_execute_tokens(_file_folder, tokens, logger)
+                    self.__process_execute_tokens(os.path.dirname(file_path), tokens, logger)
 
                 if not tokens.empty():
                     Code_lines.get_code_lines(self._code[file_path]).append(Code_line.create(line_number, tokens, None))
@@ -228,8 +223,7 @@ class Code_compilation(Code_json):
 ################################################################################
     def compile_from_file(self, file_name, logger):
         ''' Compiling code from the file, looking for *.fisd/*.fisd2 in no extension provided.'''
-        self._main_code_path = os.path.dirname(file_name)
-        self._main_code_name = self.__tokenize_from_file(self._main_code_path, file_name, logger)
+        self._main_code_name = self.__tokenize_from_file(os.path.dirname(file_name), os.path.basename(file_name), logger)
         self.__extract_functions(logger)
         self.__parse_commands(logger)
         self.__resolve_jumps(logger)

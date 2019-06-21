@@ -168,13 +168,13 @@ class WaitCommand(Command):
 class On_eventCommand(Command):
     _keyword = 'on_event'
 
-    @classmethod
-    def parse(cls, pargs):
-        pass
+    #@classmethod
+    #def parse(cls, pargs):
+    #    pass
 
-    @classmethod
-    def execute(cls, eargs):
-        eargs.logger.error("Not implemented yet!")
+    #@classmethod
+    #def execute(cls, eargs):
+    #    pass
 
 ################################################################################
 # END_EVENT Command
@@ -183,10 +183,10 @@ class On_eventCommand(Command):
 class End_eventCommand(Command):
     _keyword = 'end_event'
 
-    @classmethod
-    def parse(cls, pargs):
-        pass
+    #@classmethod
+    #def parse(cls, pargs):
+    #    pass
 
-    @classmethod
-    def execute(cls, eargs):
-        eargs.logger.error("Not implemented yet!")
+    #@classmethod
+    #def execute(cls, eargs):
+    #    pass

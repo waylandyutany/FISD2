@@ -8,10 +8,10 @@ from core.code_line import Code_line
 class Root_folder_nameCommand(Command):
     _keyword = 'root_folder_name'
 
-    @classmethod
-    def parse(cls, pargs):
-        pass
+    #@classmethod
+    #def parse(cls, pargs):
+    #    pass
 
-    @classmethod
-    def execute(cls, eargs):
-        eargs.logger.error("Not implemented yet!")
+    #@classmethod
+    #def execute(cls, eargs):
+    #    pass
