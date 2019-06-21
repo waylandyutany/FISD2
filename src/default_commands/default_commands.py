@@ -162,11 +162,26 @@ class WaitCommand(Command):
         eargs.logger.error("Not implemented yet!")
 
 ################################################################################
-# ON Command
+# ON_EVENT Command
 ################################################################################
 @command_class()
-class OnCommand(Command):
-    _keyword = 'on'
+class On_eventCommand(Command):
+    _keyword = 'on_event'
+
+    @classmethod
+    def parse(cls, pargs):
+        pass
+
+    @classmethod
+    def execute(cls, eargs):
+        eargs.logger.error("Not implemented yet!")
+
+################################################################################
+# END_EVENT Command
+################################################################################
+@command_class()
+class End_eventCommand(Command):
+    _keyword = 'end_event'
 
     @classmethod
     def parse(cls, pargs):

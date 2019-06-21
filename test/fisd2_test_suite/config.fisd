@@ -1,9 +1,9 @@
 test_suite_name = root_folder_name()
 
-on start proc begin_test_suite()
+on_event start proc begin_test_suite()
 	print "begin_test_suite()"
-endproc
+end_event
 
-on exit proc end_test_suite()
+on_event exit end_test_suite()
 	print "end_test_suite()"
-endproc
+end_event
