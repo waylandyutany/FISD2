@@ -87,9 +87,9 @@ class Code_compilation(Code_json):
 
         for possible_file in possible_files:
             if os.path.isfile(possible_file):
-                return os.path.basename(possible_file), os.path.abspath(possible_file)
+                return os.path.abspath(possible_file)
 
-        return None, None
+        return None
 
     def __process_execute_tokens(self, file_folder, tokens, logger):
         if tokens.is_name(0) and tokens.is_value_no_case(0, ExecuteCommand._keyword):
@@ -102,14 +102,14 @@ class Code_compilation(Code_json):
 
 ################################################################################
     def __tokenize_from_file(self, _file_folder, _file_name, logger):
-        file_name, file_path = self.__find_fisd_file(_file_folder, _file_name)
-        if not file_name:
-            logger.error(CompileError.non_existing_file_name(_file_name))
-            return file_name
+        file_path = self.__find_fisd_file(_file_folder, _file_name)
+        if not file_path:
+            logger.error(CompileError.non_existing_file_name(file_path))
+            return file_path
 
-        if file_name in self._code:
-            return file_name
-        self._code[file_name] = Code_lines.create()
+        if file_path in self._code:
+            return file_path
+        self._code[file_path] = Code_lines.create()
 
         with open(file_path ) as f:
             line_number = 0
@@ -118,16 +118,16 @@ class Code_compilation(Code_json):
 
                 tokens = Tokens(line)
 
-                with PrefaceLogger("'{}'[{}] : ".format(file_name, line_number), logger):
+                with PrefaceLogger("'{}'[{}] : ".format(file_path, line_number), logger):
                     Tokenizers.tokenize(tokens, logger)
 
-                with PrefaceLogger("'{}'[{}] : ".format(file_name, line_number), logger):
+                with PrefaceLogger("'{}'[{}] : ".format(file_path, line_number), logger):
                     self.__process_execute_tokens(_file_folder, tokens, logger)
 
                 if not tokens.empty():
-                    Code_lines.get_code_lines(self._code[file_name]).append(Code_line.create(line_number, tokens, None))
+                    Code_lines.get_code_lines(self._code[file_path]).append(Code_line.create(line_number, tokens, None))
 
-        return file_name
+        return file_path
 
     def __parse_commands(self, logger):
         parse_args = ParseArgs(self, logger)
