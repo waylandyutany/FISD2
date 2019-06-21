@@ -64,7 +64,6 @@
     <Content Include="test\executed2.fisd" />
     <Content Include="test\tc_execute.fisd2" />
     <Content Include="test\tc_for_if_proc.fisd2" />
-    <Content Include="test\tc_loops.fisd2" />
     <Content Include="test\tc_proc_calls.fisd2" />
     <Content Include="test\tc_restore_context.fisd2" />
     <Content Include="test\tc_var_stack.fisd2" />
