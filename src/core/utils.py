@@ -1,5 +1,7 @@
 from datetime import datetime
+import os
 
+################################################################################
 class TimeLogger:
     def __init__(self, message, logger):
         self._message = message
@@ -12,6 +14,7 @@ class TimeLogger:
         delta_time = datetime.now() - self._start_time
         self._logger.info("{} '{}'.".format(self._message, delta_time))
 
+################################################################################
 class PrefaceLogger:
     def __init__(self, new_preface, logger):
         self._logger = logger
@@ -23,3 +26,11 @@ class PrefaceLogger:
 
     def __exit__(self, type, value, tb):
         self._logger.preface = self._previous_preface
+
+################################################################################
+def root_and_file_name(file_path):
+    ''' Return file name with it's root folder name'''
+    file_path, file_name = os.path.split(file_path)
+    _, root_path = os.path.split(file_path)
+    return os.path.join(root_path, file_name)
+

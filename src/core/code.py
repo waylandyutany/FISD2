@@ -1,3 +1,5 @@
+from core.utils import root_and_file_name
+
 ################################################################################
 class Code:
     _FUNCTION_FILE_NAME = 'function_file_name'
@@ -19,8 +21,8 @@ class Code:
 
     def get_code_line_description(self, code_name, line_number):
         if Code._FUNCTION_FILE_NAME in self._code[code_name]:
-            return "'{}'.'{}'[{:03d}] : ".format(self._code[code_name][Code._FUNCTION_FILE_NAME], code_name, line_number)
-        return "'{}'[{:03d}] : ".format(code_name, line_number)
+            return "'{}'.'{}'[{:03d}] : ".format(root_and_file_name(self._code[code_name][Code._FUNCTION_FILE_NAME]), code_name, line_number)
+        return "'{}'[{:03d}] : ".format(root_and_file_name(code_name), line_number)
 
     def is_code_function(self, code_name):
         return Code._FUNCTION_FILE_NAME in self._code[code_name]
