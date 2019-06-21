@@ -73,7 +73,7 @@ class Code_compilation(Code_json):
         return super().__init__()
 
 ################################################################################
-    def __find_fisd_file(self, file_name):
+    def __find_fisd_file(self, file_folder, file_name):
         dir_name = os.path.dirname(file_name)
         name, ext = os.path.splitext(os.path.basename(file_name))
 
@@ -91,18 +91,18 @@ class Code_compilation(Code_json):
 
         return None, None
 
-    def __process_execute_tokens(self, tokens, logger):
+    def __process_execute_tokens(self, file_folder, tokens, logger):
         if tokens.is_name(0) and tokens.is_value_no_case(0, ExecuteCommand._keyword):
             if not tokens.is_string(1):
                 logger.error("Valid fisd file name must follow 'execute' command!")
                 return
-            tokenized_file_name = self.__tokenize_from_file(tokens.value_str(1), logger)
+            tokenized_file_name = self.__tokenize_from_file(file_folder, tokens.value_str(1), logger)
             if tokenized_file_name:
                 tokens.set_string(1, tokenized_file_name)
 
 ################################################################################
-    def __tokenize_from_file(self, _file_name, logger):
-        file_name, file_path = self.__find_fisd_file(_file_name)
+    def __tokenize_from_file(self, _file_folder, _file_name, logger):
+        file_name, file_path = self.__find_fisd_file(_file_folder, _file_name)
         if not file_name:
             logger.error(CompileError.non_existing_file_name(_file_name))
             return file_name
@@ -122,7 +122,7 @@ class Code_compilation(Code_json):
                     Tokenizers.tokenize(tokens, logger)
 
                 with PrefaceLogger("'{}'[{}] : ".format(file_name, line_number), logger):
-                    self.__process_execute_tokens(tokens, logger)
+                    self.__process_execute_tokens(_file_folder, tokens, logger)
 
                 if not tokens.empty():
                     Code_lines.get_code_lines(self._code[file_name]).append(Code_line.create(line_number, tokens, None))
@@ -227,7 +227,7 @@ class Code_compilation(Code_json):
     def compile_from_file(self, file_name, logger):
         ''' Compiling code from the file, looking for *.fisd/*.fisd2 in no extension provided.'''
         self._main_code_path = os.path.dirname(file_name)
-        self._main_code_name = self.__tokenize_from_file(file_name, logger)
+        self._main_code_name = self.__tokenize_from_file(self._main_code_path, file_name, logger)
         self.__extract_functions(logger)
         self.__parse_commands(logger)
         self.__resolve_jumps(logger)
