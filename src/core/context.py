@@ -2,23 +2,12 @@ from core.code import Code
 from core.code_line import Code_line
 from core.utils import PrefaceLogger
 from core.variable_stack import Variable_stack
+from core.execution import Execution
 from core.execution_stack import Execution_stack
+from core.execution_args import Execution_args
+
 import core.core as core
 import json
-
-################################################################################
-class ExecuteArgs: 
-    #@ properties for tokens, ..., code_line is property as well, for Parse arguments as well !!! optimize second call of property !!!
-    def __init__(self, _context, _logger, _code_name, _code_lines):
-        self.code_name = _code_name
-        self.code_lines = _code_lines
-        self.code_index = None
-        self.code_line = None
-
-        self.arguments = None
-
-        self.context = _context
-        self.logger = _logger
 
 ################################################################################
 class Context:
@@ -34,7 +23,7 @@ class Context:
         self._logger = logger
 
         self._variable_stack = Variable_stack(Context._variable_case_sensitive)
-        self._execution_stack = Execution_stack(self._code, self._variable_stack)
+        self._execution_stack = Execution(self._code, self._variable_stack)
 
 ################################################################################
     @property
@@ -64,7 +53,7 @@ class Context:
 
         #getting code lines from the code
         code_lines = self._code.get_code_lines(execution_context[Execution_stack._CODE_NAME])
-        execute_args = ExecuteArgs(self, self._logger, execution_context[Execution_stack._CODE_NAME], code_lines)
+        execute_args = Execution_args(self, self._logger, execution_context[Execution_stack._CODE_NAME], code_lines)
 
         #executing commands
         while execution_context[Execution_stack._CODE_INDEX] < len(code_lines) and (self._exit == False):
