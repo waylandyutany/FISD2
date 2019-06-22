@@ -1,2 +1,2 @@
 execute "../config"
-#test_set_name = root_folder_name()
+#test_set_name = fisd_current_folder()

@@ -1,7 +1,9 @@
+from default_commands.fisd_commands import Fisd_restore_context_command #@todo remove this dependency
+
 from copy import deepcopy
 from core.code_line import Code_line
 
-from default_commands.fisd_commands import Fisd_restore_context_command #@todo remove this dependency
+import os
 
 ################################################################################
 class Execution_stack:
@@ -46,18 +48,13 @@ class Execution_stack:
 
         return execution_context
 
+################################################################################
+
     def pop(self):
         self._stack.pop()
 
     def is_empty(self):
         return len(self._stack) == 0
-
-################################################################################
-    def jump_to_code(self, new_code_index):
-        self._stack[-1][Execution_stack._CODE_INDEX] = new_code_index - 1 # - 1 is due to #call_context[Context._CODE_INDEX] += 1 in execute_code loop!!!
-
-    def current_code_name(self):
-        return self._stack[-1][Execution_stack._CODE_NAME]
 
 ################################################################################
     def to_json_dict(self):
@@ -66,4 +63,24 @@ class Execution_stack:
     def from_json_dict(self, json_dict):
         self._stack = json_dict['stack']
         
-        
+################################################################################
+    def jump_to_code(self, new_code_index):
+        self._stack[-1][Execution_stack._CODE_INDEX] = new_code_index - 1 # - 1 is due to #call_context[Context._CODE_INDEX] += 1 in execute_code loop!!!
+
+################################################################################
+    def current_code_name(self):
+        return self._stack[-1][Execution_stack._CODE_NAME]
+
+    #@todo in case of function we must take path from FUNCTION_FILE_NAME !!!
+    def __current_code_path(self):
+        return self._stack[-1][Execution_stack._CODE_NAME]
+
+    def current_file_name(self):
+        return os.path.basename(self.__current_code_path(self))
+
+    def current_file_folder(self):
+        file_path, file_name = os.path.split(self.__current_code_path(self))
+        _, file_folder = os.path.split(file_path)
+        return file_folder
+
+################################################################################

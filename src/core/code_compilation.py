@@ -4,7 +4,7 @@ from core.commands import Commands
 from core.compile_errors import CompileError
 from core.code_line import Code_line
 from core.code_lines import Code_lines
-from core.utils import PrefaceLogger, root_and_file_name
+from core.utils import PrefaceLogger, folder_and_file_name
 
 import core.core as core
 
@@ -104,7 +104,7 @@ class Code_compilation(Code_json):
 
         if file_path in self._code:
             return file_path
-        logger.info("Compiling '{}'...".format(root_and_file_name(file_path)))
+        logger.info("Compiling '{}'...".format(folder_and_file_name(file_path)))
 
         self._code[file_path] = Code_lines.create()
 
@@ -115,10 +115,10 @@ class Code_compilation(Code_json):
 
                 tokens = Tokens(line)
 
-                with PrefaceLogger("'{}'[{}] : ".format(root_and_file_name(file_path), line_number), logger):
+                with PrefaceLogger("'{}'[{}] : ".format(folder_and_file_name(file_path), line_number), logger):
                     Tokenizers.tokenize(tokens, logger)
 
-                with PrefaceLogger("'{}'[{}] : ".format(root_and_file_name(file_path), line_number), logger):
+                with PrefaceLogger("'{}'[{}] : ".format(folder_and_file_name(file_path), line_number), logger):
                     self.__process_execute_tokens(os.path.dirname(file_path), tokens, logger)
 
                 if not tokens.empty():

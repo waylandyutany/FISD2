@@ -28,9 +28,9 @@ class PrefaceLogger:
         self._logger.preface = self._previous_preface
 
 ################################################################################
-def root_and_file_name(file_path):
+def folder_and_file_name(file_path):
     ''' Return file name with it's root folder name'''
     file_path, file_name = os.path.split(file_path)
-    _, root_path = os.path.split(file_path)
-    return os.path.join(root_path, file_name)
+    _, file_folder = os.path.split(file_path)
+    return os.path.join(file_folder, file_name)
 

@@ -36,6 +36,11 @@ class Context:
         self._execution_stack = Execution_stack(self._code, self._variable_stack)
 
 ################################################################################
+    @property
+    def execution_stack(self):
+        return self._execution_stack
+
+################################################################################
     def to_json_dict(self):
         return {'execution_stack':self._execution_stack.to_json_dict(),
                 'variable_stack':self._variable_stack.to_json_dict()}
@@ -105,6 +110,8 @@ class Context:
     def get_return_value(self):
         return self._return
 
+    def set_return_value(self, value):
+        self._return = value
 ################################################################################
     def run(self):
         self.execute_code(self._code.main_code_name())
