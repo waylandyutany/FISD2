@@ -6,8 +6,9 @@ class Execution_stack:
     _CODE_INDEX = 'code_index'
     _CODE_IS_FUNCTION = 'is_function'
 
-    def __init__(self):
+    def __init__(self, code):
         self._stack = []
+        self._code = code
 
 ################################################################################
     def to_json_dict(self):

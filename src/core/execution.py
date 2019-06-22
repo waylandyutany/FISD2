@@ -8,8 +8,7 @@ import os
 ################################################################################
 class Execution(Execution_stack):
     def __init__(self, code, variable_stack):
-        super().__init__()
-        self._code = code
+        super().__init__(code)
         self._variable_stack = variable_stack
 
 ################################################################################
@@ -44,7 +43,7 @@ class Execution(Execution_stack):
 
         return execution_context
 
-    def pop(self):
+    def pop_execution(self):
         self._stack.pop()
       
 ################################################################################

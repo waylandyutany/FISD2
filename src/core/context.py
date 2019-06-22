@@ -71,8 +71,10 @@ class Context:
             execution_context[Execution_stack._CODE_INDEX] += 1
             
         #popping code context from code stack
-        self._execution.pop()
-        #if function call var stack is popped
+        self._execution.pop_execution()
+
+        #if function call, var stack is popped as well 
+        #@todo move into _execution.pop_execution()
         if execution_context[Execution_stack._CODE_IS_FUNCTION]:
             self._variable_stack.pop()
 
