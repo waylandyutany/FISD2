@@ -60,3 +60,18 @@ class Fisd_current_file_command(Command):
     @staticmethod
     def execute(eargs):
         eargs.context.set_return_value(eargs.context.execution_stack.current_file_name())
+
+################################################################################
+# FISD_LINE_NUMBER Command
+################################################################################
+@command_class()
+class Fisd_line_number_command(Command):
+    _keyword = 'fisd_line_number'
+
+    @staticmethod
+    def parse(pargs):
+        pass    
+
+    @staticmethod
+    def execute(eargs):
+        eargs.context.set_return_value(eargs.context.execution_stack.current_line_number())

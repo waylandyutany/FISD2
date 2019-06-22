@@ -1,2 +1,5 @@
 execute "../config"
 #test_cases_name = fisd_current_folder()
+#test_cases_name = fisd_current_folder
+#print fisd_line_number()
+#print fisd_line_number
