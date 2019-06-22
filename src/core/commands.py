@@ -6,13 +6,13 @@ class Command:
     _keyword = None
     _evaluate = False #if true function calls are evaluated
 
-    @staticmethod
-    def parse(pargs):
-        raise NotImplementedError("Abstract method!")
+    @classmethod
+    def parse(cls, pargs):
+        pargs.logger.error("Command '{}'.parse is not yet implemented!".format(cls._keyword))
 
     @classmethod
     def execute(cls, eargs):
-        eargs.logger.error("Command '{}' is not yet implemented!".format(cls._keyword))
+        eargs.logger.error("Command '{}'.execute is not yet implemented!".format(cls._keyword))
 
 ################################################################################
 class Commands:

@@ -1,9 +1,9 @@
 #test_suite_name = root_folder_name()
 
-on_event start begin_test_suite()
-	print "begin_test_suite()"
-end_event
+#on_event start begin_test_suite()
+#	print "begin_test_suite()"
+#end_event
 
-on_event exit end_test_suite()
-	print "end_test_suite()"
-end_event
+#on_event exit end_test_suite()
+#	print "end_test_suite()"
+#end_event

@@ -1,17 +1,12 @@
 from core.code import Code
-from core.tokens import Tokens, TOKEN_NUMBER, TOKEN_STRING, TOKEN_NONE
 from copy import deepcopy
 from core.code_line import Code_line
 from core.utils import PrefaceLogger
+from core.variable_stack import Variable_stack
 import json, os
 
 from default_commands.fisd_commands import Fisd_restore_context_command #@todo remove this dependency
 import core.core as core
-
-################################################################################
-class Arguments(Tokens):
-    def __init__(self, tokens):
-        self._tokens = deepcopy(tokens.tokens()[:])
 
 ################################################################################
 class ExecuteArgs: 
@@ -34,9 +29,6 @@ class Context:
     _CODE_INDEX = 'code_index'
     _CODE_IS_FUNCTION = 'is_function'
 
-    _VAR_TYPE = 'type'
-    _VAR_VALUE = 'value'
-
     def __init__(self, code, logger):
         self._code = code
 
@@ -47,61 +39,23 @@ class Context:
         self._logger = logger
 
         self._execution_stack = []
-        self._variable_stack = [{}]
+        self._variable_stack = Variable_stack(Context._variable_case_sensitive)
 
 ################################################################################
     def to_json_dict(self):
         return {'execution_stack':deepcopy(self._execution_stack),
-                'variable_stack':deepcopy(self._variable_stack)}
+                'variable_stack':self._variable_stack.to_json_dict()}
 
     def from_json_dict(self, json_dict):
         self._execution_stack = json_dict['execution_stack']
-        self._variable_stack = json_dict['variable_stack']
+        self._variable_stack.from_json_dict(json_dict['variable_stack'])
 
 ################################################################################
-    def __tokens_to_arguments(self, tokens):
-        args =  Arguments(tokens)
-        for i in range(0, len(args)):
-            if args.is_name(i):
-                type, value = self.__find_variable(args.value(i))
-                if type == TOKEN_NUMBER:
-                    args.set_number(i, value)
-                elif type == TOKEN_STRING:
-                    args.set_string(i, value)
-
-        return args
-
-    def __find_variable(self, name):
-        if not Context._variable_case_sensitive:
-            name = name.lower()
-
-        var_stack = self._variable_stack[-1]
-        if name in var_stack:
-            return var_stack[name][Context._VAR_TYPE], var_stack[name][Context._VAR_VALUE]
-
-        if len(self._variable_stack) > 1:
-            global_var_stack = self._variable_stack[0]
-            if name in global_var_stack:
-                return global_var_stack[name][Context._VAR_TYPE], global_var_stack[name][Context._VAR_VALUE]
-
-        return TOKEN_NONE, None
-
     def get_variable(self, name):
-        type, value = self.__find_variable(name)
-        return value
+        return self._variable_stack.get_variable(name)
 
     def set_variable(self, name, value):
-        if not Context._variable_case_sensitive:
-            name = name.lower()
-
-        var_stack = self._variable_stack[-1]
-
-        if isinstance(value, int):
-            var_stack[name] = {Context._VAR_TYPE : TOKEN_NUMBER, Context._VAR_VALUE:value}
-        elif isinstance(value, float):
-            var_stack[name] = {Context._VAR_TYPE : TOKEN_NUMBER, Context._VAR_VALUE:value}
-        else:
-            var_stack[name] = {Context._VAR_TYPE : TOKEN_STRING, Context._VAR_VALUE:str(value)}
+        self._variable_stack.set_variable(name, value)
 
 ################################################################################
     def __push_execution_context(self, code_name):
@@ -113,7 +67,7 @@ class Context:
         self._execution_stack.append(execution_context)
         #if function call new var stack is pushed
         if execution_context[Context._CODE_IS_FUNCTION]:
-            self._variable_stack.append({})
+            self._variable_stack.push()
 
         return execution_context
 
@@ -150,7 +104,7 @@ class Context:
 
             line_number, line_tokens, command_class = Code_line.split(execute_args.code_line)
 
-            execute_args.arguments = self.__tokens_to_arguments(line_tokens)
+            execute_args.arguments = self._variable_stack.tokens_to_arguments(line_tokens)
             execute_args.code_lines = code_lines
             execute_args.code_index = execution_context[Context._CODE_INDEX]
 
