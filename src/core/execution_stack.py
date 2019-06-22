@@ -1,8 +1,24 @@
+from copy import deepcopy
+
 ################################################################################
 class Execution_stack:
     _CODE_NAME = 'code_name'
     _CODE_INDEX = 'code_index'
     _CODE_IS_FUNCTION = 'is_function'
+
+    def __init__(self):
+        self._stack = []
+
+################################################################################
+    def to_json_dict(self):
+        return {'stack':deepcopy(self._stack)}
+
+    def from_json_dict(self, json_dict):
+        self._stack = json_dict['stack']
+
+################################################################################
+    def is_empty(self):
+        return len(self._stack) == 0
 
 ################################################################################
     def current_code_name(self):

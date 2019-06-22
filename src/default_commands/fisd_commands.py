@@ -44,7 +44,7 @@ class Fisd_current_folder_command(Command):
 
     @staticmethod
     def execute(eargs):
-        eargs.context.set_return_value(eargs.context.execution_stack.current_file_folder())
+        eargs.context.set_return_value(eargs.context.execution.current_file_folder())
 
 ################################################################################
 # FISD_CURRENT_FILE Command
@@ -59,7 +59,7 @@ class Fisd_current_file_command(Command):
 
     @staticmethod
     def execute(eargs):
-        eargs.context.set_return_value(eargs.context.execution_stack.current_file_name())
+        eargs.context.set_return_value(eargs.context.execution.current_file_name())
 
 ################################################################################
 # FISD_LINE_NUMBER Command
@@ -74,4 +74,4 @@ class Fisd_line_number_command(Command):
 
     @staticmethod
     def execute(eargs):
-        eargs.context.set_return_value(eargs.context.execution_stack.current_line_number())
+        eargs.context.set_return_value(eargs.context.execution.current_line_number())

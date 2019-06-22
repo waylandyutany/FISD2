@@ -1,6 +1,5 @@
 from default_commands.fisd_commands import Fisd_restore_context_command #@todo remove this dependency
 
-from copy import deepcopy
 from core.code_line import Code_line
 from core.execution_stack import Execution_stack
 
@@ -9,9 +8,9 @@ import os
 ################################################################################
 class Execution(Execution_stack):
     def __init__(self, code, variable_stack):
+        super().__init__()
         self._code = code
         self._variable_stack = variable_stack
-        self._stack = []
 
 ################################################################################
     def push_execution_context(self, code_name):
@@ -45,20 +44,9 @@ class Execution(Execution_stack):
 
         return execution_context
 
-################################################################################
     def pop(self):
         self._stack.pop()
-
-    def is_empty(self):
-        return len(self._stack) == 0
-
-################################################################################
-    def to_json_dict(self):
-        return {'stack':deepcopy(self._stack)}
-
-    def from_json_dict(self, json_dict):
-        self._stack = json_dict['stack']
-        
+      
 ################################################################################
     def jump_to_code(self, new_code_index):
         self._stack[-1][Execution_stack._CODE_INDEX] = new_code_index - 1 # - 1 is due to #call_context[Context._CODE_INDEX] += 1 in execute_code loop!!!

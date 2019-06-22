@@ -23,20 +23,20 @@ class Context:
         self._logger = logger
 
         self._variable_stack = Variable_stack(Context._variable_case_sensitive)
-        self._execution_stack = Execution(self._code, self._variable_stack)
+        self._execution = Execution(self._code, self._variable_stack)
 
 ################################################################################
     @property
-    def execution_stack(self):
-        return self._execution_stack
+    def execution(self):
+        return self._execution
 
 ################################################################################
     def to_json_dict(self):
-        return {'execution_stack':self._execution_stack.to_json_dict(),
+        return {'execution_stack':self._execution.to_json_dict(),
                 'variable_stack':self._variable_stack.to_json_dict()}
 
     def from_json_dict(self, json_dict):
-        self._execution_stack.from_json_dict(json_dict['execution_stack'])
+        self._execution.from_json_dict(json_dict['execution_stack'])
         self._variable_stack.from_json_dict(json_dict['variable_stack'])
 
 ################################################################################
@@ -48,8 +48,8 @@ class Context:
 
 ################################################################################
     def execute_code(self, code_name, execution_stack_index = None):
-        execution_context = self._execution_stack.push_execution_context(code_name) if execution_stack_index == None else\
-                            self._execution_stack.restore_execution_context(execution_stack_index, self)
+        execution_context = self._execution.push_execution_context(code_name) if execution_stack_index == None else\
+                            self._execution.restore_execution_context(execution_stack_index, self)
 
         #getting code lines from the code
         code_lines = self._code.get_code_lines(execution_context[Execution_stack._CODE_NAME])
@@ -71,13 +71,13 @@ class Context:
             execution_context[Execution_stack._CODE_INDEX] += 1
             
         #popping code context from code stack
-        self._execution_stack.pop()
+        self._execution.pop()
         #if function call var stack is popped
         if execution_context[Execution_stack._CODE_IS_FUNCTION]:
             self._variable_stack.pop()
 
     def jump_to_code(self, new_code_index):
-        self._execution_stack.jump_to_code(new_code_index)
+        self._execution.jump_to_code(new_code_index)
 
 ################################################################################
     def push_call_tokens(self, call_tokens):
@@ -93,7 +93,7 @@ class Context:
 
 ################################################################################
     def return_execute_code(self, value = None):
-        code_lines = self._code.get_code_lines(self._execution_stack.current_code_name())
+        code_lines = self._code.get_code_lines(self._execution.current_code_name())
         self.jump_to_code(len(code_lines))
         self._return = value
 
@@ -107,7 +107,7 @@ class Context:
         self.execute_code(self._code.main_code_name())
 
     def run_from_restored_context(self):
-        if self._execution_stack.is_empty():
+        if self._execution.is_empty():
             self.execute_code(self._code.main_code_name())
         else:
             self.execute_code(None, 0)
