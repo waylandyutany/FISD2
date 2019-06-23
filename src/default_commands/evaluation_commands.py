@@ -20,7 +20,8 @@ class SetretCommand(Command):
 
     @staticmethod
     def create_code_line(line_number, var_name):
-        tokens = Tokens("{} {}".format(SetretCommand._keyword, var_name))
+        tokens = Tokens("{}".format(SetretCommand._keyword))
+        tokens.insert_name(1, var_name)
         tokens.mark_as_keyword(0)
         tokens.mark_as_keyword(1)
         code_line = Code_line.create(line_number, tokens, SetretCommand)
@@ -69,17 +70,18 @@ class Code_evaluation:
         rightest_function = cls.rightest_function(line_tokens, pargs.code)#@ can be done via generator and ienumerate to get the var_index
         var_index = 0
         while rightest_function:
-            #@todo handle already existing varn_name !!! - can use # as a marker
-            #@todo handle commands !!!
-            var_name = "setret_{}".format(var_index)
+            # add # before set_ret_{} variable name to prevent collision with other 'normal' variables
+            var_name = "#setret_{}".format(var_index)
+
             i, j, type = rightest_function
             function_tokens = line_tokens.pop_tokens(i - 1, j + 1)
+            func_name = function_tokens.value(0)
             line_tokens.insert_name(i, var_name)
 
             if type == cls._FISD_FUNCTION:
                 call_code_line = CallCommand.create_code_line(line_number, function_tokens)
             elif type == cls._FISD_COMMAND:
-                call_code_line = Commands.find_command(function_tokens.value(0)).create_code_line(line_number, function_tokens)
+                call_code_line = Commands.find_command(func_name).create_code_line(line_number, function_tokens)
 
             call_ret_code_line = SetretCommand.create_code_line(line_number, var_name)
 
