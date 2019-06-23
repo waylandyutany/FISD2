@@ -73,6 +73,7 @@ class ReturnCommand(Command):
 @tokenizer_class()
 class CallCommand(Command):
     _keyword = 'call'
+    _evaluate = True
 
     @staticmethod
     def parse(pargs):
@@ -83,6 +84,7 @@ class CallCommand(Command):
     @staticmethod
     def execute(eargs):
         i0 = eargs.arguments.find_op('(')
+        if i0 == None:return #@HACK Due to function evaluation CALL is done before this CALL
         call_tokens = eargs.arguments.sub_tokens(i0, len(eargs.arguments) - 1)
         eargs.context.push_call_tokens(call_tokens)
         eargs.context.execute_code(eargs.arguments.value_str(1))
