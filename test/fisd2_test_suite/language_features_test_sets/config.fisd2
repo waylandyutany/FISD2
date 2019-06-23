@@ -1,2 +1,1 @@
 execute "../config"
-test_set_name = fisd_current_folder()

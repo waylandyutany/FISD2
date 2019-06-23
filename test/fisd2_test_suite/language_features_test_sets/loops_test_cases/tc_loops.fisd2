@@ -1,4 +1,5 @@
 execute "config"
+test_case(fisd_current_folder())
 
 for i from -1 to 2
 	for j from -1 to 2

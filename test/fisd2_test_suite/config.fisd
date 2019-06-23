@@ -1,1 +1,1 @@
-test_suite_name = fisd_current_folder()
+test_suite(fisd_current_folder())

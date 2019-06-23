@@ -47,6 +47,8 @@
     <Compile Include="src\default_commands\fisd_commands.py" />
     <Compile Include="src\default_commands\loop_commands.py" />
     <Compile Include="src\default_commands\procedure_commands.py" />
+    <Compile Include="src\default_commands\run_commands.py" />
+    <Compile Include="src\default_commands\test_commands.py" />
     <Compile Include="src\default_commands\__init__.py" />
     <Compile Include="src\fisd2.py" />
   </ItemGroup>

@@ -16,6 +16,8 @@ import default_commands.procedure_commands
 import default_commands.evaluation_commands
 import default_commands.fisd_commands
 import default_commands.file_system_commands
+import default_commands.run_commands
+import default_commands.test_commands
 
 ################################################################################
 # @todo
