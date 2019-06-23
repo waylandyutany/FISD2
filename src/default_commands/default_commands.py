@@ -62,6 +62,7 @@ class SetCommand(Command):
 @command_class()
 class PrintCommand(Command):
     _keyword = 'print'
+    _evaluate = True
 
     @classmethod
     def parse(cls, pargs):
@@ -161,32 +162,3 @@ class WaitCommand(Command):
     def execute(cls, eargs):
         eargs.logger.error("Not implemented yet!")
 
-################################################################################
-# ON_EVENT Command
-################################################################################
-@command_class()
-class On_eventCommand(Command):
-    _keyword = 'on_event'
-
-    #@classmethod
-    #def parse(cls, pargs):
-    #    pass
-
-    #@classmethod
-    #def execute(cls, eargs):
-    #    pass
-
-################################################################################
-# END_EVENT Command
-################################################################################
-@command_class()
-class End_eventCommand(Command):
-    _keyword = 'end_event'
-
-    #@classmethod
-    #def parse(cls, pargs):
-    #    pass
-
-    #@classmethod
-    #def execute(cls, eargs):
-    #    pass

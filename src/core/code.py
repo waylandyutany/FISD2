@@ -27,5 +27,7 @@ class Code:
         return Code._FUNCTION_FILE_NAME in self._code[code_name]
 
     def code_name_to_code_path(self, code_name):
-        return self._code[code_name][Code._FUNCTION_FILE_NAME] if Code._FUNCTION_FILE_NAME in self._code[code_name] else self._code[code_name]
+        if Code._FUNCTION_FILE_NAME in self._code[code_name]:
+            return self._code[code_name][Code._FUNCTION_FILE_NAME]
+        return code_name
 ################################################################################

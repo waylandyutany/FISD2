@@ -1,6 +1,6 @@
 from core.code_line import Code_line
 from core.tokens import Tokens
-from core.commands import command_class, Command
+from core.commands import command_class, Command, Commands
 from default_commands.procedure_commands import CallCommand
 
 ################################################################################
@@ -30,9 +30,11 @@ class SetretCommand(Command):
 # Code_evaluation
 ################################################################################
 class Code_evaluation:
+    _FISD_FUNCTION = 0
+    _FISD_COMMAND = 1
     #@todo error when function name == variable name
-    @staticmethod
-    def rightest_function(tokens, code):
+    @classmethod
+    def rightest_function(cls, tokens, code):
         ret = None
         for i in range(0, len(tokens) - 2):
             if tokens.is_keyword(i) and tokens.is_op(i + 1) and tokens.is_value(i + 1, '('):
@@ -45,7 +47,9 @@ class Code_evaluation:
                             if nested_counter == 0:
                                 # only our fisd functions are accepted
                                 if code.get_code_lines(tokens.value(i)):
-                                    ret = (i,j)
+                                    ret = (i, j, cls._FISD_FUNCTION)
+                                elif Commands.find_command(tokens.value(i)) != None:
+                                    ret = (i, j, cls._FISD_COMMAND)
                                 break
                             else:
                                 nested_counter -= 1
@@ -68,12 +72,15 @@ class Code_evaluation:
             #@todo handle already existing varn_name !!! - can use # as a marker
             #@todo handle commands !!!
             var_name = "setret_{}".format(var_index)
-            i, j = rightest_function
+            i, j, type = rightest_function
             function_tokens = line_tokens.pop_tokens(i - 1, j + 1)
             line_tokens.insert_name(i, var_name)
-            #pargs.logger.info(str(function_tokens))
 
-            call_code_line = CallCommand.create_code_line(line_number, function_tokens)
+            if type == cls._FISD_FUNCTION:
+                call_code_line = CallCommand.create_code_line(line_number, function_tokens)
+            elif type == cls._FISD_COMMAND:
+                call_code_line = Commands.find_command(function_tokens.value(0)).create_code_line(line_number, function_tokens)
+
             call_ret_code_line = SetretCommand.create_code_line(line_number, var_name)
 
             pargs.code_lines_insertion.insert_before(line_number, call_code_line)

@@ -1,10 +1,11 @@
+from core.code_line import Code_line
+
 ################################################################################
 class Command:
-
     #Any token with name in this list is automaticaly marked as keyword.
     _keywords = None
     _keyword = None
-    _evaluate = False #if true function calls are evaluated
+    _evaluate = False
 
     @classmethod
     def parse(cls, pargs):
@@ -13,6 +14,12 @@ class Command:
     @classmethod
     def execute(cls, eargs):
         eargs.logger.error("Command '{}'.execute is not yet implemented!".format(cls._keyword))
+
+    @classmethod
+    def create_code_line(cls, line_number, tokens):
+        assert tokens.value(0).lower() == cls._keyword, ""
+        code_line = Code_line.create(line_number, tokens, cls)
+        return code_line
 
 ################################################################################
 class Commands:
