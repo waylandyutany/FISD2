@@ -33,7 +33,6 @@ class JumpCommand(Command):
 @tokenizer_class()
 class SetCommand(Command):
     _keyword = 'set'
-    _evaluate = True
 
     @classmethod
     def parse(cls, pargs):
@@ -62,7 +61,6 @@ class SetCommand(Command):
 @command_class()
 class PrintCommand(Command):
     _keyword = 'print'
-    _evaluate = True
 
     @classmethod
     def parse(cls, pargs):

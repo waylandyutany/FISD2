@@ -157,8 +157,9 @@ class Code_compilation(Code_json):
                         line_tokens.mark_tokens_as_keywords(command_class._keywords)
 
                     Code_line.set_command_class(code_line, command_class)
-                    if command_class._evaluate:
-                        Code_evaluation.evaluate_function_calls(parse_args)
+
+                    Code_evaluation.evaluate_function_calls(parse_args)
+
                     command_class.parse(parse_args)
 
             self.__insert_code_lines(parse_args.code_lines, parse_args.code_lines_insertion)

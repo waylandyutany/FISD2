@@ -52,7 +52,6 @@ class EndProcCommand(Command):
 @command_class()
 class ReturnCommand(Command):
     _keyword = 'return'
-    _evaluate = True
 
     @staticmethod
     def parse(pargs):
@@ -73,7 +72,6 @@ class ReturnCommand(Command):
 @tokenizer_class()
 class CallCommand(Command):
     _keyword = 'call'
-    _evaluate = True
 
     @staticmethod
     def parse(pargs):
