@@ -10,6 +10,9 @@ class Execution_args:
 
         self.__arguments = context._variable_stack.tokens_to_arguments(Code_line.get_line_tokens(self.code_line))
 
+    def __str__(self):
+        return str(self.__arguments)
+
     @property
     def code_name(self):
         return self.__context._execution.current_code_name()

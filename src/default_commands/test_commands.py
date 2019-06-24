@@ -13,7 +13,7 @@ class Test_suiteCommand(Command):
 
     @classmethod
     def execute(cls, eargs):
-        eargs.logger.info("{}({})".format(cls._keyword, str(eargs.arguments)))
+        eargs.logger.info("{}({})".format(cls._keyword, str(eargs)))
 
 ################################################################################
 # TEST_SET Command
@@ -28,7 +28,7 @@ class Test_setCommand(Command):
 
     @classmethod
     def execute(cls, eargs):
-        eargs.logger.info("{}({})".format(cls._keyword, str(eargs.arguments)))
+        eargs.logger.info("{}({})".format(cls._keyword, str(eargs)))
 
 ################################################################################
 # TEST_CASE Command
@@ -43,7 +43,7 @@ class Test_caseCommand(Command):
 
     @classmethod
     def execute(cls, eargs):
-        eargs.logger.info("{}({})".format(cls._keyword, str(eargs.arguments)))
+        eargs.logger.info("{}({})".format(cls._keyword, str(eargs)))
 
 ################################################################################
 # TEST_ASSERT Command
@@ -58,5 +58,5 @@ class Test_asserCommand(Command):
 
     @classmethod
     def execute(cls, eargs):
-        eargs.logger.info("{}({})".format(cls._keyword, str(eargs.arguments)))
+        eargs.logger.info("{}({})".format(cls._keyword, str(eargs)))
 
