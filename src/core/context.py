@@ -53,20 +53,13 @@ class Context:
 
         #getting code lines from the code
         code_lines = self._code.get_code_lines(execution_context[Execution_stack._CODE_NAME])
-        execute_args = Execution_args(self, self._logger, execution_context[Execution_stack._CODE_NAME], code_lines)
 
         #executing commands
         while execution_context[Execution_stack._CODE_INDEX] < len(code_lines) and (self._exit == False):
-            execute_args.code_line = code_lines[execution_context[Execution_stack._CODE_INDEX]]
+            execute_args = Execution_args(self, self._code, self._logger)
 
-            line_number, line_tokens, command_class = Code_line.split(execute_args.code_line)
-
-            execute_args.arguments = self._variable_stack.tokens_to_arguments(line_tokens)
-            execute_args.code_lines = code_lines
-            execute_args.code_index = execution_context[Execution_stack._CODE_INDEX]
-
-            with PrefaceLogger(self._code.get_code_line_description(execution_context[Execution_stack._CODE_NAME], line_number), self._logger):
-                command_class.execute(execute_args)
+            with PrefaceLogger(self._code.get_code_line_description(execute_args.code_name, execute_args.line_number), self._logger):
+                execute_args.command_class.execute(execute_args)
 
             execution_context[Execution_stack._CODE_INDEX] += 1
             

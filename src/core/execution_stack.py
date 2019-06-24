@@ -27,7 +27,7 @@ class Execution_stack:
     def __current_code_path(self):
         return self._code.code_name_to_code_path(self._stack[-1][Execution_stack._CODE_NAME])
 
-    def __current_code_index(self):
+    def current_code_index(self):
         return self._stack[-1][Execution_stack._CODE_INDEX]
 
 ################################################################################
@@ -44,4 +44,4 @@ class Execution_stack:
 
     def current_line_number(self):
         code_lines =  self._code.get_code_lines(self.current_code_name())
-        return Code_line.get_line_number(code_lines[self.__current_code_index()])
+        return Code_line.get_line_number(code_lines[self.current_code_index()])
