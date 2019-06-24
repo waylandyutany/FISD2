@@ -1,4 +1,4 @@
-from core.commands import command_class, Command
+from core.commands import command_class, Command, Commands
 from core.tokens import tokenizer_class, Tokens
 from core.code_line import Code_line
 
@@ -84,14 +84,13 @@ class CallCommand(Command):
     @staticmethod
     def execute(eargs):
         i0 = eargs.arguments.find_op('(')
-        if i0 == None:return #@HACK Due to function evaluation CALL is done before this CALL
         call_tokens = eargs.arguments.sub_tokens(i0, len(eargs.arguments) - 1)
         eargs.context.push_call_tokens(call_tokens)
         eargs.context.execute_code(eargs.arguments.value_str(1))
 
     @staticmethod
     def tokenize(tokens, logger):
-        if tokens.is_name(0) and tokens.is_op(1) and tokens.is_value(1, '('):
+        if tokens.is_name(0) and tokens.is_op(1) and tokens.is_value(1, '(') and Commands.find_command(tokens.value(0)) == None:
             tokens.insert_name(0, CallCommand._keyword)
 
     @staticmethod

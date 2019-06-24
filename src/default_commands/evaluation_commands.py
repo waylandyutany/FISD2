@@ -67,13 +67,14 @@ class Code_evaluation:
         line_tokens = Code_line.get_line_tokens(pargs.code_line)
         line_number = Code_line.get_line_number(pargs.code_line)
         cls.mark_functions_as_keywords(line_tokens)
-        rightest_function = cls.rightest_function(line_tokens, pargs.code)#@ can be done via generator and ienumerate to get the var_index
+        next_rightest_function = cls.rightest_function(line_tokens, pargs.code)
         var_index = 0
-        while rightest_function:
+        while next_rightest_function:
             # add # before set_ret_{} variable name to prevent collision with other 'normal' variables
             var_name = "#setret_{}".format(var_index)
 
-            i, j, type = rightest_function
+            i, j, type = next_rightest_function
+
             function_tokens = line_tokens.pop_tokens(i - 1, j + 1)
             func_name = function_tokens.value(0)
             line_tokens.insert_name(i, var_name)
@@ -82,11 +83,16 @@ class Code_evaluation:
                 call_code_line = CallCommand.create_code_line(line_number, function_tokens)
             elif type == cls._FISD_COMMAND:
                 call_code_line = Commands.find_command(func_name).create_code_line(line_number, function_tokens)
+            
+            next_rightest_function = cls.rightest_function(line_tokens, pargs.code)
 
-            call_ret_code_line = SetretCommand.create_code_line(line_number, var_name)
+            #CALL must call some function, so last call command is replaced instead of inserted before
+            if line_tokens.value(0) == CallCommand._keyword and (next_rightest_function == None):
+                pargs.code_lines[pargs.code_index ] = call_code_line
+            else:
+                call_ret_code_line = SetretCommand.create_code_line(line_number, var_name)
 
-            pargs.code_lines_insertion.insert_before(line_number, call_code_line)
-            pargs.code_lines_insertion.insert_before(line_number, call_ret_code_line)
+                pargs.code_lines_insertion.insert_before(line_number, call_code_line)
+                pargs.code_lines_insertion.insert_before(line_number, call_ret_code_line)
 
-            rightest_function = cls.rightest_function(line_tokens, pargs.code)
             var_index += 1

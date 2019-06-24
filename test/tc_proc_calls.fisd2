@@ -25,5 +25,9 @@ print r
 r = test_proc_sum(1,1) * test_proc_sum(test_proc_sum(1,1),cos(3) * 2) * 3
 print r
 
-#print test_proc_sum(1,1) * test_proc_sum(test_proc_sum(1,1),cos(3) * 2) * 3
+r = test_proc_sum(1,1) + test_proc_sum(test_proc_sum(1,1),test_proc_sum(1,1))
+print r
+
+r = test_proc_sum(1,-1) + test_proc_sum(test_proc_sum(-1,1),test_proc_sum(1,1))
+print r
 
