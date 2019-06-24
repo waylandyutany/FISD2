@@ -1,7 +1,7 @@
 from core.code_line import Code_line
 from core.tokens import Tokens
 from core.commands import command_class, Command, Commands
-from default_commands.procedure_commands import CallCommand
+from default_commands.procedure_commands import CallCommand, ReturnCommand
 
 ################################################################################
 # SETRET Command
@@ -33,11 +33,15 @@ class SetretCommand(Command):
 class Code_evaluation:
     _FISD_FUNCTION = 0
     _FISD_COMMAND = 1
+
+    _start_index_0_keywords = [ReturnCommand._keyword]
     #@todo error when function name == variable name
     @classmethod
     def rightest_function(cls, tokens, code):
+        start_index = 0 if tokens.is_value_no_case(0, cls._start_index_0_keywords) else 2
+
         ret = None
-        for i in range(0, len(tokens) - 2):
+        for i in range(start_index, len(tokens) - 2):
             if tokens.is_keyword(i) and tokens.is_op(i + 1) and tokens.is_value(i + 1, '('):
                 nested_counter = 0
                 for j in range(i + 2, len(tokens)):
@@ -70,8 +74,8 @@ class Code_evaluation:
         next_rightest_function = cls.rightest_function(line_tokens, pargs.code)
         var_index = 0
         while next_rightest_function:
-            # add # before set_ret_{} variable name to prevent collision with other 'normal' variables
-            var_name = "#setret_{}".format(var_index)
+            # using number as set ret variable name to prevent collision with other 'normal' variables, @todo do it better !!!:-)
+            var_name = "{0}".format(var_index)
 
             i, j, type = next_rightest_function
 
@@ -86,13 +90,9 @@ class Code_evaluation:
             
             next_rightest_function = cls.rightest_function(line_tokens, pargs.code)
 
-            #CALL must call some function, so last call command is replaced instead of inserted before
-            if line_tokens.value(0) == CallCommand._keyword and (next_rightest_function == None):
-                pargs.code_lines[pargs.code_index ] = call_code_line
-            else:
-                call_ret_code_line = SetretCommand.create_code_line(line_number, var_name)
+            call_ret_code_line = SetretCommand.create_code_line(line_number, var_name)
 
-                pargs.code_lines_insertion.insert_before(line_number, call_code_line)
-                pargs.code_lines_insertion.insert_before(line_number, call_ret_code_line)
+            pargs.code_lines_insertion.insert_before(line_number, call_code_line)
+            pargs.code_lines_insertion.insert_before(line_number, call_ret_code_line)
 
             var_index += 1

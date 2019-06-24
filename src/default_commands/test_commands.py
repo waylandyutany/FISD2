@@ -6,6 +6,7 @@ from core.commands import command_class, Command
 @command_class()
 class Test_suiteCommand(Command):
     _keyword = 'test_suite'
+    _evaluate = True
 
     @classmethod
     def parse(cls, pargs):
@@ -21,6 +22,7 @@ class Test_suiteCommand(Command):
 @command_class()
 class Test_setCommand(Command):
     _keyword = 'test_set'
+    _evaluate = True
 
     @classmethod
     def parse(cls, pargs):
@@ -36,6 +38,7 @@ class Test_setCommand(Command):
 @command_class()
 class Test_caseCommand(Command):
     _keyword = 'test_case'
+    _evaluate = True
 
     @classmethod
     def parse(cls, pargs):
@@ -51,6 +54,7 @@ class Test_caseCommand(Command):
 @command_class()
 class Test_asserCommand(Command):
     _keyword = 'test_assert'
+    _evaluate = True
 
     @classmethod
     def parse(cls, pargs):
