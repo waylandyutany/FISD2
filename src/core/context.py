@@ -66,11 +66,6 @@ class Context:
         #popping code context from code stack
         self._execution.pop_execution()
 
-        #if function call, var stack is popped as well 
-        #@todo move into _execution.pop_execution()
-        if execution_context[Execution_stack._CODE_IS_FUNCTION]:
-            self._variable_stack.pop()
-
     def jump_to_code(self, new_code_index):
         self._execution.jump_to_code(new_code_index)
 

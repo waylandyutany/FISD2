@@ -30,6 +30,9 @@ class Execution_stack:
     def current_code_index(self):
         return self._stack[-1][Execution_stack._CODE_INDEX]
 
+    def current_is_function(self):
+        return self._stack[-1][Execution_stack._CODE_IS_FUNCTION]
+
 ################################################################################
     def current_code_name(self):
         return self._stack[-1][Execution_stack._CODE_NAME]

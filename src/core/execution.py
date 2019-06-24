@@ -19,8 +19,9 @@ class Execution(Execution_stack):
                                 Execution_stack._CODE_IS_FUNCTION:self._code.is_code_function(code_name)}
         #pushing code context to the stack
         self._stack.append(execution_context)
+
         #if function call new var stack is pushed
-        if execution_context[Execution_stack._CODE_IS_FUNCTION]:
+        if self.current_is_function:
             self._variable_stack.push()
 
         return execution_context
@@ -45,6 +46,10 @@ class Execution(Execution_stack):
 
     def pop_execution(self):
         self._stack.pop()
+
+        #if from function call, var stack is popped as well
+        if self.current_is_function:
+            self._variable_stack.pop()
       
 ################################################################################
     def jump_to_code(self, new_code_index):
