@@ -4,6 +4,31 @@ from core.tokens import Tokens
 from copy import deepcopy
 
 ################################################################################
+class Arguments:
+    def __init__(self):
+        self.__args = []
+
+    def __str__(self):
+        return str(self.__args)
+
+    def __len__(self):
+        return len(self.__args)
+
+    def add(self, name, value):
+        self.__args.append((name, value))
+
+    def value(self, index):
+        try:return self.__args[index][1]
+        except:return None
+
+    def name(self, index):
+        try:return self.__args[index][0]
+        except:return None
+
+    def copy(self):
+        return deepcopy(self)
+
+################################################################################
 class Execution_args: 
     def __init__(self, context, code, logger):
         self.__context = context
@@ -12,32 +37,34 @@ class Execution_args:
 
         self.__arguments = context._variable_stack.tokens_to_arguments(Code_line.get_line_tokens(self.code_line))
 
-        self.__args = []
-        
+        self.__args = Arguments()
+
         arg_tokens = Tokens(deepcopy(self.__arguments.tokens()))
         left_bracket_index = arg_tokens.find_op('(')
         if left_bracket_index != None:
             arguments = arg_tokens.pop_tokens(left_bracket_index,len(arg_tokens) - 1).split_tokens_by_op(',')
             for argument in arguments:
                 if not argument.empty():
+                    argument_name = None
+                    if argument.is_keyword(0):
+                        argument_name = argument.value(0)
+                        argument.pop_tokens(-1, 1)
                     try:
                         argument_value = argument.evaluate()
-                        self.__args.append(argument_value)
+                        self.__args.add(argument_name, argument_value)
                     except:
-                        self.__args.append(argument.value(0))
-                else:
-                    self.__args.append(None)
+                        self.__args.add(argument_name, None)
+
+    @property
+    def args(self):
+        return self.__args
+
+################################################################################
 
     def __str__(self):
         return str(self.__args)
 
-    def argument(self, index):
-        try:
-            return self.__args[index]
-        except:
-            pass
-        return None
-
+################################################################################
     @property
     def code_name(self):
         return self.__context._execution.current_code_name()
