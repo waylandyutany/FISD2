@@ -69,6 +69,7 @@ class Tokens:
         for i in range(0, len(self._tokens)):
             if self.is_op(i) and self.is_value(i,op):
                 return i
+        return None
 
     def find_ops(self, op):
         return [i for i in range(0, len(self)) if self.is_op(i) and self.is_value(i,op)]

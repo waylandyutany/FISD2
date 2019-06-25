@@ -1,3 +1,3 @@
 execute "../config"
 test_set(fisd_current_folder())
-print fisd_line_number()
+print(fisd_line_number())

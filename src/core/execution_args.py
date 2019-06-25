@@ -12,20 +12,19 @@ class Execution_args:
 
         self.__arguments = context._variable_stack.tokens_to_arguments(Code_line.get_line_tokens(self.code_line))
 
-        self._arg_tokens = Tokens(deepcopy(self.__arguments.tokens()))
-
-        #removing command name
-        self._arg_tokens.pop_tokens(-1,1)
-
         self.__args = []
-
-        #removing '(' from the beginning
-        if self._arg_tokens.is_op(0) and self._arg_tokens.is_value(0,'(') and self._arg_tokens.is_op(-1) and self._arg_tokens.is_value(-1,')'):
-            arguments = self._arg_tokens.pop_tokens(0,len(self._arg_tokens) - 1).split_tokens_by_op(',')
+        
+        arg_tokens = Tokens(deepcopy(self.__arguments.tokens()))
+        left_bracket_index = arg_tokens.find_op('(')
+        if left_bracket_index != None:
+            arguments = arg_tokens.pop_tokens(left_bracket_index,len(arg_tokens) - 1).split_tokens_by_op(',')
             for argument in arguments:
                 if not argument.empty():
-                    argument_value = argument.evaluate()
-                    self.__args.append(argument_value)
+                    try:
+                        argument_value = argument.evaluate()
+                        self.__args.append(argument_value)
+                    except:
+                        self.__args.append(argument.value(0))
                 else:
                     self.__args.append(None)
 
