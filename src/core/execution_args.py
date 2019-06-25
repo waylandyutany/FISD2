@@ -47,9 +47,14 @@ class Execution_args:
             for argument in arguments:
                 if not argument.empty():
                     argument_name = None
-                    if argument.is_keyword(0):
+
+                    if argument.is_name(0) and argument.is_op_value(1, '='): # name = value
+                        argument_name = argument.value(0)
+                        argument.pop_tokens(-1, 2)
+                    elif argument.is_keyword(0) and argument.is_op_value(1, '(') == False: # name(
                         argument_name = argument.value(0)
                         argument.pop_tokens(-1, 1)
+
                     try:
                         argument_value = argument.evaluate()
                         self.__args.add(argument_name, argument_value)

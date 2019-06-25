@@ -107,6 +107,9 @@ class Tokens:
     def is_op(self, index):
         return self.__token(index, 0) == TOKEN_OP
 
+    def is_op_value(self, index, value):
+        return self.is_op(index) and self.is_value(index, value)
+
     def is_keyword(self, index):
         return self.__token(index, 0) == TOKEN_KEYWORD
 
