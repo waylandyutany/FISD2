@@ -1,5 +1,7 @@
 from core.execution_stack import Execution_stack
 from core.code_line import Code_line
+from core.tokens import Tokens
+from copy import deepcopy
 
 ################################################################################
 class Execution_args: 
@@ -10,8 +12,32 @@ class Execution_args:
 
         self.__arguments = context._variable_stack.tokens_to_arguments(Code_line.get_line_tokens(self.code_line))
 
+        self._arg_tokens = Tokens(deepcopy(self.__arguments.tokens()))
+
+        #removing command name
+        self._arg_tokens.pop_tokens(-1,1)
+
+        self.__args = []
+
+        #removing '(' from the beginning
+        if self._arg_tokens.is_op(0) and self._arg_tokens.is_value(0,'(') and self._arg_tokens.is_op(-1) and self._arg_tokens.is_value(-1,')'):
+            arguments = self._arg_tokens.pop_tokens(0,len(self._arg_tokens) - 1).split_tokens_by_op(',')
+            for argument in arguments:
+                if not argument.empty():
+                    argument_value = argument.evaluate()
+                    self.__args.append(argument_value)
+                else:
+                    self.__args.append(None)
+
     def __str__(self):
-        return str(self.__arguments)
+        return str(self.__args)
+
+    def argument(self, index):
+        try:
+            return self.__args[index]
+        except:
+            pass
+        return None
 
     @property
     def code_name(self):

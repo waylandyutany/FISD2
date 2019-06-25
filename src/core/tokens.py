@@ -1,4 +1,5 @@
 from io import BytesIO
+from copy import deepcopy
 from tokenize import tokenize
 from tokenize import NUMBER as TOKEN_NUMBER
 from tokenize import STRING as TOKEN_STRING
@@ -80,9 +81,7 @@ class Tokens:
 
     def sub_tokens(self, start, end):
         ''' create new Tokens from tokens between (start, end) '''
-        ret = Tokens("")
-        ret._tokens = self._tokens[start + 1 : end]
-        return ret
+        return Tokens(deepcopy(self._tokens[start + 1 : end]))
 
     def pop_tokens(self, start, end):
         ''' remove tokens between (start, end) and returns them '''
@@ -90,6 +89,9 @@ class Tokens:
         ret._tokens = self._tokens[start + 1 : end]
         del self._tokens[start + 1 : end]
         return ret
+
+    def insert_name(self, index, value):
+        self._tokens.insert(index, [TOKEN_NAME, value])
 
 ################################################################################
     def is_name(self, index):
@@ -149,10 +151,6 @@ class Tokens:
         try:
             self._tokens[index][0] = TOKEN_KEYWORD
         except:pass
-
-################################################################################
-    def insert_name(self, index, value):
-        self._tokens.insert(index, [TOKEN_NAME, value])
 
 ################################################################################
     def search_keywords_in_tokens(self, keywords):
