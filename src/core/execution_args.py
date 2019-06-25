@@ -39,6 +39,7 @@ class Execution_args:
 
         self.__args = Arguments()
 
+        #@todo works only for valid (...) calls !!! not for set !!!
         arg_tokens = Tokens(deepcopy(self.__arguments.tokens()))
         left_bracket_index = arg_tokens.find_op('(')
         if left_bracket_index != None:
