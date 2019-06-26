@@ -1,4 +1,4 @@
-from core.tokens import Tokens, TOKEN_NUMBER, TOKEN_STRING, TOKEN_NONE, TOKEN_NATIVE
+from core.tokens import Tokens, TOKEN_NUMBER, TOKEN_STRING, TOKEN_NONE
 from copy import deepcopy
 
 ################################################################################
@@ -48,8 +48,6 @@ class Variable_stack:
                     args.set_number(i, value)
                 elif type == TOKEN_STRING:
                     args.set_string(i, value)
-                elif type == TOKEN_NATIVE:
-                    args.set_native(i, value)
 
         return args
 
@@ -64,7 +62,7 @@ class Variable_stack:
         var_stack = self._stack[-1]
 
         if value == None:
-            var_stack[name] = {Variable_stack._VAR_TYPE : TOKEN_NATIVE, Variable_stack._VAR_VALUE:None}
+            var_stack[name] = {Variable_stack._VAR_TYPE : TOKEN_NUMBER, Variable_stack._VAR_VALUE:None}
         elif isinstance(value, int):
             var_stack[name] = {Variable_stack._VAR_TYPE : TOKEN_NUMBER, Variable_stack._VAR_VALUE:value}
         elif isinstance(value, float):

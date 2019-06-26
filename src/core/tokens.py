@@ -7,7 +7,6 @@ from tokenize import NAME as TOKEN_NAME
 from tokenize import OP as TOKEN_OP
 TOKEN_KEYWORD = 0
 TOKEN_NONE = -1
-TOKEN_NATIVE = -2
 
 ################################################################################
 import math
@@ -114,9 +113,6 @@ class Tokens:
     def is_keyword(self, index):
         return self.__token(index, 0) == TOKEN_KEYWORD
 
-    def is_native(self, index):
-        return self.__token(index, 0) == TOKEN_NATIVE
-
     def is_value(self, index, value):
         if self.is_string(index):
             return self.value_str(index) == str(value)
@@ -153,12 +149,6 @@ class Tokens:
         try:
             self._tokens[index][0] = TOKEN_NUMBER
             self._tokens[index][1] = number
-        except:pass
-
-    def set_native(self, index, native):
-        try:
-            self._tokens[index][0] = TOKEN_NATIVE
-            self._tokens[index][1] = native
         except:pass
 
     def mark_as_keyword(self, index):
