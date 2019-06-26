@@ -1,7 +1,9 @@
 from core.code_line import Code_line
 from core.tokens import Tokens
 from core.commands import command_class, Command, Commands
-from internal_commands.procedure_commands import CallCommand, ReturnCommand
+
+from internal_commands.procedure_commands import CallCommand, ProcCommand
+from internal_commands.default_commands import SetCommand
 
 ################################################################################
 # SETRET Command
@@ -34,15 +36,16 @@ class Code_evaluation:
     _FISD_FUNCTION = 0
     _FISD_COMMAND = 1
 
-    _start_index_0_keywords = [ReturnCommand._keyword]
+    _start_index_2_keywords = [ProcCommand._keyword, SetCommand._keyword, CallCommand._keyword]
+
     #@todo error when function name == variable name
     @classmethod
     def rightest_function(cls, tokens, code):
-        start_index = 0 if tokens.is_value_no_case(0, cls._start_index_0_keywords) else 2
+        start_index = 2 if tokens.is_value_no_case(0, cls._start_index_2_keywords) else 1
 
         ret = None
         for i in range(start_index, len(tokens) - 2):
-            if tokens.is_keyword(i) and tokens.is_op(i + 1) and tokens.is_value(i + 1, '('):
+            if tokens.is_keyword(i) and tokens.is_op_value(i + 1, '('):
                 nested_counter = 0
                 for j in range(i + 2, len(tokens)):
                     if tokens.is_op(j):
@@ -63,7 +66,7 @@ class Code_evaluation:
     @staticmethod
     def mark_functions_as_keywords(tokens):
         for i in range(0, len(tokens) - 2):
-            if tokens.is_name(i) and tokens.is_op(i + 1) and tokens.is_value(i + 1, '('):
+            if tokens.is_name(i) and tokens.is_op_value(i + 1, '('):
                 tokens.mark_as_keyword(i)
 
     @classmethod
