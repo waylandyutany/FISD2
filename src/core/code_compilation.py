@@ -8,9 +8,9 @@ from core.utils import PrefaceLogger, folder_and_file_name
 
 import core.core as core
 
-from default_commands.default_commands import ExecuteCommand
-from default_commands.procedure_commands import ProcCommand, EndProcCommand
-from default_commands.evaluation_commands import Code_evaluation
+from internal_commands.default_commands import ExecuteCommand
+from internal_commands.procedure_commands import ProcCommand, EndProcCommand
+from internal_commands.evaluation_commands import Code_evaluation
 
 import os
 

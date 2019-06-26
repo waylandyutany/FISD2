@@ -1,4 +1,4 @@
-from default_commands.fisd_commands import Fisd_restore_context_command #@todo remove this dependency
+from internal_commands.fisd_commands import Fisd_restore_context_command #@todo remove this dependency
 
 from core.code_line import Code_line
 from core.execution_stack import Execution_stack

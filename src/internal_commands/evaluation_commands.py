@@ -1,7 +1,7 @@
 from core.code_line import Code_line
 from core.tokens import Tokens
 from core.commands import command_class, Command, Commands
-from default_commands.procedure_commands import CallCommand, ReturnCommand
+from internal_commands.procedure_commands import CallCommand, ReturnCommand
 
 ################################################################################
 # SETRET Command

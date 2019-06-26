@@ -9,15 +9,15 @@ from core.logger import Logger
 from core.utils import TimeLogger
 
 #importing all default command files
-import default_commands.default_commands
-import default_commands.loop_commands
-import default_commands.conditions_commands
-import default_commands.procedure_commands
-import default_commands.evaluation_commands
-import default_commands.fisd_commands
-import default_commands.file_system_commands
-import default_commands.run_commands
-import default_commands.test_commands
+import internal_commands.default_commands
+import internal_commands.loop_commands
+import internal_commands.conditions_commands
+import internal_commands.procedure_commands
+import internal_commands.evaluation_commands
+import internal_commands.fisd_commands
+import internal_commands.file_system_commands
+import internal_commands.run_commands
+import internal_commands.test_commands
 
 ################################################################################
 # @todo
