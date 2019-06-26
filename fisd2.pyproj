@@ -40,15 +40,6 @@
     <Compile Include="src\core\utils.py" />
     <Compile Include="src\core\variable_stack.py" />
     <Compile Include="src\core\__init__.py" />
-    <Compile Include="src\default_commands\conditions_commands.py" />
-    <Compile Include="src\default_commands\default_commands.py" />
-    <Compile Include="src\default_commands\evaluation_commands.py" />
-    <Compile Include="src\default_commands\file_system_commands.py" />
-    <Compile Include="src\default_commands\fisd_commands.py" />
-    <Compile Include="src\default_commands\loop_commands.py" />
-    <Compile Include="src\default_commands\procedure_commands.py" />
-    <Compile Include="src\default_commands\run_commands.py" />
-    <Compile Include="src\default_commands\test_commands.py" />
     <Compile Include="src\fisd2.py" />
     <Compile Include="src\internal_commands\conditions_commands.py" />
     <Compile Include="src\internal_commands\default_commands.py" />
@@ -65,7 +56,6 @@
     <Folder Include="doc\" />
     <Folder Include="src\internal_commands\" />
     <Folder Include="test\" />
-    <Folder Include="src\default_commands\" />
     <Folder Include="src\" />
     <Folder Include="src\core\" />
     <Folder Include="test\fisd2_test_suite\" />
