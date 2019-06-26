@@ -13,7 +13,7 @@ class Test_suiteCommand(Command):
 
     @classmethod
     def execute(cls, eargs):
-        eargs.logger.info("{}({})".format(cls._keyword, str(eargs)))
+        eargs.logger.info("Begin test suite '{}'...".format(eargs.args.value(0)))
 
 ################################################################################
 # TEST_SET Command
@@ -28,7 +28,7 @@ class Test_setCommand(Command):
 
     @classmethod
     def execute(cls, eargs):
-        eargs.logger.info("{}({})".format(cls._keyword, str(eargs)))
+        eargs.logger.info("Begin test set '{}'...".format(eargs.args.value(0)))
 
 ################################################################################
 # TEST_CASE Command
@@ -43,7 +43,7 @@ class Test_caseCommand(Command):
 
     @classmethod
     def execute(cls, eargs):
-        eargs.logger.info("{}({})".format(cls._keyword, str(eargs)))
+        eargs.logger.info("Begin test case '{}'...".format(eargs.args.value(0)))
 
 ################################################################################
 # TEST_ASSERT Command
@@ -58,5 +58,8 @@ class Test_asserCommand(Command):
 
     @classmethod
     def execute(cls, eargs):
-        eargs.logger.info("{}({})".format(cls._keyword, str(eargs)))
+        if eargs.args.value(0) == True:
+            eargs.logger.info("PASSED '{}'".format(eargs.args.eval_string(0)))
+        else:
+            eargs.logger.error("FAILED '{}'".format(eargs.args.eval_string(0)))
 

@@ -4,7 +4,7 @@ from core.tokens import Tokens
 from copy import deepcopy
 
 ################################################################################
-class Arguments:
+class Arguments: 
     def __init__(self):
         self.__args = []
 
@@ -17,17 +17,18 @@ class Arguments:
     def add(self, name, value, eval_str):
         self.__args.append((name, value, eval_str))
 
-    def name(self, index):
-        try:return self.__args[index][0]
+    def __get(self, index, type):
+        try:return self.__args[index][type]
         except:return None
+
+    def name(self, index):
+        return self.__get(index, 0)
 
     def value(self, index):
-        try:return self.__args[index][1]
-        except:return None
+        return self.__get(index, 1)
 
     def eval_string(self, index):
-        try:return self.__args[index][2]
-        except:return None
+        return self.__get(index, 2)
 
     def copy(self):
         return deepcopy(self)
