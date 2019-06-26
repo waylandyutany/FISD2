@@ -177,14 +177,22 @@ class Tokens:
                     self.mark_as_keyword(i)
 
 ################################################################################
+    def evaluation_string(self, start_index, end_index):
+        return " ".join((str(self.value(i)) for i in range(start_index + 1, end_index)))
+
     #@todo handle better error with more details in exception, test it ! :-)
     def evaluate_tokens(self, start_index, end_index):
         try:
-            str_to_evaluate = " ".join((str(self.value(i)) for i in range(start_index + 1, end_index)))
-            e = eval(str_to_evaluate, {'__builtins__':None}, _eval_funcs)
+            str_to_evaluate = self.evaluation_string(start_index, end_index)
+            e = eval(self.evaluation_string(start_index, end_index), {'__builtins__':None}, _eval_funcs)
             return e
         except BaseException as e:
             raise Exception("'{}' in '{}'".format(e, str_to_evaluate))
 
     def evaluate(self):
         return self.evaluate_tokens(-1, len(self))
+
+    def string_to_evaluate(self):
+        return self.evaluation_string(-1, len(self))
+
+

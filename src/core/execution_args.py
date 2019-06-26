@@ -14,15 +14,19 @@ class Arguments:
     def __len__(self):
         return len(self.__args)
 
-    def add(self, name, value):
-        self.__args.append((name, value))
+    def add(self, name, value, eval_str):
+        self.__args.append((name, value, eval_str))
+
+    def name(self, index):
+        try:return self.__args[index][0]
+        except:return None
 
     def value(self, index):
         try:return self.__args[index][1]
         except:return None
 
-    def name(self, index):
-        try:return self.__args[index][0]
+    def eval_string(self, index):
+        try:return self.__args[index][2]
         except:return None
 
     def copy(self):
@@ -57,9 +61,9 @@ class Execution_args:
 
                     try:
                         argument_value = argument.evaluate()
-                        self.__args.add(argument_name, argument_value)
+                        self.__args.add(argument_name, argument_value, argument.string_to_evaluate())
                     except:
-                        self.__args.add(argument_name, None)
+                        self.__args.add(argument_name, None, argument.string_to_evaluate())
 
     @property
     def args(self):
