@@ -49,11 +49,21 @@
     <Compile Include="src\default_commands\procedure_commands.py" />
     <Compile Include="src\default_commands\run_commands.py" />
     <Compile Include="src\default_commands\test_commands.py" />
-    <Compile Include="src\default_commands\__init__.py" />
     <Compile Include="src\fisd2.py" />
+    <Compile Include="src\internal_commands\conditions_commands.py" />
+    <Compile Include="src\internal_commands\default_commands.py" />
+    <Compile Include="src\internal_commands\evaluation_commands.py" />
+    <Compile Include="src\internal_commands\file_system_commands.py" />
+    <Compile Include="src\internal_commands\fisd_commands.py" />
+    <Compile Include="src\internal_commands\loop_commands.py" />
+    <Compile Include="src\internal_commands\procedure_commands.py" />
+    <Compile Include="src\internal_commands\run_commands.py" />
+    <Compile Include="src\internal_commands\test_commands.py" />
+    <Compile Include="src\internal_commands\__init__.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="doc\" />
+    <Folder Include="src\internal_commands\" />
     <Folder Include="test\" />
     <Folder Include="src\default_commands\" />
     <Folder Include="src\" />
