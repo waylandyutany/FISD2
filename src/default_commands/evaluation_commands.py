@@ -74,7 +74,8 @@ class Code_evaluation:
         next_rightest_function = cls.rightest_function(line_tokens, pargs.code)
         var_index = 0
         while next_rightest_function:
-            # using number as set ret variable name to prevent collision with other 'normal' variables, @todo do it better !!!:-)
+            # using number as set ret variable name to prevent collision with other 'normal' variables
+            #@todo if number is used as variable name in code, log error
             var_name = "{0}".format(var_index)
 
             i, j, type = next_rightest_function

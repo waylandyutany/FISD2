@@ -1,4 +1,4 @@
-from core.tokens import Tokens, TOKEN_NUMBER, TOKEN_STRING, TOKEN_NONE
+from core.tokens import Tokens, TOKEN_NUMBER, TOKEN_STRING, TOKEN_NONE, TOKEN_NATIVE
 from copy import deepcopy
 
 ################################################################################
@@ -48,6 +48,8 @@ class Variable_stack:
                     args.set_number(i, value)
                 elif type == TOKEN_STRING:
                     args.set_string(i, value)
+                elif type == TOKEN_NATIVE:
+                    args.set_native(i, value)
 
         return args
 
@@ -61,12 +63,21 @@ class Variable_stack:
 
         var_stack = self._stack[-1]
 
-        if isinstance(value, int):
+        if value == None:
+            var_stack[name] = {Variable_stack._VAR_TYPE : TOKEN_NATIVE, Variable_stack._VAR_VALUE:None}
+        elif isinstance(value, int):
             var_stack[name] = {Variable_stack._VAR_TYPE : TOKEN_NUMBER, Variable_stack._VAR_VALUE:value}
         elif isinstance(value, float):
             var_stack[name] = {Variable_stack._VAR_TYPE : TOKEN_NUMBER, Variable_stack._VAR_VALUE:value}
         else:
             var_stack[name] = {Variable_stack._VAR_TYPE : TOKEN_STRING, Variable_stack._VAR_VALUE:str(value)}
+
+    def set_variable_native(self, name, value):
+        if not self._case_sensitive:
+            name = name.lower()
+
+        var_stack = self._stack[-1]
+        var_stack[name] = {Variable_stack._VAR_TYPE : TOKEN_NATIVE, Variable_stack._VAR_VALUE:value}
 
 ################################################################################
     def pop(self):

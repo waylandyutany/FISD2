@@ -1,6 +1,6 @@
 execute "config"
 test_case(fisd_current_folder())
-test_assert(kraken = cos(0))
+test_assert(cos(0) == cos(0))
 
 for i from -1 to 2
 	for j from -1 to 2
