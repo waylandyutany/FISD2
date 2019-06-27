@@ -136,3 +136,33 @@ class WaitCommand(Command):
     def execute(cls, eargs):
         eargs.logger.error("Not implemented yet!")
 
+################################################################################
+# DATE Command
+################################################################################
+@command_class()
+class DateCommand(Command):
+    _keyword = 'date'
+
+    @classmethod
+    def parse(cls, pargs):
+        pass
+
+    @classmethod
+    def execute(cls, eargs):
+        eargs.logger.error("Not implemented yet!")
+
+################################################################################
+# TIME Command
+################################################################################
+@command_class()
+class TimeCommand(Command):
+    _keyword = 'time'
+
+    @classmethod
+    def parse(cls, pargs):
+        pass
+
+    @classmethod
+    def execute(cls, eargs):
+        eargs.logger.error("Not implemented yet!")
+
