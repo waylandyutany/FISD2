@@ -58,9 +58,8 @@
     <Folder Include="test\" />
     <Folder Include="src\" />
     <Folder Include="src\core\" />
-    <Folder Include="test\fisd2_test_suite\" />
-    <Folder Include="test\fisd2_test_suite\language_features_test_sets\" />
-    <Folder Include="test\fisd2_test_suite\language_features_test_sets\loops_test_cases\" />
+    <Folder Include="test\fisd2\" />
+    <Folder Include="test\fisd2\language_features\" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="Global|PythonCore|3.7" />
@@ -70,10 +69,8 @@
     <Content Include="doc\test_cases.txt" />
     <Content Include="test\executed1.fisd2" />
     <Content Include="test\executed2.fisd" />
-    <Content Include="test\fisd2_test_suite\config.fisd" />
-    <Content Include="test\fisd2_test_suite\language_features_test_sets\config.fisd2" />
-    <Content Include="test\fisd2_test_suite\language_features_test_sets\loops_test_cases\config.fisd2" />
-    <Content Include="test\fisd2_test_suite\language_features_test_sets\loops_test_cases\tc_loops.fisd2" />
+    <Content Include="test\fisd2\config.fisd" />
+    <Content Include="test\fisd2\language_features\config.fisd2" />
     <Content Include="test\tc_execute.fisd2" />
     <Content Include="test\tc_for_if_proc.fisd2" />
     <Content Include="test\tc_proc_calls.fisd2" />

@@ -52,8 +52,9 @@ class SetCommand(Command):
 
     @staticmethod
     def tokenize(tokens, logger):
-        if tokens.is_name(0) and tokens.is_op(1) and tokens.is_value(1, '='):
-            tokens.insert_name(0, SetCommand._keyword)
+        if tokens.is_name(0):
+            if tokens.is_op_value(1, '='):
+                tokens.insert_name(0, SetCommand._keyword)
 
 ################################################################################
 # PRINT Command

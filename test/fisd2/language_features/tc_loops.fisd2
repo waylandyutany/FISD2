@@ -1,5 +1,5 @@
 execute "config"
-test_case(fisd_current_folder())
+test_case("loops")
 test_assert(cos(0) == cos(0))
 test_assert(cos(0) != cos(0))
 
