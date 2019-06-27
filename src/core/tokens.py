@@ -53,6 +53,9 @@ class Tokens:
     def __str__(self):
         return ", ".join([tok[1] for tok in self._tokens])
 
+    def to_string(self):
+        return " ".join([tok[1] for tok in self._tokens])
+
     def __len__(self):
         return len(self._tokens)
 

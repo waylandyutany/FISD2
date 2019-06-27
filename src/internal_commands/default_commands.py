@@ -56,10 +56,22 @@ class SetCommand(Command):
             tokens.init_from_string("{0} {1} = {1} {2} 1".format(SetCommand._keyword, tokens.value(0), op))
 
     @classmethod
+    def tokenize_op_eq(cls, tokens, logger, op):
+        if tokens.is_op_value(1, op + "="):
+            post_tokens_string = tokens.sub_tokens(1, len(tokens)).to_string()
+            tokens.init_from_string("{0} {1} = {1} {2} {3}".format(SetCommand._keyword, tokens.value(0), op, post_tokens_string))
+
+    @classmethod
     def tokenize(cls, tokens, logger):
         if tokens.is_name(0):
-            cls.tokenize_op_op(tokens, logger, '+')
-            cls.tokenize_op_op(tokens, logger, '-')
+            cls.tokenize_op_op(tokens, logger, '+') #value++
+            cls.tokenize_op_op(tokens, logger, '-') #value--
+
+            cls.tokenize_op_eq(tokens, logger, '+') #value += ...
+            cls.tokenize_op_eq(tokens, logger, '-') #value -= ...
+            cls.tokenize_op_eq(tokens, logger, '*') #value *= ...
+            cls.tokenize_op_eq(tokens, logger, '/') #value /= ...
+
             if tokens.is_op_value(1, '='):
                 tokens.insert_name(0, SetCommand._keyword)
 
