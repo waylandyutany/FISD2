@@ -8,7 +8,8 @@ class Command:
 
     @classmethod
     def parse(cls, pargs):
-        pargs.logger.error("Command '{}'.parse is not yet implemented!".format(cls._keyword))
+        pass
+        #pargs.logger.error("Command '{}'.parse is not yet implemented!".format(cls._keyword))
 
     @classmethod
     def execute(cls, eargs):

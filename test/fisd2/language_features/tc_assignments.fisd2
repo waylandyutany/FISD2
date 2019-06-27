@@ -1,3 +1,6 @@
+print date()
+print time()
+
 execute "config"
 test_case("assignments")
 

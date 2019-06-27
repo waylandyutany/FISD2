@@ -1,6 +1,7 @@
 from core.commands import command_class, Command
 from core.tokens import tokenizer_class, TOKEN_NAME, Tokens
 from core.code_line import Code_line
+import datetime
 
 ################################################################################
 # JUMP Command
@@ -144,12 +145,8 @@ class DateCommand(Command):
     _keyword = 'date'
 
     @classmethod
-    def parse(cls, pargs):
-        pass
-
-    @classmethod
     def execute(cls, eargs):
-        eargs.logger.error("Not implemented yet!")
+        eargs.set_return(datetime.datetime.now().strftime("%Y-%m-%d"))
 
 ################################################################################
 # TIME Command
@@ -159,10 +156,6 @@ class TimeCommand(Command):
     _keyword = 'time'
 
     @classmethod
-    def parse(cls, pargs):
-        pass
-
-    @classmethod
     def execute(cls, eargs):
-        eargs.logger.error("Not implemented yet!")
+        eargs.set_return(datetime.datetime.now().strftime("%H:%M:%S"))
 

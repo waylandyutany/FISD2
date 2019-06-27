@@ -71,7 +71,10 @@ class Execution_args:
         return self.__args
 
 ################################################################################
+    def set_return(self, value):
+        self.context.set_return_value(value)
 
+################################################################################
     def __str__(self):
         return str(self.__args)
 
