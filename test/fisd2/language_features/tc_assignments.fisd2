@@ -53,10 +53,10 @@ test_assert(value == -3, "value += step_value")
 
 step_value = -2
 value -= step_value
-test_assert(value == 1, "step_value = -2")
+test_assert(value == -1, "step_value = -2")
 
 value -= proc_step_value()
-test_assert(value == -1, "value += proc_step_value()")
+test_assert(value == -3, "value += proc_step_value()")
 
 #@todo  Assignments *=
 #@todo  Assignments /=

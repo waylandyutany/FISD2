@@ -33,11 +33,13 @@ class Context:
 ################################################################################
     def to_json_dict(self):
         return {'execution_stack':self._execution.to_json_dict(),
-                'variable_stack':self._variable_stack.to_json_dict()}
+                'variable_stack':self._variable_stack.to_json_dict(),
+                'return':self._return}
 
     def from_json_dict(self, json_dict):
         self._execution.from_json_dict(json_dict['execution_stack'])
         self._variable_stack.from_json_dict(json_dict['variable_stack'])
+        self._return = json_dict['return']
 
 ################################################################################
     def get_variable(self, name):
