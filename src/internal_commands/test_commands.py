@@ -59,7 +59,7 @@ class Test_asserCommand(Command):
     @classmethod
     def execute(cls, eargs):
         if eargs.args.value(0) == True:
-            eargs.logger.info("PASSED '{}', '{}'".format(eargs.args.eval_string(0), eargs.args.value(1)))
+            eargs.logger.info("PASSED '{}'".format(eargs.args.value(1)))
         else:
             eargs.logger.error("FAILED '{}', {}".format(eargs.args.eval_string(0), eargs.args.value(1)))
 

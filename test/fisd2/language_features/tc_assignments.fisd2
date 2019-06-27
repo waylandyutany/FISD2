@@ -37,9 +37,9 @@ step_value = 2
 value += step_value
 test_assert(value == 3, "value += step_value")
 
-step_value = -2
-value += step_value
-test_assert(value == 1, "value += step_value")
+step_value = 2
+value += -step_value
+test_assert(value == 1, "value += -step_value")
 
 value += proc_step_value()
 test_assert(value == 3, "value += proc_step_value()")
