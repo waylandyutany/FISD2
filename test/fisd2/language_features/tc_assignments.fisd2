@@ -1,5 +1,4 @@
-print date()
-print time()
+print date() " " time()
 
 execute "config"
 test_case("assignments")

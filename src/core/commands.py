@@ -33,8 +33,10 @@ class Commands:
         return None
 
 ################################################################################
-def command_class(name=None):
+def command_class(keyword=None):
     def _command_class(_class):
+        if keyword != None:
+            setattr(_class, '_keyword', keyword)
         Commands.commands[str(_class._keyword).lower()] = _class
         return _class
     return _command_class

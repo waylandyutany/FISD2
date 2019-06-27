@@ -80,10 +80,8 @@ class SetCommand(Command):
 ################################################################################
 # PRINT Command
 ################################################################################
-@command_class()
+@command_class('print')
 class PrintCommand(Command):
-    _keyword = 'print'
-
     @classmethod
     def parse(cls, pargs):
         pass
@@ -95,10 +93,8 @@ class PrintCommand(Command):
 ################################################################################
 # EXECUTE Command
 ################################################################################
-@command_class()
+@command_class('execute')
 class ExecuteCommand(Command):
-    _keyword = 'execute'
-
     @classmethod
     def parse(cls, pargs):
         pass
@@ -110,14 +106,8 @@ class ExecuteCommand(Command):
 ################################################################################
 # EXIT Command
 ################################################################################
-@command_class()
+@command_class('exit')
 class ExitCommand(Command):
-    _keyword = 'exit'
-
-    @classmethod
-    def parse(cls, pargs):
-        pass
-
     @classmethod
     def execute(cls, eargs):
         eargs.context.exit()
@@ -125,14 +115,8 @@ class ExitCommand(Command):
 ################################################################################
 # WAIT Command
 ################################################################################
-@command_class()
+@command_class('wait')
 class WaitCommand(Command):
-    _keyword = 'wait'
-
-    @classmethod
-    def parse(cls, pargs):
-        pass
-
     @classmethod
     def execute(cls, eargs):
         eargs.logger.error("Not implemented yet!")
@@ -140,10 +124,8 @@ class WaitCommand(Command):
 ################################################################################
 # DATE Command
 ################################################################################
-@command_class()
+@command_class('date')
 class DateCommand(Command):
-    _keyword = 'date'
-
     @classmethod
     def execute(cls, eargs):
         eargs.set_return(datetime.datetime.now().strftime("%Y-%m-%d"))
@@ -151,10 +133,8 @@ class DateCommand(Command):
 ################################################################################
 # TIME Command
 ################################################################################
-@command_class()
+@command_class('time')
 class TimeCommand(Command):
-    _keyword = 'time'
-
     @classmethod
     def execute(cls, eargs):
         eargs.set_return(datetime.datetime.now().strftime("%H:%M:%S"))
