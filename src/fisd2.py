@@ -56,7 +56,7 @@ def run_from_fisd_file(fisd_file_name, logger):
 
     if logger._errors > 0:return
 
-    with TimeLogger("Run time", Logger.log):
+    with TimeLogger("Run time", logger):
         context.run()
 
 ################################################################################
