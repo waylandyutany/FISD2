@@ -50,12 +50,20 @@ class SetCommand(Command):
 
         eargs.context.set_variable(variable_name, evaluated_value)
 
-    @staticmethod
-    def tokenize(tokens, logger):
+    @classmethod
+    def tokenize_op_op(cls, tokens, logger, op):
+        if tokens.is_op_value(1, op) and tokens.is_op_value(2, op):
+            tokens.init_from_string("{0} {1} = {1} {2} 1".format(SetCommand._keyword, tokens.value(0), op))
+
+    @classmethod
+    def tokenize(cls, tokens, logger):
         if tokens.is_name(0):
+            cls.tokenize_op_op(tokens, logger, '+')
+            cls.tokenize_op_op(tokens, logger, '-')
             if tokens.is_op_value(1, '='):
                 tokens.insert_name(0, SetCommand._keyword)
 
+            
 ################################################################################
 # PRINT Command
 ################################################################################

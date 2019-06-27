@@ -79,8 +79,8 @@ if __name__ == '__main__':
 
     args = sys.argv[1:]
     options = [str(arg).lower().strip(' -\t\n\r') for arg in args]
-    Logger.log.info("Arguments {}".format(args))
-    Logger.log.info("Options {}".format(options))
+    #Logger.log.info("Arguments {}".format(args))
+    #Logger.log.info("Options {}".format(options))
 
     #if wrong arguments or explicitly help required, help will be printed and script teminated
     print_help = False
@@ -91,8 +91,8 @@ if __name__ == '__main__':
         Logger.log.info("print_help")
         sys.exit(0)
 
-    Logger.log.debug("Tokenizers {}.".format(", ".join(["'{}'".format(name) for name in Tokenizers.tokenizers])))
-    Logger.log.debug("Commands {}.".format(", ".join(["'{}'".format(name) for name in Commands.commands])))
+    #Logger.log.debug("Tokenizers {}.".format(", ".join(["'{}'".format(name) for name in Tokenizers.tokenizers])))
+    #Logger.log.debug("Commands {}.".format(", ".join(["'{}'".format(name) for name in Commands.commands])))
 
     for file_name in glob2.glob(args[0]):
         file_extension = str(os.path.splitext(file_name)[1]).lower()

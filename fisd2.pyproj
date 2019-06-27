@@ -13,7 +13,7 @@
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId>Global|PythonCore|3.7</InterpreterId>
     <IsWindowsApplication>False</IsWindowsApplication>
-    <CommandLineArguments>test/**/tc_*.*</CommandLineArguments>
+    <CommandLineArguments>test/**/tc_assi*.*</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
@@ -71,6 +71,8 @@
     <Content Include="test\executed2.fisd" />
     <Content Include="test\fisd2\config.fisd" />
     <Content Include="test\fisd2\language_features\config.fisd2" />
+    <Content Include="test\fisd2\language_features\tc_assignments.fisd2" />
+    <Content Include="test\fisd2\language_features\tc_loops.fisd2" />
     <Content Include="test\tc_execute.fisd2" />
     <Content Include="test\tc_for_if_proc.fisd2" />
     <Content Include="test\tc_proc_calls.fisd2" />

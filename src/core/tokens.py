@@ -45,6 +45,11 @@ class Tokens:
                for tok_id, tok_val, _, _, _  in tokenize(BytesIO(line_or_tokens.encode(encoding)).readline) if tok_id in Tokens.valid_tokens\
               ]
 
+    def init_from_string(self, string, encoding = 'utf-8'):
+        self._tokens = [ [tok_id, tok_val]\
+            for tok_id, tok_val, _, _, _  in tokenize(BytesIO(string.encode(encoding)).readline) if tok_id in Tokens.valid_tokens\
+            ]
+
     def __str__(self):
         return ", ".join([tok[1] for tok in self._tokens])
 

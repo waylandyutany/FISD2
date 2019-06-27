@@ -1,2 +1,13 @@
 execute "config"
 test_case("assignments")
+
+value = 0
+test_assert(value == 0)
+
+value++
+test_assert(value == 1)
+
+value--
+test_assert(value == 0)
+
+
