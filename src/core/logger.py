@@ -2,7 +2,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 from logging import handlers
 import sys
-
+from termcolor import colored
 ################################################################################
 class Logger:
     file_format = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
@@ -17,7 +17,7 @@ class Logger:
         cls.console_log_handler.setFormatter(cls.console_format)
         cls.file_log_handler.setFormatter(cls.file_format)
 
-        cls.log.addHandler(cls.console_log_handler)
+        #cls.log.addHandler(cls.console_log_handler)
         cls.log.addHandler(cls.file_log_handler)
 
 ################################################################################
@@ -30,23 +30,37 @@ class Logger:
        
     def debug(self, msg, *args, **kwargs):
         msg = self.preface + str(msg)
+
+        print(colored("DEBUG - " + msg, 'white'))
+
         if self._log:
             self._log.debug(msg, *args, **kwargs)
 
     def info(self, msg, *args, **kwargs):
         msg = self.preface + str(msg)
+
+        print(colored("INFO - " + msg, 'white'))
+
         if self._log:
             self._log.info(msg, *args, **kwargs)
 
     def warning(self, msg, *args, **kwargs):
         msg = self.preface + str(msg)
+
         self._warnings += 1
+
+        print(colored("WARN - " + msg, 'yellow'))
+
         if self._log:
             self._log.warning(msg, *args, **kwargs)
 
     def error(self, msg, *args, **kwargs):
         msg = self.preface + str(msg)
+
         self._errors += 1
+
+        print(colored("ERROR - " + msg, 'red'))
+
         if self._log:
             self._log.error(msg, *args, **kwargs)
 
@@ -55,6 +69,10 @@ class Logger:
 
     def critical(self, msg, *args, **kwargs):
         msg = self.preface + str(msg)
+
         self._criticals += 1
+
+        print(colored("CRITICAL - " + msg, 'red'))
+
         if self._log:
             self._log.critical(msg, *args, **kwargs)

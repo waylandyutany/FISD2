@@ -75,6 +75,9 @@ def run_from_bin_fisd_file(fisd_file_name, logger):
 
 ################################################################################
 if __name__ == '__main__':
+    #enable coloring on windows
+    os.system('color')
+
     Logger.log.info("{} version '{}'.".format(core.__app_name__, core.__app_version__))
 
     args = sys.argv[1:]

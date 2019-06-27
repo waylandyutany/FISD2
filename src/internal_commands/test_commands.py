@@ -61,5 +61,5 @@ class Test_asserCommand(Command):
         if eargs.args.value(0) == True:
             eargs.logger.info("PASSED '{}'".format(eargs.args.eval_string(0), eargs.args.value(1)))
         else:
-            eargs.logger.info("FAILED '{}'".format(eargs.args.eval_string(0), eargs.args.value(1)))
+            eargs.logger.error("FAILED '{}'".format(eargs.args.eval_string(0), eargs.args.value(1)))
 
