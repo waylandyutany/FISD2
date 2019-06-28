@@ -11,12 +11,12 @@ class ExecutionParams:
         self.__code = code
         self.__logger = logger
 
-        self.__arguments = context._variable_stack.tokens_to_raw_args(Code_line.get_line_tokens(self.code_line))
+        self.__raw_args = context._variable_stack.tokens_to_raw_args(Code_line.get_line_tokens(self.code_line))
 
-        self.__args = EvaluatedArguments()
+        self.___evaluated_args = EvaluatedArguments()
 
         #@todo works only for valid (...) calls !!! not for set !!!
-        arg_tokens = Tokens(deepcopy(self.__arguments.tokens()))
+        arg_tokens = Tokens(deepcopy(self.__raw_args.tokens()))
         left_bracket_index = arg_tokens.find_op('(')
         if left_bracket_index != None:
             arguments = arg_tokens.pop_tokens(left_bracket_index,len(arg_tokens) - 1).split_tokens_by_op(',')
@@ -33,13 +33,17 @@ class ExecutionParams:
 
                     try:
                         argument_value = argument.evaluate()
-                        self.__args.add(argument_name, argument_value, argument.string_to_evaluate())
+                        self.___evaluated_args.add(argument_name, argument_value, argument.string_to_evaluate())
                     except:
-                        self.__args.add(argument_name, None, argument.string_to_evaluate())
+                        self.___evaluated_args.add(argument_name, None, argument.string_to_evaluate())
 
     @property
-    def args(self):
-        return self.__args
+    def evaluated_args(self):
+        return self.___evaluated_args
+
+    @property
+    def raw_args(self):
+        return self.__raw_args
 
 ################################################################################
     def set_return(self, value):
@@ -47,7 +51,7 @@ class ExecutionParams:
 
 ################################################################################
     def __str__(self):
-        return str(self.__args)
+        return str(self.___evaluated_args)
 
 ################################################################################
     @property
@@ -85,7 +89,3 @@ class ExecutionParams:
     @property
     def logger(self):
         return self.__logger
-
-    @property
-    def arguments(self):
-        return self.__arguments

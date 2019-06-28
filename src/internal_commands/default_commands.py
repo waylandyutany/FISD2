@@ -42,9 +42,9 @@ class SetCommand(Command):
 
     @staticmethod
     def execute(eargs):
-        variable_name = eargs.arguments.value(1)
+        variable_name = eargs.raw_args.value(1)
         try:
-            evaluated_value = eargs.arguments.evaluate_tokens(2, len(eargs.arguments))
+            evaluated_value = eargs.raw_args.evaluate_tokens(2, len(eargs.raw_args))
         except Exception as e:
             eargs.logger.error("Exception during '{}' evaluation! {}!".format(variable_name, e))
             return
@@ -88,7 +88,7 @@ class PrintCommand(Command):
 
     @classmethod
     def execute(cls, eargs):
-        eargs.logger.info("PRINT {}".format("".join( ( str(eargs.arguments.value_str(i)) for i in range(1, len(eargs.arguments)) ) )))
+        eargs.logger.info("PRINT {}".format("".join( ( str(eargs.raw_args.value_str(i)) for i in range(1, len(eargs.raw_args)) ) )))
 
 ################################################################################
 # EXECUTE Command
@@ -101,7 +101,7 @@ class ExecuteCommand(Command):
 
     @classmethod
     def execute(cls, eargs):
-        eargs.context.execute_code(eargs.arguments.value_str(1))
+        eargs.context.execute_code(eargs.raw_args.value_str(1))
 
 ################################################################################
 # EXIT Command
@@ -131,7 +131,7 @@ class WaitCommand(Command):
 
     @classmethod
     def execute(cls, eargs):
-        wait_string = eargs.arguments.sub_tokens(0, len(eargs.arguments)).to_string("")
+        wait_string = eargs.raw_args.sub_tokens(0, len(eargs.raw_args)).to_string("")
         tm = cls.get_time(wait_string)
         if tm:
             wait_in_s = (tm.hour*3600) + (tm.minute*60) + tm.second + (tm.microsecond / 1000000.0)

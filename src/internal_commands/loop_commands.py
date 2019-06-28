@@ -75,7 +75,7 @@ class ForCommand(Command):
 
     @classmethod
     def execute(cls, eargs):
-        variable_name, from_value, to_value, step_value = cls.evaluate_for_tokens(eargs.arguments)
+        variable_name, from_value, to_value, step_value = cls.evaluate_for_tokens(eargs.raw_args)
         eargs.context.set_variable(variable_name, from_value)
         next_code_index = Code_line.get_jump(eargs.code_line, cls._NEXT)
         #@todo handle if value is already over to _value

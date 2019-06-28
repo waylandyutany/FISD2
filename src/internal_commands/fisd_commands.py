@@ -14,7 +14,7 @@ class Fisd_store_context_command(Command):
 
     @staticmethod
     def execute(eargs):
-        eargs.context.store_context(eargs.args.value(0))
+        eargs.context.store_context(eargs.evaluated_args.value(0))
 
 ################################################################################
 # FISD_RESTORE_CONTEXT Command

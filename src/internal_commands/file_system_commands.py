@@ -13,4 +13,4 @@ class File_count_lineCommand(Command):
 
     @classmethod
     def execute(cls, eargs):
-        eargs.logger.info("{}({})".format(cls._keyword, str(eargs.arguments)))
+        eargs.logger.info("{}({})".format(cls._keyword, str(eargs.raw_args)))

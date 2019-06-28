@@ -18,7 +18,7 @@ class SetretCommand(Command):
 
     @staticmethod
     def execute(eargs):
-        eargs.context.set_variable(eargs.arguments.value(1), eargs.context.get_return_value())
+        eargs.context.set_variable(eargs.raw_args.value(1), eargs.context.get_return_value())
 
     @staticmethod
     def create_code_line(line_number, var_name):

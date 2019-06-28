@@ -21,7 +21,7 @@ class ProcCommand(Command):
     @staticmethod
     def execute(eargs):
         #@todo handle different parameters and default parameters
-        variable_names = eargs.arguments.sub_tokens(eargs.arguments.find_op('('), eargs.arguments.find_op(')')).split_tokens_by_op(',')
+        variable_names = eargs.raw_args.sub_tokens(eargs.raw_args.find_op('('), eargs.raw_args.find_op(')')).split_tokens_by_op(',')
         variable_values = eargs.context.pop_call_tokens().split_tokens_by_op(',')
 
         names = [str(tokens.value(0)) for tokens in variable_names if not tokens.empty()]
@@ -59,8 +59,8 @@ class ReturnCommand(Command):
 
     @staticmethod
     def execute(eargs):
-        if len(eargs.arguments) > 1:
-            value = eargs.arguments.evaluate_tokens(0, len(eargs.arguments))
+        if len(eargs.raw_args) > 1:
+            value = eargs.raw_args.evaluate_tokens(0, len(eargs.raw_args))
             eargs.context.return_execute_code(value)
         else:
             eargs.context.return_execute_code(None)
@@ -81,10 +81,10 @@ class CallCommand(Command):
 
     @staticmethod
     def execute(eargs):
-        i0 = eargs.arguments.find_op('(')
-        call_tokens = eargs.arguments.sub_tokens(i0, len(eargs.arguments) - 1)
+        i0 = eargs.raw_args.find_op('(')
+        call_tokens = eargs.raw_args.sub_tokens(i0, len(eargs.raw_args) - 1)
         eargs.context.push_call_tokens(call_tokens)
-        eargs.context.execute_code(eargs.arguments.value_str(1))
+        eargs.context.execute_code(eargs.raw_args.value_str(1))
 
     @staticmethod
     def tokenize(tokens, logger):

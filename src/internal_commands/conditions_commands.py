@@ -64,7 +64,7 @@ class IfCommand(Command):
 
     @staticmethod
     def execute(eargs):
-        if not eargs.arguments.evaluate_tokens(0, len(eargs.arguments) - 1):
+        if not eargs.raw_args.evaluate_tokens(0, len(eargs.raw_args) - 1):
             eargs.context.jump_to_code(Code_line.get_jump(eargs.code_line, IfCommand._ELSE))
 
 ################################################################################
