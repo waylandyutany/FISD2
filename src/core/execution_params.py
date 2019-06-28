@@ -1,8 +1,6 @@
 from core.execution_stack import Execution_stack
 from core.code_line import Code_line
-from core.tokens import Tokens
 from core.evaluated_arguments import EvaluatedArguments
-from copy import deepcopy
 
 ################################################################################
 class ExecutionParams: 
@@ -11,35 +9,13 @@ class ExecutionParams:
         self.__code = code
         self.__logger = logger
 
-        self.__raw_args = context._variable_stack.tokens_to_raw_args(Code_line.get_line_tokens(self.code_line))
+        self.__raw_args = context._variable_stack.tokens_to_raw_args(Code_line.get_line_tokens(self.code_line)) #@todo move to __init__
 
-        self.___evaluated_args = EvaluatedArguments()
-
-        #@todo works only for valid (...) calls !!! not for set !!!
-        arg_tokens = Tokens(deepcopy(self.__raw_args.tokens()))
-        left_bracket_index = arg_tokens.find_op('(')
-        if left_bracket_index != None:
-            arguments = arg_tokens.pop_tokens(left_bracket_index,len(arg_tokens) - 1).split_tokens_by_op(',')
-            for argument in arguments:
-                if not argument.empty():
-                    argument_name = None
-
-                    if argument.is_name(0) and argument.is_op_value(1, '='): # name = value
-                        argument_name = argument.value(0)
-                        argument.pop_tokens(-1, 2)
-                    elif argument.is_keyword(0) and argument.is_op_value(1, '(') == False: # name(
-                        argument_name = argument.value(0)
-                        argument.pop_tokens(-1, 1)
-
-                    try:
-                        argument_value = argument.evaluate()
-                        self.___evaluated_args.add(argument_name, argument_value, argument.string_to_evaluate())
-                    except:
-                        self.___evaluated_args.add(argument_name, None, argument.string_to_evaluate())
+        self.__evaluated_args = EvaluatedArguments(self.__raw_args)
 
     @property
     def evaluated_args(self):
-        return self.___evaluated_args
+        return self.__evaluated_args
 
     @property
     def raw_args(self):
@@ -51,7 +27,7 @@ class ExecutionParams:
 
 ################################################################################
     def __str__(self):
-        return str(self.___evaluated_args)
+        return str(self.__evaluated_args)
 
 ################################################################################
     @property
