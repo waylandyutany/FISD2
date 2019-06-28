@@ -54,8 +54,8 @@ class Tokens:
     def __str__(self):
         return ", ".join([tok[1] for tok in self._tokens])
 
-    def to_string(self):
-        return " ".join([tok[1] for tok in self._tokens])
+    def to_string(self,fmt = " "):
+        return fmt.join([tok[1] for tok in self._tokens])
 
     def __len__(self):
         return len(self._tokens)
@@ -134,7 +134,7 @@ class Tokens:
         if isinstance(value,(list, tuple)):
             return any((self.value_str(index).lower() == str(v).lower() for v in value))
         return self.value_str(index).lower() == str(value).lower()
-
+################################################################################
     def value(self, index):
         ''' return string as "string" '''
         if self.is_number(index):

@@ -1,11 +1,13 @@
 execute "config"
 test_case("wait")
 
-wait 1
+wait 01:02:03.05
+wait 01:02:03.4
+wait 01:02:03
+wait 01:02
+wait 01:02.03
 wait 01
-wait 0
+wait 01.02
+wait 1
+wait 1.2
 
-wait 00:00:00
-wait 00:00:01
-wait 0:0:0
-wait 0:0:1

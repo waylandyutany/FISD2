@@ -117,10 +117,27 @@ class ExitCommand(Command):
 ################################################################################
 @command_class('wait')
 class WaitCommand(Command):
-    pass
-#    @classmethod
-#    def execute(cls, eargs):
-#        eargs.logger.error("Not implemented yet!")
+    """
+    Valid formats
+    """
+    _wait_formats = ["%H:%M:%S.%f", "%H:%M:%S", "%M:%S.%f", "%M:%S", "%S.%f", "%S"]
+
+    @classmethod
+    def get_time(cls, string):
+        for wait_format in cls._wait_formats:
+            try:return datetime.datetime.strptime(string, wait_format)
+            except:continue
+        return None
+
+    @classmethod
+    def execute(cls, eargs):
+        wait_string = eargs.arguments.sub_tokens(0, len(eargs.arguments)).to_string("")
+        tm = cls.get_time(wait_string)
+        if tm:
+            wait_in_s = (tm.hour*3600) + (tm.minute*60) + tm.second + (tm.microsecond / 1000000.0)
+            eargs.logger.info(wait_string + "->" + str(tm) + "->" + str(wait_in_s) + "s")
+        else:
+            eargs.logger.info(wait_string)
 
 ################################################################################
 # DATE Command
