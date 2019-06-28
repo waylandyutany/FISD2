@@ -1,37 +1,8 @@
 from core.execution_stack import Execution_stack
 from core.code_line import Code_line
 from core.tokens import Tokens
+from core.evaluated_arguments import EvaluatedArguments
 from copy import deepcopy
-
-################################################################################
-class Arguments: 
-    def __init__(self):
-        self.__args = []
-
-    def __str__(self):
-        return str(self.__args)
-
-    def __len__(self):
-        return len(self.__args)
-
-    def add(self, name, value, eval_str):
-        self.__args.append((name, value, eval_str))
-
-    def __get(self, index, type):
-        try:return self.__args[index][type]
-        except:return None
-
-    def name(self, index):
-        return self.__get(index, 0)
-
-    def value(self, index):
-        return self.__get(index, 1)
-
-    def eval_string(self, index):
-        return self.__get(index, 2)
-
-    def copy(self):
-        return deepcopy(self)
 
 ################################################################################
 class Execution_args: 
@@ -40,9 +11,9 @@ class Execution_args:
         self.__code = code
         self.__logger = logger
 
-        self.__arguments = context._variable_stack.tokens_to_arguments(Code_line.get_line_tokens(self.code_line))
+        self.__arguments = context._variable_stack.tokens_to_raw_args(Code_line.get_line_tokens(self.code_line))
 
-        self.__args = Arguments()
+        self.__args = EvaluatedArguments()
 
         #@todo works only for valid (...) calls !!! not for set !!!
         arg_tokens = Tokens(deepcopy(self.__arguments.tokens()))

@@ -1,10 +1,6 @@
 from core.tokens import Tokens, TOKEN_NUMBER, TOKEN_STRING, TOKEN_NONE, TOKEN_NATIVE
 from copy import deepcopy
-
-################################################################################
-class Arguments(Tokens):
-    def __init__(self, tokens):
-        self._tokens = deepcopy(tokens.tokens()[:])
+from core.raw_arguments import RawArguments
 
 ################################################################################
 class Variable_stack:
@@ -39,8 +35,8 @@ class Variable_stack:
         return TOKEN_NONE, None
 
 ################################################################################
-    def tokens_to_arguments(self, tokens):
-        args =  Arguments(tokens)
+    def tokens_to_raw_args(self, tokens):
+        args =  RawArguments(tokens)
         for i in range(0, len(args)):
             if args.is_name(i):
                 type, value = self.__find_variable(args.value(i))
