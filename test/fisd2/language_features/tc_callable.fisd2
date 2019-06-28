@@ -1,0 +1,17 @@
+execute "config"
+test_case("callable")
+
+proc proc_return_value(value)
+	return value
+endproc
+
+#test_return_value 2
+#setret return_value
+#test_assert(return_value == 2, "return_value == 2")
+
+test_return_value(2)
+setret return_value
+test_assert(return_value == 2, "return_value == 2")
+
+test_assert(proc_return_value(2) == 2, "proc_return_value(2) == 2")
+test_assert(test_return_value(2) == 2, "test_return_value(2) == 2")
