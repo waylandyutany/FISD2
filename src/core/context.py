@@ -4,7 +4,7 @@ from core.utils import PrefaceLogger
 from core.variable_stack import Variable_stack
 from core.execution import Execution
 from core.execution_stack import Execution_stack
-from core.execution_args import Execution_args
+from core.execution_params import ExecutionParams
 
 import core.core as core
 import json
@@ -58,10 +58,10 @@ class Context:
 
         #executing commands
         while execution_context[Execution_stack._CODE_INDEX] < len(code_lines) and (self._exit == False):
-            execute_args = Execution_args(self, self._code, self._logger)
+            execution_params = ExecutionParams(self, self._code, self._logger)
 
-            with PrefaceLogger(self._code.get_code_line_description(execute_args.code_name, execute_args.line_number), self._logger):
-                execute_args.command_class.execute(execute_args)
+            with PrefaceLogger(self._code.get_code_line_description(execution_params.code_name, execution_params.line_number), self._logger):
+                execution_params.command_class.execute(execution_params)
 
             execution_context[Execution_stack._CODE_INDEX] += 1
             

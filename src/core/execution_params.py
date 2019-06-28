@@ -5,7 +5,7 @@ from core.evaluated_arguments import EvaluatedArguments
 from copy import deepcopy
 
 ################################################################################
-class Execution_args: 
+class ExecutionParams: 
     def __init__(self, context, code, logger):
         self.__context = context
         self.__code = code
