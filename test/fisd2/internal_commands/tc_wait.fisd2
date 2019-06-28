@@ -1,0 +1,11 @@
+execute "config"
+test_case("wait")
+
+wait 1
+wait 01
+wait 0
+
+wait 00:00:00
+wait 00:00:01
+wait 0:0:0
+wait 0:0:1

@@ -117,9 +117,10 @@ class ExitCommand(Command):
 ################################################################################
 @command_class('wait')
 class WaitCommand(Command):
-    @classmethod
-    def execute(cls, eargs):
-        eargs.logger.error("Not implemented yet!")
+    pass
+#    @classmethod
+#    def execute(cls, eargs):
+#        eargs.logger.error("Not implemented yet!")
 
 ################################################################################
 # DATE Command

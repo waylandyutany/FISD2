@@ -13,7 +13,7 @@ class Command:
 
     @classmethod
     def execute(cls, eargs):
-        eargs.logger.error("Command '{}'.execute is not yet implemented!".format(cls._keyword))
+        eargs.logger.error("Command '{}' is not yet implemented!".format(cls._keyword))
 
     @classmethod
     def create_code_line(cls, line_number, tokens):
