@@ -1,0 +1,8 @@
+execute "config"
+test_case("fisd_commands")
+
+#!!! Keep this on line 5 or change line number in test_assert !!!
+test_assert(fisd_line_number() == 5, "fisd_line_number() == 5")
+
+test_assert(fisd_current_file() == "tc_fisd_commands.fisd2", "fisd_current_file() == 'tc_fisd_commands.fisd2'")
+test_assert(fisd_current_folder() == "internal_commands", "fisd_current_folder() == 'internal_commands'")

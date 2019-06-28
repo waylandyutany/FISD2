@@ -75,6 +75,7 @@
     <Content Include="test\executed2.fisd" />
     <Content Include="test\fisd2\config.fisd" />
     <Content Include="test\fisd2\internal_commands\config.fisd2" />
+    <Content Include="test\fisd2\internal_commands\tc_fisd_commands.fisd2" />
     <Content Include="test\fisd2\internal_commands\tc_wait.fisd2" />
     <Content Include="test\fisd2\language_features\config.fisd2" />
     <Content Include="test\fisd2\language_features\tc_assignments.fisd2" />

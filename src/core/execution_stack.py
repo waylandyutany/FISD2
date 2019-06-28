@@ -38,7 +38,7 @@ class Execution_stack:
         return self._stack[-1][Execution_stack._CODE_NAME]
 
     def current_file_name(self):
-        return os.path.basename(self.__current_code_path(self))
+        return os.path.basename(self.__current_code_path())
 
     def current_file_folder(self):
         file_path, file_name = os.path.split(self.__current_code_path())
