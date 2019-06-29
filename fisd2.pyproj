@@ -38,6 +38,7 @@
     <Compile Include="src\core\execution_context.py" />
     <Compile Include="src\core\execution_stack.py" />
     <Compile Include="src\core\logger.py" />
+    <Compile Include="src\core\parse_params.py" />
     <Compile Include="src\core\raw_arguments.py" />
     <Compile Include="src\core\tokens.py" />
     <Compile Include="src\core\utils.py" />

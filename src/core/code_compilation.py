@@ -5,7 +5,7 @@ from core.compile_errors import CompileError
 from core.code_line import Code_line
 from core.code_lines import Code_lines
 from core.utils import PrefaceLogger, folder_and_file_name
-
+from core.parse_params import ParseParams, Code_lines_insertion, Code_labels
 import core.core as core
 
 from internal_commands.default_commands import ExecuteCommand
@@ -13,58 +13,6 @@ from internal_commands.procedure_commands import ProcCommand, EndProcCommand
 from internal_commands.evaluation_commands import Code_evaluation
 
 import os
-
-################################################################################
-class ParseArgs:
-    def __init__(self, _code, _logger):
-        self.code_name = None
-        self.code_lines = None
-        self.code_index = None
-        self.code_line = None
-        self.code_labels = None
-
-        self.code = _code
-        self.logger = _logger
-
-        self.code_lines_insertion = None
-
-################################################################################
-################################################################################
-class Code_lines_insertion:
-    def __init__(self):
-        self._insertion = {}
-
-    def insert_before(self, line_number, code_line):
-        self.__insert(-1, line_number, code_line)
-
-    def insert_after(self, line_number, code_line):
-        self.__insert(1, line_number, code_line)
-
-    def __insert(self, where, line_number, code_line):
-        if line_number not in self._insertion:
-            self._insertion[line_number] = { -1 : [], 1 : []}
-        self._insertion[line_number][where].append(code_line)
-
-    def pop_lines_for_insertion(self, line_number):
-        if line_number in self._insertion:
-            ret = self._insertion[line_number][-1], self._insertion[line_number][1]
-            del self._insertion[line_number]
-            return ret
-        return None
-
-################################################################################
-################################################################################
-class Code_labels:
-    def __init__(self):
-        self._labels_counter = {}
-       
-    def get_label_name(self, label_name):
-        if label_name not in self._labels_counter:
-            self._labels_counter[label_name] = 0
-            return "{}_{:02d}".format(label_name, self._labels_counter[label_name])
-
-        self._labels_counter[label_name] += 1
-        return "{}_{:02d}".format(label_name, self._labels_counter[label_name])
 
 ################################################################################
 ################################################################################
@@ -127,18 +75,18 @@ class Code_compilation(Code_json):
         return file_path
 
     def __parse_commands(self, logger):
-        parse_args = ParseArgs(self, logger)
+        parse_params = ParseParams(self, logger)
 
         for code_name in self._code:
             #code labels uniqueness is per code[code_name]
-            parse_args.code_labels = Code_labels()
-            parse_args.code_lines = self.get_code_lines(code_name)
-            parse_args.code_lines_insertion = Code_lines_insertion()
+            parse_params.code_labels = Code_labels()
+            parse_params.code_lines = self.get_code_lines(code_name)
+            parse_params.code_lines_insertion = Code_lines_insertion()
 
-            for parse_args.code_index in range(0, len(parse_args.code_lines)):
-                code_line = parse_args.code_lines[parse_args.code_index]
-                parse_args.code_name = code_name
-                parse_args.code_line = code_line
+            for parse_params.code_index in range(0, len(parse_params.code_lines)):
+                code_line = parse_params.code_lines[parse_params.code_index]
+                parse_params.code_name = code_name
+                parse_params.code_line = code_line
 
                 line_number, line_tokens, _ = Code_line.split(code_line)
 
@@ -158,11 +106,11 @@ class Code_compilation(Code_json):
 
                     Code_line.set_command_class(code_line, command_class)
 
-                    Code_evaluation.evaluate_function_calls(parse_args)
+                    Code_evaluation.evaluate_function_calls(parse_params)
 
-                    command_class.parse(parse_args)
+                    command_class.parse(parse_params)
 
-            self.__insert_code_lines(parse_args.code_lines, parse_args.code_lines_insertion)
+            self.__insert_code_lines(parse_params.code_lines, parse_params.code_lines_insertion)
 
     def __insert_code_lines(self, code_lines, insertion):
         #@todo move label if avaliable at the beginning of line with same line numbers !!!
