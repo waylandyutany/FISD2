@@ -98,6 +98,9 @@ class Code_compilation(Code_json):
 
                     Code_evaluation.evaluate_function_calls(parse_params)
 
+                    if command_class._cmd_type:
+                        command_class._cmd_type.preprocess_line_tokens(parse_params.line_tokens)
+
                     command_class.parse(parse_params)
 
             self.__insert_code_lines(parse_params.code_lines, parse_params.code_lines_insertion)

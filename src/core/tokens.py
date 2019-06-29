@@ -103,6 +103,9 @@ class Tokens:
     def insert_name(self, index, value):
         self._tokens.insert(index, [TOKEN_NAME, value])
 
+    def insert_op(self, index, value):
+        self._tokens.insert(index, [TOKEN_OP, value])
+
 ################################################################################
     def is_name(self, index):
         return self.__token(index, 0) == TOKEN_NAME

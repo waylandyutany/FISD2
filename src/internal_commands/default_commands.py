@@ -1,5 +1,5 @@
 from core.commands import command_class, Command
-from core.command_type import CallableCommand
+from core.command_type import CallableCommand as Callable
 from core.tokens import tokenizer_class, TOKEN_NAME, Tokens
 from core.code_line import Code_line
 import datetime
@@ -116,7 +116,7 @@ class ExitCommand(Command):
 ################################################################################
 # WAIT Command
 ################################################################################
-@command_class('wait', CallableCommand())
+@command_class('wait')
 class WaitCommand(Command):
     """
     Valid formats

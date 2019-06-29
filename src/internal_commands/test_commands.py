@@ -1,4 +1,5 @@
 from core.commands import command_class, Command
+from core.command_type import CallableCommand as Callable
 
 ################################################################################
 # TEST_SUITE Command
@@ -51,7 +52,7 @@ class Test_asserCommand(Command):
 ################################################################################
 # TEST_RETURN_VALUE Command
 ################################################################################
-@command_class('test_return_value')
+@command_class('test_return_value', Callable())
 class Test_return_valueCommand(Command):
     @classmethod
     def execute(cls, eargs):

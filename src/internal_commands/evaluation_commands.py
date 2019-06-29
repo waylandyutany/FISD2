@@ -54,9 +54,10 @@ class Code_evaluation:
                         elif tokens.is_value(j, ')'):
                             if nested_counter == 0:
                                 # only our fisd functions are accepted
-                                if code.get_code_lines(tokens.value(i)):
+                                function_name = tokens.value(i)
+                                if code.get_code_lines(function_name):
                                     ret = (i, j, cls._FISD_FUNCTION)
-                                elif Commands.find_command(tokens.value(i)) != None:
+                                elif Commands.find_command(function_name) != None:
                                     ret = (i, j, cls._FISD_COMMAND)
                                 break
                             else:

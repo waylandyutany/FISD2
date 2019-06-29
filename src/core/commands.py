@@ -5,6 +5,7 @@ class Command:
     #Any token with name in this list is automaticaly marked as keyword.
     _keywords = None
     _keyword = None
+    _cmd_type = None
 
     @classmethod
     def parse(cls, pargs):
