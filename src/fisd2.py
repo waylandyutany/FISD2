@@ -29,45 +29,49 @@ logger = Logger(Logger.log)
 ################################################################################
 def compile_to_file(fisd_file_name, logger):
     fisd_bin_file_name = fisd_file_name + ".bin"
-    Logger.log.info("Compiling '{}' to '{}'...".format(fisd_file_name, fisd_bin_file_name))
+    Logger.log.info()
 
     code = Code_compilation()
     context = Context(code, logger)
 
-    with TimeLogger("Compilation time", logger):
+    with TimeLogger("Compiling '{}' to '{}'...".format(fisd_file_name, fisd_bin_file_name),
+                    "Compilation duration", logger): 
         code.compile_from_file(fisd_file_name, logger)
 
     if logger._errors > 0:return
 
-    with TimeLogger("Storing time", logger):
+    with TimeLogger("Storing to '{}'...".format(fisd_file_name, fisd_bin_file_name),
+                    "Storing duration", logger):
         context.store_context(fisd_bin_file_name)
 
 ################################################################################
 def run_from_fisd_file(fisd_file_name, logger):
-    Logger.log.info("Running '{}'...".format(fisd_file_name))
     code = Code_compilation()
     context = Context(code, logger)
 
-    with TimeLogger("Compilation time", logger):
+    with TimeLogger("Compiling '{}'...".format(fisd_file_name),
+                    "Compilation duration", logger):
         code.compile_from_file(fisd_file_name, logger)
 
     if logger._errors > 0:return
 
-    with TimeLogger("Run time", logger):
+    with TimeLogger("Running '{}'...".format(fisd_file_name), 
+                    "Running duration", logger):
         context.run()
 
 ################################################################################
 def run_from_bin_fisd_file(fisd_file_name, logger):
-    Logger.log.info("Running '{}'...".format(fisd_file_name))
     code = Code_compilation()
     context = Context(code, logger)
 
-    with TimeLogger("Restoring time", logger):
+    with TimeLogger("Restoring '{}'...".format(fisd_file_name), 
+                    "Restoring duration", logger):
         context.restore_context(fisd_file_name)
 
     if logger._errors > 0:return
 
-    with TimeLogger("Run time", logger):
+    with TimeLogger("Running '{}'...".format(fisd_file_name), 
+                    "Running duration", logger):
         context.run_from_restored_context()
 
 ################################################################################
