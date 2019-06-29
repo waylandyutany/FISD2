@@ -25,6 +25,10 @@ class ParseParams:
     def line_tokens(self):
         return Code_line.get_line_tokens(self.code_line)
 
+    @property
+    def command_name(self):
+        return self.line_tokens.value(0)
+
 ################################################################################
 class Code_lines_insertion:
     def __init__(self):

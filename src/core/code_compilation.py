@@ -81,15 +81,13 @@ class Code_compilation(Code_json):
 
             for parse_params.code_index in range(0, len(parse_params.code_lines)):
                 with PrefaceLogger(self.get_code_line_description(code_name, parse_params.line_number), logger):
-                    command_name = parse_params.line_tokens.value(0)
-
-                    if not parse_params.line_tokens.is_name(0):
-                        logger.error(CompileError.invalid_command(command_name))
+                    if not parse_params.command_name:
+                        logger.error(CompileError.invalid_command(parse_params.command_name))
                         continue
 
-                    command_class = Commands.find_command(command_name)
+                    command_class = Commands.find_command(parse_params.command_name)
                     if not command_class:
-                        logger.error(CompileError.unknown_command(command_name))
+                        logger.error(CompileError.unknown_command(parse_params.command_name))
                         continue
 
                     parse_params.line_tokens.mark_as_keyword(0)
