@@ -114,9 +114,18 @@ class ExitCommand(Command):
         eargs.context.exit()
 
 ################################################################################
+# WAIT_TO_SECONDS Command
+################################################################################
+@command_class('wait_to_seconds', Callable())
+class Wait_to_secondsCommand(Command):
+    @classmethod
+    def execute(cls, eargs):
+        pass
+
+################################################################################
 # WAIT Command
 ################################################################################
-@command_class('wait')
+@command_class('wait', Callable())
 class WaitCommand(Command):
     """
     Valid formats
