@@ -80,35 +80,37 @@ if __name__ == '__main__':
         #enable coloring on windows
         os.system('color')
 
-        logger.info("{} version '{}'.".format(core.__app_name__, core.__app_version__))
+        with TimeLogger("{} version '{}'...".format(core.__app_name__, core.__app_version__), 
+                        "Total '{}' duration".format(core.__app_name__), logger):
 
-        args = sys.argv[1:]
-        options = [str(arg).lower().strip(' -\t\n\r') for arg in args]
-        #Logger.log.info("Arguments {}".format(args))
-        #Logger.log.info("Options {}".format(options))
+            args = sys.argv[1:]
+            options = [str(arg).lower().strip(' -\t\n\r') for arg in args]
+            #Logger.log.info("Arguments {}".format(args))
+            #Logger.log.info("Options {}".format(options))
 
-        #if wrong arguments or explicitly help required, help will be printed and script teminated
-        print_help = False
-        if len(args) == 0 or len({'help','?','h'}.intersection(set(options))) > 0:
-            print_help = True
+            #if wrong arguments or explicitly help required, help will be printed and script teminated
+            print_help = False
+            if len(args) == 0 or len({'help','?','h'}.intersection(set(options))) > 0:
+                print_help = True
 
-        if print_help:
-            Logger.log.info("print_help")
-            sys.exit(0)
+            if print_help:
+                Logger.log.info("print_help")
+                sys.exit(0)
 
-        #Logger.log.debug("Tokenizers {}.".format(", ".join(["'{}'".format(name) for name in Tokenizers.tokenizers])))
-        #Logger.log.debug("Commands {}.".format(", ".join(["'{}'".format(name) for name in Commands.commands])))
-        for file_name in glob2.glob(args[0]):
-            file_extension = str(os.path.splitext(file_name)[1]).lower()
-            logger.reset_errors()
+            #Logger.log.debug("Tokenizers {}.".format(", ".join(["'{}'".format(name) for name in Tokenizers.tokenizers])))
+            #Logger.log.debug("Commands {}.".format(", ".join(["'{}'".format(name) for name in Commands.commands])))
 
-            if file_extension in core.__fisd_file_extensions__:
-                if 'compile-to-file' in options:
-                    compile_to_file(file_name, logger)
-                else:
-                    run_from_fisd_file(file_name, logger)
-            elif file_extension in core.__binary_fisd_file_extensions__:
-                run_from_bin_fisd_file(file_name, logger)
+            for file_name in glob2.glob(args[0]):
+                file_extension = str(os.path.splitext(file_name)[1]).lower()
+                logger.reset_errors()
+
+                if file_extension in core.__fisd_file_extensions__:
+                    if 'compile-to-file' in options:
+                        compile_to_file(file_name, logger)
+                    else:
+                        run_from_fisd_file(file_name, logger)
+                elif file_extension in core.__binary_fisd_file_extensions__:
+                    run_from_bin_fisd_file(file_name, logger)
 
     except Exception as e:
         #logger.critical(str(e) + " - " + str(sys.exc_info()))
