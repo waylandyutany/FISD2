@@ -11,8 +11,6 @@ import json
 
 ################################################################################
 class Context:
-    _variable_case_sensitive = False
-
     def __init__(self, code, logger):
         self._code = code
 
@@ -22,7 +20,7 @@ class Context:
 
         self._logger = logger
 
-        self._variable_stack = Variable_stack(Context._variable_case_sensitive)
+        self._variable_stack = Variable_stack(core.__variable_case_sensitive__)
         self._execution = Execution(self._code, self._variable_stack)
 
 ################################################################################

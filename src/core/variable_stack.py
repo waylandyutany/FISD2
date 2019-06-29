@@ -1,6 +1,5 @@
 from core.tokens import Tokens, TOKEN_NUMBER, TOKEN_STRING, TOKEN_NONE, TOKEN_NATIVE
 from copy import deepcopy
-from core.raw_arguments import RawArguments
 
 ################################################################################
 class Variable_stack:
@@ -19,7 +18,7 @@ class Variable_stack:
         self._stack = json_dict['_stack']
 
 ################################################################################
-    def __find_variable(self, name):
+    def find_variable(self, name):
         if not self._case_sensitive:
             name = name.lower()
 
@@ -34,23 +33,8 @@ class Variable_stack:
 
         return TOKEN_NONE, None
 
-################################################################################
-    def tokens_to_raw_args(self, tokens):
-        args =  RawArguments(tokens)
-        for i in range(0, len(args)):
-            if args.is_name(i):
-                type, value = self.__find_variable(args.value(i))
-                if type == TOKEN_NUMBER:
-                    args.set_number(i, value)
-                elif type == TOKEN_STRING:
-                    args.set_string(i, value)
-                elif type == TOKEN_NATIVE:
-                    args.set_native(i, value)
-
-        return args
-
     def get_variable(self, name):
-        type, value = self.__find_variable(name)
+        type, value = self.find_variable(name)
         return value
 
     def set_variable(self, name, value):

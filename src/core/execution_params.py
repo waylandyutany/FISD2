@@ -1,6 +1,7 @@
 from core.execution_stack import Execution_stack
 from core.code_line import Code_line
 from core.evaluated_arguments import EvaluatedArguments
+from core.raw_arguments import RawArguments
 
 ################################################################################
 class ExecutionParams: 
@@ -9,8 +10,7 @@ class ExecutionParams:
         self.__code = code
         self.__logger = logger
 
-        self.__raw_args = context._variable_stack.tokens_to_raw_args(Code_line.get_line_tokens(self.code_line)) #@todo move to __init__
-
+        self.__raw_args = RawArguments(context._variable_stack, self.line_tokens)
         self.__evaluated_args = EvaluatedArguments(self.__raw_args)
 
     @property
@@ -53,6 +53,10 @@ class ExecutionParams:
     @property
     def command_class(self):
         return Code_line.get_command_class(self.code_line)
+
+    @property
+    def line_tokens(self):
+        return Code_line.get_line_tokens(self.code_line)
 
     @property
     def context(self):
