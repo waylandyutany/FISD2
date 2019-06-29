@@ -1,16 +1,29 @@
+from core.code_line import Code_line
+
 ################################################################################
 class ParseParams:
-    def __init__(self, _code, _logger):
-        self.code_name = None
-        self.code_lines = None
+    def __init__(self, _code, _logger, _code_name):
+        self.code_name = _code_name
         self.code_index = None
-        self.code_line = None
-        self.code_labels = None
 
         self.code = _code
         self.logger = _logger
 
-        self.code_lines_insertion = None
+        self.code_lines_insertion = Code_lines_insertion()
+        self.code_labels = Code_labels()
+        self.code_lines = self.code.get_code_lines(_code_name)
+
+    @property
+    def code_line(self):
+        return self.code_lines[self.code_index]
+
+    @property
+    def line_number(self):
+        return Code_line.get_line_number(self.code_line)
+
+    @property
+    def line_tokens(self):
+        return Code_line.get_line_tokens(self.code_line)
 
 ################################################################################
 class Code_lines_insertion:

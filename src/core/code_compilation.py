@@ -75,36 +75,26 @@ class Code_compilation(Code_json):
         return file_path
 
     def __parse_commands(self, logger):
-        parse_params = ParseParams(self, logger)
-
         for code_name in self._code:
             #code labels uniqueness is per code[code_name]
-            parse_params.code_labels = Code_labels()
-            parse_params.code_lines = self.get_code_lines(code_name)
-            parse_params.code_lines_insertion = Code_lines_insertion()
+            parse_params = ParseParams(self, logger, code_name)
 
             for parse_params.code_index in range(0, len(parse_params.code_lines)):
-                code_line = parse_params.code_lines[parse_params.code_index]
-                parse_params.code_name = code_name
-                parse_params.code_line = code_line
-
-                line_number, line_tokens, _ = Code_line.split(code_line)
-
-                with PrefaceLogger(self.get_code_line_description(code_name, line_number), logger):
-                    if not line_tokens.is_name(0):
-                        logger.error(CompileError.invalid_command(line_tokens.value(0)))
+                with PrefaceLogger(self.get_code_line_description(code_name, parse_params.line_number), logger):
+                    if not parse_params.line_tokens.is_name(0):
+                        logger.error(CompileError.invalid_command(parse_params.line_tokens.value(0)))
                         continue
 
-                    command_class = Commands.find_command(line_tokens.value(0))
+                    command_class = Commands.find_command(parse_params.line_tokens.value(0))
                     if not command_class:
-                        logger.error(CompileError.unknown_command(line_tokens.value(0)))
+                        logger.error(CompileError.unknown_command(parse_params.line_tokens.value(0)))
                         continue
 
-                    line_tokens.mark_as_keyword(0)
+                    parse_params.line_tokens.mark_as_keyword(0)
                     if command_class._keywords:
-                        line_tokens.mark_tokens_as_keywords(command_class._keywords)
+                        parse_params.line_tokens.mark_tokens_as_keywords(command_class._keywords)
 
-                    Code_line.set_command_class(code_line, command_class)
+                    Code_line.set_command_class(parse_params.code_line, command_class)
 
                     Code_evaluation.evaluate_function_calls(parse_params)
 
