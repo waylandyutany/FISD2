@@ -5,15 +5,23 @@ proc proc_return_value(value)
 	return value
 endproc
 
+test_return_value( 1 )
+setret return_value
+test_assert(return_value == 1, "return_value == 1")
+
 test_return_value 2
 setret return_value
 test_assert(return_value == 2, "return_value == 2")
 
-test_return_value( 2 )
+proc_return_value( 3 )
 setret return_value
-test_assert(return_value == 2, "return_value == 2")
+test_assert(return_value == 3, "return_value == 3")
 
-test_assert(test_return_value(2) == 2, "return_value == 2")
+proc_return_value( 4 )
+setret return_value
+test_assert(return_value == 4, "return_value == 4")
 
-test_assert(proc_return_value(2) == 2, "proc_return_value(2) == 2")
-test_assert(test_return_value(2) == 2, "test_return_value(2) == 2")
+test_assert(proc_return_value(5) == 5, "proc_return_value(5) == 5")
+test_assert(proc_return_value(7) == 7, "proc_return_value(7) == 7")
+test_assert(test_return_value(5) == 5, "test_return_value(5) == 5")
+test_assert(test_return_value(6) == 6, "test_return_value(6) == 6")

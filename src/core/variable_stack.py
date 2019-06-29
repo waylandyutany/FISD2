@@ -54,10 +54,8 @@ class Variable_stack:
         return value
 
     def set_variable(self, name, value):
-        try:# in case name is number !!!
-            if not self._case_sensitive:
-                name = name.lower()
-        except:pass
+        if not self._case_sensitive:
+            name = name.lower()
 
         var_stack = self._stack[-1]
 

@@ -56,5 +56,4 @@ class Test_asserCommand(Command):
 class Test_return_valueCommand(Command):
     @classmethod
     def execute(cls, eargs):
-        eargs.logger.info("test_return_value({})".format(eargs.evaluated_args.value(0)))
         eargs.set_return(eargs.evaluated_args.value(0))

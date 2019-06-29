@@ -14,7 +14,7 @@ class SetretCommand(Command):
 
     @staticmethod
     def parse(pargs):
-        pass    
+        pargs.line_tokens.mark_as_keyword(1)
 
     @staticmethod
     def execute(eargs):
@@ -80,7 +80,7 @@ class Code_evaluation:
         while next_rightest_function:
             # using number as set ret variable name to prevent collision with other 'normal' variables
             #@todo if number is used as variable name in code, log error
-            var_name = "{0}".format(var_index)
+            var_name = "{}".format(var_index)
 
             i, j, type = next_rightest_function
 
