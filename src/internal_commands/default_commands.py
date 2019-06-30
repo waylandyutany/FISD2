@@ -125,7 +125,7 @@ class Time_to_secondsCommand(Command):
         elif len(eargs.evaluated_args) == 2:
             eargs.set_return((eargs.evaluated_args.value(0) * 60) + eargs.evaluated_args.value(1))
         else:
-            eargs.set_return(1)
+            eargs.set_return(eargs.evaluated_args.value(0))
 
 ################################################################################
 # WAIT Command
