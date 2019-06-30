@@ -1,6 +1,14 @@
 execute "config"
 test_case("wait")
 
+test_assert(time_to_seconds(1,1,1) == 1, "")
+test_assert(time_to_seconds(1,1) == 1, "")
+test_assert(time_to_seconds(1) == 1, "")
+test_assert(time_to_seconds(1.0) == 1, "")
+
+seconds = time_to_seconds(time())
+
+wait seconds
 wait 01:02:03.05
 wait 01:02:03.4
 wait 01:02:03

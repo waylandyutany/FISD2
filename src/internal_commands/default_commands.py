@@ -116,11 +116,11 @@ class ExitCommand(Command):
 ################################################################################
 # WAIT_TO_SECONDS Command
 ################################################################################
-@command_class('wait_to_seconds', Callable())
-class Wait_to_secondsCommand(Command):
+@command_class('time_to_seconds', Callable())
+class Time_to_secondsCommand(Command):
     @classmethod
     def execute(cls, eargs):
-        pass
+        eargs.set_return(1)
 
 ################################################################################
 # WAIT Command
