@@ -1,10 +1,12 @@
 execute "config"
 test_case("wait")
 
-test_assert(time_to_seconds(1,1,1) == 1, "")
-test_assert(time_to_seconds(1,1) == 1, "")
-test_assert(time_to_seconds(1) == 1, "")
-test_assert(time_to_seconds(1.0) == 1, "")
+test_assert(time_to_seconds(1, 1, 1) == 3661, "time_to_seconds(1,1,1) == 3661")
+test_assert(time_to_seconds(1, 1, 1.1) == 3661.1, "time_to_seconds(1,1,1.1) == 3661.1")
+test_assert(time_to_seconds(1, 1) == 61, "time_to_seconds(1,1) == 61")
+test_assert(time_to_seconds(1, 1.1) == 61.1, "time_to_seconds(1,1.1) == 61.1")
+test_assert(time_to_seconds(1) == 1, "time_to_seconds(1) == 1")
+test_assert(time_to_seconds(1.1) == 1, "time_to_seconds(1.1) == 1.0")
 
 seconds = time_to_seconds(time())
 

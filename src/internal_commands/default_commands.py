@@ -120,7 +120,12 @@ class ExitCommand(Command):
 class Time_to_secondsCommand(Command):
     @classmethod
     def execute(cls, eargs):
-        eargs.set_return(1)
+        if len(eargs.evaluated_args) == 3:
+            eargs.set_return((eargs.evaluated_args.value(0) * 3600) + (eargs.evaluated_args.value(1) * 60) + eargs.evaluated_args.value(2))
+        elif len(eargs.evaluated_args) == 2:
+            eargs.set_return((eargs.evaluated_args.value(0) * 60) + eargs.evaluated_args.value(1))
+        else:
+            eargs.set_return(1)
 
 ################################################################################
 # WAIT Command
