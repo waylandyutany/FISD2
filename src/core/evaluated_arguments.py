@@ -24,9 +24,9 @@ class EvaluatedArguments:
 
                     try:
                         argument_value = argument.evaluate()
-                        self.__add(argument_name, argument_value, argument.string_to_evaluate())
+                        self.__add(argument_name, argument_value, argument.to_string())
                     except:
-                        self.__add(argument_name, None, argument.string_to_evaluate())
+                        self.__add(argument_name, None, argument.to_string())
 
 
     def __str__(self):

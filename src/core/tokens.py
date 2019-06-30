@@ -52,10 +52,10 @@ class Tokens:
             ]
 
     def __str__(self):
-        return ", ".join([tok[1] for tok in self._tokens])
+        return self.to_string(", ")
 
     def to_string(self,fmt = " "):
-        return fmt.join([tok[1] for tok in self._tokens])
+        return fmt.join([str(tok[1]) for tok in self._tokens])
 
     def __len__(self):
         return len(self._tokens)
@@ -202,8 +202,5 @@ class Tokens:
 
     def evaluate(self):
         return self.evaluate_tokens(-1, len(self))
-
-    def string_to_evaluate(self):
-        return self.evaluation_string(-1, len(self))
 
 
