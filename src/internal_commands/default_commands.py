@@ -13,12 +13,8 @@ class JumpCommand(Command):
     _keyword = _JUMP
 
     @staticmethod
-    def parse(pargs):
-        pass    
-
-    @staticmethod
-    def execute(eargs):
-        eargs.context.jump_to_code(Code_line.get_jump(eargs.code_line, JumpCommand._keyword))
+    def execute(params):
+        params.context.jump_to_code(Code_line.get_jump(params.code_line, JumpCommand._keyword))
 
     @staticmethod
     def create_code_line(line_number, jump_label_name):
@@ -42,15 +38,15 @@ class SetCommand(Command):
         line_tokens.mark_as_keyword(1)
 
     @staticmethod
-    def execute(eargs):
-        variable_name = eargs.raw_args.value(1)
+    def execute(params):
+        variable_name = params.raw_args.value(1)
         try:
-            evaluated_value = eargs.raw_args.evaluate_tokens(2, len(eargs.raw_args))
+            evaluated_value = params.raw_args.evaluate_tokens(2, len(params.raw_args))
         except Exception as e:
-            eargs.logger.error("Exception during '{}' evaluation! {}!".format(variable_name, e))
+            params.logger.error("Exception during '{}' evaluation! {}!".format(variable_name, e))
             return
 
-        eargs.context.set_variable(variable_name, evaluated_value)
+        params.context.set_variable(variable_name, evaluated_value)
 
     @classmethod
     def tokenize_op_op(cls, tokens, logger, op):
@@ -84,12 +80,8 @@ class SetCommand(Command):
 @command_class('print')
 class PrintCommand(Command):
     @classmethod
-    def parse(cls, pargs):
-        pass
-
-    @classmethod
-    def execute(cls, eargs):
-        eargs.logger.info("PRINT {}".format("".join( ( str(eargs.raw_args.value_str(i)) for i in range(1, len(eargs.raw_args)) ) )))
+    def execute(cls, params):
+        params.logger.info("PRINT {}".format("".join( ( str(params.raw_args.value_str(i)) for i in range(1, len(params.raw_args)) ) )))
 
 ################################################################################
 # EXECUTE Command
@@ -97,12 +89,8 @@ class PrintCommand(Command):
 @command_class('execute')
 class ExecuteCommand(Command):
     @classmethod
-    def parse(cls, pargs):
-        pass
-
-    @classmethod
-    def execute(cls, eargs):
-        eargs.context.execute_code(eargs.raw_args.value_str(1))
+    def execute(cls, params):
+        params.context.execute_code(params.raw_args.value_str(1))
 
 ################################################################################
 # EXIT Command
@@ -110,8 +98,8 @@ class ExecuteCommand(Command):
 @command_class('exit')
 class ExitCommand(Command):
     @classmethod
-    def execute(cls, eargs):
-        eargs.context.exit()
+    def execute(cls, params):
+        params.context.exit()
 
 ################################################################################
 # WAIT_TO_SECONDS Command
@@ -157,7 +145,7 @@ class Time_to_secondsCommand(Command):
 class WaitCommand(Command):
     @classmethod
     def execute(cls, params):
-        time_to_seconds = Time_to_secondsCommand(params)
+        time_to_seconds = Time_to_secondsCommand.time_to_seconds(params)
         params.logger.info("Waiting '{}'s...".format(time_to_seconds))
 
 ################################################################################
@@ -166,8 +154,8 @@ class WaitCommand(Command):
 @command_class('date')
 class DateCommand(Command):
     @classmethod
-    def execute(cls, eargs):
-        eargs.set_return(datetime.datetime.now().strftime("%Y-%m-%d"))
+    def execute(cls, params):
+        params.set_return(datetime.datetime.now().strftime("%Y-%m-%d"))
 
 ################################################################################
 # TIME Command
@@ -175,6 +163,6 @@ class DateCommand(Command):
 @command_class('time')
 class TimeCommand(Command):
     @classmethod
-    def execute(cls, eargs):
-        eargs.set_return(datetime.datetime.now().strftime("%H:%M:%S"))
+    def execute(cls, params):
+        params.set_return(datetime.datetime.now().strftime("%H:%M:%S"))
 
