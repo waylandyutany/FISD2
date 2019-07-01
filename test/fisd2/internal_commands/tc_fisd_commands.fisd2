@@ -1,8 +1,13 @@
 execute "config"
-test_case("fisd_commands")
+test_case("this_commands")
 
 #!!! Keep this on line 5 or change line number in test_assert !!!
-test_assert(fisd_line_number() == 5, "fisd_line_number() == 5")
+test_assert(this_line_number() == 5, "this_line_number() == 5")
 
-test_assert(fisd_current_file() == "tc_fisd_commands.fisd2", "fisd_current_file() == 'tc_fisd_commands.fisd2'")
-test_assert(fisd_current_folder() == "internal_commands", "fisd_current_folder() == 'internal_commands'")
+test_assert(this_file_name() == "tc_fisd_commands.fisd2", "this_file_name() == 'tc_fisd_commands.fisd2'")
+test_assert(this_folder_name() == "internal_commands", "this_folder_name() == 'internal_commands'")
+
+print this_file_path()
+print this_make_path("../one_level_up.txt")
+print this_make_path("../../two_levels_up.txt")
+print this_make_path("../../../three_levels_up.txt")
