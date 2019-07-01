@@ -19,6 +19,7 @@ import internal_commands.this_commands
 import internal_commands.file_system_commands
 import internal_commands.run_commands
 import internal_commands.test_commands
+import internal_commands.time_commands
 
 ################################################################################
 # @todo
