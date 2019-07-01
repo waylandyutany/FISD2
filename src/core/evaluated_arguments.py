@@ -36,7 +36,7 @@ class EvaluatedArguments:
         return len(self.__args)
 
     def __add(self, name, value, eval_str):
-        self.__args.append((name, value, eval_str))
+        self.__args.append((name, value, eval_str, type(value)))
 
     def __get(self, index, type):
         try:return self.__args[index][type]

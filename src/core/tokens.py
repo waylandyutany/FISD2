@@ -141,6 +141,8 @@ class Tokens:
     def value(self, index):
         ''' return string as "string" '''
         if self.is_number(index):
+            if isinstance(self.__token(index, 1), (float,int)):
+                return self.__token(index, 1)
             try:
                 return int(self.__token(index, 1))
             except:
