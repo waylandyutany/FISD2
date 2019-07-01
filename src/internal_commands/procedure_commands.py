@@ -5,10 +5,8 @@ from core.code_line import Code_line
 ################################################################################
 # PROC Command
 ################################################################################
-@command_class()
+@command_class('proc')
 class ProcCommand(Command):
-    _keyword = 'proc'
-
     @staticmethod
     def parse(pargs):
         #@ error when missing begin and end parenthesis
@@ -19,60 +17,46 @@ class ProcCommand(Command):
                 line_tokens.mark_as_keyword(i)
 
     @staticmethod
-    def execute(eargs):
+    def execute(params):
         #@todo handle different parameters and default parameters
-        variable_names = eargs.raw_args.sub_tokens(eargs.raw_args.find_op('('), eargs.raw_args.find_op(')')).split_tokens_by_op(',')
-        variable_values = eargs.context.pop_call_tokens().split_tokens_by_op(',')
+        variable_names = params.raw_args.sub_tokens(params.raw_args.find_op('('), params.raw_args.find_op(')')).split_tokens_by_op(',')
+        variable_values = params.context.pop_call_tokens().split_tokens_by_op(',')
 
         names = [str(tokens.value(0)) for tokens in variable_names if not tokens.empty()]
         evaluated_values = [tokens.evaluate() for tokens in variable_values if not tokens.empty()]
 
         #value_tokens = [token.evaluate() for token in variable_tokens]
         for i in range(0, len(names)):
-            eargs.context.set_variable(names[i], evaluated_values[i])
+            params.context.set_variable(names[i], evaluated_values[i])
 
 ################################################################################
 # END_PROC Command
 ################################################################################
-@command_class()
+@command_class('endproc')
 class EndProcCommand(Command):
-    _keyword = 'endproc'
-
     @staticmethod
-    def parse(pargs):
-        pass
-
-    @staticmethod
-    def execute(eargs):
-        eargs.context.return_execute_code(None)
+    def execute(params):
+        params.context.return_execute_code(None)
 
 ################################################################################
 # RETURN Command
 ################################################################################
-@command_class()
+@command_class('return')
 class ReturnCommand(Command):
-    _keyword = 'return'
-
     @staticmethod
-    def parse(pargs):
-        pass
-
-    @staticmethod
-    def execute(eargs):
-        if len(eargs.raw_args) > 1:
-            value = eargs.raw_args.evaluate_tokens(0, len(eargs.raw_args))
-            eargs.context.return_execute_code(value)
+    def execute(params):
+        if len(params.raw_args) > 1:
+            value = params.raw_args.evaluate_tokens(0, len(params.raw_args))
+            params.context.return_execute_code(value)
         else:
-            eargs.context.return_execute_code(None)
+            params.context.return_execute_code(None)
 
 ################################################################################
 # CALL Command
 ################################################################################
-@command_class()
+@command_class('call')
 @tokenizer_class()
 class CallCommand(Command):
-    _keyword = 'call'
-
     @staticmethod
     def parse(pargs):
         #@todo error when mismatched number of arguments
@@ -80,11 +64,11 @@ class CallCommand(Command):
         pass
 
     @staticmethod
-    def execute(eargs):
-        i0 = eargs.raw_args.find_op('(')
-        call_tokens = eargs.raw_args.sub_tokens(i0, len(eargs.raw_args) - 1)
-        eargs.context.push_call_tokens(call_tokens)
-        eargs.context.execute_code(eargs.raw_args.value_str(1))
+    def execute(params):
+        i0 = params.raw_args.find_op('(')
+        call_tokens = params.raw_args.sub_tokens(i0, len(params.raw_args) - 1)
+        params.context.push_call_tokens(call_tokens)
+        params.context.execute_code(params.raw_args.value_str(1))
 
     @staticmethod
     def tokenize(tokens, logger):
