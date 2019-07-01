@@ -4,7 +4,7 @@ test_case("this_commands")
 #!!! Keep this on line 5 or change line number in test_assert !!!
 test_assert(this_line_number() == 5, "this_line_number() == 5")
 
-test_assert(this_file_name() == "tc_fisd_commands.fisd2", "this_file_name() == 'tc_fisd_commands.fisd2'")
+test_assert(this_file_name() == "tc_this_commands.fisd2", "this_file_name() == 'tc_this_commands.fisd2'")
 test_assert(this_folder_name() == "internal_commands", "this_folder_name() == 'internal_commands'")
 
 print this_file_path()

@@ -15,6 +15,7 @@ import internal_commands.conditions_commands
 import internal_commands.procedure_commands
 import internal_commands.evaluation_commands
 import internal_commands.fisd_commands
+import internal_commands.this_commands
 import internal_commands.file_system_commands
 import internal_commands.run_commands
 import internal_commands.test_commands
