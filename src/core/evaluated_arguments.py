@@ -51,5 +51,8 @@ class EvaluatedArguments:
     def eval_string(self, index):
         return self.__get(index, 2)
 
-    def copy(self):
+    def type(self, index):
+        return self.__get(index, 3)
+
+    def clone(self):
         return deepcopy(self)

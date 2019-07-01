@@ -118,41 +118,47 @@ class ExitCommand(Command):
 ################################################################################
 @command_class('time_to_seconds', Callable())
 class Time_to_secondsCommand(Command):
+    @staticmethod
+    def string_to_seconds(s):
+        float_part = 0.0
+        time_and_float = s.split(".")
+        try:float_part = float("0." + time_and_float[1])
+        except:pass
+        time_part = time_and_float[0].split(":")
+        if len(time_part) == 3:
+            return (int(time_part[0]) * 3600) + (int(time_part[1]) * 60) + int(time_part[0]) + float_part
+        elif len(time_part) == 2:
+            return (int(time_part[0]) * 60) + int(time_part[1]) + float_part
+        elif len(time_part) == 1:
+            return int(time_part[0]) + float_part
+        return float_part
+
     @classmethod
-    def execute(cls, eargs):
-        if len(eargs.evaluated_args) == 3:
-            eargs.set_return((eargs.evaluated_args.value(0) * 3600) + (eargs.evaluated_args.value(1) * 60) + eargs.evaluated_args.value(2))
-        elif len(eargs.evaluated_args) == 2:
-            eargs.set_return((eargs.evaluated_args.value(0) * 60) + eargs.evaluated_args.value(1))
+    def time_to_seconds(cls, params):
+        eargs = params.evaluated_args
+        if len(eargs) == 3:
+            return((eargs.value(0) * 3600) + (eargs.value(1) * 60) + eargs.value(2))
+        elif len(eargs) == 2:
+            return((eargs.value(0) * 60) + eargs.value(1))
         else:
-            eargs.set_return(eargs.evaluated_args.value(0))
+            if eargs.type(0) == str:
+                return(cls.string_to_seconds(eargs.value(0)))
+            else:
+                return(eargs.value(0))
+
+    @classmethod
+    def execute(cls, params):
+        params.set_return(cls.time_to_seconds(params))
 
 ################################################################################
 # WAIT Command
 ################################################################################
 @command_class('wait', Callable())
 class WaitCommand(Command):
-    """
-    Valid formats
-    """
-    _wait_formats = ["%H:%M:%S.%f", "%H:%M:%S", "%M:%S.%f", "%M:%S", "%S.%f", "%S"]
-
     @classmethod
-    def get_time(cls, string):
-        for wait_format in cls._wait_formats:
-            try:return datetime.datetime.strptime(string, wait_format)
-            except:continue
-        return None
-
-    @classmethod
-    def execute(cls, eargs):
-        wait_string = eargs.raw_args.sub_tokens(0, len(eargs.raw_args)).to_string("")
-        tm = cls.get_time(wait_string)
-        if tm:
-            wait_in_s = (tm.hour*3600) + (tm.minute*60) + tm.second + (tm.microsecond / 1000000.0)
-            eargs.logger.info(wait_string + "->" + str(tm) + "->" + str(wait_in_s) + "s")
-        else:
-            eargs.logger.info(wait_string)
+    def execute(cls, params):
+        time_to_seconds = Time_to_secondsCommand(params)
+        params.logger.info("Waiting '{}'s...".format(time_to_seconds))
 
 ################################################################################
 # DATE Command
