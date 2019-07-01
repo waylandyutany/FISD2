@@ -3,42 +3,50 @@ test_case("loops")
 test_assert(cos(0) == cos(0))
 test_assert(cos(0) != cos(0))
 
+################################################################################
+test_case("for i from -1 to 2")
+loop_counter = 0
 for i from -1 to 2
 	for j from -1 to 2
-		print i " " j
+		loop_counter++
 	next j
 next i
+test_assert(i == 2, "i == 2")
+test_assert(j == 2, "j == 2")
+test_assert(loop_counter == 9, "loop_counter == 9")
 
-for i from -1 to 2
-	for j from -1 to 2
-	next j
-next i
-print i " " j
-
+################################################################################
+test_case("for i from -1 to 2 step 2")
+loop_counter = 0
 for i from -1 to 2 step 2
 	for j from -1 to 2 step 2
-		print i " " j
+		loop_counter++
 	next j
 next i
+test_assert(i == 3, "i == 3")
+test_assert(j == 3, "j == 3")
+test_assert(loop_counter == 4, "loop_counter == 4")
 
+################################################################################
+loop_counter = 0
 for i from -1 to 2 step 2
 	for j from -1 to 2 step 2
+	loop_counter++
 	next j
 next i
-print i " " j
 
-print "for i from -1 to 2"
+loop_counter = 0
 for i from -1 to 2
-	print i
+	loop_counter++
 next
 
-print "for i from 1 to -2"
+loop_counter = 0
 for i from 1 to -2
-	print i
+	loop_counter++
 next
 
-print "for i from 1 to -2 step -2"
+loop_counter = 0
 for i from 1 to -2 step -2
-	print i
+	loop_counter++
 next
 
