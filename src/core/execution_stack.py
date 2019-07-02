@@ -58,3 +58,22 @@ class Execution_stack:
         if file_or_folder_name == None:
             return file_path
         return os.path.abspath(os.path.join(file_path, file_or_folder_name))
+
+################################################################################
+    def main_file_path(self):
+        return os.path.split(self._code.main_code_name())
+
+    def main_file_name(self):
+        _,file_name = os.path.split(self._code.main_code_name())
+        return file_name
+
+    def main_folder_name(self):
+        file_path, file_name = os.path.split(self._code.main_code_name())
+        _, file_folder = os.path.split(file_path)
+        return file_folder
+
+    def main_make_path(self, file_or_folder_name):
+        file_path, _ = os.path.split(self._code.main_code_name())
+        if file_or_folder_name == None:
+            return file_path
+        return os.path.abspath(os.path.join(file_path, file_or_folder_name))

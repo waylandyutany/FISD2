@@ -13,9 +13,20 @@ proc test_proc()
 	test_assert(this_folder_name() == "internal_commands", "this_folder_name() == 'internal_commands'")
 endproc
 
+test_assert(main_file_name() == "tc_this_commands.fisd2", 'main_file_name() == "tc_this_commands.fisd2"')
+test_assert(main_folder_name() == "internal_commands", 'main_folder_name() == "internal_commands"')
+
+test_assert(main_file_name() == this_file_name(), "main_file_name() == this_file_name()")
+test_assert(main_folder_name() == this_folder_name(), "main_folder_name() == this_folder_name()")
+
 test_proc()
 
-print this_file_path()
-print this_make_path("../one_level_up.txt")
-print this_make_path("../../two_levels_up.txt")
-print this_make_path("../../../three_levels_up.txt")
+#print this_file_path()
+#print make_path_from_this("../one_level_up.txt")
+#print make_path_from_this("../../two_levels_up.txt")
+#print make_path_from_this("../../../three_levels_up.txt")
+
+
+test_assert(make_path_from_this("../one_level_up.txt") == make_path_from_main("../one_level_up.txt"), "make_path_from_this == make_path_from_main")
+test_assert(make_path_from_this("../../two_levels_up.txt") == make_path_from_main("../../two_levels_up.txt"), "make_path_from_this == make_path_from_main")
+test_assert(make_path_from_this("../../../three_levels_up.txt") == make_path_from_main("../../../three_levels_up.txt"), "make_path_from_this == make_path_from_main")
