@@ -1,2 +1,2 @@
 execute "../config"
-test_set(fisd_current_folder())
+test_set(this_folder_name())
