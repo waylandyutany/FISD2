@@ -1,4 +1,17 @@
 from core.commands import command_class, Command
+import os
+
+def get_file_name_from_path(path):
+    return os.path.split(path)[1]
+
+def get_folder_name_from_path(path):
+    file_path, _ = os.path.split(path)
+    _, folder_name = os.path.split(file_path)
+    return folder_name
+
+def make_path_from_path(from_path, path):
+    from_path, _ = os.path.split(from_path)
+    return os.path.abspath(os.path.join(from_path, path))
 
 ################################################################################
 # THIS_FOLDER_NAME Command
@@ -7,7 +20,8 @@ from core.commands import command_class, Command
 class This_folder_name_command(Command):
     @staticmethod
     def execute(params):
-        params.context.set_return_value(params.context.execution.current_file_folder())
+        context = params.context
+        context.set_return_value(get_folder_name_from_path(context.execution.current_code_path()))
 
 ################################################################################
 # THIS_FILE_PATH Command
@@ -16,7 +30,8 @@ class This_folder_name_command(Command):
 class This_file_path_command(Command):
     @staticmethod
     def execute(params):
-        params.context.set_return_value(params.context.execution.current_file_path())
+        context = params.context
+        context.set_return_value(context.execution.current_code_path())
 
 ################################################################################
 # THIS_FILE_NAME Command
@@ -25,7 +40,8 @@ class This_file_path_command(Command):
 class This_file_name_command(Command):
     @staticmethod
     def execute(params):
-        params.context.set_return_value(params.context.execution.current_file_name())
+        context = params.context
+        context.set_return_value(get_file_name_from_path(context.execution.current_code_path()))
 
 ################################################################################
 # THIS_LINE_NUMBER Command
@@ -43,8 +59,9 @@ class This_line_number_command(Command):
 class Make_path_from_this_command(Command):
     @staticmethod
     def execute(params):
+        context = params.context
         eargs = params.evaluated_args
-        params.context.set_return_value(params.context.execution.current_make_path(eargs.value(0)))
+        params.context.set_return_value(make_path_from_path(context.execution.current_code_path(), eargs.value(0)))
 
 ################################################################################
 # MAIN_FILE_NAME Command
@@ -53,7 +70,7 @@ class Make_path_from_this_command(Command):
 class Main_file_name_command(Command):
     @staticmethod
     def execute(params):
-        params.context.set_return_value(params.context.execution.main_file_name())
+        params.context.set_return_value(get_file_name_from_path(params.code.main_code_name()))
 
 ################################################################################
 # MAIN_FILE_PATH Command
@@ -62,7 +79,7 @@ class Main_file_name_command(Command):
 class Main_file_path_command(Command):
     @staticmethod
     def execute(params):
-        params.context.set_return_value(params.context.execution.main_file_path())
+        params.context.set_return_value(params.code.main_code_name())
 
 ################################################################################
 # MAIN_FOLDER_NAME Command
@@ -71,7 +88,7 @@ class Main_file_path_command(Command):
 class Main_folder_name_command(Command):
     @staticmethod
     def execute(params):
-        params.context.set_return_value(params.context.execution.main_folder_name())
+        params.context.set_return_value(get_folder_name_from_path(params.code.main_code_name()))
 
 ################################################################################
 # MAKE_PATH_FROM_MAIN Command
@@ -81,4 +98,4 @@ class Make_path_from_main_command(Command):
     @staticmethod
     def execute(params):
         eargs = params.evaluated_args
-        params.context.set_return_value(params.context.execution.main_make_path(eargs.value(0)))
+        params.context.set_return_value(make_path_from_path(params.code.main_code_name(), eargs.value(0)))

@@ -62,9 +62,9 @@ class ExecutionParams:
     def context(self):
         return self.__context
 
-    #@property
-    #def code(self):
-    #    return self.__code
+    @property
+    def code(self):
+        return self.__code
 
     @property
     def logger(self):
