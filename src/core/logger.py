@@ -1,11 +1,14 @@
 import logging
 from logging.handlers import RotatingFileHandler
 from logging import handlers
-import sys
+import sys, os
 from copy import copy
 from termcolor import colored
 
 ################################################################################
+#enable coloring on windows
+os.system('color')
+
 class ColoredFormatter(logging.Formatter):
     level_to_color = {
         logging.DEBUG : 'white',
@@ -19,7 +22,8 @@ class ColoredFormatter(logging.Formatter):
         logging.Formatter.__init__(self, patern)
 
     def format(self, record):
-        colored_record = copy(record)
+#        colored_record = copy(record)
+        colored_record = record #@todo do we need to copy ?
         colored_record.levelname = "{}".format(colored(colored_record.levelname, ColoredFormatter.level_to_color[colored_record.levelno]))
         #colored_record.msg
         return logging.Formatter.format(self, colored_record)

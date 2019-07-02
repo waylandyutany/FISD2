@@ -73,9 +73,6 @@ if __name__ == '__main__':
     logger = None
 
     try:
-        #enable coloring on windows
-        os.system('color')
-
         fisd_search_patter = sys.argv[1]
         del sys.argv[1]
 
@@ -90,19 +87,6 @@ if __name__ == '__main__':
 
         with TimeLogger("{} version '{}'...".format(core.__app_name__, core.__app_version__), 
                         "Total '{}' duration".format(core.__app_name__), logger):
-
-
-            ##if wrong arguments or explicitly help required, help will be printed and script teminated
-            #print_help = False
-            #if len(args) == 0 or len({'help','?','h'}.intersection(set(options))) > 0:
-            #    print_help = True
-
-            #if print_help:
-            #    Logger.log.info("print_help")
-            #    sys.exit(0)
-
-            #Logger.log.debug("Tokenizers {}.".format(", ".join(["'{}'".format(name) for name in Tokenizers.tokenizers])))
-            #Logger.log.debug("Commands {}.".format(", ".join(["'{}'".format(name) for name in Commands.commands])))
 
             for file_name in glob2.glob(fisd_search_patter):
                 file_extension = str(os.path.splitext(file_name)[1]).lower()
