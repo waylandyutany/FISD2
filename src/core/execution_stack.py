@@ -34,6 +34,7 @@ class Execution_stack:
         return self._stack[-1][Execution_stack._CODE_IS_FUNCTION]
 
 ################################################################################
+#@todo move it to commands definition !!!
     def current_code_name(self):
         return self._stack[-1][Execution_stack._CODE_NAME]
 
