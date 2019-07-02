@@ -1,4 +1,8 @@
 execute "config"
 test_case("tc_error_0")
 
-run_fisd2()
+log_file_path = this_make_path(this_file_name()+".log")
+test_file_path = this_make_path(this_file_name()+".test")
+run_fisd2(test_file_path, log_file_path)
+
+test_assert(file_count_lines(log_file_path, "ERR") == 0, 'file_count_lines(log_file_path, "ERR") == 1')
