@@ -22,7 +22,7 @@ class This_folder_name_command(Command):
     @staticmethod
     def execute(params):
         context = params.context
-        context.set_return_value(get_folder_name_from_path(context.execution.current_code_path()))
+        context.set_return_value(get_folder_name_from_path(context.execution.current_code_path))
 
 ################################################################################
 # THIS_FILE_PATH Command
@@ -32,7 +32,7 @@ class This_file_path_command(Command):
     @staticmethod
     def execute(params):
         context = params.context
-        context.set_return_value(context.execution.current_code_path())
+        context.set_return_value(context.execution.current_code_path)
 
 ################################################################################
 # THIS_FILE_NAME Command
@@ -42,7 +42,7 @@ class This_file_name_command(Command):
     @staticmethod
     def execute(params):
         context = params.context
-        context.set_return_value(get_file_name_from_path(context.execution.current_code_path()))
+        context.set_return_value(get_file_name_from_path(context.execution.current_code_path))
 
 ################################################################################
 # THIS_LINE_NUMBER Command
@@ -51,7 +51,7 @@ class This_file_name_command(Command):
 class This_line_number_command(Command):
     @staticmethod
     def execute(params):
-        params.context.set_return_value(params.context.execution.current_line_number())
+        params.context.set_return_value(params.context.execution.current_line_number)
 
 ################################################################################
 # MAKE_PATH_FROM_THIS Command
@@ -62,7 +62,7 @@ class Make_path_from_this_command(Command):
     def execute(params):
         context = params.context
         eargs = params.evaluated_args
-        context.set_return_value(make_path_from_path(context.execution.current_code_path(),
+        context.set_return_value(make_path_from_path(context.execution.current_code_path,
                                                      eargs.value(0)))
 
 ################################################################################

@@ -32,7 +32,7 @@ class ExecutionParams:
 ################################################################################
     @property
     def code_name(self):
-        return self.__context._execution.current_code_name()
+        return self.__context._execution.current_code_name
 
     @property
     def code_lines(self):
@@ -40,7 +40,7 @@ class ExecutionParams:
 
     @property
     def code_index(self):
-        return self.__context._execution.current_code_index()
+        return self.__context._execution.current_code_index
 
     @property
     def code_line(self):
@@ -48,7 +48,7 @@ class ExecutionParams:
 
     @property
     def line_number(self):
-        return self.__context._execution.current_line_number()
+        return self.__context._execution.current_line_number
 
     @property
     def command_class(self):

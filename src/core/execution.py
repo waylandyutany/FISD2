@@ -45,11 +45,12 @@ class Execution(Execution_stack):
         return execution_context
 
     def pop_execution(self):
-        self._stack.pop()
-
         #if from function call, var stack is popped as well
         if self.current_is_function:
             self._variable_stack.pop()
+
+        self._stack.pop()
+
       
 ################################################################################
     def jump_to_code(self, new_code_index):

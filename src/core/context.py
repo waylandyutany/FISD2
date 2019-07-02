@@ -83,7 +83,7 @@ class Context:
 
 ################################################################################
     def return_execute_code(self, value = None):
-        code_lines = self._code.get_code_lines(self._execution.current_code_name())
+        code_lines = self._code.get_code_lines(self._execution.current_code_name)
         self.jump_to_code(len(code_lines))
         self._return = value
 
