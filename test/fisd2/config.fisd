@@ -1,1 +1,10 @@
 test_suite(this_folder_name())
+
+fisd2_file_path = this_make_path("../../src/fisd2.py")
+print fisd2_file_path
+
+proc run_fisd2()
+	fisd2_file_path = this_make_path("../../src/fisd2.py")
+	print fisd2_file_path
+	run(fisd2_file_path)
+endproc

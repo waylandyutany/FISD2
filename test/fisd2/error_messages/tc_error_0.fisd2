@@ -1,5 +1,4 @@
 execute "config"
 test_case("tc_error_0")
 
-#!!! Keep this on line 5 or change line number in test_assert !!!
-test_assert(this_line_number() == 5, "this_line_number() == 5")
+run_fisd2()

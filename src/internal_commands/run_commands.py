@@ -7,7 +7,9 @@ from core.commands import command_class, Command
 class RunCommand(Command):
     @classmethod
     def execute(cls, params):
-        params.logger.error("Not implemented yet!")
+        eargs = params.evaluated_args
+        run_params = " ".join(str(eargs.value(i)) for i in range(0,len(eargs)))
+        params.logger.info("Running '{}'...".format(run_params))
 
 ################################################################################
 # RUN_ASYNC Command
