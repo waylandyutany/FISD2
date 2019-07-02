@@ -31,12 +31,6 @@ class Logger:
 
     log = logging.getLogger('fisd2_logger')
 
-    _KEY_DEBUG = 'DBG'
-    _KEY_INFO = 'INF'
-    _KEY_WARNING = 'WRN'
-    _KEY_ERROR = 'ERR'
-    _KEY_CRITICAL = 'CRITICAL'
-
     @classmethod
     def init_logger(cls, log_file_name, log_verbosity):
         if log_file_name:
@@ -50,11 +44,11 @@ class Logger:
         else:
             cls.log.setLevel(logging.INFO)
 
-        logging.addLevelName(logging.ERROR, cls._KEY_ERROR)
-        logging.addLevelName(logging.INFO, cls._KEY_INFO)
-        logging.addLevelName(logging.DEBUG, cls._KEY_DEBUG)
-        logging.addLevelName(logging.WARNING, cls._KEY_WARNING)
-        logging.addLevelName(logging.CRITICAL, cls._KEY_CRITICAL)
+        logging.addLevelName(logging.ERROR, 'ERR')
+        logging.addLevelName(logging.INFO, 'INF')
+        logging.addLevelName(logging.DEBUG, 'DBG')
+        logging.addLevelName(logging.WARNING, 'WRN')
+        logging.addLevelName(logging.CRITICAL, 'CRITICAL')
 
         if cls.file_log_handler:
             cls.file_log_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
