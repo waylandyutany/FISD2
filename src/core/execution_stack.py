@@ -20,6 +20,7 @@ class Execution_stack:
         self._stack = json_dict['stack']
 
 ################################################################################
+    @property
     def is_empty(self):
         return len(self._stack) == 0
 

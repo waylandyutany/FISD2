@@ -97,7 +97,7 @@ class Context:
         self.execute_code(self._code.main_code_name())
 
     def run_from_restored_context(self):
-        if self._execution.is_empty():
+        if self._execution.is_empty:
             self.execute_code(self._code.main_code_name())
         else:
             self.execute_code(None, 0)
