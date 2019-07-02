@@ -1,6 +1,7 @@
 from core.commands import command_class, Command
 import os
 
+################################################################################
 def get_file_name_from_path(path):
     return os.path.split(path)[1]
 
@@ -61,7 +62,8 @@ class Make_path_from_this_command(Command):
     def execute(params):
         context = params.context
         eargs = params.evaluated_args
-        params.context.set_return_value(make_path_from_path(context.execution.current_code_path(), eargs.value(0)))
+        context.set_return_value(make_path_from_path(context.execution.current_code_path(),
+                                                     eargs.value(0)))
 
 ################################################################################
 # MAIN_FILE_NAME Command
@@ -98,4 +100,5 @@ class Make_path_from_main_command(Command):
     @staticmethod
     def execute(params):
         eargs = params.evaluated_args
-        params.context.set_return_value(make_path_from_path(params.code.main_code_name(), eargs.value(0)))
+        params.context.set_return_value(make_path_from_path(params.code.main_code_name(),
+                                                            eargs.value(0)))
