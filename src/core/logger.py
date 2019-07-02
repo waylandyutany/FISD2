@@ -2,14 +2,32 @@ import logging
 from logging.handlers import RotatingFileHandler
 from logging import handlers
 import sys
+from copy import copy
 from termcolor import colored
+
+################################################################################
+class ColoredFormatter(logging.Formatter):
+    level_to_color = {
+        logging.DEBUG : 'white',
+        logging.INFO : 'white',
+        logging.WARNING : 'yellow',
+        logging.ERROR : 'red',
+        logging.CRITICAL : 'red'
+    }
+
+    def __init__(self, patern):
+        logging.Formatter.__init__(self, patern)
+
+    def format(self, record):
+        colored_record = copy(record)
+        colored_record.levelname = "{}".format(colored(colored_record.levelname, ColoredFormatter.level_to_color[colored_record.levelno]))
+        #colored_record.msg
+        return logging.Formatter.format(self, colored_record)
+
 ################################################################################
 class Logger:
-    file_format = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-    file_log_handler = handlers.RotatingFileHandler("fisd2.log", maxBytes=(1 * 1024 * 1024), backupCount=1)
-
-    console_format = logging.Formatter("%(levelname)s - %(message)s")
-    console_log_handler = logging.StreamHandler(sys.stdout)
+    file_log_handler = None
+    console_log_handler = None
 
     log = logging.getLogger('fisd2_logger')
 
@@ -19,15 +37,18 @@ class Logger:
     _KEY_ERROR = 'ERR'
     _KEY_CRITICAL = 'CRITICAL'
 
-    _COLOR_DEBUG = 'white'
-    _COLOR_INFO = 'white'
-    _COLOR_WARNING = 'yellow'
-    _COLOR_ERROR = 'red'
-    _COLOR_CRITICAL = 'red'
-
     @classmethod
-    def init_logger(cls, name = 'fisd2_logger'):
-        cls.log.setLevel(logging.DEBUG)
+    def init_logger(cls, log_file_name, log_verbosity):
+        if log_file_name:
+            cls.file_log_handler = handlers.RotatingFileHandler(log_file_name, maxBytes=(1 * 1024 * 1024), backupCount=1)
+
+        cls.console_log_handler = logging.StreamHandler(sys.stdout)
+
+        log_verbosity = str(log_verbosity).upper()
+        if hasattr(logging, log_verbosity):
+            cls.log.setLevel(getattr(logging, log_verbosity))
+        else:
+            cls.log.setLevel(logging.INFO)
 
         logging.addLevelName(logging.ERROR, cls._KEY_ERROR)
         logging.addLevelName(logging.INFO, cls._KEY_INFO)
@@ -35,12 +56,14 @@ class Logger:
         logging.addLevelName(logging.WARNING, cls._KEY_WARNING)
         logging.addLevelName(logging.CRITICAL, cls._KEY_CRITICAL)
 
-        cls.console_log_handler.setFormatter(cls.console_format)
-        cls.file_log_handler.setFormatter(cls.file_format)
+        if cls.file_log_handler:
+            cls.file_log_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+            cls.log.addHandler(cls.file_log_handler)
 
-        #cls.log.addHandler(cls.console_log_handler)
-        cls.log.addHandler(cls.file_log_handler)
-
+        if cls.console_log_handler:
+            cls.console_log_handler.setFormatter(ColoredFormatter("%(levelname)s - %(message)s"))
+            cls.log.addHandler(cls.console_log_handler)
+    
 ################################################################################
     def __init__(self, log = None):
         self._criticals = 0
@@ -49,51 +72,42 @@ class Logger:
         self._log = log
         self.preface = ""
        
-    def debug(self, msg, *args, **kwargs):
-        msg = self.preface + str(msg)
+    def message(self, msg):
+        return self.preface + str(msg) 
 
-        print(colored("{} - {}".format(Logger._KEY_DEBUG, msg), Logger._COLOR_DEBUG))
-
-        if self._log:
-            self._log.debug(msg, *args, **kwargs)
-
-    def info(self, msg, *args, **kwargs):
-        msg = self.preface + str(msg)
-
-        print(colored("{} - {}".format(Logger._KEY_INFO, msg), Logger._COLOR_INFO))
-
-        if self._log:
-            self._log.info(msg, *args, **kwargs)
-
-    def warning(self, msg, *args, **kwargs):
-        msg = self.preface + str(msg)
-
-        self._warnings += 1
-
-        print(colored("{} - {}".format(Logger._KEY_WARNING, msg), Logger._COLOR_WARNING))
-
-        if self._log:
-            self._log.warning(msg, *args, **kwargs)
-
-    def error(self, msg, *args, **kwargs):
-        msg = self.preface + str(msg)
-
-        self._errors += 1
-
-        print(colored("{} - {}".format(Logger._KEY_ERROR, msg), Logger._COLOR_ERROR))
-
-        if self._log:
-            self._log.error(msg, *args, **kwargs)
+################################################################################
+    def reset_criticals(self):
+        self._criticals = 0
 
     def reset_errors(self):
         self._errors = 0
 
-    def critical(self, msg, *args, **kwargs):
-        msg = self.preface + str(msg)
+    def reset_warnings(self):
+        self._warnings = 0
 
-        self._criticals += 1
+################################################################################
+    def debug(self, msg, *args, **kwargs):
+        if self._log:
+            self._log.debug(self.message(msg), *args, **kwargs)
 
-        print(colored("{} - {}".format(Logger._KEY_CRITICAL, msg), Logger._COLOR_CRITICAL))
+    def info(self, msg, *args, **kwargs):
+        if self._log:
+            self._log.info(self.message(msg), *args, **kwargs)
+
+    def warning(self, msg, *args, **kwargs):
+        self._warnings += 1
 
         if self._log:
-            self._log.critical(msg, *args, **kwargs)
+            self._log.warning(self.message(msg), *args, **kwargs)
+
+    def error(self, msg, *args, **kwargs):
+        self._errors += 1
+
+        if self._log:
+            self._log.error(self.message(msg), *args, **kwargs)
+
+    def critical(self, msg, *args, **kwargs):
+        self._criticals += 1
+
+        if self._log:
+            self._log.critical(self.message(msg), *args, **kwargs)
