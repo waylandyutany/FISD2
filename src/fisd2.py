@@ -79,7 +79,7 @@ if __name__ == '__main__':
         parser = argparse.ArgumentParser(description="")
         parser.add_argument('--compile-to-file', action='store_true', help='')
         parser.add_argument('--log-file', default=None, type=str, help='')
-        parser.add_argument('--log-verbosity', default='info', type=str, help='')
+        parser.add_argument('--log-verbosity', default='info', type=str, choices=['debug', 'info', 'warning', 'error', 'critical'], help='')
         args = parser.parse_args()
 
         Logger.init_logger(args.log_file, args.log_verbosity)
