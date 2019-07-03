@@ -6,5 +6,9 @@ test_file_path = make_path_from_this(this_file_name()+".test")
 
 file_delete(log_file_path)
 run_fisd2(test_file_path, log_file_path)
+
 test_assert(file_count_lines(log_file_path, "FISD2 version '2.0.0'...") == 1, "'FISD2 version '2.0.0'...' in log.")
+test_assert(file_count_lines(log_file_path, "Hello world:-)") == 1, "'Hello world:-)' in log.")
+test_assert(file_count_lines(log_file_path, "CRITICAL") == 0, "No CRITICAL errors.")
+
 file_delete(log_file_path)

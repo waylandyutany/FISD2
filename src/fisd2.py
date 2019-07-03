@@ -73,32 +73,39 @@ if __name__ == '__main__':
     logger = None
 
     try:
-        fisd_search_patter = sys.argv[1]
-        del sys.argv[1]
-
         parser = argparse.ArgumentParser(description="")
         parser.add_argument('--compile-to-file', action='store_true', help='')
         parser.add_argument('--log-file', default=None, type=str, help='')
+        parser.add_argument('--fisd-file', type=str, help='')
         parser.add_argument('--log-verbosity', default='info', type=str, choices=['debug', 'info', 'warning', 'error', 'critical'], help='')
         args = parser.parse_args()
 
         Logger.init_logger(args.log_file, args.log_verbosity)
         logger = Logger(Logger.log)
 
+        logger.info("'{}'".format(str(sys.argv)))
+
         with TimeLogger("{} version '{}'...".format(core.__app_name__, core.__app_version__), 
                         "Total '{}' duration".format(core.__app_name__), logger):
 
-            for file_name in glob2.glob(fisd_search_patter):
+            files_to_process = []
+            if os.path.isfile(args.fisd_file):
+                files_to_process = [args.fisd_file]
+            else:
+                files_to_process = glob2.glob(args.fisd_file)
+
+            for file_name in files_to_process:
                 file_extension = str(os.path.splitext(file_name)[1]).lower()
                 logger.reset_errors()
 
-                if file_extension in core.__fisd_file_extensions__:
+                if file_extension in core.__binary_fisd_file_extensions__:
+                    run_from_bin_fisd_file(file_name, logger)
+                else:
                     if args.compile_to_file:
                         compile_to_file(file_name, logger)
                     else:
                         run_from_fisd_file(file_name, logger)
-                elif file_extension in core.__binary_fisd_file_extensions__:
-                    run_from_bin_fisd_file(file_name, logger)
+
 
     except Exception as e:
         #logger.critical(str(e) + " - " + str(sys.exc_info()))
