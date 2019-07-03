@@ -5,6 +5,5 @@ print fisd2_file_path
 
 proc run_fisd2(test_file_path, log_file_path)
 	fisd2_file_path = make_path_from_this("../../src/fisd2.py")
-	print fisd2_file_path
-	run(fisd2_file_path, test_file_path, "--log-file", log_file_path)
+	run('python.exe "' + fisd2_file_path + '"', '"' + test_file_path + '"', "--log-file", '"' + log_file_path + '"')
 endproc

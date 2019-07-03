@@ -1,4 +1,5 @@
 from core.commands import command_class, Command
+from subprocess import Popen, PIPE
 
 ################################################################################
 # RUN Command
@@ -9,7 +10,8 @@ class RunCommand(Command):
     def execute(cls, params):
         eargs = params.evaluated_args
         run_params = " ".join(str(eargs.value(i)) for i in range(0,len(eargs)))
-        params.logger.info("Running '{}'...".format(run_params))
+        output = Popen(run_params,stdout=PIPE)
+        response = output.communicate()
 
 ################################################################################
 # RUN_ASYNC Command
