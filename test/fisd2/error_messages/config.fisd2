@@ -11,3 +11,7 @@ endproc
 proc clean_test_fisd()
 	clean_fisd2(log_file_path)
 endproc
+
+proc count_log_lines(line_pattern)
+	return file_count_lines(log_file_path, line_pattern)
+endproc

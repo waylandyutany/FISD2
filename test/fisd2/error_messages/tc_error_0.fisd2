@@ -3,7 +3,7 @@ test_case("tc_error_0")
 
 run_test_fisd()
 
-test_assert(file_count_lines(log_file_path, "FISD2 version '2.0.0'...") == 1, "'FISD2 version '2.0.0'...' in log.")
-test_assert(file_count_lines(log_file_path, "Hello world:-)") == 1, "'Hello world:-)' in log.")
+test_assert(count_log_lines("FISD2 version '2.0.0'...") == 1, "'FISD2 version '2.0.0'...' in log.")
+test_assert(count_log_lines("Hello world:-)") == 1, "'Hello world:-)' in log.")
 
 clean_test_fisd()
