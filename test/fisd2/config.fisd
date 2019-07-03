@@ -1,9 +1,12 @@
 test_suite(this_folder_name())
 
-fisd2_file_path = make_path_from_this("../../src/fisd2.py")
-print fisd2_file_path
-
 proc run_fisd2(test_file_path, log_file_path)
+	file_delete(log_file_path)
 	fisd2_file_path = make_path_from_this("../../src/fisd2.py")
 	run('python.exe "' + fisd2_file_path + '"', '--fisd-file "' + test_file_path + '"', "--log-file", '"' + log_file_path + '"')
+endproc
+
+proc clean_fisd2(log_file_path)
+	test_assert(file_count_lines(log_file_path, "CRITICAL") == 0, "No CRITICAL errors.")
+	file_delete(log_file_path)
 endproc
