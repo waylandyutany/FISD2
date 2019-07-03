@@ -193,11 +193,22 @@ class Tokens:
     def evaluation_string(self, start_index, end_index):
         return " ".join((str(self.value(i)) for i in range(start_index + 1, end_index)))
 
+    #_str_replaces = [("\x09", "\\t"),
+    #                 ("\x07", "\\a"),
+    #                 ("\x08", "\\b"),
+    #                 ("\x0c","\\f"),
+    #                 ("\x0a", "\\n"),
+    #                 ("\x0d", "\\r"),
+    #                 ("\x0b", "\\v"),
+    #                 ("\x27", '\\"'),
+    #                 ("\x5c", "\\")]
+
     #@todo handle better error with more details in exception, test it ! :-)
     def evaluate_tokens(self, start_index, end_index):
         try:
             str_to_evaluate = self.evaluation_string(start_index, end_index)
-            e = eval(self.evaluation_string(start_index, end_index), {'__builtins__':None}, _eval_funcs)
+            str_to_evaluate = str_to_evaluate.replace("\\","\\\\") #avoiding converting escape sequences
+            e = eval(str_to_evaluate, {'__builtins__':None}, _eval_funcs)
             return e
         except BaseException as e:
             raise Exception("'{}' in '{}'".format(e, str_to_evaluate))

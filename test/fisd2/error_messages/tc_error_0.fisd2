@@ -3,6 +3,6 @@ test_case("tc_error_0")
 
 log_file_path = make_path_from_this(this_file_name()+".log")
 test_file_path = make_path_from_this(this_file_name()+".test")
-run_fisd2(test_file_path, log_file_path)
 
+run_fisd2(test_file_path, log_file_path)
 test_assert(file_count_lines(log_file_path, "ERR") == 1, 'file_count_lines(log_file_path, "ERR") == 1')
