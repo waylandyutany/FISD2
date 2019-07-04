@@ -81,6 +81,7 @@
     <Content Include="test\fisd2\error_messages\config.fisd2" />
     <Content Include="test\fisd2\error_messages\tc_error_0.fisd2" />
     <Content Include="test\fisd2\internal_commands\config.fisd2" />
+    <Content Include="test\fisd2\internal_commands\tc_run_kill_async.fisd2" />
     <Content Include="test\fisd2\internal_commands\tc_this_commands.fisd2" />
     <Content Include="test\fisd2\internal_commands\tc_wait.fisd2" />
     <Content Include="test\fisd2\language_features\config.fisd2" />

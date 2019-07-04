@@ -1,0 +1,3 @@
+execute "config"
+test_case("run_kill_async")
+
