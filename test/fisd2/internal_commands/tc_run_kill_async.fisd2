@@ -1,3 +1,7 @@
 execute "config"
 test_case("run_kill_async")
 
+pid = run_async("calc.exe")
+wait(3)
+kill_async(pid)
+

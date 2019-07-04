@@ -1,5 +1,5 @@
 from core.commands import command_class, Command
-from subprocess import Popen, PIPE
+import subprocess, psutil
 
 ################################################################################
 # RUN Command
@@ -7,11 +7,15 @@ from subprocess import Popen, PIPE
 @command_class('run')
 class RunCommand(Command):
     @classmethod
-    def execute(cls, params):
+    def get_run_params(cls, params):
         eargs = params.evaluated_args
-        run_params = " ".join(str(eargs.value(i)) for i in range(0,len(eargs)))
-        output = Popen(run_params,stdout=PIPE)
-        response = output.communicate()
+        return " ".join(str(eargs.value(i)) for i in range(0,len(eargs)))
+
+    @classmethod
+    def execute(cls, params):
+        run_params = cls.get_run_params(params)
+        process = Popen(run_params,stdout=PIPE)
+        response = process.communicate()
 
 ################################################################################
 # RUN_ASYNC Command
@@ -20,7 +24,10 @@ class RunCommand(Command):
 class Run_asyncCommand(Command):
     @classmethod
     def execute(cls, params):
-        params.logger.error("Not implemented yet!")
+        run_params = RunCommand.get_run_params(params)
+        process = subprocess.Popen(run_params, stdout=subprocess.PIPE, shell=True)
+        params.set_return(process.pid)
+        params.logger.info("Running async '{}' with pid'{}'...".format(run_params, process.pid))
 
 ################################################################################
 # KILL_ASYNC Command
@@ -29,4 +36,13 @@ class Run_asyncCommand(Command):
 class Kill_asyncCommand(Command):
     @classmethod
     def execute(cls, params):
-        params.logger.error("Not implemented yet!")
+        pid_to_kill = params.evaluated_args.value(0)
+        params.logger.info("Killing async pid'{}'".format(pid_to_kill))
+        for proc in psutil.process_iter():
+            try:
+                pinfo = proc.as_dict(attrs=['pid', 'ppid', 'name', 'username','cmdline'])
+                if "calc" in pinfo['name'].lower():
+                    params.logger.info(pinfo)
+                    proc.kill()
+            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                pass
