@@ -22,6 +22,14 @@ import internal_commands.test_commands
 import internal_commands.time_commands
 
 ################################################################################
+#@todos
+# 1. time_start, time_delay and use it for wait tc
+#
+#
+#
+#
+################################################################################
+
 def compile_to_file(fisd_file_name, logger):
     fisd_bin_file_name = fisd_file_name + ".bin"
 

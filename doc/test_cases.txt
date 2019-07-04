@@ -5,3 +5,4 @@
 5. line number when error
 6. cyclic execute
 7. same code file name and function name
+8. fisd_version and check inside log

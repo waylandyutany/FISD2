@@ -1,6 +1,6 @@
 from core.commands import command_class, Command
 from core.command_type import CallableCommand as Callable
-import datetime
+import datetime, time
 
 ################################################################################
 # WAIT_TO_SECONDS Command
@@ -47,7 +47,25 @@ class WaitCommand(Command):
     @classmethod
     def execute(cls, params):
         time_to_seconds = Time_to_secondsCommand.time_to_seconds(params)
-        params.logger.info("Waiting '{}'s...".format(time_to_seconds))
+
+        if  time_to_seconds >= 3600:
+            hours = int(time_to_seconds/3600)
+            minutes = int((time_to_seconds - (hours*3600)) / 60)
+            seconds = int(time_to_seconds - (hours*3600) - (minutes*60))
+            wait_string = "{:02d}:{:02d}:{:02d}".format(hours, minutes, seconds)
+        elif time_to_seconds >= 60:
+            minutes = int(time_to_seconds/60)
+            seconds = int(time_to_seconds - (minutes * 60))
+            wait_string = "{:02d}:{:02d}".format(minutes, seconds)
+        else:
+            wait_string = "{:02d}".format(int(time_to_seconds))
+
+        float_part = int((time_to_seconds - int(time_to_seconds))*100)
+        wait_string = wait_string + ".{:02d}".format(float_part)
+
+        params.logger.info("Waiting {}...".format(wait_string))
+        time.sleep(float(time_to_seconds))
+        params.logger.info("Continuing after {} wait.".format(wait_string))
 
 ################################################################################
 # DATE Command
