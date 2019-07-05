@@ -9,5 +9,5 @@ endproc
 
 proc clean_fisd2(log_file_path)
 	test_assert(file_count_lines(log_file_path, "*CRITICAL*") == 0, "No CRITICAL errors.")
-	file_delete(log_file_path)
+	test_assert(file_delete(log_file_path), "Deleting log file.")
 endproc

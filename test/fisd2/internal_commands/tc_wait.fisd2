@@ -2,7 +2,7 @@ execute "config"
 test_case("wait")
 
 test_assert(time_to_seconds(1, 1, 1) == 3661, "time_to_seconds(1,1,1) == 3661")
-test_assert(time_to_seconds(1, 1, 1.1) == 3661.1, "time_to_seconds(1,1,1.1) == 3661.1")
+test_assert(time_to_seconds(1, 1, 1.001) == 3661.001, "time_to_seconds(1,1,1.001) == 3661.001")
 
 test_assert(time_to_seconds(1, 1) == 61, "time_to_seconds(1,1) == 61")
 test_assert(time_to_seconds(1, 1.1) == 61.1, "time_to_seconds(1,1.1) == 61.1")
@@ -14,10 +14,10 @@ test_assert(time_to_seconds("01:01:01") == 3661, 'time_to_seconds("01:01:01") ==
 test_assert(time_to_seconds("01:01:01.01") == 3661.01, 'time_to_seconds("01:01:01.01") == 3661.01')
 
 test_assert(time_to_seconds("1:1:1") == 3661, 'time_to_seconds("1:1:1") == 3661')
-test_assert(time_to_seconds("1:1:1.01") == 3661.01, 'time_to_seconds("1:1:1.01") == 3661.01')
+test_assert(time_to_seconds("1:1:1.0001") == 3661.0001, 'time_to_seconds("1:1:1.0001") == 3661.0001')
 
 test_assert(time_to_seconds("00:00:00") == 0, 'time_to_seconds("00:00:00") == 0')
-test_assert(time_to_seconds("00:00:00.01") == 0.01, 'time_to_seconds("00:00:00.01") == 0.01')
+test_assert(time_to_seconds("00:00:00.001") == 0.001, 'time_to_seconds("00:00:00.001") == 0.001')
 
 test_assert(time_to_seconds("1:1") == 61, 'time_to_seconds("1:1") == 61')
 test_assert(time_to_seconds("1:1.1") == 61.1, 'time_to_seconds("1:1.1") == 61.1')
