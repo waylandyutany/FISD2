@@ -3,19 +3,19 @@ import os
 
 ################################################################################
 class TimeLogger:
-    def __init__(self, pre_msg, post_msg, logger):
+    def __init__(self, pre_msg, post_msg, logger_func):
         self._pre_msg = pre_msg
         self._post_msg = post_msg
 
-        self._logger = logger
+        self._logger_func = logger_func
 
     def __enter__(self):
         self._start_time = datetime.now()
-        self._logger.info("{}".format(self._pre_msg))
+        self._logger_func("{}".format(self._pre_msg))
 
     def __exit__(self, type, value, tb):
         delta_time = datetime.now() - self._start_time
-        self._logger.info("{} {}s.".format(self._post_msg, delta_time.total_seconds()))
+        self._logger_func("{} {}s.".format(self._post_msg, delta_time.total_seconds()))
 
 ################################################################################
 class PrefaceLogger:

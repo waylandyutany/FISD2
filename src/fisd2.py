@@ -37,13 +37,13 @@ def compile_to_file(fisd_file_name, logger):
     context = Context(code, logger)
 
     with TimeLogger("Compiling '{}' to '{}'...".format(fisd_file_name, fisd_bin_file_name),
-                    "Compilation duration", logger): 
+                    "Compilation duration", logger.debug): 
         code.compile_from_file(fisd_file_name, logger)
 
     if logger._errors > 0:return
 
     with TimeLogger("Storing to '{}'...".format(fisd_file_name, fisd_bin_file_name),
-                    "Storing duration", logger):
+                    "Storing duration", logger.debug):
         context.store_context(fisd_bin_file_name)
 
 ################################################################################
@@ -52,13 +52,13 @@ def run_from_fisd_file(fisd_file_name, logger):
     context = Context(code, logger)
 
     with TimeLogger("Compiling '{}'...".format(fisd_file_name),
-                    "Compilation duration", logger):
+                    "Compilation duration", logger.debug):
         code.compile_from_file(fisd_file_name, logger)
 
     if logger._errors > 0:return
 
     with TimeLogger("Running '{}'...".format(fisd_file_name), 
-                    "Running duration", logger):
+                    "Running duration", logger.debug):
         context.run()
 
 ################################################################################
@@ -67,13 +67,13 @@ def run_from_bin_fisd_file(fisd_file_name, logger):
     context = Context(code, logger)
 
     with TimeLogger("Restoring '{}'...".format(fisd_file_name), 
-                    "Restoring duration", logger):
+                    "Restoring duration", logger.debug):
         context.restore_context(fisd_file_name)
 
     if logger._errors > 0:return
 
     with TimeLogger("Running '{}'...".format(fisd_file_name), 
-                    "Running duration", logger):
+                    "Running duration", logger.debug):
         context.run_from_restored_context()
 
 ################################################################################
@@ -94,7 +94,7 @@ if __name__ == '__main__':
         logger.info("'{}'".format(str(sys.argv)))
 
         with TimeLogger("{} version '{}'...".format(core.__app_name__, core.__app_version__), 
-                        "Total '{}' duration".format(core.__app_name__), logger):
+                        "Total '{}' duration".format(core.__app_name__), logger.info):
 
             files_to_process = []
             if os.path.isfile(args.fisd_file):

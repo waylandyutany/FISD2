@@ -52,7 +52,7 @@ class Code_compilation(Code_json):
 
         if file_path in self._code:
             return file_path
-        logger.info("Compiling '{}'...".format(folder_and_file_name(file_path)))
+        logger.debug("Compiling '{}'...".format(folder_and_file_name(file_path)))
 
         self._code[file_path] = Code_lines.create()
 

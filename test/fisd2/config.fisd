@@ -4,7 +4,7 @@ fisd2_file_path = make_path_from_this("../../src/fisd2.py")
 
 proc run_fisd2(test_file_path, log_file_path)
 	file_delete(log_file_path)
-	run('python.exe "' + fisd2_file_path + '"', '--fisd-file "' + test_file_path + '"', "--log-file", '"' + log_file_path + '"')
+	run("python.exe", fisd2_file_path, "--fisd-file", test_file_path, "--log-file", log_file_path)
 endproc
 
 proc clean_fisd2(log_file_path)
