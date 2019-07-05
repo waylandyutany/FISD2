@@ -1,5 +1,5 @@
 from core.commands import command_class, Command
-import subprocess, psutil
+import subprocess, psutil, os
 
 ################################################################################
 # RUN Command
@@ -14,7 +14,7 @@ class RunCommand(Command):
     @classmethod
     def execute(cls, params):
         run_params = cls.get_run_params(params)
-        process = Popen(run_params,stdout=PIPE)
+        process = subprocess.Popen(run_params,stdout=subprocess.PIPE)
         response = process.communicate()
 
 ################################################################################
@@ -28,6 +28,7 @@ class Run_asyncCommand(Command):
         process = subprocess.Popen(run_params, stdout=subprocess.PIPE, shell=True)
         params.set_return(process.pid)
         params.logger.info("Running async '{}' with pid'{}'...".format(run_params, process.pid))
+        params.logger.info("os.getpid()'{}'...".format(os.getpid()))
 
 ################################################################################
 # KILL_ASYNC Command
