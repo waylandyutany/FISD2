@@ -1,5 +1,5 @@
 from core.commands import command_class, Command
-import os
+import os, fnmatch
 
 ################################################################################
 # FILE_COUNT_LINE Command
@@ -13,7 +13,7 @@ class File_count_linesCommand(Command):
         line_match_pattern = params.evaluated_args.value(1)
         with open(file_name) as f:
             for line in f.readlines():
-                if line_match_pattern in line:
+                if fnmatch.fnmatch(line, line_match_pattern):
                     line_counter += 1
 
         params.set_return(line_counter)

@@ -6,7 +6,7 @@ test_file_path = make_path_from_main(main_file_name()+".test")
 
 proc run_test_fisd()
 	run_fisd2(test_file_path, log_file_path)
-	test_assert(count_log_lines("FISD2 version '2.0.0'...") == 1, "'FISD2 version '2.0.0'...' in log.")
+	test_assert(count_log_lines("*FISD2 version '2.0.0'...*") == 1, "'*FISD2 version '2.0.0'...*' in log.")
 endproc
 
 proc clean_test_fisd()
