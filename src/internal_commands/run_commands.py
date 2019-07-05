@@ -9,7 +9,7 @@ class RunCommand(Command):
     @classmethod
     def get_run_params(cls, params):
         eargs = params.evaluated_args
-        return " ".join(str(eargs.value(i)) for i in range(0,len(eargs)))
+        return [str(eargs.value(i)) for i in range(0,len(eargs))]
 
     @classmethod
     def execute(cls, params):
@@ -25,9 +25,9 @@ class Run_asyncCommand(Command):
     @classmethod
     def execute(cls, params):
         run_params = RunCommand.get_run_params(params)
-        process = subprocess.Popen(run_params, stdout=subprocess.PIPE, shell=True)
-        params.set_return(process.pid)
-        params.logger.info("Running async '{}' with pid'{}'...".format(run_params, process.pid))
+        subprocess.Popen(run_params, stdout=subprocess.PIPE, shell=True)
+        params.set_return(str(run_params))
+        #params.logger.info("Running async '{}'...".format(run_params))
 
 ################################################################################
 # KILL_ASYNC Command
@@ -36,18 +36,21 @@ class Run_asyncCommand(Command):
 class Kill_asyncCommand(Command):
     @classmethod
     def execute(cls, params):
-        pid_to_kill = params.evaluated_args.value(0)
-        params.logger.info("Killing async pid'{}'".format(pid_to_kill))
-        os.kill(pid_to_kill, signal.SIGTERM)
-        params.set_return(True)
-        #for proc in psutil.process_iter():
-        #    try:
-        #        pinfo = proc.as_dict(attrs=['pid', 'ppid', 'name', 'username','cmdline'])
-        #        if pid_to_kill == pinfo['pid']:
-        #            params.logger.info(pinfo)
-        #            proc.kill()
-        #            return
-        #    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-        #        pass
+        run_params = eval(params.evaluated_args.value(0))
 
-        #params.set_return(False)
+        for proc in psutil.process_iter():
+            try:
+                pinfo = proc.as_dict(attrs=['cmdline','pid'])
+                try:
+                    if all((pinfo['cmdline'][i] == run_params[i]) for i in range(0,len(run_params))):
+                        #params.logger.info("Killing {}.".format(pinfo['pid']))
+                        proc.terminate()
+                        params.set_return(True)
+                        return
+                except:
+                    pass
+            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                pass
+
+        params.set_return(False)
+        params.logger.error("Unable to kill async process {}!".format(str(run_params)))
