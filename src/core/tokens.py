@@ -207,7 +207,6 @@ class Tokens:
     def evaluate_tokens(self, start_index, end_index):
         try:
             str_to_evaluate = self.evaluation_string(start_index, end_index)
-            str_to_evaluate = str_to_evaluate.replace("\\","\\\\") #avoiding converting escape sequences
             e = eval(str_to_evaluate, {'__builtins__':None}, _eval_funcs)
             return e
         except BaseException as e:

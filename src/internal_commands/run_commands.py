@@ -1,5 +1,5 @@
 from core.commands import command_class, Command
-import subprocess, psutil, os
+import subprocess, psutil, os, signal
 
 ################################################################################
 # RUN Command
@@ -28,7 +28,6 @@ class Run_asyncCommand(Command):
         process = subprocess.Popen(run_params, stdout=subprocess.PIPE, shell=True)
         params.set_return(process.pid)
         params.logger.info("Running async '{}' with pid'{}'...".format(run_params, process.pid))
-        params.logger.info("os.getpid()'{}'...".format(os.getpid()))
 
 ################################################################################
 # KILL_ASYNC Command
@@ -39,11 +38,16 @@ class Kill_asyncCommand(Command):
     def execute(cls, params):
         pid_to_kill = params.evaluated_args.value(0)
         params.logger.info("Killing async pid'{}'".format(pid_to_kill))
-        for proc in psutil.process_iter():
-            try:
-                pinfo = proc.as_dict(attrs=['pid', 'ppid', 'name', 'username','cmdline'])
-                if "calc" in pinfo['name'].lower():
-                    params.logger.info(pinfo)
-                    proc.kill()
-            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-                pass
+        os.kill(pid_to_kill, signal.SIGTERM)
+        params.set_return(True)
+        #for proc in psutil.process_iter():
+        #    try:
+        #        pinfo = proc.as_dict(attrs=['pid', 'ppid', 'name', 'username','cmdline'])
+        #        if pid_to_kill == pinfo['pid']:
+        #            params.logger.info(pinfo)
+        #            proc.kill()
+        #            return
+        #    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+        #        pass
+
+        #params.set_return(False)

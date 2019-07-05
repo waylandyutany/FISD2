@@ -2,6 +2,9 @@ from core.commands import command_class, Command
 import os
 
 ################################################################################
+def normalize_path(path):
+    return path.replace("\\","/")
+
 def get_file_name_from_path(path):
     return os.path.split(path)[1]
 
@@ -12,7 +15,7 @@ def get_folder_name_from_path(path):
 
 def make_path_from_path(from_path, path):
     from_path, _ = os.path.split(from_path)
-    return os.path.abspath(os.path.join(from_path, path))
+    return normalize_path(os.path.abspath(os.path.join(from_path, path)))
 
 ################################################################################
 # THIS_FOLDER_NAME Command
@@ -32,7 +35,7 @@ class This_file_path_command(Command):
     @staticmethod
     def execute(params):
         context = params.context
-        context.set_return_value(context.execution.current_code_path)
+        context.set_return_value(normalize_path(context.execution.current_code_path))
 
 ################################################################################
 # THIS_FILE_NAME Command
@@ -81,7 +84,7 @@ class Main_file_name_command(Command):
 class Main_file_path_command(Command):
     @staticmethod
     def execute(params):
-        params.context.set_return_value(params.code.main_code_name())
+        params.context.set_return_value(normalize_path(params.code.main_code_name()))
 
 ################################################################################
 # MAIN_FOLDER_NAME Command

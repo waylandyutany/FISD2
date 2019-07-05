@@ -26,5 +26,8 @@ class File_deleteCommand(Command):
     @classmethod
     def execute(cls, params):
         file_name = params.evaluated_args.value(0)
-        if os.path.isfile(file_name):
+        try:
             os.remove(file_name)
+            params.set_return(True)
+        except:
+            params.set_return(False)
