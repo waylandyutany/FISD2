@@ -58,6 +58,8 @@
     <Compile Include="src\internal_commands\__init__.py" />
     <Compile Include="src\testing\testing.py" />
     <Compile Include="src\testing\testing_commands.py" />
+    <Compile Include="src\testing\testing_report.py" />
+    <Compile Include="src\testing\testing_report_txt.py" />
     <Compile Include="src\testing\testing_stat.py" />
   </ItemGroup>
   <ItemGroup>

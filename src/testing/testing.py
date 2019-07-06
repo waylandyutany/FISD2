@@ -1,4 +1,6 @@
 from testing.testing_stat import TestingStat
+from testing.testing_report import TestingReport
+import testing.testing_report_txt
 
 ################################################################################
 class Testing:
