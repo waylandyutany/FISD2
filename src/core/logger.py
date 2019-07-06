@@ -38,6 +38,7 @@ class Logger:
 
     @classmethod
     def init_logger(cls, log_file_name, log_verbosity, test_report_file):
+        #@todo recreate dir if not exists, what maxBytes, backupCount, ...
         if log_file_name:
             cls.file_log_handler = handlers.RotatingFileHandler(log_file_name, maxBytes=(1 * 1024 * 1024), backupCount=1)
 

@@ -37,19 +37,12 @@ class Test_caseCommand(Command):
 ################################################################################
 @command_class('test_assert')
 class Test_asserCommand(Command):
-    _tag_passed = "#PASSED"
-    _tag_failed = "#FAILED"
-
     @classmethod
     def execute(cls, params):
         eargs = params.evaluated_args
-        if eargs.value(0) == True:
-            params.logger.info("{} '{}'".format(cls._tag_passed, 
-                                               eargs.value(1)))
-        else:
-            params.logger.warning("{} '{}', {}".format(cls._tag_failed, 
-                                                      eargs.eval_string(0),
-                                                      eargs.value(1)))
+        Testing.test_assert(evaluation = eargs.value(0),
+                            evaluation_string=eargs.eval_string(0),
+                            evaluation_description = eargs.value(1))
 
 ################################################################################
 # TEST_RETURN_VALUE Command
@@ -57,5 +50,5 @@ class Test_asserCommand(Command):
 @command_class('test_return_value', Callable())
 class Test_return_valueCommand(Command):
     @classmethod
-    def execute(cls, eargs):
-        eargs.set_return(eargs.evaluated_args.value(0))
+    def execute(cls, params):
+        params.set_return(params.evaluated_args.value(0))
