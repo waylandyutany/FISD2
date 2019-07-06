@@ -43,9 +43,10 @@ class Logger:
             cls.file_log_handler = handlers.RotatingFileHandler(log_file_name, maxBytes=(1 * 1024 * 1024), backupCount=1)
 
         if test_report_file:
+            test_report_file += ".log"
             try: os.remove(test_report_file)
             except: pass
-            cls.test_log_handler = handlers.RotatingFileHandler(test_report_file+".log", maxBytes=(1 * 1024 * 1024))
+            cls.test_log_handler = handlers.RotatingFileHandler(test_report_file, maxBytes=(1 * 1024 * 1024))
 
         cls.console_log_handler = logging.StreamHandler(sys.stdout)
 

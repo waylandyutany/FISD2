@@ -6,6 +6,7 @@ import os, fnmatch
 ################################################################################
 @command_class('file_count_lines')
 class File_count_linesCommand(Command):
+    #@todo need to have option for case sensitive matching 
     @classmethod
     def execute(cls, params):
         line_counter = 0
