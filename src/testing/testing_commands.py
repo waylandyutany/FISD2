@@ -1,35 +1,36 @@
 from core.commands import command_class, Command
 from core.command_type import CallableCommand as Callable
+from testing.testing import Testing
 
 ################################################################################
 # TEST_SUITE Command
 ################################################################################
 @command_class('test_suite')
 class Test_suiteCommand(Command):
-    _tag_test_suite = "#TEST_SUITE"
     @classmethod
-    def execute(cls, eargs):
-        eargs.logger.info("{} '{}'...".format(cls._tag_test_suite, eargs.evaluated_args.value(0)))
+    def execute(cls, params):
+        eargs = params.evaluated_args
+        Testing.begin_test_suite(eargs.value(0), eargs.value(1))
 
 ################################################################################
 # TEST_SET Command
 ################################################################################
 @command_class('test_set')
 class Test_setCommand(Command):
-    _tag_test_set = "#TEST_SET"
     @classmethod
-    def execute(cls, eargs):
-        eargs.logger.info("{} '{}'...".format(cls._tag_test_set, eargs.evaluated_args.value(0)))
+    def execute(cls, params):
+        eargs = params.evaluated_args
+        Testing.begin_test_set(eargs.value(0), eargs.value(1))
 
 ################################################################################
 # TEST_CASE Command
 ################################################################################
 @command_class('test_case')
 class Test_caseCommand(Command):
-    _tag_test_case = "#TEST_CASE"
     @classmethod
-    def execute(cls, eargs):
-        eargs.logger.info("{} '{}'...".format(cls._tag_test_case, eargs.evaluated_args.value(0)))
+    def execute(cls, params):
+        eargs = params.evaluated_args
+        Testing.begin_test_case(eargs.value(0), eargs.value(1))
 
 ################################################################################
 # TEST_ASSERT Command
@@ -40,14 +41,15 @@ class Test_asserCommand(Command):
     _tag_failed = "#FAILED"
 
     @classmethod
-    def execute(cls, eargs):
-        if eargs.evaluated_args.value(0) == True:
-            eargs.logger.info("{} '{}'".format(cls._tag_passed, 
-                                               eargs.evaluated_args.value(1)))
+    def execute(cls, params):
+        eargs = params.evaluated_args
+        if eargs.value(0) == True:
+            params.logger.info("{} '{}'".format(cls._tag_passed, 
+                                               eargs.value(1)))
         else:
-            eargs.logger.warning("{} '{}', {}".format(cls._tag_failed, 
-                                                      eargs.evaluated_args.eval_string(0),
-                                                      eargs.evaluated_args.value(1)))
+            params.logger.warning("{} '{}', {}".format(cls._tag_failed, 
+                                                      eargs.eval_string(0),
+                                                      eargs.value(1)))
 
 ################################################################################
 # TEST_RETURN_VALUE Command

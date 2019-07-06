@@ -7,6 +7,7 @@ from core.code_compilation import Code_compilation
 from core.commands import Commands
 from core.logger import Logger
 from core.utils import TimeLogger
+from testing.testing import Testing
 
 #importing all default command files
 import internal_commands.default_commands
@@ -18,15 +19,12 @@ import internal_commands.fisd_commands
 import internal_commands.this_commands
 import internal_commands.file_system_commands
 import internal_commands.run_commands
-import internal_commands.test_commands
+import testing.testing_commands
 import internal_commands.time_commands
 
 ################################################################################
 #@todos
 # 1. time_start, time_delay and use it for wait tc
-#
-#
-#
 #
 ################################################################################
 
@@ -82,14 +80,19 @@ if __name__ == '__main__':
 
     try:
         parser = argparse.ArgumentParser(description="")
-        parser.add_argument('--compile-to-file', action='store_true', help='')
-        parser.add_argument('--log-file', default=None, type=str, help='')
         parser.add_argument('--fisd-file', type=str, help='')
+        parser.add_argument('--compile-to-file', action='store_true', help='')
+        parser.add_argument('--test-report-file', type=str, default=None, help='')
+        parser.add_argument('--log-file', default=None, type=str, help='')
         parser.add_argument('--log-verbosity', default='info', type=str, choices=['debug', 'info', 'warning', 'error', 'critical'], help='')
         args = parser.parse_args()
 
-        Logger.init_logger(args.log_file, args.log_verbosity)
+        #Initialize logging
+        Logger.init_logger(args.log_file, args.log_verbosity, args.test_report_file)
         logger = Logger(Logger.log)
+
+        #Initialize testing
+        Testing.init(args.test_report_file, logger)
 
         logger.info("'{}'".format(str(sys.argv)))
 
@@ -114,7 +117,8 @@ if __name__ == '__main__':
                     else:
                         run_from_fisd_file(file_name, logger)
 
-
+        #Finalize testing, logging and saving reports and stats
+        Testing.finalize()
     except Exception as e:
         #logger.critical(str(e) + " - " + str(sys.exc_info()))
         exc_type, exc_value, exc_traceback = sys.exc_info()

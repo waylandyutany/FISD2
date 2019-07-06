@@ -31,14 +31,20 @@ class ColoredFormatter(logging.Formatter):
 ################################################################################
 class Logger:
     file_log_handler = None
+    test_log_handler = None
     console_log_handler = None
 
     log = logging.getLogger('fisd2_logger')
 
     @classmethod
-    def init_logger(cls, log_file_name, log_verbosity):
+    def init_logger(cls, log_file_name, log_verbosity, test_report_file):
         if log_file_name:
             cls.file_log_handler = handlers.RotatingFileHandler(log_file_name, maxBytes=(1 * 1024 * 1024), backupCount=1)
+
+        if test_report_file:
+            try: os.remove(test_report_file)
+            except: pass
+            cls.test_log_handler = handlers.RotatingFileHandler(test_report_file+".log", maxBytes=(1 * 1024 * 1024))
 
         cls.console_log_handler = logging.StreamHandler(sys.stdout)
 
@@ -57,6 +63,10 @@ class Logger:
         if cls.file_log_handler:
             cls.file_log_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
             cls.log.addHandler(cls.file_log_handler)
+
+        if cls.test_log_handler:
+            cls.test_log_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+            cls.log.addHandler(cls.test_log_handler)
 
         if cls.console_log_handler:
             cls.console_log_handler.setFormatter(ColoredFormatter("%(levelname)s - %(message)s"))
