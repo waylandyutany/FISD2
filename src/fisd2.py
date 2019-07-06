@@ -25,7 +25,7 @@ import internal_commands.time_commands
 ################################################################################
 #@todos
 # 1. time_start, time_delay and use it for wait tc
-#
+# 2. self._exit, what if call run_code again ? Assert or context restart, or what?
 ################################################################################
 
 def compile_to_file(fisd_file_name, logger):
