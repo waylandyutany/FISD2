@@ -80,7 +80,7 @@ if __name__ == '__main__':
 
     try:
         parser = argparse.ArgumentParser(description="")
-        parser.add_argument('--fisd-file', type=str, help='')
+        parser.add_argument('--fisd-file', type=str, nargs='*', action='store', help='')
         parser.add_argument('--compile-to-file', action='store_true', help='')
         parser.add_argument('--test-report-file', type=str, default=None, help='')
         parser.add_argument('--log-file', default=None, type=str, help='')
@@ -94,20 +94,23 @@ if __name__ == '__main__':
         #Initialize testing
         Testing.init(args.test_report_file, logger)
 
-        logger.info("'{}'".format(str(sys.argv)))
-
         with TimeLogger("{} version '{}'...".format(core.__app_name__, core.__app_version__), 
                         "Total '{}' duration".format(core.__app_name__), logger.info):
 
+            logger.info("'{}'".format(str(sys.argv)))
+
             files_to_process = []
-            if os.path.isfile(args.fisd_file):
-                files_to_process = [args.fisd_file]
-            else:
-                files_to_process = glob2.glob(args.fisd_file)
+            for fisd_file in args.fisd_file:
+                if os.path.isfile(fisd_file):
+                    files_to_process.append(fisd_file)
+                else:
+                    files_to_process.extend(glob2.glob(fisd_file))
 
             for file_name in files_to_process:
                 file_extension = str(os.path.splitext(file_name)[1]).lower()
                 logger.reset_errors()
+
+                logger.info("Processing '{}'...".format(file_name))
 
                 if file_extension in core.__binary_fisd_file_extensions__:
                     run_from_bin_fisd_file(file_name, logger)
