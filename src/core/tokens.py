@@ -210,8 +210,8 @@ class Tokens:
             e = eval(str_to_evaluate, {'__builtins__':None}, _eval_funcs)
             return e
         except BaseException as e:
-            return str_to_evaluate
-            #raise Exception("'{}' in '{}'".format(e, str_to_evaluate))
+            #return str_to_evaluate
+            raise Exception("'{}' in '{}'".format(e, str_to_evaluate))
 
     def evaluate(self):
         return self.evaluate_tokens(-1, len(self))
