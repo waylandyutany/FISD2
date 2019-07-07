@@ -12,15 +12,18 @@ class Testing:
 
     __stat = None
     __logger = None
+    __report_file = None
 
     @classmethod
     def init(cls, report_file, logger):
         cls.__stat = TestingStat(logger)
         cls.__logger = logger
+        cls.__report_file = report_file
 
     @classmethod
     def finalize(cls):
-        pass
+        if cls.__report_file:
+            cls.__stat.save(cls.__report_file + ".json")
 
     #@classmethod
     #def stat(cls):
