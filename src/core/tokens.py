@@ -5,15 +5,11 @@ from tokenize import NUMBER as TOKEN_NUMBER
 from tokenize import STRING as TOKEN_STRING
 from tokenize import NAME as TOKEN_NAME
 from tokenize import OP as TOKEN_OP
+from core.safe_utils import safe_eval
+
 TOKEN_KEYWORD = 0
 TOKEN_NONE = -1
 TOKEN_NATIVE = -2 # None, [],{},()
-
-################################################################################
-import math
-_eval_funcs = {'cos':math.cos,
-                'sin':math.sin,
-                }
 
 ################################################################################
 class Tokenizers:
@@ -207,7 +203,7 @@ class Tokens:
     def evaluate_tokens(self, start_index, end_index):
         try:
             str_to_evaluate = self.evaluation_string(start_index, end_index)
-            e = eval(str_to_evaluate, {'__builtins__':None}, _eval_funcs)
+            e = safe_eval(str_to_evaluate)
             return e
         except BaseException as e:
             #return str_to_evaluate

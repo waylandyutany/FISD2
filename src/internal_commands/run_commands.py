@@ -1,5 +1,6 @@
 from core.commands import command_class, Command
 import subprocess, psutil
+from core.safe_utils import safe_eval
 
 ################################################################################
 # RUN Command
@@ -45,7 +46,7 @@ class Run_asyncCommand(Command):
 class Kill_asyncCommand(Command):
     @classmethod
     def execute(cls, params):
-        run_params = eval(params.evaluated_args.value(0))
+        run_params = safe_eval(params.evaluated_args.value(0))
         RunCommand.log_run_params(params.logger.info, "Kill async : ", run_params)
 
         for proc in psutil.process_iter():

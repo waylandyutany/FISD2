@@ -1,5 +1,6 @@
 from core.commands import command_class, Command
-import os, fnmatch
+import fnmatch
+from core.safe_utils import safe_file_delete
 
 ################################################################################
 # FILE_COUNT_LINE Command
@@ -26,9 +27,5 @@ class File_count_linesCommand(Command):
 class File_deleteCommand(Command):
     @classmethod
     def execute(cls, params):
-        file_name = params.evaluated_args.value(0)
-        try:
-            os.remove(file_name)
-            params.set_return(True)
-        except:
-            params.set_return(False)
+        file_path = params.evaluated_args.value(0)
+        params.set_return(safe_file_delete(file_path))

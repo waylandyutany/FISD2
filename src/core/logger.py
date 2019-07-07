@@ -4,6 +4,7 @@ from logging import handlers
 import sys, os
 from copy import copy
 from termcolor import colored
+from core.safe_utils import safe_file_delete
 
 ################################################################################
 #enable coloring on windows
@@ -44,8 +45,7 @@ class Logger:
 
         if test_report_file:
             test_report_file += ".log"
-            try: os.remove(test_report_file)
-            except: pass
+            safe_file_delete(test_report_file)
             cls.test_log_handler = handlers.RotatingFileHandler(test_report_file, maxBytes=(1 * 1024 * 1024))
 
         cls.console_log_handler = logging.StreamHandler(sys.stdout)

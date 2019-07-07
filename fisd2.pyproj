@@ -40,6 +40,7 @@
     <Compile Include="src\core\logger.py" />
     <Compile Include="src\core\parse_params.py" />
     <Compile Include="src\core\raw_arguments.py" />
+    <Compile Include="src\core\safe_utils.py" />
     <Compile Include="src\core\tokens.py" />
     <Compile Include="src\core\utils.py" />
     <Compile Include="src\core\variable_stack.py" />
