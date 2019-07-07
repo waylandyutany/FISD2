@@ -16,3 +16,6 @@ class TestingStat:
 
     def begin_test_case(self, name, description):
         pass
+
+    def check_assert(self, place, evaluation, evaluation_string, evaluation_description):
+        pass

@@ -43,6 +43,8 @@ class Testing:
 
     @classmethod
     def test_assert(cls, evaluation, evaluation_string, evaluation_description):
+        cls.__stat.check_assert(cls.__logger.preface, evaluation, evaluation_string, evaluation_description)
+
         if evaluation == True:
             cls.__logger.info("{} '{}'".format(cls._tag_passed, 
                                                evaluation_description))
