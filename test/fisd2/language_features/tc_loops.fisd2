@@ -1,10 +1,10 @@
 execute "config"
-test_case("loops")
+test_case("TC100","loops")
 test_assert(cos(0) == cos(0))
 test_assert(cos(0) != cos(0))
 
 ################################################################################
-test_case("for i from -1 to 2")
+test_case("TC101", "for i from -1 to 2")
 loop_counter = 0
 for i from -1 to 2
 	for j from -1 to 2
@@ -16,7 +16,7 @@ test_assert(j == 2, "j == 2")
 test_assert(loop_counter == 9, "loop_counter == 9")
 
 ################################################################################
-test_case("for i from -1 to 2 step 2")
+test_case("TC102", "for i from -1 to 2 step 2")
 loop_counter = 0
 for i from -1 to 2 step 2
 	for j from -1 to 2 step 2

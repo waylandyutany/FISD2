@@ -2,6 +2,7 @@ from testing.testing_stat import TestingStat
 from testing.testing_report import TestingReport
 import testing.testing_report_txt
 
+#@todo warning if same test case begin
 ################################################################################
 class Testing:
     _tag_test_suite = "#TEST_SUITE"
