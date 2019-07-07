@@ -8,6 +8,7 @@ from core.commands import Commands
 from core.logger import Logger
 from core.utils import TimeLogger
 from testing.testing import Testing
+from core.safe_utils import safe_log_params
 
 #importing all default command files
 import internal_commands.default_commands
@@ -97,7 +98,7 @@ if __name__ == '__main__':
         with TimeLogger("{} version '{}'...".format(core.__app_name__, core.__app_version__), 
                         "Total '{}' duration".format(core.__app_name__), logger.info):
 
-            logger.info("'{}'".format(str(sys.argv)))
+            safe_log_params(logger.info, "Command line : ", sys.argv)
 
             files_to_process = []
             for fisd_file in args.fisd_file:

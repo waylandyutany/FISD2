@@ -20,3 +20,8 @@ def safe_file_delete(path):
     return False
 
 ################################################################################
+def safe_log_params(logger_func, message, params):
+    if len(params) > 0:
+        logger_func(message + "'{}'".format(params[0]))
+        for i in range(1, len(params)):
+            logger_func((" " * len(message)) + "'{}'".format(params[i]))
