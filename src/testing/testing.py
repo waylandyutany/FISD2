@@ -1,4 +1,4 @@
-from testing.testing_stat import TestingStat
+from testing.testing_stat import TestingStat, TestingStatEnumerator
 from testing.testing_report import TestingReport
 import testing.testing_report_txt
 
@@ -22,7 +22,23 @@ class Testing:
         cls.__report_file = report_file
 
     @classmethod
+    def log_stat(cls):
+        tse = TestingStatEnumerator()
+        cls.__stat.enumerate(tse)
+        cls.__logger.info("Testing statistics :".format())
+        cls.__logger.info("Total Test Suites({}), Sets({}), Cases({}), Failed cases({})".format(tse.test_suites,
+                                                                                                tse.test_sets, 
+                                                                                                tse.test_cases,
+                                                                                                tse.failed_test_cases))
+        cls.__logger.info("Total Assertions({}), Failed Assertions({}), Passed Assertions({})".format(tse.failed_assertions + tse.passed_assertions,
+                                                                                                      tse.failed_assertions,
+                                                                                                      tse.passed_assertions))
+#        cls.__logger.info("".format())
+
+    @classmethod
     def finalize(cls):
+        cls.log_stat()
+
         if cls.__report_file:
             cls.__stat.save(cls.__report_file + ".json")
 

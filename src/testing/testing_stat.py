@@ -1,6 +1,28 @@
 import json
 
 ################################################################################
+class TestingStatEnumerator:
+    def __init__(self):
+        self.test_suites = 0
+        self.test_sets = 0
+        self.test_cases = 0
+        self.failed_test_cases = 0
+        self.failed_assertions = 0
+        self.passed_assertions = 0
+
+    def on_test_suite(self, name, description):
+        self.test_suites += 1
+
+    def on_test_set(self, name, description):
+        self.test_sets += 1
+
+    def on_test_case(self, name, description, passed_assertions, failed_assertions):
+        self.test_cases += 1
+        self.failed_test_cases += 1 if failed_assertions > 0 else 0
+        self.failed_assertions += failed_assertions
+        self.passed_assertions += passed_assertions
+
+################################################################################
 class TestingStat:
     _key_test_suites = 'test_suites'
     _key_test_sets = 'test_sets'
@@ -11,7 +33,7 @@ class TestingStat:
 
     def __init__(self, logger):
         self.__logger = logger
-        self.__suite_name = 'default_suite'
+        self.__suite_name = 'default_suite' #@todo or None instead ?
         self.__set_name = 'default_set'
         self.__tc_name = 'default_tc'
         self.__stat = {TestingStat._key_test_suites:{}}
@@ -20,6 +42,20 @@ class TestingStat:
         j = json.dumps(self.__stat, indent=2)
         with open(file_path, 'w') as f:
             f.write(j)
+
+    def enumerate(self, testing_stat_enumerator):
+        test_suites = self.__stat[TestingStat._key_test_suites]
+        for suite_name in test_suites:
+            testing_stat_enumerator.on_test_suite(suite_name, None)
+
+            test_sets = test_suites[suite_name][TestingStat._key_test_sets]
+            for set_name in test_sets:
+                testing_stat_enumerator.on_test_set(set_name, None)
+
+                test_cases = test_sets[set_name][TestingStat._key_test_cases]
+                for tc_name in test_cases:
+                    test_case = test_cases[tc_name]
+                    testing_stat_enumerator.on_test_case(tc_name, None, test_case[TestingStat._key_passed], test_case[TestingStat._key_failed])
 
 ################################################################################
     @property
