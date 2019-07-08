@@ -1,0 +1,23 @@
+execute "config"
+test_case("Recursion","Recursion")
+
+proc rec_count_down(i)
+#	print "rec_count_down " i
+	if i == 0 then
+		return 0
+	endif
+	return rec_count_down(i - 1) + i
+endproc
+
+test_assert(rec_count_down(10) == 55, "rec_count_down(10) == 55")
+
+proc rec_count_down2(i)
+#	print "rec_count_down2 " i
+	if i == 0 then
+		return 0
+	endif
+	j = i - 1
+	return rec_count_down(j) + i
+endproc
+
+test_assert(rec_count_down2(10) == 55, "rec_count_down2(10) == 55")
