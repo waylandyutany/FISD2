@@ -106,6 +106,7 @@ if __name__ == '__main__':
                     files_to_process.append(fisd_file)
                 else:
                     files_to_process.extend(glob2.glob(fisd_file))
+            files_to_process = sorted(files_to_process)
 
             for file_name in files_to_process:
                 file_extension = str(os.path.splitext(file_name)[1]).lower()
