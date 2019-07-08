@@ -1,28 +1,76 @@
-PROC test_for()
+execute "config"
+test_case("if_elif_else","if_elif_else")
+
+count_0 = 0
+count_1 = 0
+count_2 = 0
+count_3 = 0
+count_4 = 0
+count_5 = 0
+count_6 = 0
+count_7 = 0
+count_8 = 0
+count_9 = 0
+count_even = 0
+count_odd = 0
+count_odd_greater_equal_5 = 0
+count_div_3_greater_0 = 0
+
 FOR I FROM 0 TO 10
-    if $I%2==0 then
-        print $I, "je parne"
+    if I%2==0 then
+		count_even++
+        if $i == 0 then
+			count_0++
+		elif $i == 2 then
+			count_2++
+        endif
         if $i == 4 then
-            print "Styri"
+			count_4++
 		elif $i == 6 then
-			print "Sest"
+			count_6++
         endif
         if $i == 8 then
-            print "Osem"
+			count_8++
         endif
     else
-        print $I, "je neparne"
-        if $I >= 5 then
-            print ">= Pat"
+		count_odd++
+        if $i == 1 then
+			count_1++
+		elif $i == 3 then
+			count_3++
         endif
-        if $I == 7 then
-            print "Sedem"
+        if $i == 5 then
+			count_5++
+		elif $i == 7 then
+			count_7++
+        endif
+        if $i == 9 then
+			count_9++
+        endif
+        if $I >= 5 then
+            count_odd_greater_equal_5++
         endif
     endif
     if $I > 0 and $I%3==0 then
-        print $I, "je delitelne troma"
+        count_div_3_greater_0++
     endif
-	#return
 next I
-endproc
-test_for()
+
+test_assert(count_even == 5, "0..9 has 5 even numbers.")
+test_assert(count_odd == 5, "0..9 has 5 odd numbers.")
+test_assert(count_odd_greater_equal_5 == 3, "5..9 has 3 odd numbers >= 5.")
+test_assert(count_div_3_greater_0 == 3, "1..9 has 3 numbers divided by 3.")
+
+test_assert(count_0 == 1, "0..9 has exactly one 0.")
+test_assert(count_2 == 1, "0..9 has exactly one 2.")
+test_assert(count_4 == 1, "0..9 has exactly one 4.")
+test_assert(count_6 == 1, "0..9 has exactly one 6.")
+test_assert(count_8 == 1, "0..9 has exactly one 8.")
+
+test_assert(count_1 == 1, "0..9 has exactly one 1.")
+test_assert(count_3 == 1, "0..9 has exactly one 3.")
+test_assert(count_5 == 1, "0..9 has exactly one 5.")
+test_assert(count_7 == 1, "0..9 has exactly one 7.")
+test_assert(count_9 == 1, "0..9 has exactly one 9.")
+
+
