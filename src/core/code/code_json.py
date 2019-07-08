@@ -1,6 +1,6 @@
-from core.code import Code
+from core.code.code import Code
+from core.code.code_line import Code_line
 from core.commands import Commands
-from core.code_line import Code_line
 from copy import deepcopy
 from core.tokens import Tokens
 

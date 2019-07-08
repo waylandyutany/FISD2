@@ -3,7 +3,7 @@ import core.core as core
 
 from core.context import Context
 from core.tokens import Tokenizers
-from core.code_compilation import Code_compilation
+from core.code.code_compilation import Code_compilation
 from core.commands import Commands
 from core.logger import Logger
 from core.utils import TimeLogger

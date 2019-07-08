@@ -1,4 +1,4 @@
-from core.code import Code
+from core.code.code import Code
 from core.code_line import Code_line
 from core.utils import PrefaceLogger
 from core.variable_stack import Variable_stack

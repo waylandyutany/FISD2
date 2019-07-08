@@ -1,9 +1,10 @@
-from core.code_json import Code_json
+from core.code.code_json import Code_json
+from core.code.code_line import Code_line
+from core.code.code_lines import Code_lines
+
 from core.tokens import Tokenizers, Tokens
 from core.commands import Commands
 from core.compile_errors import CompileError
-from core.code_line import Code_line
-from core.code_lines import Code_lines
 from core.utils import PrefaceLogger, folder_and_file_name
 from core.parse_params import ParseParams, Code_lines_insertion, Code_labels
 import core.core as core

@@ -1,5 +1,5 @@
-from core.code_line import Code_line
-from core.code import Code
+from core.code.code_line import Code_line
+from core.code.code import Code
 
 class Code_lines:
     @staticmethod

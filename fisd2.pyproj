@@ -22,11 +22,13 @@
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="src\core\code.py" />
-    <Compile Include="src\core\code_compilation.py" />
-    <Compile Include="src\core\code_json.py" />
+    <Compile Include="src\core\code\code.py" />
+    <Compile Include="src\core\code\code_compilation.py" />
+    <Compile Include="src\core\code\code_json.py" />
+    <Compile Include="src\core\code\code_line.py" />
+    <Compile Include="src\core\code\code_lines.py" />
+    <Compile Include="src\core\code\__init__.py" />
     <Compile Include="src\core\code_line.py" />
-    <Compile Include="src\core\code_lines.py" />
     <Compile Include="src\core\commands.py" />
     <Compile Include="src\core\command_type.py" />
     <Compile Include="src\core\compile_errors.py" />
@@ -65,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="doc\" />
+    <Folder Include="src\core\code\" />
     <Folder Include="src\internal_commands\" />
     <Folder Include="src\testing\" />
     <Folder Include="test\" />
