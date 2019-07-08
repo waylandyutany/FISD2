@@ -1,4 +1,4 @@
-from core.code_line import Code_line
+from core.code.code_line import Code_line
 from core.tokens import Tokens
 from core.commands import command_class, Command, Commands
 

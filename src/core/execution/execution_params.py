@@ -1,5 +1,5 @@
-from core.execution_stack import Execution_stack
-from core.code_line import Code_line
+from core.execution.execution_stack import Execution_stack
+from core.code.code_line import Code_line
 from core.evaluated_arguments import EvaluatedArguments
 from core.raw_arguments import RawArguments
 

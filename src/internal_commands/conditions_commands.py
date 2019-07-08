@@ -1,6 +1,6 @@
 from core.commands import command_class, Command
 from internal_commands.default_commands import JumpCommand
-from core.code_line import Code_line
+from core.code.code_line import Code_line
 
 ################################################################################
 # IF Command

@@ -1,5 +1,5 @@
 from copy import deepcopy
-from core.code_line import Code_line
+from core.code.code_line import Code_line
 import os
 
 ################################################################################

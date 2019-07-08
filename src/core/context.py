@@ -1,11 +1,12 @@
 from core.code.code import Code
-from core.code_line import Code_line
-from core.utils import PrefaceLogger
-from core.variable_stack import Variable_stack
-from core.execution import Execution
-from core.execution_stack import Execution_stack
-from core.execution_params import ExecutionParams
+from core.code.code_line import Code_line
+from core.execution.variable_stack import Variable_stack
+from core.execution.execution import Execution
+from core.execution.execution_stack import Execution_stack
+from core.execution.execution_params import ExecutionParams
+
 from core.safe_utils import safe_path
+from core.utils import PrefaceLogger
 
 import core.core as core
 import json
