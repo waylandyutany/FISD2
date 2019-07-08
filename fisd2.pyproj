@@ -38,6 +38,7 @@
     <Compile Include="src\core\execution\execution_context.py" />
     <Compile Include="src\core\execution\execution_params.py" />
     <Compile Include="src\core\execution\execution_stack.py" />
+    <Compile Include="src\core\execution\system_variables.py" />
     <Compile Include="src\core\execution\variable_stack.py" />
     <Compile Include="src\core\execution\__init__.py" />
     <Compile Include="src\core\logger.py" />
@@ -101,7 +102,7 @@
     <Content Include="test\tc_execute.fisd2" />
     <Content Include="test\tc_for_if_proc.fisd2" />
     <Content Include="test\tc_proc_calls.fisd2" />
-    <Content Include="test\tc_restore_context.fisd2" />
+    <Content Include="test\fisd2\language_features\tc_restore_context.fisd2" />
     <Content Include="test\tc_var_stack.fisd2" />
     <Content Include="test\tc_recursion.fisd2" />
     <Content Include="test\test_var_stack_executed.fisd2" />

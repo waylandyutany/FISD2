@@ -100,26 +100,26 @@ class TestingStat:
         tc_node[cls._key_failed] += failed
 
 ################################################################################
-    def begin_test_suite(self, name, description):
+    def begin_test_suite(self, system_var, name, description):
         self.__suite_name = name
         node = self.__get_node(name)
         if description:
             node[TestingStat._key_description] = description
 
-    def begin_test_set(self, name, description):
+    def begin_test_set(self, system_var, name, description):
         self.__set_name = name
         node = self.__get_node(self.__suite_name, name)
         if description:
             node[TestingStat._key_description] = description
 
-    def begin_test_case(self, name, description):
+    def begin_test_case(self, system_var, name, description):
         self.__tc_name = name
         node = self.__get_node(self.__suite_name, self.__set_name, name)
         if description:
             node[TestingStat._key_description] = description
         TestingStat.__reset_tc_node(node)
         
-    def check_assert(self, place, evaluation, evaluation_string, evaluation_description):
+    def check_assert(self, system_var, place, evaluation, evaluation_string, evaluation_description):
         node = self.__get_node(self.__suite_name, self.__set_name, self.__tc_name)
         passed = 1 if (evaluation == True) else 0
         failed = 1 if (evaluation == False) else 0

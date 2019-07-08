@@ -1,0 +1,18 @@
+execute "config"
+test_case("TC1000", "restore_context")
+
+kraken = "kraken_str"
+test_assert(kraken == "kraken_str", 'kraken == "kraken_str"')
+
+proc test_restore_context()
+	var = "var_str"
+	test_assert(var == "var_str", 'var == "var_str"')
+	fisd_store_context()
+	exit
+	fisd_restore_context()
+	test_assert(var == "var_str", 'var == "var_str"')
+endproc
+
+test_restore_context()
+
+test_assert(kraken == "kraken_str", 'kraken == "kraken_str"')

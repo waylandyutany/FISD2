@@ -1,6 +1,7 @@
 from core.code.code import Code
 from core.code.code_line import Code_line
 from core.execution.variable_stack import Variable_stack
+from core.execution.system_variables import SystemVariables
 from core.execution.execution import Execution
 from core.execution.execution_stack import Execution_stack
 from core.execution.execution_params import ExecutionParams
@@ -24,19 +25,26 @@ class Context:
 
         self._variable_stack = Variable_stack(core.__variable_case_sensitive__)
         self._execution = Execution(self._code, self._variable_stack)
+        self._system_variables = SystemVariables()
 
 ################################################################################
     @property
     def execution(self):
         return self._execution
 
+    @property
+    def system_variables(self):
+        return self._system_variables
+
 ################################################################################
     def to_json_dict(self):
         return {'execution_stack':self._execution.to_json_dict(),
                 'variable_stack':self._variable_stack.to_json_dict(),
+                'system_variables':self._system_variables.to_json_dict(),
                 'return':self._return}
 
     def from_json_dict(self, json_dict):
+        self._system_variables.from_json_dict(json_dict['system_variables'])
         self._execution.from_json_dict(json_dict['execution_stack'])
         self._variable_stack.from_json_dict(json_dict['variable_stack'])
         self._return = json_dict['return']

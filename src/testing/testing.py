@@ -47,23 +47,33 @@ class Testing:
     #    return cls.__stat
 
     @classmethod
-    def begin_test_suite(cls, name, description):
+    def begin_test_suite(cls, system_var, name, description):
         cls.__logger.info("{} '{}'...".format(cls._tag_test_suite, name))
-        cls.__stat.begin_test_suite(name, description)
+        cls.__stat.begin_test_suite(system_var, 
+                                    name, 
+                                    description)
 
     @classmethod
-    def begin_test_set(cls, name, description):
+    def begin_test_set(cls, system_var, name, description):
         cls.__logger.info("{} '{}'...".format(cls._tag_test_set, name))
-        cls.__stat.begin_test_set(name, description)
+        cls.__stat.begin_test_set(system_var, 
+                                  name, 
+                                  description)
 
     @classmethod
-    def begin_test_case(cls, name, description):
+    def begin_test_case(cls, system_var, name, description):
         cls.__logger.info("{} '{}'...".format(cls._tag_test_case, name))
-        cls.__stat.begin_test_case(name, description)
+        cls.__stat.begin_test_case(system_var, 
+                                   name, 
+                                   description)
 
     @classmethod
-    def test_assert(cls, evaluation, evaluation_string, evaluation_description):
-        cls.__stat.check_assert(cls.__logger.preface, evaluation, evaluation_string, evaluation_description)
+    def test_assert(cls, system_var, evaluation, evaluation_string, evaluation_description):
+        cls.__stat.check_assert(system_var,
+                                cls.__logger.preface, 
+                                evaluation, 
+                                evaluation_string, 
+                                evaluation_description)
 
         if evaluation == True:
             cls.__logger.info("{} '{}'".format(cls._tag_passed, 
