@@ -74,7 +74,7 @@ class TestingStat:
         test_sets = test_suites[suite_name][TestingStat._key_test_sets]
 
         if set_name == None:
-            return test_sets
+            return test_suites[suite_name]
 
         if set_name not in test_sets:
             test_sets[set_name] = {TestingStat._key_test_cases:{}}
@@ -82,7 +82,7 @@ class TestingStat:
         test_cases = test_sets[set_name][TestingStat._key_test_cases]
 
         if tc_name == None:
-            return test_cases
+            return test_sets[set_name]
 
         if tc_name not in test_cases:
             test_cases[tc_name] = {}
@@ -104,13 +104,13 @@ class TestingStat:
     def begin_test_suite(self, system_var, name, description):
         system_var.set(TestingStat._key_test_suite, name)
         node = self.__get_node(name)
-        #node[TestingStat._key_description] = description
+        node[TestingStat._key_description] = description
 
     def begin_test_set(self, system_var, name, description):
         system_var.set(TestingStat._key_test_set, name)
         node = self.__get_node(system_var.get(TestingStat._key_test_suite, TestingStat._key_default),
                                name)
-        #node[TestingStat._key_description] = description
+        node[TestingStat._key_description] = description
 
     def begin_test_case(self, system_var, name, description):
         system_var.set(TestingStat._key_test_case, name)
