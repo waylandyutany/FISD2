@@ -4,7 +4,7 @@ from logging import handlers
 import sys, os
 from copy import copy
 from termcolor import colored
-from core.safe_utils import safe_file_delete
+from core.safe_utils import safe_file_delete, safe_path
 
 ################################################################################
 #enable coloring on windows
@@ -41,12 +41,15 @@ class Logger:
     def init_logger(cls, log_file_name, log_verbosity, test_report_file):
         #@todo recreate dir if not exists, what maxBytes, backupCount, ...
         if log_file_name:
-            cls.file_log_handler = handlers.RotatingFileHandler(log_file_name, maxBytes=(1 * 1024 * 1024), backupCount=1)
+            cls.file_log_handler = handlers.RotatingFileHandler(safe_path(log_file_name),
+                                                                maxBytes=(1 * 1024 * 1024),
+                                                                backupCount=1)
 
         if test_report_file:
             test_report_file += ".log"
             safe_file_delete(test_report_file)
-            cls.test_log_handler = handlers.RotatingFileHandler(test_report_file, maxBytes=(1 * 1024 * 1024))
+            cls.test_log_handler = handlers.RotatingFileHandler(safe_path(test_report_file),
+                                                                maxBytes=(1 * 1024 * 1024))
 
         cls.console_log_handler = logging.StreamHandler(sys.stdout)
 

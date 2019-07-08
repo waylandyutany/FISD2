@@ -1,4 +1,5 @@
 import json
+from core.safe_utils import safe_path
 
 ################################################################################
 class TestingStatEnumerator:
@@ -40,7 +41,7 @@ class TestingStat:
 
     def save(self, file_path):
         j = json.dumps(self.__stat, indent=2)
-        with open(file_path, 'w') as f:
+        with open(safe_path(file_path), 'w') as f:
             f.write(j)
 
     def enumerate(self, testing_stat_enumerator):

@@ -5,6 +5,7 @@ from core.variable_stack import Variable_stack
 from core.execution import Execution
 from core.execution_stack import Execution_stack
 from core.execution_params import ExecutionParams
+from core.safe_utils import safe_path
 
 import core.core as core
 import json
@@ -113,7 +114,7 @@ If file_name is None, file_name is taken from code, '.bin' extension is added an
                      'context':self.to_json_dict()}
 
         j = json.dumps(json_dict, indent=2)
-        with open(file_name, 'w') as f:
+        with open(safe_path(file_name), 'w') as f:
             f.write(j)
 
     def restore_context(self, file_name):

@@ -20,6 +20,14 @@ def safe_file_delete(path):
     return False
 
 ################################################################################
+def safe_path(path):
+    try:
+        os.makedirs(os.path.dirname(path))
+    except FileExistsError:
+        pass
+    return path
+
+################################################################################
 def safe_log_params(logger_func, message, params):
     if len(params) > 0:
         logger_func(message + "'{}'".format(params[0]))
