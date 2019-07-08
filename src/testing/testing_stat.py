@@ -35,6 +35,10 @@ class TestingStat:
     _key_test_set = 'test_set'
     _key_test_case = 'test_case'
     _key_default = 'default'
+    _key_failures = 'failures'
+    _key_where = 'where'
+    _key_why = 'why'
+    _key_what = 'what'
 
     def __init__(self, logger):
         self.__logger = logger
@@ -100,6 +104,14 @@ class TestingStat:
         tc_node[cls._key_passed] += passed
         tc_node[cls._key_failed] += failed
 
+    @classmethod
+    def __add_failure(cls, tc_node, place, evaluation_string, evaluation_description):
+        if cls._key_failures not in tc_node:
+            tc_node[cls._key_failures] = []
+        tc_node[cls._key_failures].append({ cls._key_where:place,
+                                            cls._key_why : evaluation_string,
+                                            cls._key_what : evaluation_description })
+
 ################################################################################
     def begin_test_suite(self, system_var, name, description):
         system_var.set(TestingStat._key_test_suite, name)
@@ -127,3 +139,6 @@ class TestingStat:
         passed = 1 if (evaluation == True) else 0
         failed = 1 if (evaluation == False) else 0
         TestingStat.__increment_tc_node(node, passed, failed)
+
+        if (evaluation == False):
+            TestingStat.__add_failure(node, place, evaluation_string, evaluation_description)
