@@ -16,7 +16,8 @@ class RunCommand(Command):
     def execute(cls, params):
         run_params = cls.get_run_params(params)
         safe_log_params(params.logger.info, "Run : ", run_params)
-        process = subprocess.Popen(run_params)
+        #stdout=subprocess.PIPE disable flooding my output with new process output
+        process = subprocess.Popen(run_params, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         response = process.communicate()
 
 ################################################################################
@@ -28,7 +29,8 @@ class Run_asyncCommand(Command):
     def execute(cls, params):
         run_params = RunCommand.get_run_params(params)
         safe_log_params(params.logger.info, "Run async : ", run_params)
-        subprocess.Popen(run_params)
+        #stdout=subprocess.PIPE disable flooding my output with new process output
+        subprocess.Popen(run_params, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         params.set_return(str(run_params))
         #params.logger.info("Running async '{}'...".format(run_params))
 
