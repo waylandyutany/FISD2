@@ -1,4 +1,5 @@
-from testing.testing_stat import TestingStat, TestingStatEnumerator
+from testing.testing_stat import TestingStat
+from testing.testing_stat_enumerator import TestingStatEnumerator
 from testing.testing_report import TestingReport
 import testing.testing_report_txt
 import os

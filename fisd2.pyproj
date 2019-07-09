@@ -65,6 +65,7 @@
     <Compile Include="src\testing\testing_report.py" />
     <Compile Include="src\testing\testing_report_txt.py" />
     <Compile Include="src\testing\testing_stat.py" />
+    <Compile Include="src\testing\testing_stat_enumerator.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="doc\" />
