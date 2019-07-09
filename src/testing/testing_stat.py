@@ -11,18 +11,47 @@ class TestingStatEnumerator:
         self.failed_assertions = 0
         self.passed_assertions = 0
 
-    def on_test_suite(self, name, description):
+    def on_test_suite(self, test_suite_info):
         self.test_suites += 1
 
-    def on_test_set(self, name, description):
+    def on_test_set(self, test_set_info):
         self.test_sets += 1
 
-    def on_test_case(self, name, description, passed_assertions, failed_assertions):
+    def on_test_case(self, test_case_info):
         self.test_cases += 1
-        self.failed_test_cases += 1 if failed_assertions > 0 else 0
-        self.failed_assertions += failed_assertions
-        self.passed_assertions += passed_assertions
+        self.failed_test_cases += 1 if test_case_info.failed_assertions > 0 else 0
+        self.failed_assertions += test_case_info.failed_assertions
+        self.passed_assertions += test_case_info.passed_assertions
 
+################################################################################
+class TestSuiteInfo:
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
+
+class TestSetInfo:
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
+
+class TestCaseInfo:
+    def __init__(self, name, tc_node):
+        self.name = name
+        self.description = tc_node[TestingStat._key_description]
+        self.passed_assertions = tc_node[TestingStat._key_passed]
+        self.failed_assertions = tc_node[TestingStat._key_failed]
+        self.failures = []
+        if TestingStat._key_failures in tc_node:
+            for failure in tc_node[TestingStat._key_failures]:
+                self.failures.append(FailureInfo(failure[TestingStat._key_what],
+                                                 failure[TestingStat._key_why],
+                                                 failure[TestingStat._key_where]))
+
+class FailureInfo:
+    def __init__(self, what, why, where):
+        self.what = what
+        self.why = why
+        self.where = where
 ################################################################################
 class TestingStat:
     _key_test_suites = 'test_suites'
@@ -52,16 +81,18 @@ class TestingStat:
     def enumerate(self, testing_stat_enumerator):
         test_suites = self.__stat[TestingStat._key_test_suites]
         for suite_name in test_suites:
-            testing_stat_enumerator.on_test_suite(suite_name, None)
+            testing_stat_enumerator.on_test_suite(TestSuiteInfo(suite_name,
+                                                                test_suites[suite_name][TestingStat._key_description]))
 
             test_sets = test_suites[suite_name][TestingStat._key_test_sets]
             for set_name in test_sets:
-                testing_stat_enumerator.on_test_set(set_name, None)
+                testing_stat_enumerator.on_test_set(TestSetInfo(set_name,
+                                                                test_sets[set_name][TestingStat._key_description]))
 
                 test_cases = test_sets[set_name][TestingStat._key_test_cases]
                 for tc_name in test_cases:
                     test_case = test_cases[tc_name]
-                    testing_stat_enumerator.on_test_case(tc_name, None, test_case[TestingStat._key_passed], test_case[TestingStat._key_failed])
+                    testing_stat_enumerator.on_test_case(TestCaseInfo(tc_name, test_case))
 
 ################################################################################
     @property

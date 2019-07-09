@@ -7,16 +7,13 @@ class TestingReport_TXT(TestingReport):
         super().__init__(*args, **kwargs)
         self.test_stat.enumerate(self)
 
-    def on_test_suite(self, name, description):
-        print("on_test_suite")
-        pass
+    def on_test_suite(self, test_suite_info):
+        print("on_test_suite : ", test_suite_info.name)
 
-    def on_test_set(self, name, description):
-        print("on_test_set")
-        pass
+    def on_test_set(self, test_set_info):
+        print("on_test_set : ", test_set_info.name)
 
-    def on_test_case(self, name, description, passed_assertions, failed_assertions):
-        print("on_test_case")
-        pass
+    def on_test_case(self, test_case_info):
+        print("on_test_case : ", test_case_info.name)
 
 
