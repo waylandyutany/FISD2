@@ -24,8 +24,8 @@ class Context:
         self._logger = logger
 
         self._variable_stack = Variable_stack(core.__variable_case_sensitive__)
+        self._system_variables = SystemVariables(core.__variable_case_sensitive__)
         self._execution = Execution(self._code, self._variable_stack)
-        self._system_variables = SystemVariables()
 
 ################################################################################
     @property
