@@ -21,10 +21,13 @@ class Testing:
         cls.__stat = TestingStat(logger)
         cls.__logger = logger
         cls.__report_file = report_file
-        _, report_extension = os.path.splitext(cls.__report_file)
-        cls.__report_class = TestingReport.find_report_class(report_extension)
-        if not cls.__report_class:
-            cls.__logger.error("Unable to find '{}' report class!".format(report_extension))
+        cls.__report_class = None
+
+        if cls.__report_file:
+            _, report_extension = os.path.splitext(cls.__report_file)
+            cls.__report_class = TestingReport.find_report_class(report_extension)
+            if not cls.__report_class:
+                cls.__logger.error("Unable to find '{}' report class!".format(report_extension))
         
     @classmethod
     def log_stat(cls):

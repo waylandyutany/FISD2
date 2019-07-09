@@ -76,6 +76,8 @@ def run_from_bin_fisd_file(fisd_file_name, logger):
         context.run_from_restored_context()
 
 ################################################################################
+#--fisd-file test/**/tc_*.fisd2 test/**/tc_*.bin --test-report-file reports/report.txt
+
 if __name__ == '__main__':
     logger = None
 
