@@ -13,15 +13,15 @@ class TestSetInfo:
         self.description = set_node[TestingStat._key_description] if TestingStat._key_description in set_node else None
 
 class TestCaseInfo:
-    def __init__(self, name, tc_node):
+    def __init__(self, name, case_node):
         self.name = name
-        self.description = tc_node[TestingStat._key_description] if TestingStat._key_description in tc_node else None
+        self.description = case_node[TestingStat._key_description] if TestingStat._key_description in case_node else None
 
-        self.passed_assertions = tc_node[TestingStat._key_passed]
-        self.failed_assertions = tc_node[TestingStat._key_failed]
+        self.passed_assertions = case_node[TestingStat._key_passed]
+        self.failed_assertions = case_node[TestingStat._key_failed]
         self.failures = []
-        if TestingStat._key_failures in tc_node:
-            for failure in tc_node[TestingStat._key_failures]:
+        if TestingStat._key_failures in case_node:
+            for failure in case_node[TestingStat._key_failures]:
                 self.failures.append(FailureInfo(failure[TestingStat._key_what],
                                                  failure[TestingStat._key_why],
                                                  failure[TestingStat._key_where]))

@@ -33,7 +33,8 @@ class Test_caseCommand(Command):
     def execute(cls, params):
         eargs = params.evaluated_args
         system_var = params.context.system_variables
-        Testing.begin_test_case(system_var, eargs.value(0), eargs.value(1))
+        where = params.logger.preface
+        Testing.begin_test_case(system_var, where, eargs.value(0), eargs.value(1))
 
 ################################################################################
 # TEST_ASSERT Command

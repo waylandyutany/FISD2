@@ -16,6 +16,7 @@ class Testing:
     __stat = None
     __logger = None
     __report_file = None
+    __test_cases = {}
 
     @classmethod
     def init(cls, report_file, logger):
@@ -69,7 +70,14 @@ class Testing:
                                   description)
 
     @classmethod
-    def begin_test_case(cls, system_var, name, description):
+    def begin_test_case(cls, system_var, where, name, description):
+        #@todo test case for this, warning if test_case with same name on different place
+        lower_name = name.lower()
+        if lower_name in cls.__test_cases and cls.__test_cases[lower_name] != where:
+            cls.__logger.warning("Test case '{}' already defined here '{}'!".format(name, cls.__test_cases[lower_name]))
+        cls.__test_cases[lower_name] = where
+
+
         cls.__logger.info("{} '{}'...".format(cls._tag_test_case, name))
         cls.__stat.begin_test_case(system_var, 
                                    name, 
