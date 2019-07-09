@@ -1,6 +1,7 @@
 from testing.testing_stat import TestingStat, TestingStatEnumerator
 from testing.testing_report import TestingReport
 import testing.testing_report_txt
+import os
 
 #@todo warning if same test case begin
 ################################################################################
@@ -20,7 +21,11 @@ class Testing:
         cls.__stat = TestingStat(logger)
         cls.__logger = logger
         cls.__report_file = report_file
-
+        _, report_extension = os.path.splitext(cls.__report_file)
+        cls.__report_class = TestingReport.find_report_class(report_extension)
+        if not cls.__report_class:
+            cls.__logger.error("Unable to find '{}' report class!".format(report_extension))
+        
     @classmethod
     def log_stat(cls):
         tse = TestingStatEnumerator()
@@ -42,9 +47,8 @@ class Testing:
         if cls.__report_file:
             cls.__stat.save(cls.__report_file + ".json")
 
-    #@classmethod
-    #def stat(cls):
-    #    return cls.__stat
+        if cls.__report_class:
+            report = cls.__report_class(cls.__logger, cls.__report_file, cls.__stat)
 
     @classmethod
     def begin_test_suite(cls, system_var, name, description):
