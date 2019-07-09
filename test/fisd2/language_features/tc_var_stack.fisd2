@@ -1,0 +1,10 @@
+execute "config"
+test_case("vat_stack", "Variable stack")
+
+set kraken = "kraken_str"
+set andromeda = "andromeda_str"
+
+execute "test_var_stack_executed"
+
+test_assert(kraken == "kraken_str", "")
+test_assert(andromeda == "andromeda_executed_str", "")

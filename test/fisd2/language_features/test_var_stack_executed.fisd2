@@ -1,0 +1,8 @@
+set andromeda = "andromeda_executed_str"
+
+proc test_proc(name)
+	set kraken = "kraken_replace"
+	test_assert(kraken == "kraken_replace", "")
+endproc
+
+test_proc(andromeda)
