@@ -1,5 +1,7 @@
 from datetime import datetime
 import os
+import traceback
+import sys
 
 ################################################################################
 class TimeLogger:
@@ -37,3 +39,8 @@ def folder_and_file_name(file_path):
     _, file_folder = os.path.split(file_path)
     return os.path.join(file_folder, file_name)
 
+################################################################################
+def log_exception(log_func):
+    exc_type, exc_value, exc_traceback = sys.exc_info()
+    for trace_line in reversed(traceback.format_exception(exc_type, exc_value, exc_traceback)[1:]):
+        log_func(str(trace_line)[:-1])

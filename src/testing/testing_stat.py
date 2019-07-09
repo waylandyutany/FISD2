@@ -3,19 +3,20 @@ from core.safe_utils import safe_path
 
 ################################################################################
 class TestSuiteInfo:
-    def __init__(self, name, description):
+    def __init__(self, name, suite_node):
         self.name = name
-        self.description = description
+        self.description = suite_node[TestingStat._key_description] if TestingStat._key_description in suite_node else None
 
 class TestSetInfo:
-    def __init__(self, name, description):
+    def __init__(self, name, set_node):
         self.name = name
-        self.description = description
+        self.description = set_node[TestingStat._key_description] if TestingStat._key_description in set_node else None
 
 class TestCaseInfo:
     def __init__(self, name, tc_node):
         self.name = name
-        self.description = tc_node[TestingStat._key_description]
+        self.description = tc_node[TestingStat._key_description] if TestingStat._key_description in tc_node else None
+
         self.passed_assertions = tc_node[TestingStat._key_passed]
         self.failed_assertions = tc_node[TestingStat._key_failed]
         self.failures = []
@@ -60,13 +61,11 @@ class TestingStat:
     def enumerate(self, testing_stat_enumerator):
         test_suites = self.__stat[TestingStat._key_test_suites]
         for suite_name in test_suites:
-            testing_stat_enumerator.on_test_suite(TestSuiteInfo(suite_name,
-                                                                test_suites[suite_name][TestingStat._key_description]))
+            testing_stat_enumerator.on_test_suite(TestSuiteInfo(suite_name,test_suites[suite_name]))
 
             test_sets = test_suites[suite_name][TestingStat._key_test_sets]
             for set_name in test_sets:
-                testing_stat_enumerator.on_test_set(TestSetInfo(set_name,
-                                                                test_sets[set_name][TestingStat._key_description]))
+                testing_stat_enumerator.on_test_set(TestSetInfo(set_name, test_sets[set_name]))
 
                 test_cases = test_sets[set_name][TestingStat._key_test_cases]
                 for tc_name in test_cases:

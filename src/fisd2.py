@@ -1,14 +1,18 @@
-import sys, os, glob2, traceback, argparse
+import sys, os, glob2, argparse
 import core.core as core
 
 from core.context import Context
 from core.tokens import Tokenizers
 from core.code.code_compilation import Code_compilation
+
 from core.commands import Commands
 from core.logger import Logger
-from core.utils import TimeLogger
+
 from testing.testing import Testing
+
 from core.safe_utils import safe_log_params
+from core.utils import TimeLogger, log_exception
+
 
 #importing all default command files
 import internal_commands.default_commands
@@ -113,6 +117,7 @@ if __name__ == '__main__':
             for file_name in files_to_process:
                 file_extension = str(os.path.splitext(file_name)[1]).lower()
                 logger.reset_errors()
+                logger.reset_criticals()
 
                 logger.info("Processing '{}'...".format(file_name))
 
@@ -128,10 +133,5 @@ if __name__ == '__main__':
         Testing.finalize()
     except Exception as e:
         #logger.critical(str(e) + " - " + str(sys.exc_info()))
-        exc_type, exc_value, exc_traceback = sys.exc_info()
-        for trace_line in reversed(traceback.format_exception(exc_type, exc_value, exc_traceback)[1:]):
-            if logger:
-                logger.critical(str(trace_line)[:-1])
-            else:
-                print(str(trace_line)[:-1])
+        log_exception(logger.critical) if logger else log_exception(print)
         raise

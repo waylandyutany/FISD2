@@ -7,7 +7,7 @@ from core.execution.execution_stack import Execution_stack
 from core.execution.execution_params import ExecutionParams
 
 from core.safe_utils import safe_path
-from core.utils import PrefaceLogger
+from core.utils import PrefaceLogger, log_exception
 
 import core.core as core
 import json
@@ -65,16 +65,23 @@ class Context:
         code_lines = self._code.get_code_lines(execution_context[Execution_stack._CODE_NAME])
 
         #executing commands
-        while execution_context[Execution_stack._CODE_INDEX] < len(code_lines) and (self._exit == False):
+        while execution_context[Execution_stack._CODE_INDEX] < len(code_lines) and self.__can_executing:
             execution_params = ExecutionParams(self, self._code, self._logger)
 
             with PrefaceLogger(self._code.get_code_line_description(execution_params.code_name, execution_params.line_number), self._logger):
-                execution_params.command_class.execute(execution_params)
+                try:
+                    execution_params.command_class.execute(execution_params)
+                except Exception as e:
+                    log_exception(self._logger.critical)
 
             execution_context[Execution_stack._CODE_INDEX] += 1
             
         #popping code context from code stack
         self._execution.pop_execution()
+
+    @property
+    def __can_executing(self):
+        return (self._exit == False) and (self._logger._errors + self._logger._criticals == 0)
 
     def jump_to_code(self, new_code_index):
         self._execution.jump_to_code(new_code_index)
