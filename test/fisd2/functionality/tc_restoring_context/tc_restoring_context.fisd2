@@ -24,10 +24,12 @@ test_assert(count_log_lines("*after fisd_restore_context()*") == 2, "")
 test_assert(count_log_lines("*PRINT after store variable*variable_string*") == 2, "")
 test_assert(count_log_lines("*Removing binary fisd file*") == 1, "")
 
-
 test_assert(file_delete(bin_test_file_path) == False, "Binary fisd file already deleted via '--delete-bin-file'.")
 
 test_assert(file_delete(log_file_path), "Deleting log file.")
+
+test_assert(file_count_lines(report_file_path, "*TOTAL_CASES - 2*") == 1, "")
+
 test_assert(file_delete(report_file_path), "Deleting report file.")
 test_assert(file_delete(report_file_path + ".json"), "Deleting report stat file.")
 test_assert(file_delete(report_file_path + ".log"), "Deleting report log file.")

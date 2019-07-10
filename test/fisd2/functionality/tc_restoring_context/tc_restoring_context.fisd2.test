@@ -1,3 +1,5 @@
+test_case("before_store")
+test_assert(True)
 variable = "variable_string"
 print "before store variable : ", variable
 print "before fisd_store_context()"
@@ -6,3 +8,5 @@ exit()
 fisd_restore_context()
 print "after fisd_restore_context()"
 print "after store variable : ", variable
+test_case("after_store")
+test_assert(True)
