@@ -13,7 +13,6 @@ from testing.testing import Testing
 from core.safe_utils import safe_log_params
 from core.utils import TimeLogger, log_exception
 
-
 #importing all default command files
 import internal_commands.default_commands
 import internal_commands.loop_commands
@@ -119,7 +118,12 @@ if __name__ == '__main__':
                 logger.reset_errors()
                 logger.reset_criticals()
 
-                logger.info("Processing '{}'...".format(file_name))
+                if os.path.isfile(file_name):
+                    logger.info("Processing '{}'...".format(file_name))
+                else:
+                    # Skipping file processing in case file has been meanwhile deleted by other fisd file
+                    logger.info("Skipping '{}'...".format(file_name))
+                    continue
 
                 if file_extension in core.__binary_fisd_file_extensions__:
                     run_from_bin_fisd_file(file_name, logger)
