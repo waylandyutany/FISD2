@@ -5,7 +5,7 @@ from testing.testing import Testing
 ################################################################################
 # TEST_SUITE Command
 ################################################################################
-@command_class('test_suite')
+@command_class('test_suite', Callable())
 class Test_suiteCommand(Command):
     @classmethod
     def execute(cls, params):
@@ -16,7 +16,7 @@ class Test_suiteCommand(Command):
 ################################################################################
 # TEST_SET Command
 ################################################################################
-@command_class('test_set')
+@command_class('test_set', Callable())
 class Test_setCommand(Command):
     @classmethod
     def execute(cls, params):
@@ -27,7 +27,7 @@ class Test_setCommand(Command):
 ################################################################################
 # TEST_CASE Command
 ################################################################################
-@command_class('test_case')
+@command_class('test_case', Callable())
 class Test_caseCommand(Command):
     @classmethod
     def execute(cls, params):
@@ -39,7 +39,7 @@ class Test_caseCommand(Command):
 ################################################################################
 # TEST_ASSERT Command
 ################################################################################
-@command_class('test_assert')
+@command_class('test_assert', Callable())
 class Test_asserCommand(Command):
     @classmethod
     def execute(cls, params):
@@ -62,7 +62,7 @@ class Test_return_valueCommand(Command):
 ################################################################################
 # TEST_CASES_TOTAL Command
 ################################################################################
-@command_class('test_cases_total')
+@command_class('test_cases_total', Callable())
 class Test_cases_totalCommand(Command):
     @classmethod
     def execute(cls, params):
@@ -71,7 +71,7 @@ class Test_cases_totalCommand(Command):
 ################################################################################
 # TEST_CASES_PASSED Command
 ################################################################################
-@command_class('test_cases_passed')
+@command_class('test_cases_passed', Callable())
 class Test_cases_passedCommand(Command):
     @classmethod
     def execute(cls, params):
@@ -80,7 +80,7 @@ class Test_cases_passedCommand(Command):
 ################################################################################
 # TEST_CASE_PASSED Command
 ################################################################################
-@command_class('test_case_passed')
+@command_class('test_case_passed', Callable())
 class Test_case_passedCommand(Command):
     @classmethod
     def execute(cls, params):
