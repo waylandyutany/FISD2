@@ -1,0 +1,14 @@
+proc test_execute_proc()
+	execute "executed2"
+endproc
+
+execute "execute2"
+execute "execute1"
+execute "execute1.fisd2"
+execute "execute2.fisd"
+
+test_print_proc()
+
+
+
+

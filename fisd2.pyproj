@@ -80,6 +80,7 @@
     <Folder Include="test\fisd2\language_features\" />
     <Folder Include="test\fisd2\internal_commands\" />
     <Folder Include="test\fisd2\error_messages\" />
+    <Folder Include="test\fisd2\language_features\tc_execute\" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="Global|PythonCore|3.7" />
@@ -87,8 +88,8 @@
   <ItemGroup>
     <Content Include="doc\fisd2.txt" />
     <Content Include="doc\test_cases.txt" />
-    <Content Include="test\executed1.fisd2" />
-    <Content Include="test\executed2.fisd" />
+    <Content Include="test\fisd2\language_features\tc_execute\executed.fisd2" />
+    <Content Include="test\fisd2\language_features\tc_execute\executed.fisd" />
     <Content Include="test\fisd2\config.fisd" />
     <Content Include="test\fisd2\error_messages\config.fisd2" />
     <Content Include="test\fisd2\error_messages\tc_error_0.fisd2" />
@@ -99,8 +100,9 @@
     <Content Include="test\fisd2\language_features\config.fisd2" />
     <Content Include="test\fisd2\language_features\tc_assignments.fisd2" />
     <Content Include="test\fisd2\language_features\tc_callable.fisd2" />
+    <Content Include="test\fisd2\language_features\tc_execute\tc_execute.fisd2.test" />
     <Content Include="test\fisd2\language_features\tc_loops.fisd2" />
-    <Content Include="test\tc_execute.fisd2" />
+    <Content Include="test\fisd2\language_features\tc_execute\tc_execute.fisd2" />
     <Content Include="test\fisd2\language_features\tc_for_if_proc.fisd2" />
     <Content Include="test\fisd2\language_features\tc_proc_calls.fisd2" />
     <Content Include="test\fisd2\language_features\tc_restore_context.fisd2" />
