@@ -1,3 +1,8 @@
+variable = "variable_string"
+print "before store variable : ", variable
+print "before fisd_store_context()"
 fisd_store_context()
-exit
+exit()
 fisd_restore_context()
+print "after fisd_restore_context()"
+print "after store variable : ", variable
