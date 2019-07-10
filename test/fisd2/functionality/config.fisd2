@@ -1,0 +1,2 @@
+execute "../config"
+test_set(this_folder_name())

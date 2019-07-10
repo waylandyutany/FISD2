@@ -1,0 +1,4 @@
+execute "../config"
+test_case(this_folder_name())
+
+test_assert(True, this_folder_name())
