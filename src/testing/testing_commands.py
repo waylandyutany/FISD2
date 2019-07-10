@@ -58,3 +58,31 @@ class Test_return_valueCommand(Command):
     @classmethod
     def execute(cls, params):
         params.set_return(params.evaluated_args.value(0))
+
+################################################################################
+# TEST_CASES_TOTAL Command
+################################################################################
+@command_class('test_cases_total')
+class Test_cases_totalCommand(Command):
+    @classmethod
+    def execute(cls, params):
+        pass
+
+################################################################################
+# TEST_CASES_PASSED Command
+################################################################################
+@command_class('test_cases_passed')
+class Test_cases_passedCommand(Command):
+    @classmethod
+    def execute(cls, params):
+        pass
+
+################################################################################
+# TEST_CASE_PASSED Command
+################################################################################
+@command_class('test_case_passed')
+class Test_case_passedCommand(Command):
+    @classmethod
+    def execute(cls, params):
+        pass
+

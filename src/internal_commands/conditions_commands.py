@@ -5,7 +5,7 @@ from core.code.code_line import Code_line
 ################################################################################
 # IF Command
 ################################################################################
-@command_class()
+@command_class('if')
 class IfCommand(Command):
     _IF = 'if'
     _END_IF = 'endif'
@@ -13,7 +13,6 @@ class IfCommand(Command):
     _ELSE = 'else'
     _ELIF = 'elif'
 
-    _keyword = _IF
     _keywords = [_THEN]
 
     @classmethod
@@ -70,14 +69,8 @@ class IfCommand(Command):
 ################################################################################
 # ENDIF Command
 ################################################################################
-@command_class()
+@command_class(IfCommand._END_IF)
 class EndIfProcCommand(Command):
-    _keyword = IfCommand._END_IF
-
-    @staticmethod
-    def parse(pargs):
-        pass
-
     @staticmethod
     def execute(eargs):
         pass
@@ -85,14 +78,8 @@ class EndIfProcCommand(Command):
 ################################################################################
 # ELSE Command
 ################################################################################
-@command_class()
+@command_class(IfCommand._ELSE)
 class ElseProcCommand(Command):
-    _keyword = IfCommand._ELSE
-
-    @staticmethod
-    def parse(pargs):
-        pass
-
     @staticmethod
     def execute(eargs):
         pass
@@ -100,14 +87,9 @@ class ElseProcCommand(Command):
 ################################################################################
 # ELIF Command
 ################################################################################
-@command_class()
+@command_class(IfCommand._ELIF)
 class ElifProcCommand(Command):
-    _keyword = IfCommand._ELIF
     _keywords = [IfCommand._THEN]
-
-    @staticmethod
-    def parse(pargs):
-        pass
 
     @staticmethod
     def execute(eargs):

@@ -85,10 +85,8 @@ class ForCommand(Command):
 ################################################################################
 # NEXT Command
 ################################################################################
-@command_class()
+@command_class(ForCommand._NEXT)
 class NextProcCommand(Command):
-    _keyword = ForCommand._NEXT
-
     @classmethod
     def parse(cls, pargs):
         _, line_tokens, _ = Code_line.split(pargs.code_line)
