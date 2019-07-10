@@ -88,8 +88,8 @@
   <ItemGroup>
     <Content Include="doc\fisd2.txt" />
     <Content Include="doc\test_cases.txt" />
-    <Content Include="test\fisd2\language_features\tc_execute\executed.fisd2" />
-    <Content Include="test\fisd2\language_features\tc_execute\executed.fisd" />
+    <Content Include="test\fisd2\language_features\tc_execute\execute2.fisd2" />
+    <Content Include="test\fisd2\language_features\tc_execute\execute1.fisd" />
     <Content Include="test\fisd2\config.fisd" />
     <Content Include="test\fisd2\error_messages\config.fisd2" />
     <Content Include="test\fisd2\error_messages\tc_error_0.fisd2" />

@@ -1,4 +1,10 @@
 execute "../config"
 test_case(this_folder_name())
 
-test_assert(True, this_folder_name())
+run_test_fisd()
+
+test_assert(count_log_lines("*execute2.fisd2*") == 4, '"execute2.fisd2" in log.')
+test_assert(count_log_lines("*execute1.fisd*") == 4, '"execute1.fisd" in log.')
+
+clean_test_fisd()
+

@@ -1,6 +1,8 @@
 test_suite(this_folder_name())
 
 fisd2_file_path = make_path_from_this("../../src/fisd2.py")
+log_file_path = make_path_from_main(main_file_name()+".log")
+test_file_path = make_path_from_main(main_file_name()+".test")
 
 proc run_fisd2(test_file_path, log_file_path)
 	file_delete(log_file_path)
@@ -10,4 +12,17 @@ endproc
 proc clean_fisd2(log_file_path)
 	test_assert(file_count_lines(log_file_path, "*CRITICAL*") == 0, "No CRITICAL errors.")
 	test_assert(file_delete(log_file_path), "Deleting log file.")
+endproc
+
+proc run_test_fisd()
+	run_fisd2(test_file_path, log_file_path)
+	test_assert(count_log_lines("*FISD2 version '2.0.0'...*") == 1, "'*FISD2 version '2.0.0'...*' in log.")
+endproc
+
+proc clean_test_fisd()
+	clean_fisd2(log_file_path)
+endproc
+
+proc count_log_lines(line_pattern)
+	return file_count_lines(log_file_path, line_pattern)
 endproc

@@ -1,13 +1,16 @@
 proc test_execute_proc()
-	execute "executed2"
+	execute "execute2"
+	execute "execute1"
+	execute "execute2.fisd2"
+	execute "execute1.fisd"
 endproc
 
 execute "execute2"
 execute "execute1"
-execute "execute1.fisd2"
-execute "execute2.fisd"
+execute "execute2.fisd2"
+execute "execute1.fisd"
 
-test_print_proc()
+test_execute_proc()
 
 
 
