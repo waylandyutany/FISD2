@@ -1,4 +1,17 @@
 execute "../config"
 test_case(this_folder_name())
 
-test_assert(True, this_folder_name())
+bin_test_file_path = test_file_path + ".bin"
+report_file_path = make_path_from_main(main_file_name()+".txt")
+
+run("python.exe", fisd2_file_path, "--fisd-file", test_file_path, "--log-file", log_file_path, "--test-report-file", report_file_path)
+run("python.exe", fisd2_file_path, "--fisd-file", bin_test_file_path, "--log-file", log_file_path, "--test-report-file", report_file_path)
+
+test_assert(file_count_lines(log_file_path, "*CRITICAL*") == 0, "No CRITICAL errors.")
+
+test_assert(file_delete(log_file_path), "Deleting log file.")
+test_assert(file_delete(bin_test_file_path), "Deleting binary file.")
+test_assert(file_delete(report_file_path), "Deleting report file.")
+test_assert(file_delete(report_file_path + ".json"), "Deleting report stat file.")
+test_assert(file_delete(report_file_path + ".log"), "Deleting report log file.")
+

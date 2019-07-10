@@ -1,0 +1,3 @@
+fisd_store_context()
+exit
+fisd_restore_context()
