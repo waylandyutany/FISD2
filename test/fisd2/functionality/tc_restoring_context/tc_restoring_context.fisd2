@@ -18,8 +18,16 @@ test_assert(file_count_lines(log_file_path, "*PRINT after store variable*variabl
 test_assert(file_count_lines(log_file_path, "*CRITICAL*") == 0, "No CRITICAL errors.")
 test_assert(file_count_lines(log_file_path, "*ERR*") == 0, "No errors.")
 
+run("python.exe", fisd2_file_path, "--fisd-file", bin_test_file_path, "--log-file", log_file_path, "--delete-bin-file")
+
+test_assert(file_count_lines(log_file_path, "*after fisd_restore_context()*") == 2, "")
+test_assert(file_count_lines(log_file_path, "*PRINT after store variable*variable_string*") == 2, "")
+test_assert(file_count_lines(log_file_path, "*Removing binary fisd file*") == 1, "")
+
+
+test_assert(file_delete(bin_test_file_path) == False, "Binary fisd file already deleted via '--delete-bin-file'.")
+
 test_assert(file_delete(log_file_path), "Deleting log file.")
-test_assert(file_delete(bin_test_file_path), "Deleting binary file.")
 test_assert(file_delete(report_file_path), "Deleting report file.")
 test_assert(file_delete(report_file_path + ".json"), "Deleting report stat file.")
 test_assert(file_delete(report_file_path + ".log"), "Deleting report log file.")

@@ -64,7 +64,7 @@ def run_from_fisd_file(fisd_file_name, logger):
         context.run()
 
 ################################################################################
-def run_from_bin_fisd_file(fisd_file_name, logger):
+def run_from_bin_fisd_file(fisd_file_name, logger, delete_bin_file):
     code = Code_compilation()
     context = Context(code, logger)
 
@@ -78,6 +78,10 @@ def run_from_bin_fisd_file(fisd_file_name, logger):
                     "Running duration", logger.debug):
         context.run_from_restored_context()
 
+    if delete_bin_file:
+        logger.info("Removing binary fisd file '{}'...".format(fisd_file_name))
+        os.remove(fisd_file_name)
+
 ################################################################################
 #--fisd-file test/**/tc_*.fisd2 test/**/tc_*.bin --test-report-file reports/report.txt
 
@@ -87,7 +91,8 @@ if __name__ == '__main__':
     try:
         parser = argparse.ArgumentParser(description="")
         parser.add_argument('--fisd-file', type=str, nargs='*', action='store', help='')
-        parser.add_argument('--compile-to-file', action='store_true', help='')
+        parser.add_argument('--compile-to-file', action='store_true', default=False, help='')
+        parser.add_argument('--delete-bin-file', action='store_true', default=False, help='Binary fisd file is deleted after processed.')
         parser.add_argument('--test-report-file', type=str, default=None, help='')
         parser.add_argument('--log-file', default=None, type=str, help='')
         parser.add_argument('--log-verbosity', default='info', type=str, choices=['debug', 'info', 'warning', 'error', 'critical'], help='')
@@ -126,7 +131,7 @@ if __name__ == '__main__':
                     continue
 
                 if file_extension in core.__binary_fisd_file_extensions__:
-                    run_from_bin_fisd_file(file_name, logger)
+                    run_from_bin_fisd_file(file_name, logger, args.delete_bin_file)
                 else:
                     if args.compile_to_file:
                         compile_to_file(file_name, logger)
