@@ -1,5 +1,5 @@
 from testing.testing_stat import TestingStat
-from testing.testing_stat_enumerator import TestingStatEnumerator
+from testing.testing_stat_enumerators import TestingStatCounter, TestingStatTestCases
 from testing.testing_report import TestingReport
 import testing.testing_report_txt
 import os
@@ -33,16 +33,16 @@ class Testing:
         
     @classmethod
     def log_stat(cls):
-        tse = TestingStatEnumerator()
-        cls.__stat.enumerate(tse)
+        ts_counter = TestingStatCounter()
+        cls.__stat.enumerate(ts_counter)
         cls.__logger.info("Testing statistics :".format())
-        cls.__logger.info("Total Test Suites({}), Sets({}), Cases({}), Failed cases({})".format(tse.test_suites,
-                                                                                                tse.test_sets, 
-                                                                                                tse.test_cases,
-                                                                                                tse.failed_test_cases))
-        cls.__logger.info("Total Assertions({}), Failed Assertions({}), Passed Assertions({})".format(tse.failed_assertions + tse.passed_assertions,
-                                                                                                      tse.failed_assertions,
-                                                                                                      tse.passed_assertions))
+        cls.__logger.info("Total Test Suites({}), Sets({}), Cases({}), Failed cases({})".format(ts_counter.test_suites,
+                                                                                                ts_counter.test_sets, 
+                                                                                                ts_counter.test_cases,
+                                                                                                ts_counter.failed_test_cases))
+        cls.__logger.info("Total Assertions({}), Failed Assertions({}), Passed Assertions({})".format(ts_counter.failed_assertions + ts_counter.passed_assertions,
+                                                                                                      ts_counter.failed_assertions,
+                                                                                                      ts_counter.passed_assertions))
 #        cls.__logger.info("".format())
 
     @classmethod
@@ -98,3 +98,15 @@ class Testing:
             cls.__logger.warning("{} '{}', {}".format(cls._tag_failed, 
                                                       evaluation_string,
                                                       evaluation_description))
+
+    @classmethod
+    def test_cases_total(cls):
+        ts_test_cases = TestingStatTestCases()
+        cls.__stat.enumerate(ts_test_cases)
+        return ts_test_cases.test_cases
+
+    @classmethod
+    def test_cases_passed(cls):
+        ts_test_cases = TestingStatTestCases()
+        cls.__stat.enumerate(ts_test_cases)
+        return ts_test_cases.test_cases - ts_test_cases.failed_test_cases

@@ -66,7 +66,7 @@ class Test_return_valueCommand(Command):
 class Test_cases_totalCommand(Command):
     @classmethod
     def execute(cls, params):
-        pass
+        params.set_return(Testing.test_cases_total())
 
 ################################################################################
 # TEST_CASES_PASSED Command
@@ -75,7 +75,7 @@ class Test_cases_totalCommand(Command):
 class Test_cases_passedCommand(Command):
     @classmethod
     def execute(cls, params):
-        pass
+        params.set_return(Testing.test_cases_passed())
 
 ################################################################################
 # TEST_CASE_PASSED Command

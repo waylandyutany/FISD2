@@ -61,16 +61,19 @@ class TestingStat:
     def enumerate(self, testing_stat_enumerator):
         test_suites = self.__stat[TestingStat._key_test_suites]
         for suite_name in test_suites:
-            testing_stat_enumerator.on_test_suite(TestSuiteInfo(suite_name,test_suites[suite_name]))
+            if hasattr(testing_stat_enumerator,'on_test_suite'):
+                testing_stat_enumerator.on_test_suite(TestSuiteInfo(suite_name,test_suites[suite_name]))
 
             test_sets = test_suites[suite_name][TestingStat._key_test_sets]
             for set_name in test_sets:
-                testing_stat_enumerator.on_test_set(TestSetInfo(set_name, test_sets[set_name]))
+                if hasattr(testing_stat_enumerator,'on_test_set'):
+                    testing_stat_enumerator.on_test_set(TestSetInfo(set_name, test_sets[set_name]))
 
                 test_cases = test_sets[set_name][TestingStat._key_test_cases]
                 for tc_name in test_cases:
                     test_case = test_cases[tc_name]
-                    testing_stat_enumerator.on_test_case(TestCaseInfo(tc_name, test_case))
+                    if hasattr(testing_stat_enumerator,'on_test_case'):
+                        testing_stat_enumerator.on_test_case(TestCaseInfo(tc_name, test_case))
 
 ################################################################################
     @property
