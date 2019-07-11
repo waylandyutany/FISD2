@@ -94,7 +94,8 @@ if __name__ == '__main__':
         parser.add_argument('--fisd-file', type=str, nargs='*', action='store', help='')
         parser.add_argument('--compile-to-file', action='store_true', default=False, help='')
         parser.add_argument('--delete-bin-file', action='store_true', default=False, help='Binary fisd file is deleted after processed.')
-        parser.add_argument('--test-report-file', type=str, default=None, help='')
+        parser.add_argument('--test-report-file', type=str, default=None, help='Report file will be generated.')
+        parser.add_argument('--merge-report-file', action='store_true', default=False, help='Merge report file from previous run.')
         parser.add_argument('--log-file', default=None, type=str, help='')
         parser.add_argument('--log-verbosity', default='info', type=str, choices=['debug', 'info', 'warning', 'error', 'critical'], help='')
         args = parser.parse_args()
@@ -104,7 +105,7 @@ if __name__ == '__main__':
         logger = Logger(Logger.log)
 
         #Initialize testing
-        Testing.init(args.test_report_file, logger)
+        Testing.init(args.test_report_file, args.merge_report_file, logger)
 
         with TimeLogger("{} version '{}'...".format(core.__app_name__, core.__app_version__), 
                         "Total '{}' duration".format(core.__app_name__), logger.info):

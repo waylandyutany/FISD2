@@ -15,7 +15,8 @@ class File_count_linesCommand(Command):
         line_match_pattern = params.evaluated_args.value(1)
         with open(file_name) as f:
             for line in f.readlines():
-                if fnmatch.fnmatch(line, line_match_pattern):
+                # padding begin and end with ' ' in order to fix matching entire line
+                if fnmatch.fnmatch(" " + line + " ", line_match_pattern):
                     line_counter += 1
 
         params.set_return(line_counter)

@@ -54,11 +54,17 @@ class TestingStat:
         self.__logger = logger
         self.__stat = {TestingStat._key_test_suites:{}}
 
-    def save(self, file_path):
+################################################################################
+    def save_to_file(self, file_path):
         j = json.dumps(self.__stat, indent=2)
         with open(safe_path(file_path), 'w') as f:
             f.write(j)
 
+    def load_from_file(self, file_path):
+        with open(file_path) as f:
+            self.__stat = json.load(f)
+
+################################################################################
     def enumerate(self, testing_stat_enumerator):
         test_suites = self.__stat[TestingStat._key_test_suites]
         for suite_name in test_suites:

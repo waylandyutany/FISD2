@@ -19,18 +19,24 @@ class Testing:
     __test_cases = {}
 
     @classmethod
-    def init(cls, report_file, logger):
+    def init(cls, report_file, merge_report_file, logger):
         cls.__stat = TestingStat(logger)
         cls.__logger = logger
         cls.__report_file = report_file
+         
         cls.__report_class = None
 
         if cls.__report_file:
+            cls.__stat_file = report_file + ".json"
             _, report_extension = os.path.splitext(cls.__report_file)
             cls.__report_class = TestingReport.find_report_class(report_extension)
             if not cls.__report_class:
                 cls.__logger.error("Unable to find '{}' report class!".format(report_extension))
         
+            if merge_report_file and os.path.isfile(cls.__stat_file):
+                cls.__logger.info("Merging report file '{}'...".format(cls.__stat_file))
+                cls.__stat.load_from_file(cls.__stat_file)
+
     @classmethod
     def log_stat(cls):
         ts_counter = TestCounterEnumerator()
@@ -50,7 +56,7 @@ class Testing:
         cls.log_stat()
 
         if cls.__report_file:
-            cls.__stat.save(cls.__report_file + ".json")
+            cls.__stat.save_to_file(cls.__stat_file)
 
         if cls.__report_class:
             report = cls.__report_class(cls.__logger, cls.__report_file, cls.__stat)
