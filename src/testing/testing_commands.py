@@ -82,6 +82,9 @@ class Test_cases_passedCommand(Command):
 ################################################################################
 @command_class('test_case_passed_assertions', Callable())
 class Test_case_passed_assertionsCommand(Command):
+    """ test_case_passed_assertions() - Return passed assertions number for last test case
+test_case_passed_assertions(test_case_name) - Return passed assertions number for test case with name test_case_name
+"""
     @classmethod
     def execute(cls, params):
         eargs = params.evaluated_args
@@ -93,6 +96,9 @@ class Test_case_passed_assertionsCommand(Command):
 ################################################################################
 @command_class('test_case_failed_assertions', Callable())
 class Test_case_failed_assertionsCommand(Command):
+    """ test_case_failed_assertions() - Return failed assertions number for last test case
+test_case_failed_assertions(test_case_name) - Return failed assertions number for test case with name test_case_name 
+"""
     @classmethod
     def execute(cls, params):
         eargs = params.evaluated_args
