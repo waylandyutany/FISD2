@@ -1,11 +1,13 @@
 from core.commands import command_class, Command
-import fnmatch
 from core.safe_utils import safe_file_delete
+from core.command_type import CallableCommand as Callable
+
+import fnmatch
 
 ################################################################################
 # FILE_COUNT_LINE Command
 ################################################################################
-@command_class('file_count_lines')
+@command_class('file_count_lines', Callable())
 class File_count_linesCommand(Command):
     #@todo need to have option for case sensitive matching 
     @classmethod
@@ -24,7 +26,7 @@ class File_count_linesCommand(Command):
 ################################################################################
 # FILE_DELETE Command
 ################################################################################
-@command_class('file_delete')
+@command_class('file_delete', Callable())
 class File_deleteCommand(Command):
     @classmethod
     def execute(cls, params):
