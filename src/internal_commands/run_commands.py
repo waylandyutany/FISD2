@@ -50,13 +50,9 @@ class Kill_asyncCommand(Command):
                 try:
                     if pinfo['cmdline'] == run_params:
                         proc.terminate()
-                        params.set_return(True) #@todo error seems like terminate is async as well !!!
+                        proc.wait()
+                        params.set_return(True)
                         return
-                    #if all((pinfo['cmdline'][i] == run_params[i]) for i in range(0,len(run_params))):
-                    #    #params.logger.info("Killing {}.".format(pinfo['pid']))
-                    #    proc.terminate()
-                    #    params.set_return(True)
-                    #    return
                 except:
                     pass
             except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):

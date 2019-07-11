@@ -1,5 +1,5 @@
 from testing.testing_stat import TestingStat
-from testing.testing_stat_enumerators import TestingStatCounter, TestingStatTestCases
+from testing.testing_stat_enumerators import TestCounterEnumerator, TestCasesEnumerator
 from testing.testing_report import TestingReport
 import testing.testing_report_txt
 import os
@@ -33,7 +33,7 @@ class Testing:
         
     @classmethod
     def log_stat(cls):
-        ts_counter = TestingStatCounter()
+        ts_counter = TestCounterEnumerator()
         cls.__stat.enumerate(ts_counter)
         cls.__logger.info("Testing statistics :".format())
         cls.__logger.info("Total Test Suites({}), Sets({}), Cases({}), Failed cases({})".format(ts_counter.test_suites,
@@ -101,13 +101,13 @@ class Testing:
 
     @classmethod
     def test_cases_total(cls):
-        ts_test_cases = TestingStatTestCases()
+        ts_test_cases = TestCasesEnumerator()
         cls.__stat.enumerate(ts_test_cases)
         return ts_test_cases.test_cases
 
     @classmethod
     def test_cases_passed(cls):
-        ts_test_cases = TestingStatTestCases()
+        ts_test_cases = TestCasesEnumerator()
         cls.__stat.enumerate(ts_test_cases)
         return ts_test_cases.test_cases - ts_test_cases.failed_test_cases
 
