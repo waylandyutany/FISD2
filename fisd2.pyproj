@@ -45,6 +45,9 @@
     <Compile Include="src\core\logger.py" />
     <Compile Include="src\core\code\parse_params.py" />
     <Compile Include="src\core\execution\raw_arguments.py" />
+    <Compile Include="src\core\pretty_json.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="src\core\safe_utils.py" />
     <Compile Include="src\core\tokens.py" />
     <Compile Include="src\core\utils.py" />
