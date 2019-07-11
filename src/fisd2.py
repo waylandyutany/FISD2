@@ -33,6 +33,7 @@ import internal_commands.time_commands
 # 3. error test_assert('non existing function') never fails !!! test_assert(count_file_lines(report_file_path, "*TOTAL_CASES - 2*") == 1, "")
 # 4. warning if merging report json stat file
 # 5. Nicer bin json + zipped
+# 6. this_name, main_name
 ################################################################################
 
 def compile_to_file(fisd_file_name, logger):
