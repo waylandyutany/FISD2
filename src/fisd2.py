@@ -32,6 +32,7 @@ import internal_commands.time_commands
 # 2. self._exit, what if call run_code again ? Assert or context restart, or what?
 # 3. error test_assert('non existing function') never fails !!! test_assert(count_file_lines(report_file_path, "*TOTAL_CASES - 2*") == 1, "")
 # 4. warning if merging report json stat file
+# 5. Nicer bin json + zipped
 ################################################################################
 
 def compile_to_file(fisd_file_name, logger):
