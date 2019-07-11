@@ -78,11 +78,24 @@ class Test_cases_passedCommand(Command):
         params.set_return(Testing.test_cases_passed())
 
 ################################################################################
-# TEST_CASE_PASSED Command
+# TEST_CASE_PASSED_ASSERTIONS Command
 ################################################################################
-@command_class('test_case_passed', Callable())
-class Test_case_passedCommand(Command):
+@command_class('test_case_passed_assertions', Callable())
+class Test_case_passed_assertionsCommand(Command):
     @classmethod
     def execute(cls, params):
-        pass
+        eargs = params.evaluated_args
+        system_var = params.context.system_variables
+        params.set_return(Testing.test_case_passed_assertions(system_var, eargs.value(0)))
+
+################################################################################
+# TEST_CASE_FAILED_ASSERTIONS Command
+################################################################################
+@command_class('test_case_failed_assertions', Callable())
+class Test_case_failed_assertionsCommand(Command):
+    @classmethod
+    def execute(cls, params):
+        eargs = params.evaluated_args
+        system_var = params.context.system_variables
+        params.set_return(Testing.test_case_failed_assertions(system_var, eargs.value(0)))
 

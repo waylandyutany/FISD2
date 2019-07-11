@@ -34,3 +34,6 @@ test_assert(file_delete(report_file_path), "Deleting report file.")
 test_assert(file_delete(report_file_path + ".json"), "Deleting report stat file.")
 test_assert(file_delete(report_file_path + ".log"), "Deleting report log file.")
 
+test_assert(test_case_passed_assertions() == test_case_passed_assertions(this_folder_name()), "test_case_passed_assertions() == test_case_passed_assertions(this_folder_name())")
+test_assert(test_case_failed_assertions() == test_case_failed_assertions(this_folder_name()), "test_case_failed_assertions() == test_case_failed_assertions(this_folder_name())")
+

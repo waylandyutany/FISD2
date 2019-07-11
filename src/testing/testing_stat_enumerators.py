@@ -40,3 +40,16 @@ class TestingStatTestCases:
     def on_test_case(self, test_case_info):
         self.test_cases += 1
         self.failed_test_cases += 1 if test_case_info.failed_assertions > 0 else 0
+
+################################################################################
+class TestingStatTestCase:
+    def __init__(self, name):
+        self.failed_assertions = None
+        self.passed_assertions = None
+        self.__name = name.lower()
+
+    def on_test_case(self, test_case_info):
+        if test_case_info.name.lower() == self.__name:
+            self.failed_assertions = test_case_info.failed_assertions
+            self.passed_assertions = test_case_info.passed_assertions
+

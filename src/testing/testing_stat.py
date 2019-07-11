@@ -1,5 +1,6 @@
 import json
 from core.safe_utils import safe_path
+from testing.testing_stat_enumerators import TestingStatTestCase
 
 ################################################################################
 class TestSuiteInfo:
@@ -154,3 +155,13 @@ class TestingStat:
 
         if (evaluation == False):
             TestingStat.__add_failure(node, place, evaluation_string, evaluation_description)
+
+    def test_case_passed_assertions(self, system_var, tc_name):
+        ts_test_case = TestingStatTestCase(tc_name if tc_name else system_var.get(TestingStat._key_test_case))
+        self.enumerate(ts_test_case)
+        return ts_test_case.passed_assertions
+
+    def test_case_failed_assertions(self, system_var, tc_name):
+        ts_test_case = TestingStatTestCase(tc_name if tc_name else system_var.get(TestingStat._key_test_case))
+        self.enumerate(ts_test_case)
+        return ts_test_case.failed_assertions
