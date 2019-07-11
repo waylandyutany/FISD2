@@ -1,0 +1,13 @@
+execute "config"
+test_case("testing_commands")
+
+test_assert(test_case_passed_assertions() == 0)
+test_assert(test_case_failed_assertions() == 0)
+test_assert(test_case_passed_assertions() == 2)
+test_assert(test_case_failed_assertions() == 0)
+
+test_assert(test_case_passed_assertions("testing_commands") == test_case_passed_assertions())
+test_assert(test_case_failed_assertions("testing_commands") == test_case_failed_assertions())
+
+test_assert(test_case_passed())
+test_assert(test_case_failed() == False)

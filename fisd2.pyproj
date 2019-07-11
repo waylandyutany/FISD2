@@ -94,6 +94,7 @@
     <Content Include="test\fisd2\functionality\config.fisd2" />
     <Content Include="test\fisd2\functionality\tc_restoring_context\tc_restoring_context.fisd2" />
     <Content Include="test\fisd2\functionality\tc_restoring_context\tc_restoring_context.fisd2.test" />
+    <Content Include="test\fisd2\internal_commands\tc_testing_commands.fisd2" />
     <Content Include="test\fisd2\language_features\tc_execute\execute2.fisd2" />
     <Content Include="test\fisd2\language_features\tc_execute\execute1.fisd" />
     <Content Include="test\fisd2\config.fisd" />

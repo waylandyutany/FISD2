@@ -105,3 +105,31 @@ test_case_failed_assertions(test_case_name) - Return failed assertions number fo
         system_var = params.context.system_variables
         params.set_return(Testing.test_case_failed_assertions(system_var, eargs.value(0)))
 
+################################################################################
+# TEST_CASE_PASSED Command
+################################################################################
+@command_class('test_case_passed', Callable())
+class Test_case_passedCommand(Command):
+    """ test_case_passed() - Return True if last test case passed
+test_case_passed(test_case_name) - Return true if test case with name test_case_name passed
+"""
+    @classmethod
+    def execute(cls, params):
+        eargs = params.evaluated_args
+        system_var = params.context.system_variables
+        params.set_return(Testing.test_case_failed_assertions(system_var, eargs.value(0)) == 0)
+
+################################################################################
+# TEST_CASE_FAILED_ASSERTIONS Command
+################################################################################
+@command_class('test_case_failed', Callable())
+class Test_case_failed(Command):
+    """ test_case_failed() - Return True if last test case failed
+test_case_failed(test_case_name) - Return true if test case with name test_case_name failed
+"""
+    @classmethod
+    def execute(cls, params):
+        eargs = params.evaluated_args
+        system_var = params.context.system_variables
+        params.set_return(Testing.test_case_failed_assertions(system_var, eargs.value(0)) > 0)
+
