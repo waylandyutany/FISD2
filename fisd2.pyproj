@@ -69,7 +69,6 @@
     <Compile Include="src\testing\__init__.py" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="doc\" />
     <Folder Include="src\core\code\" />
     <Folder Include="src\core\execution\" />
     <Folder Include="src\internal_commands\" />
@@ -89,8 +88,6 @@
     <InterpreterReference Include="Global|PythonCore|3.7" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="doc\fisd2.txt" />
-    <Content Include="doc\test_cases.txt" />
     <Content Include="test\fisd2\functionality\config.fisd2" />
     <Content Include="test\fisd2\functionality\tc_restoring_context\tc_restoring_context.fisd2" />
     <Content Include="test\fisd2\functionality\tc_restoring_context\tc_restoring_context.fisd2.test" />
