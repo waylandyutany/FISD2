@@ -1,4 +1,4 @@
-from core.commands import command_class, Command
+from core.commands.commands import command_class, Command
 from core.code.code_line import Code_line
 
 ################################################################################

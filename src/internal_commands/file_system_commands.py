@@ -1,6 +1,6 @@
-from core.commands import command_class, Command
+from core.commands.commands import command_class, Command
 from core.safe_utils import safe_file_delete
-from core.command_type import CallableCommand as Callable
+from core.commands.command_type import CallableCommand as Callable
 
 import fnmatch
 

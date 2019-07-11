@@ -1,6 +1,6 @@
 from core.code.code_line import Code_line
 from core.tokens import Tokens
-from core.commands import command_class, Command, Commands
+from core.commands.commands import command_class, Command, Commands
 
 from internal_commands.procedure_commands import CallCommand, ProcCommand
 from internal_commands.default_commands import SetCommand

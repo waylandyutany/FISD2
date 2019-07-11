@@ -1,4 +1,4 @@
-from core.commands import command_class, Command
+from core.commands.commands import command_class, Command
 import subprocess, psutil
 from core.safe_utils import safe_eval, safe_log_params
 

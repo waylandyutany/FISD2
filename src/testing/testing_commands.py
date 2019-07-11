@@ -1,5 +1,5 @@
-from core.commands import command_class, Command
-from core.command_type import CallableCommand as Callable
+from core.commands.commands import command_class, Command
+from core.commands.command_type import CallableCommand as Callable
 from testing.testing import Testing
 
 ################################################################################

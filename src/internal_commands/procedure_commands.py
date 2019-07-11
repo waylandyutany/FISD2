@@ -1,4 +1,4 @@
-from core.commands import command_class, Command, Commands
+from core.commands.commands import command_class, Command, Commands
 from core.tokens import tokenizer_class, Tokens
 from core.code.code_line import Code_line
 

@@ -5,7 +5,7 @@ from core.context import Context
 from core.tokens import Tokenizers
 from core.code.code_compilation import Code_compilation
 
-from core.commands import Commands
+from core.commands.commands import Commands
 from core.logger import Logger
 
 from testing.testing import Testing

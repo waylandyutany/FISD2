@@ -1,5 +1,5 @@
-from core.commands import command_class, Command
-from core.command_type import CallableCommand as Callable
+from core.commands.commands import command_class, Command
+from core.commands.command_type import CallableCommand as Callable
 from core.tokens import tokenizer_class, TOKEN_NAME, Tokens
 from core.code.code_line import Code_line
 
