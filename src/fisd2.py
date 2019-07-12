@@ -39,7 +39,9 @@ import internal_commands.time_commands
 # pip install glob2 - linux, windows
 # pip3 install termcolor - linux, windows
 # pip install psutil - linux, windows
-
+# sudo service ssh start
+# ip address - to get ip address
+# sudo mount -t vboxsf linux_shared media/linuxshared
 ################################################################################
 
 def compile_to_file(fisd_file_name, logger):
