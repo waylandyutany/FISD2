@@ -1,0 +1,3 @@
+test_case("first")
+test_assert(True, "True")
+print "Hello world from FISD2!"

@@ -34,6 +34,12 @@ import internal_commands.time_commands
 # 4. warning if merging report json stat file
 # 5. Nicer bin json + zipped
 # 6. this_name, main_name
+
+#@prerequisities
+# pip install glob2 - linux, windows
+# pip3 install termcolor - linux, windows
+# pip install psutil - linux, windows
+
 ################################################################################
 
 def compile_to_file(fisd_file_name, logger):
@@ -114,6 +120,7 @@ if __name__ == '__main__':
                         "Total '{}' duration".format(core.__app_name__), logger.info):
 
             safe_log_params(logger.info, "Command line : ", sys.argv)
+            logger.info("Working dir  : '{}'".format(os.getcwd()))
 
             files_to_process = []
             for fisd_file in args.fisd_file:
@@ -122,6 +129,8 @@ if __name__ == '__main__':
                 else:
                     files_to_process.extend(glob2.glob(fisd_file))
             #files_to_process = sorted(files_to_process)
+            if len(files_to_process) == 0:
+                logger.warning("No file(s) to process for '--fisd-file {}'".format(args.fisd_file))
 
             for file_name in files_to_process:
                 file_extension = str(os.path.splitext(file_name)[1]).lower()
@@ -132,7 +141,7 @@ if __name__ == '__main__':
                     logger.info("Processing '{}'...".format(file_name))
                 else:
                     # Skipping file processing in case file has been meanwhile deleted by other fisd file
-                    logger.info("Skipping '{}'...".format(file_name))
+                    logger.warning("Skipped non existing file '{}'.".format(file_name))
                     continue
 
                 if file_extension in core.__binary_fisd_file_extensions__:

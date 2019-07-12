@@ -13,7 +13,7 @@
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId>Global|PythonCore|3.7</InterpreterId>
     <IsWindowsApplication>False</IsWindowsApplication>
-    <CommandLineArguments>--fisd-file test/**/tc_*.fisd2 test/**/tc_*.bin --test-report-file reports/report.txt</CommandLineArguments>
+    <CommandLineArguments>--fisd-file src/hello_world.fisd2</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
@@ -118,6 +118,8 @@
     <Content Include="test\fisd2\language_features\tc_var_stack.fisd2" />
     <Content Include="test\fisd2\language_features\tc_recursion.fisd2" />
     <Content Include="test\fisd2\language_features\test_var_stack_executed.fisd2" />
+    <Content Include="test\hello_world.fisd2" />
+    <Content Include="test\run_tests.bat" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>
