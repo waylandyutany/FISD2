@@ -93,6 +93,7 @@
     <InterpreterReference Include="Global|PythonCore|3.7" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="readme.txt" />
     <Content Include="test\fisd2\functionality\config.fisd2" />
     <Content Include="test\fisd2\functionality\tc_restoring_context\tc_restoring_context.fisd2" />
     <Content Include="test\fisd2\functionality\tc_restoring_context\tc_restoring_context.fisd2.test" />

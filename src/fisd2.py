@@ -36,9 +36,6 @@ import internal_commands.time_commands
 # 6. this_name, main_name
 
 #@prerequisities
-# pip install glob2 - linux, windows
-# pip3 install termcolor - linux, windows
-# pip install psutil - linux, windows
 # sudo service ssh start
 # ip address - to get ip address
 # sudo mount -t vboxsf linux_shared media/linuxshared
