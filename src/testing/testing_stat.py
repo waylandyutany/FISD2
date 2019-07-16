@@ -80,10 +80,10 @@ class TestingStat:
                 if has_attr_on_test_set:
                     testing_stat_enumerator.on_test_set(TestSetInfo(set_name, test_sets[set_name]))
 
-                test_cases = test_sets[set_name][TestingStat._key_test_cases]
-                for tc_name in test_cases:
-                    test_case = test_cases[tc_name]
-                    if has_attr_on_test_case:
+                if has_attr_on_test_case:
+                    test_cases = test_sets[set_name][TestingStat._key_test_cases]
+                    for tc_name in test_cases:
+                        test_case = test_cases[tc_name]
                         testing_stat_enumerator.on_test_case(TestCaseInfo(tc_name, test_case))
 
 ################################################################################
