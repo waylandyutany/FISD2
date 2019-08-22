@@ -1,2 +1,4 @@
 *.suo
 *.pyc
+/fisd2_env
+/reports
