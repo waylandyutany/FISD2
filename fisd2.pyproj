@@ -11,9 +11,9 @@
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <InterpreterId>Global|PythonCore|3.7</InterpreterId>
+    <InterpreterId>MSBuild|fisd2_env|$(MSBuildProjectFullPath)</InterpreterId>
     <IsWindowsApplication>False</IsWindowsApplication>
-    <CommandLineArguments>--fisd-file src/hello_world.fisd2</CommandLineArguments>
+    <CommandLineArguments>--fisd-file test/**/tc_*.fisd2 test/**/tc_*.bin --test-report-file reports/report.txt</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="readme.txt" />
+    <Content Include="src\requirements.txt" />
     <Content Include="test\fisd2\functionality\config.fisd2" />
     <Content Include="test\fisd2\functionality\tc_restoring_context\tc_restoring_context.fisd2" />
     <Content Include="test\fisd2\functionality\tc_restoring_context\tc_restoring_context.fisd2.test" />
@@ -121,6 +122,17 @@
     <Content Include="test\fisd2\language_features\test_var_stack_executed.fisd2" />
     <Content Include="test\hello_world.fisd2" />
     <Content Include="test\run_tests.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Interpreter Include="fisd2_env\">
+      <Id>fisd2_env</Id>
+      <Version>3.7</Version>
+      <Description>fisd2_env (Python 3.7 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>
