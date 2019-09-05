@@ -4,7 +4,7 @@ test_case("run_kill_async")
 log_file_path = make_path_from_main(main_file_name()+".log")
 test_file_path = make_path_from_main(main_file_name()+".test")
 
-pid = run_async("python.exe", fisd2_file_path, "--fisd-file", test_file_path, "--log-file", log_file_path)
+pid = run_async(python_executable, fisd2_file_path, "--fisd-file", test_file_path, "--log-file", log_file_path)
 wait(2)
 test_assert(file_delete(log_file_path) == False, "Unable to delete log file of running process.")
 test_assert(kill_async(pid),"Killed process.")
