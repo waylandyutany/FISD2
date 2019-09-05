@@ -121,6 +121,7 @@ if __name__ == '__main__':
 
             safe_log_params(logger.info, "Command line : ", sys.argv)
             logger.info("Working dir  : '{}'".format(os.getcwd()))
+            logger.info("Platform     : '{}'".format(sys.platform))
 
             files_to_process = []
             for fisd_file in args.fisd_file:

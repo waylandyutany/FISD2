@@ -1,4 +1,5 @@
 from core.commands.commands import command_class, Command
+import sys
 
 ################################################################################
 # FISD_STORE_CONTEXT Command
@@ -17,3 +18,12 @@ class Fisd_restore_context_command(Command):
     @staticmethod
     def execute(params):
         pass
+
+################################################################################
+# FISD_PLATFORM Command
+################################################################################
+@command_class('fisd_sys_platform')
+class Fisd_sys_platform_command(Command):
+    @staticmethod
+    def execute(params):
+        params.set_return(sys.platform)
