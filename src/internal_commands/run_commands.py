@@ -59,4 +59,5 @@ class Kill_asyncCommand(Command):
                 pass
 
         params.set_return(False)
+        #@todo we should rather raise exception
         params.logger.error("Unable to kill async process {}!".format(str(run_params)))

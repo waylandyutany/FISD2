@@ -121,7 +121,8 @@ if __name__ == '__main__':
             safe_log_params(logger.info, "Command line : ", sys.argv)
             logger.info("Working dir  : '{}'".format(os.getcwd()))
             logger.info("Platform     : '{}'".format(sys.platform))
-
+            logger.info("Python       : '{}.{}.{} {}'".format(sys.version_info.major, sys.version_info.minor, sys.version_info.micro, sys.version_info.releaselevel))
+            
             files_to_process = []
             for fisd_file in args.fisd_file:
                 if os.path.isfile(fisd_file):
