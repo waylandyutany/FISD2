@@ -6,8 +6,8 @@ report_file_path = make_path_from_main(main_file_name()+".txt")
 
 file_delete(log_file_path)
 
-run("python.exe", fisd2_file_path, "--fisd-file", test_file_path, "--log-file", log_file_path, "--test-report-file", report_file_path)
-run("python.exe", fisd2_file_path, "--fisd-file", bin_test_file_path, "--log-file", log_file_path, "--test-report-file", report_file_path, "--merge-report-file")
+run(python_executable, fisd2_file_path, "--fisd-file", test_file_path, "--log-file", log_file_path, "--test-report-file", report_file_path)
+run(python_executable, fisd2_file_path, "--fisd-file", bin_test_file_path, "--log-file", log_file_path, "--test-report-file", report_file_path, "--merge-report-file")
 
 test_assert(count_log_lines("*before fisd_store_context()*") == 1, "")
 test_assert(count_log_lines("*after fisd_restore_context()*") == 1, "")

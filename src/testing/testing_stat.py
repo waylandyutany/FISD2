@@ -20,12 +20,22 @@ class TestCaseInfo:
 
         self.passed_assertions = case_node[TestingStat._key_passed]
         self.failed_assertions = case_node[TestingStat._key_failed]
+        self.exception_raised = case_node[TestingStat._key_exception_raised]
+
         self.failures = []
         if TestingStat._key_failures in case_node:
             for failure in case_node[TestingStat._key_failures]:
                 self.failures.append(FailureInfo(failure[TestingStat._key_what],
                                                  failure[TestingStat._key_why],
                                                  failure[TestingStat._key_where]))
+
+    @property
+    def failed(self):
+        return self.failed_assertions + self.exception_raised > 0
+
+    @property
+    def passed(self):
+        return self.failed == False
 
 class FailureInfo:
     def __init__(self, what, why, where):
@@ -41,6 +51,7 @@ class TestingStat:
     _key_description = 'description'
     _key_passed = 'passed'
     _key_failed = 'failed'
+    _key_exception_raised = 'exception_raised'
     _key_test_suite = 'test_suite'
     _key_test_set = 'test_set'
     _key_test_case = 'test_case'
@@ -121,6 +132,7 @@ class TestingStat:
     def __reset_tc_node(cls, tc_node):
         tc_node[cls._key_passed] = 0
         tc_node[cls._key_failed] = 0
+        tc_node[cls._key_exception_raised] = 0
 
     @classmethod
     def __increment_tc_node(cls, tc_node, passed, failed):
@@ -155,6 +167,13 @@ class TestingStat:
         node[TestingStat._key_description] = description
         TestingStat.__reset_tc_node(node)
         
+    def exception_raised(self, system_var):
+        tc_node = self.__get_node(system_var.get(TestingStat._key_test_suite, TestingStat._key_default),
+                               system_var.get(TestingStat._key_test_set, TestingStat._key_default),
+                               system_var.get(TestingStat._key_test_case, TestingStat._key_default))
+        tc_node[TestingStat._key_exception_raised] += 1
+
+
     def check_assert(self, system_var, place, evaluation, evaluation_string, evaluation_description):
         node = self.__get_node(system_var.get(TestingStat._key_test_suite, TestingStat._key_default),
                                system_var.get(TestingStat._key_test_set, TestingStat._key_default),

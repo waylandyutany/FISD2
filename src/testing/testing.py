@@ -135,3 +135,7 @@ class Testing:
     @classmethod
     def test_case_failed_assertions(cls, system_var, tc_name):
         return cls.__stat.test_case_failed_assertions(system_var, tc_name)
+
+    @classmethod
+    def exception_raised(cls, system_var):
+        cls.__stat.exception_raised(system_var)

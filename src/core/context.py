@@ -9,6 +9,8 @@ from core.execution.execution_params import ExecutionParams
 from core.safe_utils import safe_path
 from core.utils import PrefaceLogger, log_exception
 
+from testing.testing import Testing
+
 import core.core as core
 import json
 
@@ -72,6 +74,7 @@ class Context:
                 try:
                     execution_params.command_class.execute(execution_params)
                 except Exception as e:
+                    Testing.exception_raised(self.system_variables)
                     log_exception(self._logger.critical)
 
             execution_context[Execution_stack._CODE_INDEX] += 1

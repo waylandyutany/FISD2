@@ -45,7 +45,7 @@ class TestingReport_TXT(TestingReport):
         self.total_cases += 1
         description = "" if not test_case_info.description else " - '{}'".format(test_case_info.description)
 
-        if test_case_info.failed_assertions > 0:
+        if test_case_info.failed:
             self.failed_cases += 1
             self.txt_lines.append("        TEST_CASE - FAIL - '{}'".format(test_case_info.name) + description)
             for failure in test_case_info.failures:
