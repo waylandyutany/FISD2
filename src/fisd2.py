@@ -61,7 +61,7 @@ def compile_to_file(fisd_file_name, logger):
 
     if logger._errors > 0:return
 
-    with TimeLogger("Storing to '{}'...".format(fisd_file_name, fisd_bin_file_name),
+    with TimeLogger("Storing '{}' to '{}'...".format(fisd_file_name, fisd_bin_file_name),
                     "Storing duration", logger.debug):
         context.store_context(fisd_bin_file_name)
 
