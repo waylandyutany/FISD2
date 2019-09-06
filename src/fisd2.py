@@ -26,6 +26,14 @@ import internal_commands.run_commands
 import testing.testing_commands
 import internal_commands.time_commands
 
+
+################################################################################
+#remote debugging example
+#import ptvsd
+#ptvsd.enable_attach()
+#ptvsd.wait_for_attach()
+#breakpoint()
+
 ################################################################################
 #@todos
 # 1. time_start, time_delay and use it for wait tc
@@ -122,7 +130,7 @@ if __name__ == '__main__':
             logger.info("Working dir  : '{}'".format(os.getcwd()))
             logger.info("Platform     : '{}'".format(sys.platform))
             logger.info("Python       : '{}.{}.{} {}'".format(sys.version_info.major, sys.version_info.minor, sys.version_info.micro, sys.version_info.releaselevel))
-            
+
             files_to_process = []
             for fisd_file in args.fisd_file:
                 if os.path.isfile(fisd_file):
