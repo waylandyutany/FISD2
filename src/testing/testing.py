@@ -59,7 +59,7 @@ class Testing:
             cls.__stat.save_to_file(cls.__stat_file)
 
         if cls.__report_class:
-            report = cls.__report_class(cls.__logger, cls.__report_file, cls.__stat)
+            cls.__report_class(cls.__logger, cls.__report_file, cls.__stat)
 
     @classmethod
     def begin_test_suite(cls, system_var, name, description):
@@ -116,17 +116,6 @@ class Testing:
         ts_test_cases = TestCasesEnumerator()
         cls.__stat.enumerate(ts_test_cases)
         return ts_test_cases.test_cases - ts_test_cases.failed_test_cases
-
-
-    @classmethod
-    def test_case_passed_assertions(cls, system_var, tc_name):
-        ts_test_case = TestingStatTestCase(tc_name if tc_name else system_var.get('TestingStat._key_test_case'))
-        return ts_test_case.passed_assertions
-
-    @classmethod
-    def test_case_failed_assertions(cls, system_var, tc_name):
-        ts_test_case = TestingStatTestCase(tc_name if tc_name else system_var.get('TestingStat._key_test_case'))
-        return ts_test_case.failed_assertions
 
     @classmethod
     def test_case_passed_assertions(cls, system_var, tc_name):
