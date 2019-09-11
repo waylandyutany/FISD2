@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import sys, os, glob2, argparse
 import core.core as core
 
@@ -33,6 +35,8 @@ import internal_commands.time_commands
 #ptvsd.enable_attach()
 #ptvsd.wait_for_attach()
 #breakpoint()
+#sudo apt-get install python3-venv
+#python3 -m venv .venv
 
 ################################################################################
 #@todos

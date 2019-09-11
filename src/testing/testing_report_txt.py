@@ -1,3 +1,4 @@
+from __future__ import print_function
 from testing.testing_report import TestingReport, testing_report_class
 from core.safe_utils import safe_path
 

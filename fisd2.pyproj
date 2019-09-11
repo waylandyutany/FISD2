@@ -95,6 +95,7 @@
   <ItemGroup>
     <Content Include="readme.txt" />
     <Content Include="src\requirements.txt" />
+    <Content Include="test\fisd2\error_messages\tc_error_0.fisd2.test" />
     <Content Include="test\fisd2\functionality\config.fisd2" />
     <Content Include="test\fisd2\functionality\tc_restoring_context\tc_restoring_context.fisd2" />
     <Content Include="test\fisd2\functionality\tc_restoring_context\tc_restoring_context.fisd2.test" />
