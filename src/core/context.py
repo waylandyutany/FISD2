@@ -6,6 +6,8 @@ from core.execution.execution import Execution
 from core.execution.execution_stack import Execution_stack
 from core.execution.execution_params import ExecutionParams
 
+from core.commands.commands import call_command
+
 from core.safe_utils import safe_path
 from core.utils import PrefaceLogger, log_exception
 
@@ -72,7 +74,7 @@ class Context:
 
             with PrefaceLogger(self._code.get_code_line_description(execution_params.code_name, execution_params.line_number), self._logger):
                 try:
-                    execution_params.command_class.execute(execution_params)
+                    call_command(execution_params)
                 except Exception as e:
                     Testing.exception_raised(self.system_variables)
                     log_exception(self._logger.critical)

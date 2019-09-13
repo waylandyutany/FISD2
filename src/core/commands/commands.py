@@ -13,7 +13,7 @@ class Command:
         #pargs.logger.error("Command '{}'.parse is not yet implemented!".format(cls._keyword))
 
     @classmethod
-    def execute(cls, eargs):
+    def execute(cls, eargs, *args, **kwargs):
         eargs.logger.error("Command '{}' is not yet implemented!".format(cls._keyword))
 
     @classmethod
@@ -34,12 +34,27 @@ class Commands:
         return None
 
 ################################################################################
-def command_class(keyword=None, cmd_type=None):
+def command_class(keyword=None, cmd_type=None, pass_evaluated_args = False):
     def _command_class(_class):
         if keyword != None:
             setattr(_class, '_keyword', keyword)
+
         if cmd_type != None:
             setattr(_class, '_cmd_type', cmd_type)
+
+        # if _pass_evaluated_args True, evaluated arguments are passed within execute(cls, params, ...)
+        # and returned value is automaticaly set to context
+        setattr(_class, '_pass_evaluated_args', pass_evaluated_args)
+           
         Commands.commands[str(_class._keyword).lower()] = _class
+
         return _class
     return _command_class
+
+################################################################################
+def call_command(execution_params):
+    if execution_params.command_class._pass_evaluated_args:
+        ret = execution_params.command_class.execute(execution_params, *execution_params.evaluated_args.values())
+        execution_params.set_return(ret)
+    else:
+        execution_params.command_class.execute(execution_params)

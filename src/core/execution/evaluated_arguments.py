@@ -56,3 +56,6 @@ class EvaluatedArguments:
 
     def clone(self):
         return deepcopy(self)
+
+    def values(self):
+        return [self.value(i) for i in range(0, len(self))]
