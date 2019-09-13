@@ -73,8 +73,8 @@ class WaitCommand(Command):
 @command_class('date')
 class DateCommand(Command):
     @classmethod
-    def execute(cls, params):
-        params.set_return(datetime.datetime.now().strftime("%Y-%m-%d"))
+    def execute_args(cls, params):
+        return datetime.datetime.now().strftime("%Y-%m-%d")
 
 ################################################################################
 # TIME Command
@@ -82,6 +82,6 @@ class DateCommand(Command):
 @command_class('time')
 class TimeCommand(Command):
     @classmethod
-    def execute(cls, params):
-        params.set_return(datetime.datetime.now().strftime("%H:%M:%S"))
+    def execute_args(cls, params):
+        return datetime.datetime.now().strftime("%H:%M:%S")
 
