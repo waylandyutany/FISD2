@@ -1,4 +1,6 @@
 from core.commands.commands import command_class, Command
+from core.commands.command_type import CallableCommand as Callable
+
 import sys
 
 ################################################################################
@@ -22,8 +24,8 @@ class Fisd_restore_context_command(Command):
 ################################################################################
 # FISD_PLATFORM Command
 ################################################################################
-@command_class('fisd_sys_platform')
+@command_class('fisd_sys_platform', Callable(True))
 class Fisd_sys_platform_command(Command):
     @staticmethod
     def execute(params):
-        params.set_return(sys.platform)
+        return sys.platform
