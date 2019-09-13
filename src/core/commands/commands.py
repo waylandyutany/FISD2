@@ -42,6 +42,8 @@ def command_class(keyword=None, cmd_type=None):
         if cmd_type != None:
             setattr(_class, '_cmd_type', cmd_type)
            
+        setattr(_class, '_call_execute_args', hasattr(_class, 'execute_args'))
+
         Commands.commands[str(_class._keyword).lower()] = _class
 
         return _class
@@ -49,8 +51,8 @@ def command_class(keyword=None, cmd_type=None):
 
 ################################################################################
 def call_command(execution_params):
-    if execution_params.command_class._cmd_type and execution_params.command_class._cmd_type.pass_evaluated_args:
-        ret = execution_params.command_class.execute(execution_params, *execution_params.evaluated_args.values())
+    if execution_params.command_class._call_execute_args:
+        ret = execution_params.command_class.execute_args(execution_params, *execution_params.evaluated_args.values())
         execution_params.set_return(ret)
     else:
         execution_params.command_class.execute(execution_params)

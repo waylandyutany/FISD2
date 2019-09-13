@@ -7,11 +7,11 @@ import fnmatch
 ################################################################################
 # FILE_COUNT_LINE Command
 ################################################################################
-@command_class('file_count_lines', Callable(True))
+@command_class('file_count_lines', Callable())
 class File_count_linesCommand(Command):
     #@todo need to have option for case sensitive matching 
     @classmethod
-    def execute(cls, params, file_name, line_match_pattern):
+    def execute_args(cls, params, file_name, line_match_pattern):
         line_counter = 0
         with open(file_name) as f:
             for line in f.readlines():
@@ -24,8 +24,8 @@ class File_count_linesCommand(Command):
 ################################################################################
 # FILE_DELETE Command
 ################################################################################
-@command_class('file_delete', Callable(True))
+@command_class('file_delete', Callable())
 class File_deleteCommand(Command):
     @classmethod
-    def execute(cls, params, file_path):
+    def execute_args(cls, params, file_path):
         return safe_file_delete(file_path)

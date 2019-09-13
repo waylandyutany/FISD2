@@ -24,8 +24,8 @@ class Fisd_restore_context_command(Command):
 ################################################################################
 # FISD_PLATFORM Command
 ################################################################################
-@command_class('fisd_sys_platform', Callable(True))
+@command_class('fisd_sys_platform', Callable())
 class Fisd_sys_platform_command(Command):
     @staticmethod
-    def execute(params):
+    def execute_args(params):
         return sys.platform
