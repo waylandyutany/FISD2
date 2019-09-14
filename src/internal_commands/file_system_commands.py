@@ -11,7 +11,7 @@ import fnmatch
 class File_count_linesCommand(Command):
     #@todo need to have option for case sensitive matching 
     @classmethod
-    def execute_args(cls, params, file_name, line_match_pattern):
+    def call(cls, params, file_name, line_match_pattern):
         line_counter = 0
         with open(file_name) as f:
             for line in f.readlines():
@@ -27,5 +27,5 @@ class File_count_linesCommand(Command):
 @command_class('file_delete', Callable())
 class File_deleteCommand(Command):
     @classmethod
-    def execute_args(cls, params, file_path):
+    def call(cls, params, file_path):
         return safe_file_delete(file_path)

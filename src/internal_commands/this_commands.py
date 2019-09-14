@@ -23,7 +23,7 @@ def make_path_from_path(from_path, path):
 @command_class('this_folder_name')
 class This_folder_name_command(Command):
     @staticmethod
-    def execute_args(params):
+    def call(params):
         return get_folder_name_from_path(params.context.execution.current_code_path)
 
 ################################################################################
@@ -32,7 +32,7 @@ class This_folder_name_command(Command):
 @command_class('this_file_path')
 class This_file_path_command(Command):
     @staticmethod
-    def execute_args(params):
+    def call(params):
         return normalize_path(params.context.execution.current_code_path)
 
 ################################################################################
@@ -41,7 +41,7 @@ class This_file_path_command(Command):
 @command_class('this_file_name')
 class This_file_name_command(Command):
     @staticmethod
-    def execute_args(params):
+    def call(params):
         return get_file_name_from_path(params.context.execution.current_code_path)
 
 ################################################################################
@@ -50,7 +50,7 @@ class This_file_name_command(Command):
 @command_class('this_line_number')
 class This_line_number_command(Command):
     @staticmethod
-    def execute_args(params):
+    def call(params):
         return params.context.execution.current_line_number
 
 ################################################################################
@@ -59,7 +59,7 @@ class This_line_number_command(Command):
 @command_class('make_path_from_this')
 class Make_path_from_this_command(Command):
     @staticmethod
-    def execute_args(params, path):
+    def call(params, path):
         return make_path_from_path(params.context.execution.current_code_path, path)
 
 ################################################################################
@@ -68,7 +68,7 @@ class Make_path_from_this_command(Command):
 @command_class('main_file_name')
 class Main_file_name_command(Command):
     @staticmethod
-    def execute_args(params):
+    def call(params):
         return get_file_name_from_path(params.code.main_code_name())
 
 ################################################################################
@@ -77,7 +77,7 @@ class Main_file_name_command(Command):
 @command_class('main_file_path')
 class Main_file_path_command(Command):
     @staticmethod
-    def execute_args(params):
+    def call(params):
         return normalize_path(params.code.main_code_name())
 
 ################################################################################
@@ -86,7 +86,7 @@ class Main_file_path_command(Command):
 @command_class('main_folder_name')
 class Main_folder_name_command(Command):
     @staticmethod
-    def execute_args(params):
+    def call(params):
         return get_folder_name_from_path(params.code.main_code_name())
 
 ################################################################################
@@ -95,5 +95,5 @@ class Main_folder_name_command(Command):
 @command_class('make_path_from_main')
 class Make_path_from_main_command(Command):
     @staticmethod
-    def execute_args(params, path):
+    def call(params, path):
         return make_path_from_path(params.code.main_code_name(), path)

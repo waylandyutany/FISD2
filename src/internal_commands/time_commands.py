@@ -73,7 +73,7 @@ class WaitCommand(Command):
 @command_class('date')
 class DateCommand(Command):
     @classmethod
-    def execute_args(cls, params):
+    def call(cls, params):
         return datetime.datetime.now().strftime("%Y-%m-%d")
 
 ################################################################################
@@ -82,6 +82,6 @@ class DateCommand(Command):
 @command_class('time')
 class TimeCommand(Command):
     @classmethod
-    def execute_args(cls, params):
+    def call(cls, params):
         return datetime.datetime.now().strftime("%H:%M:%S")
 
