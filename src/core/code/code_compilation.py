@@ -10,7 +10,7 @@ from core.utils import PrefaceLogger, folder_and_file_name
 import core.core as core
 
 from internal_commands.default_commands import ExecuteCommand
-from internal_commands.procedure_commands import ProcCommand, EndProcCommand
+from internal_commands.procedure_commands import ProcCommand, EndProcCommand, CallCommand
 from internal_commands.evaluation_commands import Code_evaluation
 
 import os
@@ -163,6 +163,22 @@ class Code_compilation(Code_json):
                 for jump_name in jumps:
                     jumps[jump_name] = labels_jumps_indicies[jumps[jump_name]]
 
+    def __resolve_call_signatures(self, logger):
+        for code_name in self._code:
+            parse_params = ParseParams(self, logger, code_name)
+            for parse_params.code_index in range(0, len(parse_params.code_lines)):
+                with PrefaceLogger(self.get_code_line_description(code_name, parse_params.line_number), logger):
+                    command_class = Code_line.get_command_class(parse_params.code_line)
+
+                    # checking against call signature
+                    if command_class._callable:
+                        line_tokens = parse_params.line_tokens
+                        pass
+                    # checking against function signature
+                    elif command_class._keyword == CallCommand._keyword:
+                        line_tokens = parse_params.line_tokens
+                        pass
+
 ################################################################################
     def compile_from_file(self, file_name, logger):
         ''' Compiling code from the file, looking for *.fisd/*.fisd2 in no extension provided.'''
@@ -170,3 +186,4 @@ class Code_compilation(Code_json):
         self.__extract_functions(logger)
         self.__parse_commands(logger)
         self.__resolve_jumps(logger)
+        self.__resolve_call_signatures(logger)
