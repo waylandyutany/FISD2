@@ -163,21 +163,42 @@ class Code_compilation(Code_json):
                 for jump_name in jumps:
                     jumps[jump_name] = labels_jumps_indicies[jumps[jump_name]]
 
+################################################################################
+    @staticmethod
+    def __get_call_signature_from_signature(signature):
+        call_signature = []
+        return call_signature
+
+    def __get_call_signature_from_function(function_name):
+        call_signature = []
+        return call_signature
+
+    @staticmethod
+    def __resolve_call_signature(logger, line_tokens, call_params, call_signature):
+        pass
+
+################################################################################
     def __resolve_call_signatures(self, logger):
+        ''' Checking call parameters match with function or command signature
+Resolving default call paramaters e.g. option="case_sensitive"'''
+
         for code_name in self._code:
             parse_params = ParseParams(self, logger, code_name)
             for parse_params.code_index in range(0, len(parse_params.code_lines)):
                 with PrefaceLogger(self.get_code_line_description(code_name, parse_params.line_number), logger):
                     command_class = Code_line.get_command_class(parse_params.code_line)
 
-                    # checking against call signature
+                    # checking against command call signature
                     if command_class._callable:
-                        line_tokens = parse_params.line_tokens
-                        pass
+                        call_params = Code_line.get_call_params(parse_params.code_line)
+                        call_signature = Code_compilation.__get_call_signature_from_signature(command_class._call_signature)
+                        Code_compilation.__resolve_call_signature(logger, parse_params.line_tokens, call_params, call_signature)
+
                     # checking against function signature
                     elif command_class._keyword == CallCommand._keyword:
-                        line_tokens = parse_params.line_tokens
-                        pass
+                        call_params = Code_line.get_call_params(parse_params.code_line)
+                        call_signature = self.__get_call_signature_from_function()
+                        Code_compilation.__resolve_call_signature(logger, parse_params.line_tokens, call_params, call_signature)
 
 ################################################################################
     def compile_from_file(self, file_name, logger):

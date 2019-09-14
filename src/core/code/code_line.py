@@ -62,3 +62,9 @@ class Code_line:
         if cls._CODE_JUMPS not in code_line:
             return {}
         return code_line[cls._CODE_JUMPS]
+
+    @classmethod
+    def get_call_params(cls, code_line):
+        line_tokens = cls.get_line_tokens(code_line)
+        call_params = []
+        return call_params
