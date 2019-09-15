@@ -49,6 +49,9 @@ def command_class(keyword=None, cmd_type=None):
         if _class._callable:
             setattr(_class, '_call_signature', Call_signature.create_from_signature(inspect.signature(_class.call)))
 
+        # making sure all keywords are lower case
+        _class._keyword = str(_class._keyword).lower()
+
         Commands.commands[str(_class._keyword).lower()] = _class
 
         return _class

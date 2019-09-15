@@ -1,5 +1,6 @@
 from core.code.code_line import Code_line
 from core.code.code import Code
+from core.code.call_signature import Call_signature
 
 class Code_lines:
     @staticmethod
@@ -35,7 +36,8 @@ class Code_lines:
     @staticmethod
     def create_function_code_lines(function_file_name, function_code_lines):
         return {Code._CODE_LINES:function_code_lines,
-                Code._FUNCTION_FILE_NAME:function_file_name}
+                Code._FUNCTION_FILE_NAME:function_file_name,
+                Code._FUNCTION_CALL_SIGNATURE:Call_signature.create_from_function_code_lines(function_code_lines).to_json_dict()}
 
     @staticmethod
     def get_code_lines(code):

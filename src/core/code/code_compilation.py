@@ -180,7 +180,8 @@ Resolving default call paramaters e.g. option="case_sensitive"'''
 
                     # checking against function signature
                     elif command_class._keyword == CallCommand._keyword:
-                        call_signature = None
+                        function_name = parse_params.line_tokens.value(1)
+                        call_signature = self.get_function_call_signature(function_name)
                         if call_signature:
                             call_signature.resolve(logger, parse_params.line_tokens)
 

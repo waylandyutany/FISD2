@@ -1,8 +1,10 @@
 from core.utils import folder_and_file_name
+from core.code.call_signature import Call_signature
 
 ################################################################################
 class Code:
     _FUNCTION_FILE_NAME = 'function_file_name'
+    _FUNCTION_CALL_SIGNATURE = 'function_call_signature'
     _CODE_LINES = 'code_lines'
 
     def __init__(self):
@@ -25,6 +27,11 @@ class Code:
 
     def is_code_function(self, code_name):
         return Code._FUNCTION_FILE_NAME in self._code[code_name]
+
+    def get_function_call_signature(self, code_name):
+        if Code._FUNCTION_CALL_SIGNATURE in self._code[code_name]:
+            return Call_signature(self._code[code_name][Code._FUNCTION_CALL_SIGNATURE])
+        return None
 
     def code_name_to_code_path(self, code_name):
         if Code._FUNCTION_FILE_NAME in self._code[code_name]:
