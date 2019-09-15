@@ -19,6 +19,7 @@ class ProcCommand(Command):
     @staticmethod
     def execute(params):
         #@todo handle different parameters and default parameters
+        call_signature = params.call_signature 
         variable_names = params.raw_args.sub_tokens(params.raw_args.find_op('('), params.raw_args.find_op(')')).split_tokens_by_op(',')
         variable_values = params.context.pop_call_tokens().split_tokens_by_op(',')
 
