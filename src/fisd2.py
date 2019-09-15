@@ -136,11 +136,12 @@ if __name__ == '__main__':
             logger.info("Python       : '{}.{}.{} {}'".format(sys.version_info.major, sys.version_info.minor, sys.version_info.micro, sys.version_info.releaselevel))
 
             files_to_process = []
-            for fisd_file in args.fisd_file:
-                if os.path.isfile(fisd_file):
-                    files_to_process.append(fisd_file)
-                else:
-                    files_to_process.extend(glob2.glob(fisd_file))
+            if args.fisd_file:
+                for fisd_file in args.fisd_file:
+                    if os.path.isfile(fisd_file):
+                        files_to_process.append(fisd_file)
+                    else:
+                        files_to_process.extend(glob2.glob(fisd_file))
             #files_to_process = sorted(files_to_process)
             if len(files_to_process) == 0:
                 logger.warning("No file(s) to process for '--fisd-file {}'".format(args.fisd_file))

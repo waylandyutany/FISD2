@@ -2,3 +2,6 @@
 *.pyc
 /fisd2_env
 /reports
+/src/.vscode
+/src/.fisd2_venv
+/src/reports
