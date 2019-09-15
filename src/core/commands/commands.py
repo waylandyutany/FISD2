@@ -1,4 +1,6 @@
 from core.code.code_line import Code_line
+from core.code.call_signature import Call_signature
+
 import inspect
 
 ################################################################################
@@ -45,7 +47,7 @@ def command_class(keyword=None, cmd_type=None):
            
         setattr(_class, '_callable', hasattr(_class, 'call'))
         if _class._callable:
-            setattr(_class, '_call_signature', inspect.signature(_class.call))
+            setattr(_class, '_call_signature', Call_signature.create_from_signature(inspect.signature(_class.call)))
 
         Commands.commands[str(_class._keyword).lower()] = _class
 
