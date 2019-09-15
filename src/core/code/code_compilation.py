@@ -127,6 +127,7 @@ class Code_compilation(Code_json):
         #@todo error when function name already exists, we should allow same function name but not for same scope, but we should at least warn
         #@todo error when proc within proc, no nested proc supported
         #@todo error no endproc
+        #@todo function name case sensitive ? do it optionable
         functions_code = {}
         for code_name in self._code:
             code_lines = self.get_code_lines(code_name)
