@@ -1,0 +1,12 @@
+execute "config"
+test_case("test_return_value_default", "Variable stack")
+
+proc test_func_default_value(val0, val1 = 0)
+	return val0 + val1
+endproc
+
+test_assert(test_return_value_default() == 0, "")
+test_assert(test_return_value_default(1) == 1, "")
+
+#test_assert(test_func_default_value() == 0, "")
+test_assert(test_func_default_value(1, 1) == 2, "")

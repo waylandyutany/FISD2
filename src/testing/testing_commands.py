@@ -56,8 +56,17 @@ class Test_asserCommand(Command):
 @command_class('test_return_value', Callable())
 class Test_return_valueCommand(Command):
     @classmethod
-    def execute(cls, params):
-        params.set_return(params.evaluated_args.value(0))
+    def call(cls, params, value):
+        return value
+
+################################################################################
+# TEST_RETURN_VALUE Command
+################################################################################
+@command_class('test_return_value_default', Callable())
+class Test_return_valueCommand(Command):
+    @classmethod
+    def call(cls, params, value = 0):
+        return value
 
 ################################################################################
 # TEST_CASES_TOTAL Command
