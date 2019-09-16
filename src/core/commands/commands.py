@@ -25,6 +25,14 @@ class Command:
         code_line = Code_line.create(line_number, tokens, cls)
         return code_line
 
+    @classmethod
+    def get_call_signature(cls):
+        if not cls._callable:
+            return None
+        if not cls._call_signature:
+            cls._call_signature = Call_signature.create_from_signature(inspect.signature(cls.call))
+        return cls._call_signature
+
 ################################################################################
 class Commands:
     commands = {}
@@ -46,15 +54,15 @@ def command_class(keyword=None, cmd_type=None):
             setattr(_class, '_cmd_type', cmd_type)
            
         setattr(_class, '_callable', hasattr(_class, 'call'))
-        if _class._callable:
-            setattr(_class, '_call_signature', Call_signature.create_from_signature(inspect.signature(_class.call)))
-
+        setattr(_class, '_call_signature', None)
+        
         # making sure all keywords are lower case
         _class._keyword = str(_class._keyword).lower()
 
-        Commands.commands[str(_class._keyword).lower()] = _class
+        Commands.commands[_class._keyword] = _class
 
         return _class
+
     return _command_class
 
 ################################################################################

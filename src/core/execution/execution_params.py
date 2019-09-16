@@ -55,10 +55,6 @@ class ExecutionParams:
         return Code_line.get_command_class(self.code_line)
 
     @property
-    def call_signature(self):
-        return self.code.get_function_call_signature(self.code_name)
-
-    @property
     def line_tokens(self):
         return Code_line.get_line_tokens(self.code_line)
 

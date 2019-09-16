@@ -2,6 +2,7 @@ from core.code.code_json import Code_json
 from core.code.code_line import Code_line
 from core.code.code_lines import Code_lines
 from core.code.parse_params import ParseParams, Code_lines_insertion, Code_labels
+from core.code.call_signature import Call_signature
 
 from core.tokens import Tokenizers, Tokens
 from core.commands.commands import Commands
@@ -121,7 +122,7 @@ class Code_compilation(Code_json):
             i += 1
 
 
-    def __extract_functions(self, logger):
+    def __extract_functions(self, logger, function_signatures):
         #@todo error when end proc w/o proc keyword
         #@todo error when no name token after proc token
         #@todo error when function name already exists, we should allow same function name but not for same scope, but we should at least warn
@@ -138,6 +139,7 @@ class Code_compilation(Code_json):
                 function_name = first_line_tokens.value(1)
                 function_code_lines = Code_lines.move(code_lines, first_line_number, last_line_number)
                 functions_code[function_name] = Code_lines.create_function_code_lines(code_name, function_code_lines)
+                function_signatures[function_name] = Call_signature.create_from_function_code_lines(function_code_lines)
 
         for function_code in functions_code:
             self._code[function_code] = functions_code[function_code]
@@ -165,7 +167,7 @@ class Code_compilation(Code_json):
                     jumps[jump_name] = labels_jumps_indicies[jumps[jump_name]]
 
 ################################################################################
-    def __resolve_call_signatures(self, logger):
+    def __resolve_call_signatures(self, logger, function_signatures):
         ''' Checking call parameters match with function or command signature
 Resolving default call paramaters e.g. option="case_sensitive"'''
 
@@ -177,20 +179,22 @@ Resolving default call paramaters e.g. option="case_sensitive"'''
 
                     # checking against command call signature
                     if command_class._callable:
-                        command_class._call_signature.resolve(logger, parse_params.line_tokens)
+                        command_class.get_call_signature().resolve(logger, parse_params.line_tokens)
 
                     # checking against function signature
                     elif command_class._keyword == CallCommand._keyword:
                         function_name = parse_params.line_tokens.value(1)
-                        call_signature = self.get_function_call_signature(function_name)
+                        call_signature = function_signatures[function_name]
                         if call_signature:
                             call_signature.resolve(logger, parse_params.line_tokens)
 
 ################################################################################
     def compile_from_file(self, file_name, logger):
         ''' Compiling code from the file, looking for *.fisd/*.fisd2 in no extension provided.'''
+
+        function_signatures = {}
         self._main_code_name = self.__tokenize_from_file(os.path.dirname(file_name), os.path.basename(file_name), logger)
-        self.__extract_functions(logger)
+        self.__extract_functions(logger, function_signatures)
         self.__parse_commands(logger)
         self.__resolve_jumps(logger)
-        self.__resolve_call_signatures(logger)
+        self.__resolve_call_signatures(logger, function_signatures)

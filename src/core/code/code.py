@@ -4,7 +4,6 @@ from core.code.call_signature import Call_signature
 ################################################################################
 class Code:
     _FUNCTION_FILE_NAME = 'function_file_name'
-    _FUNCTION_CALL_SIGNATURE = 'function_call_signature'
     _CODE_LINES = 'code_lines'
 
     def __init__(self):
